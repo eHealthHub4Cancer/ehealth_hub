@@ -1,0 +1,131 @@
+.home-page {
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff;
+  }
+  
+  .hero-section {
+    position: relative;
+    padding: 80px 20px;
+    background: linear-gradient(to right, #f8f9fa 0%, #ffffff 100%);
+  }
+  
+  .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .hero-text-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #1a3e5a;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .hero-subtitle-container {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: #435c73;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+  }
+  
+  .accent-line {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #1a3e5a, #66b2ff);
+    margin: 0 auto;
+    border-radius: 2px;
+  }
+  
+  .hero-description {
+    position: relative;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    margin-bottom: 3rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .hero-description:hover {
+    transform: translateY(-5px);
+  }
+  
+  .hero-description p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #546e7a;
+    margin: 0;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 40px 15px;
+    }
+  
+    .hero-title {
+      font-size: 2.5rem;
+    }
+  
+    .hero-subtitle {
+      font-size: 1.4rem;
+    }
+  
+    .hero-description {
+      padding: 1.5rem;
+    }
+  
+    .hero-description p {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+  }
+  
+  /* Add a subtle animation for the content */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .hero-text-container > * {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+  
+  .hero-title {
+    animation-delay: 0.2s;
+  }
+  
+  .hero-subtitle-container {
+    animation-delay: 0.4s;
+  }
+  
+  .hero-description {
+    animation-delay: 0.6s;
+  }

@@ -1,5 +1,6 @@
+/* Base Navbar Styling */
 .navbar {
-    background-color: #1a3e5a; 
+    background-color: #1a3e5a;
     height: 80px;
     display: flex;
     justify-content: center;
@@ -10,7 +11,8 @@
   .navbar-container {
     display: flex;
     justify-content: space-between;
-    height: 80px;
+    align-items: center; 
+    height: 100%; 
     z-index: 1;
     width: 100%;
     padding: 0 24px;
@@ -19,6 +21,7 @@
   
   .navbar-logo img {
     height: 50px;
+    object-fit: contain;
   }
   
   .menu-icon {
@@ -72,7 +75,8 @@
     z-index: 1;
   }
   
-  .dropdown-content.active {
+  /* Show the dropdown when hovering over the parent dropdown link */
+  .dropdown:hover .dropdown-content {
     display: block;
   }
   
@@ -98,7 +102,7 @@
     }
   
     .nav-menu {
-      display: none; 
+      display: none; /* Hide menu by default */
       flex-direction: column;
       position: absolute;
       top: 80px;
@@ -112,7 +116,7 @@
   
     .nav-menu.active {
       left: 0;
-      display: flex; 
+      display: flex; /* Show the menu when active */
     }
   
     .nav-item {
@@ -124,11 +128,6 @@
       padding: 2rem;
       width: 100%;
       display: table;
-    }
-  
-    .dropdown-content.active {
-      display: block;
-      position: relative;
     }
   
     .dropdown-content {

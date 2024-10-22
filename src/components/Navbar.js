@@ -2,17 +2,14 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom'; // Added useLocation to track active link
 import { FaBars, FaTimes } from 'react-icons/fa';
 import './Navbar.css';
+import logo from '../Images/logo/eHealthHub_logo.png'
 
 function Navbar() {
   const [click, setClick] = useState(false);
-  const [dropdownClick, setDropdownClick] = useState(false);
   const location = useLocation(); // To check the current path
 
   const handleClick = () => setClick(!click);
   const closeMenu = () => setClick(false);
-
-  const handleDropdownClick = () => setDropdownClick(!dropdownClick);
-  const closeDropdownMenu = () => setDropdownClick(false);
 
   const getActiveClass = (path) => {
     return location.pathname === path ? 'active' : '';
@@ -22,7 +19,7 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo" onClick={closeMenu}>
-          <img src="/images/logo/eHealthHub_logo.png" alt="eHealthHub Logo" />
+            <img src={logo} alt="eHealthHub Logo" />
         </Link>
         <div className="menu-icon" onClick={handleClick}>
           {click ? <FaTimes /> : <FaBars />}
@@ -54,15 +51,15 @@ function Navbar() {
             </Link>
           </li>
           <li className="nav-item dropdown">
-            <span className="nav-links" onClick={handleDropdownClick}>
-              Output 
+            <span className="nav-links">
+              Output
             </span>
-            <ul className={dropdownClick ? 'dropdown-content active' : 'dropdown-content'}>
+            <ul className="dropdown-content">
               <li>
-                <Link to="/output/talks" onClick={() => { closeMenu(); closeDropdownMenu(); }}>Talks</Link>
+                <Link to="/output/talks" onClick={closeMenu}>Talks</Link>
               </li>
               <li>
-                <Link to="/output/publications" onClick={() => { closeMenu(); closeDropdownMenu(); }}>Publications</Link>
+                <Link to="/output/publications" onClick={closeMenu}>Publications</Link>
               </li>
             </ul>
           </li>

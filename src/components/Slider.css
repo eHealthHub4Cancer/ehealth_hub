@@ -1,0 +1,65 @@
+/* Default styles */
+.slick-slider {
+    width: 100%;
+    position: relative;
+}
+
+.slick-slide img {
+    width: 100%;
+    height: 750px !important;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.slide-caption {
+    text-align: center;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.slide-caption h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.slide-caption p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .slick-slider {
+        position: relative;
+        /* Remove any fixed height constraints */
+    }
+    
+    .slick-slide {
+        position: relative;
+        /* Remove any fixed height constraints */
+    }
+    
+    .slick-slide img {
+        height: 250px !important; /* Smaller height for mobile */
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .slide-caption h2 {
+        font-size: 1.2rem;
+    }
+
+    .slide-caption p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Ensure body and html can scroll */
+html, body {
+    height: auto;
+    overflow-y: auto !important;
+}
