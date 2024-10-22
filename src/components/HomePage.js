@@ -1,5 +1,7 @@
 import React from "react";
 import HomeSlider from "./HomeSlider";
+import CollaboratorsSection from './CollaboratorsSection';
+
 import "./HomePage.css";
 
 function HomePage() {
@@ -21,6 +23,7 @@ function HomePage() {
           </div>
         </div>
         <HomeSlider />
+        <CollaboratorsSection/>
       </section>
     </div>
   );
