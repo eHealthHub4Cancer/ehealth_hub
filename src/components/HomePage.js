@@ -1,6 +1,7 @@
 import React from "react";
 import HomeSlider from "./HomeSlider";
 import CollaboratorsSection from './CollaboratorsSection';
+import FundingSection from "./FundingSection";
 
 import "./HomePage.css";
 
@@ -24,6 +25,7 @@ function HomePage() {
         </div>
         <HomeSlider />
         <CollaboratorsSection/>
+        <FundingSection/>
       </section>
     </div>
   );

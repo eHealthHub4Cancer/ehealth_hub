@@ -1,0 +1,236 @@
+.funding-section {
+    padding: 60px 0;  /* Reduced top padding */
+    background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);  /* Enhanced background contrast */
+    overflow: hidden;
+    margin-top: -40px;  /* Negative margin to shift up */
+  }
+  
+  .funding-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    gap: 80px;  /* Increased gap between image and content */
+  }
+  
+  .funding-content {
+    flex: 1;
+    max-width: 600px;
+  }
+  
+  .funding-text-container {
+    position: relative;
+    padding-left: 20px;  /* Added padding for better text alignment */
+  }
+  
+  .funding-title {
+    font-size: 2.8rem;
+    color: #1a3e5a;
+    margin-bottom: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  
+  .accent-line {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #1a3e5a, #66b2ff);
+    margin: 20px 0;
+    border-radius: 2px;
+  }
+  
+  .funding-description {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #546e7a;
+    margin-bottom: 30px;
+  }
+  
+  .highlight {
+    color: #1a3e5a;
+    font-weight: 600;
+  }
+  
+  .learn-more-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 28px;
+    background: #1a3e5a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(26, 62, 90, 0.15);
+  }
+  
+  .learn-more-btn:hover {
+    background: #2a5980;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26, 62, 90, 0.2);
+  }
+  
+  .arrow-icon {
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+  }
+  
+  .learn-more-btn:hover .arrow-icon {
+    transform: translateX(4px);
+  }
+  
+  .funding-image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    order: -1;  /* Makes image appear first in flex container */
+  }
+  
+  .image-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 700px;  /* Slightly reduced max-width */
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  }
+  
+  .funding-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  
+  .image-wrapper:hover .funding-image {
+    transform: scale(1.05);
+  }
+  
+  .image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(26, 62, 90, 0.95), transparent);
+    padding: 30px;
+    color: white;
+  }
+  
+  .overlay-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+  }
+  
+  .stat {
+    text-align: center;
+  }
+  
+  .stat-value {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+  
+  .stat-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+  }
+  
+  .stat-divider {
+    width: 2px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  @media (max-width: 1024px) {
+    .funding-section {
+      margin-top: -20px;
+      padding: 40px 0;
+    }
+  
+    .funding-container {
+      flex-direction: column;
+      padding: 20px;
+      gap: 40px;
+    }
+  
+    .funding-content {
+      max-width: 100%;
+    }
+  
+    .funding-text-container {
+      padding-left: 0;
+      text-align: center;
+    }
+  
+    .accent-line {
+      margin: 20px auto;
+    }
+  
+    .funding-image-container {
+      width: 100%;
+      padding: 10px;
+      order: 0;  /* Reset order for mobile */
+    }
+  
+    .funding-title {
+      font-size: 2.4rem;
+    }
+  
+    .image-wrapper {
+      max-width: 100%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .funding-section {
+      padding: 30px 0;
+    }
+  
+    .funding-title {
+      font-size: 2rem;
+    }
+  
+    .funding-description {
+      font-size: 1rem;
+    }
+  
+    .overlay-content {
+      gap: 20px;
+    }
+  
+    .stat-value {
+      font-size: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .funding-container {
+      padding: 15px;
+    }
+  
+    .funding-title {
+      font-size: 1.8rem;
+    }
+  
+    .stat-value {
+      font-size: 1.3rem;
+    }
+  
+    .stat-label {
+      font-size: 0.8rem;
+    }
+  
+    .learn-more-btn {
+      padding: 10px 24px;
+      font-size: 0.95rem;
+    }
+  }
