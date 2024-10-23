@@ -9,21 +9,21 @@ const DigitalInitiatives = () => {
       <div className="initiatives-container">
         <div className="initiatives-content">
           <div className="content-grid">
+            
+            {/* Text content */}
             <div className="text-content" data-aos="fade-right">
               <h2 className="initiatives-title">eHealth-Hub Digital Health Initiatives</h2>
               <div className="accent-bar"></div>
               
               <div className="initiative-summary">
                 <p>
-                  The eHealth-Hub for Cancer is at the forefront of revolutionizing cancer research 
-                  through cutting-edge digital health technologies. By integrating various data streams 
-                  such as genomics, liquid biopsies, digital pathology, and environmental factors, 
-                  we aim to enhance cancer research across the island.
+                The eHealth-Hub for cancer is developing software and frameworks to harmonize, 
+                unify and connect clinical data to support all-island cancer research.
+                By integrating various data streams 
+                such as genomics, liquid biopsies, digital pathology, and environmental factors, 
+                we aim to enhance cancer research across the island.
                 </p>
-                <p>
-                  Our work focuses on harmonizing clinical data, enabling large-scale, cross-border 
-                  research that supports innovative cancer treatment and diagnosis.
-                </p>
+        
               </div>
 
               <div className="key-areas">
@@ -47,6 +47,7 @@ const DigitalInitiatives = () => {
               </Link>
             </div>
 
+            {/* Visual content on the right */}
             <div className="visual-content" data-aos="fade-left">
               <div className="image-wrapper">
                 <img src={infrastructureImage} alt="Digital Health Infrastructure Diagram" />
@@ -57,6 +58,7 @@ const DigitalInitiatives = () => {
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
