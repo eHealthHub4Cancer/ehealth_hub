@@ -1,8 +1,8 @@
 .funding-section {
-    padding: 60px 0;  /* Reduced top padding */
-    background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);  /* Enhanced background contrast */
+    padding: 60px 0;  
+    background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);  
     overflow: hidden;
-    margin-top: -40px;  /* Negative margin to shift up */
+    margin-top: -40px;  
   }
   
   .funding-container {
@@ -11,7 +11,7 @@
     padding: 0 40px;
     display: flex;
     align-items: center;
-    gap: 80px;  /* Increased gap between image and content */
+    gap: 80px;  
   }
   
   .funding-content {
@@ -21,7 +21,7 @@
   
   .funding-text-container {
     position: relative;
-    padding-left: 20px;  /* Added padding for better text alignment */
+    padding-left: 20px;  
   }
   
   .funding-title {
@@ -88,13 +88,13 @@
     justify-content: center;
     align-items: center;
     padding: 20px;
-    order: -1;  /* Makes image appear first in flex container */
+    order: -1;  
   }
   
   .image-wrapper {
     position: relative;
     width: 100%;
-    max-width: 700px;  /* Slightly reduced max-width */
+    max-width: 700px;  
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);

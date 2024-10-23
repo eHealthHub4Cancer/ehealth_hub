@@ -3,6 +3,7 @@ import HomeSlider from "./HomeSlider";
 import CollaboratorsSection from './CollaboratorsSection';
 import FundingSection from "./FundingSection";
 
+
 import "./HomePage.css";
 
 function HomePage() {
@@ -26,6 +27,7 @@ function HomePage() {
         <HomeSlider />
         <CollaboratorsSection/>
         <FundingSection/>
+        
       </section>
     </div>
   );
