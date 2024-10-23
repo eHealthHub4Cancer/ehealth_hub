@@ -7,60 +7,113 @@ import "./Slider.css";
 // Import images
 import image1 from '../Images/sliders/2022_OHDSI_meeting_WashingtonDC.jpg';
 import image2 from '../Images/sliders/2023_Belfast Photo 1.jpeg';
-// import image3 from '../Images/sliders/data_integration.jpeg';
-// import image4 from '../Images/sliders/overview.jpeg';
 import image5 from '../Images/sliders/ul-research-centre-Clifford_Culhane2.jpeg';
+
+const CustomPrevArrow = ({ onClick }) => (
+  <button className="slick-arrow slick-prev custom-arrow prev-arrow" onClick={onClick}>
+    <svg 
+      width="24" 
+      height="24" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth="2" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    >
+      <polyline points="15 18 9 12 15 6" />
+    </svg>
+  </button>
+);
+
+const CustomNextArrow = ({ onClick }) => (
+  <button className="slick-arrow slick-next custom-arrow next-arrow" onClick={onClick}>
+    <svg 
+      width="24" 
+      height="24" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth="2" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    >
+      <polyline points="9 18 15 12 9 6" />
+    </svg>
+  </button>
+);
 
 function HomeSlider() {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 800,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 5000,
+    pauseOnHover: true,
+    fade: true,
+    cssEase: "cubic-bezier(0.87, 0.03, 0.41, 0.9)",
+    prevArrow: <CustomPrevArrow />,
+    nextArrow: <CustomNextArrow />,
+    appendDots: dots => (
+      <div className="dots-container">
+        <ul className="custom-dots"> {dots} </ul>
+      </div>
+    ),
+    customPaging: i => (
+      <div className="custom-dot"></div>
+    )
   };
 
   return (
-    <div className="slider-container">
+    <div className="slider-wrapper">
+      <div className="slider-container">
         <Slider {...settings}>
-        <div>
-            <img src={image1} alt="OHDSI Meeting in Washington DC" />
-            <div className="slide-caption">
-            <h2>2022 OHDSI Meeting, Washington DC</h2>
-            <p>Highlighting global collaboration and data science efforts.</p>
+          <div className="slide">
+            <div className="slide-image-container">
+              <img src={image1} alt="OHDSI Meeting in Washington DC" />
+              <div className="slide-overlay"></div>
             </div>
-        </div>
-        <div>
-            <img src={image2} alt="Belfast Event 2023" />
             <div className="slide-caption">
-            <h2>2023 Belfast Photo</h2>
-            <p>Key players behind the eHealth Hub project.</p>
+              <div className="caption-content">
+                <h2>2022 OHDSI Meeting, Washington DC</h2>
+                <div className="caption-divider"></div>
+                <p>Highlighting global collaboration and data science efforts in healthcare transformation.</p>
+              </div>
             </div>
-        </div>
-        {/* <div>
-            <img src={image3} alt="Data Integration Visual" />
+          </div>
+
+          <div className="slide">
+            <div className="slide-image-container">
+              <img src={image2} alt="Belfast Event 2023" />
+              <div className="slide-overlay"></div>
+            </div>
             <div className="slide-caption">
-            <h2>Data Integration Visual</h2>
-            <p>Explaining the technology and data integration efforts.</p>
+              <div className="caption-content">
+                <h2>2023 Belfast Photo</h2>
+                <div className="caption-divider"></div>
+                <p>Pioneering minds behind the eHealth Hub project shaping the future of healthcare.</p>
+              </div>
             </div>
-        </div>
-        <div>
-            <img src={image4} alt="eHealth Hub Overview" />
+          </div>
+
+          <div className="slide">
+            <div className="slide-image-container">
+              <img src={image5} alt="Research Leaders at UL Research Centre" />
+              <div className="slide-overlay"></div>
+            </div>
             <div className="slide-caption">
-            <h2>Overview</h2>
-            <p>Unified harmonized health data for network cancer research studies.</p>
+              <div className="caption-content">
+                <h2>UL Research Centre</h2>
+                <div className="caption-divider"></div>
+                <p>Key leaders driving innovation in eHealth Hub for Cancer research and development.</p>
+              </div>
             </div>
-        </div> */}
-        <div>
-            <img src={image5} alt="Research Leaders at UL Research Centre" />
-            <div className="slide-caption">
-            <h2>UL Research Centre</h2>
-            <p>Key leaders in the research for eHealth Hub for Cancer.</p>
-            </div>
-        </div>
+          </div>
         </Slider>
+      </div>
     </div>
   );
 }
