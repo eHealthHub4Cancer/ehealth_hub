@@ -38,9 +38,9 @@ const HeroSection = () => {
                       <div className="circle-item">EHR Medical Profile</div>
                       <div className="circle-item">Environment</div>
                       <div className="circle-item">Liquid Biopsies</div>
-                      <div className="circle-item">Metabolites</div>
-                      <div className="circle-item">Digital Pathology</div>
                       <div className="circle-item">Single Cell Sequencing</div>
+                      <div className="circle-item">Digital Pathology</div>
+                      <div className="circle-item">Metabolites</div>
                       <div className="circle-item">Proteomics</div>
                     </div>
                     <div className="circle-center">Data Integration & Modelling</div>
