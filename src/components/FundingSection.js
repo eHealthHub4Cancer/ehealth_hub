@@ -38,7 +38,7 @@ const FundingSection = () => {
 
         <div className="funding-content" data-aos="fade-left">
           <div className="funding-text-container">
-            <h2 className="funding-title">Funding Excellence</h2>
+            <h2 className="funding-title">Funding Sources</h2>
             <div className="accent-line"></div>
             <p className="funding-description">
               The <span className="highlight">eHealth-Hub for Cancer</span> is an emerging hub of 
