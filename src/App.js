@@ -13,6 +13,10 @@ import Shirin from "./components/People/Shirin";
 import Aedin from "./components/People/Aedin";
 import Mark from "./components/People/Mark";
 import Ruth from "./components/People/Ruth";
+import Katie from "./components/People/Katie";
+import Ian from "./components/People/Ian";
+import Nina from "./components/People/Nina";
+import Simon from "./components/People/Simeon";
 import './App.css'; 
 
 function App() {
@@ -30,6 +34,10 @@ function App() {
             <Route path="/people/aedin" element={<Aedin />} />
             <Route path="/people/mark" element={<Mark />} />
             <Route path="/people/ruth" element={<Ruth />} />
+            <Route path="/people/katie" element={<Katie />} />
+            <Route path="/people/ian" element={<Ian />} />
+            <Route path="/people/nina" element={<Nina />} />
+            <Route path="/people/simon" element={<Simon />} />
             <Route path="/news" element={<News />} />
             <Route path="/output/talks" element={<Talks />} />
             <Route path="/output/publications" element={<Publications />} />
