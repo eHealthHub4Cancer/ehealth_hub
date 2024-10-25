@@ -188,6 +188,7 @@
       gap: 40px 20px;
       padding: 0 20px 30px;
     }
+
   
     .main-info {
       grid-column: 1 / -1;
@@ -216,6 +217,10 @@
       grid-template-columns: 1fr;
       gap: 30px;
     }
+
+    .sponsor-logo {
+        margin-left: 240px;
+      }
   
     .footer-section {
       text-align: center;
@@ -272,6 +277,10 @@
     .sponsor-logo {
       max-width: 100px;
     }
+
+    .sponsor-logo {
+        margin-left: 150px;
+      }
   
     .footer-bottom-links {
       flex-direction: column;
