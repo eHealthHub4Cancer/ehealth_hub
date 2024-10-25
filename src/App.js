@@ -17,6 +17,7 @@ import Katie from "./components/People/Katie";
 import Ian from "./components/People/Ian";
 import Nina from "./components/People/Nina";
 import Simon from "./components/People/Simeon";
+import Bill from "./components/People/Bill";
 import './App.css'; 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Route path="/people/ian" element={<Ian />} />
             <Route path="/people/nina" element={<Nina />} />
             <Route path="/people/simon" element={<Simon />} />
+            <Route path="/people/bill" element={<Bill />} />
             <Route path="/news" element={<News />} />
             <Route path="/output/talks" element={<Talks />} />
             <Route path="/output/publications" element={<Publications />} />
