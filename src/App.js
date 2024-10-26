@@ -18,6 +18,10 @@ import Ian from "./components/People/Ian";
 import Nina from "./components/People/Nina";
 import Simon from "./components/People/Simeon";
 import Bill from "./components/People/Bill";
+import GenderInequalityStudy from "./components/News/GenderInequalityStudy";
+import GoodFridayCancerLegacy from "./components/News/GoodFridayCancerLegacy";
+import PhDOpportunity from "./components/News/PhDOpportunity";
+import BelfastAgreement25 from "./components/News/BelfastAgreement25";
 import './App.css'; 
 
 function App() {
@@ -41,6 +45,11 @@ function App() {
             <Route path="/people/simon" element={<Simon />} />
             <Route path="/people/bill" element={<Bill />} />
             <Route path="/news" element={<News />} />
+            <Route path="news/gender-inequality-study" element={<GenderInequalityStudy />} />
+            <Route path="news/good-friday-cancer-legacy" element={<GoodFridayCancerLegacy />} />
+            <Route path="news/phd-opportunity" element={<PhDOpportunity />} />
+            <Route path="news/belfast-agreement-showcase" element={<BelfastAgreement25 />} />
+            
             <Route path="/output/talks" element={<Talks />} />
             <Route path="/output/publications" element={<Publications />} />
           </Routes>
