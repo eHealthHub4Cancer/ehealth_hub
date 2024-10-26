@@ -8,7 +8,7 @@ function LDCRCBuildingTogether() {
     <div className="news-article-container">
       {/* Breadcrumb Navigation */}
       <nav className="article-breadcrumb">
-        <Link to="/" className="breadcrumb-link">News</Link>
+        <Link to="/news" className="breadcrumb-link">News</Link>
         <ChevronLeft size={16} />
         <span>LDCRC Building Together Event</span>
       </nav>

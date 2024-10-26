@@ -22,6 +22,11 @@ import GenderInequalityStudy from "./components/News/GenderInequalityStudy";
 import GoodFridayCancerLegacy from "./components/News/GoodFridayCancerLegacy";
 import PhDOpportunity from "./components/News/PhDOpportunity";
 import BelfastAgreement25 from "./components/News/BelfastAgreement25";
+import LDCRCBuildingTogether from "./components/News/LDCRCBuildingTogether";
+import DellTechnologiesPresentation from "./components/News/DellTechnologiesPresentation";
+import HRBConference from "./components/News/HRBConference";
+import OHDSIMeeting from "./components/News/OHDSIMeeting";
+import AICRILaunch from "./components/News/AICRILaunch";
 import './App.css'; 
 
 function App() {
@@ -49,7 +54,11 @@ function App() {
             <Route path="news/good-friday-cancer-legacy" element={<GoodFridayCancerLegacy />} />
             <Route path="news/phd-opportunity" element={<PhDOpportunity />} />
             <Route path="news/belfast-agreement-showcase" element={<BelfastAgreement25 />} />
-            
+            <Route path="news/ldcrc-building-together" element={<LDCRCBuildingTogether />} />
+            <Route path="news/dell-technologies-presentation" element={<DellTechnologiesPresentation />} />
+            <Route path="news/aicri-launch" element={<AICRILaunch />} />
+            <Route path="news/ohdsi-meeting" element={<OHDSIMeeting />} />
+            <Route path="news/hrb-conference" element={<HRBConference />} />
             <Route path="/output/talks" element={<Talks />} />
             <Route path="/output/publications" element={<Publications />} />
           </Routes>
