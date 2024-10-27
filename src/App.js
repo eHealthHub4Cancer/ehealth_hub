@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import HomePage from "./components/HomePage";
@@ -34,12 +34,12 @@ import './App.css';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/">
       <div className="app-container">
         <Navbar />
         <main className="main-content">
           <Routes>
-            <Route path="/" exact element={<HomePage />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<About />} />
             <Route path="/people" element={<People />} />
             <Route path="/projects" element={<Projects />} />
@@ -53,18 +53,18 @@ function App() {
             <Route path="/people/simon" element={<Simon />} />
             <Route path="/people/bill" element={<Bill />} />
             <Route path="/news" element={<News />} />
-            <Route path="news/gender-inequality-study" element={<GenderInequalityStudy />} />
-            <Route path="news/good-friday-cancer-legacy" element={<GoodFridayCancerLegacy />} />
-            <Route path="news/phd-opportunity" element={<PhDOpportunity />} />
-            <Route path="news/belfast-agreement-showcase" element={<BelfastAgreement25 />} />
-            <Route path="news/ldcrc-building-together" element={<LDCRCBuildingTogether />} />
-            <Route path="news/dell-technologies-presentation" element={<DellTechnologiesPresentation />} />
-            <Route path="news/aicri-launch" element={<AICRILaunch />} />
-            <Route path="news/ohdsi-meeting" element={<OHDSIMeeting />} />
-            <Route path="news/hrb-conference" element={<HRBConference />} />
-            <Route path="news/bcni-talk" element={<BCNITalk />} />
-            <Route path="news/rte-brainstorm" element={<RTEBrainstorm />} />
-            <Route path="news/limerick-post" element={<LimerickPost />} />
+            <Route path="/news/gender-inequality-study" element={<GenderInequalityStudy />} />
+            <Route path="/news/good-friday-cancer-legacy" element={<GoodFridayCancerLegacy />} />
+            <Route path="/news/phd-opportunity" element={<PhDOpportunity />} />
+            <Route path="/news/belfast-agreement-showcase" element={<BelfastAgreement25 />} />
+            <Route path="/news/ldcrc-building-together" element={<LDCRCBuildingTogether />} />
+            <Route path="/news/dell-technologies-presentation" element={<DellTechnologiesPresentation />} />
+            <Route path="/news/aicri-launch" element={<AICRILaunch />} />
+            <Route path="/news/ohdsi-meeting" element={<OHDSIMeeting />} />
+            <Route path="/news/hrb-conference" element={<HRBConference />} />
+            <Route path="/news/bcni-talk" element={<BCNITalk />} />
+            <Route path="/news/rte-brainstorm" element={<RTEBrainstorm />} />
+            <Route path="/news/limerick-post" element={<LimerickPost />} />
             <Route path="/output/talks" element={<Talks />} />
             <Route path="/output/publications" element={<Publications />} />
           </Routes>
