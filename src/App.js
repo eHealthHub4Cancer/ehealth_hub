@@ -27,6 +27,9 @@ import DellTechnologiesPresentation from "./components/News/DellTechnologiesPres
 import HRBConference from "./components/News/HRBConference";
 import OHDSIMeeting from "./components/News/OHDSIMeeting";
 import AICRILaunch from "./components/News/AICRILaunch";
+import BCNITalk from "./components/News/BCNITalk";
+import RTEBrainstorm from "./components/News/RTEBrainstorm";
+import LimerickPost from "./components/News/LimerickPost";
 import './App.css'; 
 
 function App() {
@@ -59,6 +62,9 @@ function App() {
             <Route path="news/aicri-launch" element={<AICRILaunch />} />
             <Route path="news/ohdsi-meeting" element={<OHDSIMeeting />} />
             <Route path="news/hrb-conference" element={<HRBConference />} />
+            <Route path="news/bcni-talk" element={<BCNITalk />} />
+            <Route path="news/rte-brainstorm" element={<RTEBrainstorm />} />
+            <Route path="news/limerick-post" element={<LimerickPost />} />
             <Route path="/output/talks" element={<Talks />} />
             <Route path="/output/publications" element={<Publications />} />
           </Routes>
