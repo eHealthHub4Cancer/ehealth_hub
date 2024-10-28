@@ -30,11 +30,13 @@ import AICRILaunch from "./components/News/AICRILaunch";
 import BCNITalk from "./components/News/BCNITalk";
 import RTEBrainstorm from "./components/News/RTEBrainstorm";
 import LimerickPost from "./components/News/LimerickPost";
+import ScrollToTop from "./components/ScrollToTop Component";
 import './App.css'; 
 
 function App() {
   return (
     <Router basename="/">
+      <ScrollToTop />
       <div className="app-container">
         <Navbar />
         <main className="main-content">
