@@ -129,6 +129,16 @@ function News() {
       categories: ["NEWS ARTICLE", "LIMERICK"],
       excerpt: "Limerick and Belfast researchers tackle 'future cancer epidemic' from the Limerick Post",
       route: "/news/limerick-post"
+    },
+    {
+      id: 13,
+      title: "Postdoctoral Researcher in Cancer Digital Health",
+      image: require('../Images/News/postdoc.png'),
+      date: "NOV 1, 2024",
+      author: "UNIVERSITY OF LIMERICK",
+      categories: ["POSTDOC", "CANCER DIGITAL HEALTH", "RESEARCH OPPORTUNITY"],
+      excerpt: "The University of Limerick invites applications for a postdoctoral researcher position in Cancer Digital Health and Real-World Data...",
+      route: "/news/postdoctoral-application"
     }
   ];
 
