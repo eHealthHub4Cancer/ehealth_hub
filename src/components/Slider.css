@@ -1,14 +1,15 @@
 /* Full-width Container Styles */
 .slider-wrapper {
-    position: relative;
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    margin-right: calc(-50vw + 50%);
-    overflow: hidden;
-    background: #f8f9fa;
-    padding-bottom: 60px;
-    margin-top: 20px;
-  }
+  position: relative;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  overflow: hidden;
+  background: #f8f9fa;
+  padding-bottom: 0; 
+  margin-top: 0;
+  margin-bottom: 0; 
+}
   
   .slider-container {
     position: relative;
@@ -153,7 +154,7 @@
   /* Dots Navigation */
   .dots-container {
     position: absolute;
-    bottom: -50px;
+    bottom: -10px;
     width: 100%;
     text-align: center;
   }

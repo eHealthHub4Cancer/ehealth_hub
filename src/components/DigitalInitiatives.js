@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './DigitalInitiatives.css';
-import infrastructureImage from '../Images/sliders/data_integration.jpeg';
+import infrastructureImage from '../Images/logo/eHealth.png';
 
 const DigitalInitiatives = () => {
   return (
@@ -26,19 +26,6 @@ const DigitalInitiatives = () => {
         
               </div>
 
-              <div className="key-areas">
-                <div className="key-area" data-aos="fade-up" data-aos-delay="100">
-                  <h3>Data Science & Technology</h3>
-                  <p>Utilizing tools like Bioconductor, OHDSI, and R, combined with advanced technologies 
-                    such as federated learning and AI/ML.</p>
-                </div>
-                <div className="key-area" data-aos="fade-up" data-aos-delay="200">
-                  <h3>Data Integration</h3>
-                  <p>Bringing together family history, environmental factors, sequencing data, and more 
-                    to support cancer research.</p>
-                </div>
-              </div>
-
               <Link to="/projects" className="explore-btn">
                 Explore Our Projects
                 <svg className="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -53,8 +40,7 @@ const DigitalInitiatives = () => {
                 <img src={infrastructureImage} alt="Digital Health Infrastructure Diagram" />
                 <div className="image-overlay">
                   <div className="diagram-caption">
-                    Comprehensive Digital Health Infrastructure
-                  </div>
+                  Enhancing Cancer Research through Federated data sharing and Analytics                  </div>
                 </div>
               </div>
             </div>
