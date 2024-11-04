@@ -21,7 +21,7 @@ const HeroSection = () => {
             
             <div className="hero-text">
               <h1 className="hero-title">
-                The eHealth-Hub<br />for Cancer
+                The eHealth-Hub for Cancer
               </h1>
               <h2 className="hero-subtitle">Transforming Healthcare Data</h2>
               <h3 className="hero-subheading">
