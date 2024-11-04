@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom'; // Added useLocation to track active link
+import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import './Navbar.css';
-import logo from '../Images/logo/eHealthHub_logo.png'
+import logo from '../Images/logo/eHealthHub_logo.png';
 
 function Navbar() {
   const [click, setClick] = useState(false);
-  const location = useLocation(); // To check the current path
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const location = useLocation();
 
   const handleClick = () => setClick(!click);
-  const closeMenu = () => setClick(false);
+  const closeMenu = () => {
+    setClick(false);
+    setDropdownOpen(false); // Close dropdown when menu is closed
+  };
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
 
   const getActiveClass = (path) => {
     return location.pathname === path ? 'active' : '';
@@ -19,7 +27,7 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo" onClick={closeMenu}>
-            <img src={logo} alt="eHealthHub Logo" />
+          <img src={logo} alt="eHealthHub Logo" />
         </Link>
         <div className="menu-icon" onClick={handleClick}>
           {click ? <FaTimes /> : <FaBars />}
@@ -50,11 +58,15 @@ function Navbar() {
               News
             </Link>
           </li>
-          <li className="nav-item dropdown">
-            <span className="nav-links">
+          <li
+            className="nav-item dropdown"
+            onMouseEnter={() => window.innerWidth > 768 && setDropdownOpen(true)}
+            onMouseLeave={() => window.innerWidth > 768 && setDropdownOpen(false)}
+          >
+            <span className="nav-links" onClick={toggleDropdown}>
               Output
             </span>
-            <ul className="dropdown-content">
+            <ul className={`dropdown-content ${dropdownOpen ? 'show' : ''}`}>
               <li>
                 <Link to="/output/talks" onClick={closeMenu}>Talks</Link>
               </li>
