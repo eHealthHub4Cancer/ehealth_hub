@@ -7,11 +7,13 @@
   
   .funding-container {
     max-width: 1400px;
-    margin: 0 auto;
+    margin: 40px 10px;
     padding: 0 40px;
     display: flex;
     align-items: center;
-    gap: 80px;  
+    gap: 80px;
+    font-family: 'Montserrat', sans-serif;
+
   }
   
   .funding-content {
@@ -45,6 +47,7 @@
     line-height: 1.8;
     color: #546e7a;
     margin-bottom: 30px;
+    font-weight: 500;
   }
   
   .highlight {
@@ -58,6 +61,7 @@
     padding: 12px 28px;
     background: #1a3e5a;
     color: white;
+    font-family: 'Montserrat', sans-serif;
     border: none;
     border-radius: 8px;
     font-size: 1rem;
@@ -141,7 +145,8 @@
   
   .stat-label {
     font-size: 0.9rem;
-    opacity: 0.9;
+    font-weight: 1000;
+    color: white;
   }
   
   .stat-divider {

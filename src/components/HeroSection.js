@@ -1,5 +1,3 @@
-
-import ehealthLogo from '../Images/logo/eHealthHub_logo.png';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -20,9 +18,6 @@ const HeroSection = () => {
       <div className="hero-content">
         <div className="hero-grid">
           <div className="hero-left">
-            <div className="hero-logo-container">
-              <img src={ehealthLogo} alt="eHealth Hub Logo" className="hero-logo" />
-            </div>
             
             <div className="hero-text">
               <h1 className="hero-title">
