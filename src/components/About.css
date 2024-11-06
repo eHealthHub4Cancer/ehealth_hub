@@ -8,19 +8,33 @@
 
 .about-container {
   max-width: 1400px;
-  margin: 0 auto;
+  margin: 31px auto;
   padding: 0 40px;
   display: grid;
   grid-template-columns: 280px 1fr;
   gap: 60px;
 }
 
+#interoperability .content-block .feature-card{
+  box-shadow: none !important;
+}
+#interoperability .content-block .feature-card hr{
+  width: 20%;
+  height: 7px;
+  border-radius: 20px;
+  border: none;
+  margin: 10px;
+  background: linear-gradient(135deg, #9ec6ee 0%, #ffffff 100%);
+}
+.feature-card p{
+  text-align: left;
+}
 /* Sidebar Navigation */
 .about-sidebar {
   position: sticky;
   top: 100px;
   height: fit-content;
-  background: white;
+  /* background: white; */
   padding: 30px;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
@@ -31,7 +45,8 @@
   color: #1a3e5a;
   font-size: 1.2rem;
   margin-bottom: 20px;
-  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
   padding-left: 16px;
 }
 
@@ -41,6 +56,12 @@
   margin: 0;
 }
 
+.key-points ul li{
+  font-weight: 500;
+  line-height: 1.5;
+  font-size: 1em;
+}
+
 .page-navigation button {
   width: 100%;
   text-align: left;
@@ -48,11 +69,13 @@
   background: none;
   border: none;
   color: #435c73;
-  font-size: 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s ease;
   border-radius: 8px;
   position: relative;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
 }
 
 .page-navigation button:hover {
@@ -64,15 +87,18 @@
 /* Main Content */
 .about-content {
   background: white;
-  border-radius: 24px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  /* border-radius: px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); */
   padding: 40px;
+  font-family: 'Montserrat', sans-serif;
+
 }
 
 .content-section {
   margin-bottom: 60px;
   padding-bottom: 40px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  text-align: left;
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.1); */
 }
 
 .content-section:last-child {
@@ -82,7 +108,7 @@
 }
 
 .content-section h1 {
-  font-size: 2.8rem;
+  font-size: 2.3rem;
   color: #1a3e5a;
   margin-bottom: 30px;
   line-height: 1.2;
@@ -96,12 +122,14 @@
 
 .content-block {
   margin-bottom: 30px;
+  text-align: left;
 }
 
 .content-block p {
-  font-size: 1.1rem;
-  line-height: 1.8;
+  font-size: 1.0rem;
+  line-height: 1.7;
   color: #546e7a;
+  font-weight: 500;
   margin-bottom: 20px;
 }
 
@@ -128,7 +156,7 @@
 
 .stat-number {
   display: block;
-  font-size: 2.5rem;
+  font-size: 2.1rem;
   font-weight: 700;
   color: #1a3e5a;
   margin-bottom: 10px;
@@ -154,9 +182,9 @@
 
 .feature-card {
   background: white;
-  padding: 30px;
+  padding: 10px;
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); */
   margin: 30px 0;
 }
 
@@ -164,6 +192,7 @@
   color: #1a3e5a;
   font-size: 1.4rem;
   margin-bottom: 15px;
+  text-align: left;
 }
 
 /* Key Points */
@@ -254,6 +283,7 @@
   display: flex;
   align-items: flex-start;
   gap: 20px;
+  font-weight: 500;
   padding: 25px;
   background: white;
   border-radius: 16px;
@@ -273,7 +303,7 @@
 
 .contribution-item p {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #435c73;
   line-height: 1.5;
 }
@@ -299,6 +329,7 @@
   .about-sidebar {
     position: relative;
     top: 0;
+    display:none;
     margin-bottom: 30px;
   }
 

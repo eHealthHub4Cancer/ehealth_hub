@@ -8,6 +8,7 @@ import "./Slider.css";
 import image1 from '../Images/sliders/2022_OHDSI_meeting_WashingtonDC.jpg';
 import image2 from '../Images/sliders/2023_Belfast Photo 1.jpeg';
 import image5 from '../Images/sliders/ul-research-centre-Clifford_Culhane2.jpeg';
+import image6 from '../Images/sliders/hdruk.jpg'
 
 const CustomPrevArrow = ({ onClick }) => (
   <button className="slick-arrow slick-prev custom-arrow prev-arrow" onClick={onClick}>
@@ -109,6 +110,19 @@ function HomeSlider() {
                 <h2>UL Research Centre</h2>
                 <div className="caption-divider"></div>
                 <p>Key leaders driving innovation in eHealth Hub for Cancer research and development.</p>
+              </div>
+            </div>
+          </div>
+          <div className="slide">
+            <div className="slide-image-container">
+              <img src={image6} alt="OHDSI Meeting in Washington DC" />
+              <div className="slide-overlay"></div>
+            </div>
+            <div className="slide-caption">
+              <div className="caption-content">
+                <h2>OHDSI UK 2024, Wellcome Trust, London</h2>
+                <div className="caption-divider"></div>
+                <p>The 2024 Meeting of the OHDSI UK Node, devoted to the OMOP Common Data Model and its applications.</p>
               </div>
             </div>
           </div>
