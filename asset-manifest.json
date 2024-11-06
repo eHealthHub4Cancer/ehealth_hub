@@ -1,9 +1,10 @@
 {
   "files": {
-    "main.css": "/ehealth_hub/static/css/main.f0f8e9bb.css",
-    "main.js": "/ehealth_hub/static/js/main.b851efe0.js",
+    "main.css": "/ehealth_hub/static/css/main.8c889654.css",
+    "main.js": "/ehealth_hub/static/js/main.8fe171e4.js",
     "static/js/453.6411f75a.chunk.js": "/ehealth_hub/static/js/453.6411f75a.chunk.js",
     "static/media/LDCRC_BuildingTogether_April_2023.jpeg": "/ehealth_hub/static/media/LDCRC_BuildingTogether_April_2023.d6e9dc07a944ad211b5e.jpeg",
+    "static/media/hdruk.jpg": "/ehealth_hub/static/media/hdruk.c4810993e42bc940b9ae.jpg",
     "static/media/BCNI_meeting.png": "/ehealth_hub/static/media/BCNI_meeting.dfbf91b670079b78500a.png",
     "static/media/BrainStorm (1).png": "/ehealth_hub/static/media/BrainStorm (1).e945dfcfd0db9b248958.png",
     "static/media/2022_Apr_LimerickPost_Update.png": "/ehealth_hub/static/media/2022_Apr_LimerickPost_Update.b1c65f61535d7f2d75fe.png",
@@ -37,12 +38,12 @@
     "static/media/slick.ttf": "/ehealth_hub/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/ehealth_hub/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/ehealth_hub/index.html",
-    "main.f0f8e9bb.css.map": "/ehealth_hub/static/css/main.f0f8e9bb.css.map",
-    "main.b851efe0.js.map": "/ehealth_hub/static/js/main.b851efe0.js.map",
+    "main.8c889654.css.map": "/ehealth_hub/static/css/main.8c889654.css.map",
+    "main.8fe171e4.js.map": "/ehealth_hub/static/js/main.8fe171e4.js.map",
     "453.6411f75a.chunk.js.map": "/ehealth_hub/static/js/453.6411f75a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f0f8e9bb.css",
-    "static/js/main.b851efe0.js"
+    "static/css/main.8c889654.css",
+    "static/js/main.8fe171e4.js"
   ]
 }
