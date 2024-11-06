@@ -13,7 +13,7 @@ function People() {
       name: 'Dr Shirin Moghaddam',
       title: 'Mathematics and Statistics, Faculty Of Science & Engineering, University of Limerick',
       image: require('../Images/People/ShirinMoghaddam.jpeg'),
-      tags: ['PROJECT SUPERVISOR', 'LIMERICK', 'UL'],
+      tags: ['PROJECT SUPERVISOR', 'LIMERICK'],
       route: '/people/shirin'
     },
     {

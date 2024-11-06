@@ -95,6 +95,7 @@ const About = () => {
             <div className="content-block">
               <div className="feature-card">
                 <h3>OMOP Common Data Model (CDM)</h3>
+                <hr/>
                 <p>
                   The Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) enables the capture of information 
                   (e.g., encounters, patients, providers, diagnoses, drugs, measurements and procedures) in the same way across different institutions. 

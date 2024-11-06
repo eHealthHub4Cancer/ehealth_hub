@@ -1,8 +1,10 @@
 .people-container {
-    max-width: 1400px;
+    /* max-width: 1400px; */
     margin: 0 auto;
     margin-top: 60px;
-    padding: 40px 20px;
+    padding: 40px 100px;
+    font-family: 'Montserrat', sans-serif;
+
   }
   
   .people-header {
@@ -22,6 +24,8 @@
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     margin-bottom: 40px;
+    font-family: 'Montserrat', sans-serif;
+
   }
   
   .filter-header {
@@ -29,15 +33,17 @@
     align-items: center;
     gap: 12px;
     margin-bottom: 20px;
-    color: #1a3e5a;
+    color: black;
     font-size: 1.2rem;
-    font-weight: 600;
+    /* font-weight: 700; */
+    font-weight: bolder;
   }
   
   .filter-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
+    font-family: 'Montserrat', sans-serif;
   }
   
   .filter-tag {
@@ -49,22 +55,27 @@
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 0.9rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
   }
   
   .filter-tag:hover {
-    background: rgba(69, 183, 209, 0.1);
-    color: #45B7D1;
+    background: #1a3e5a;
+    color: white;
+    font-weight: bolder;
   }
   
   .filter-tag.active {
-    background: #45B7D1;
+    background: #1a3e5a;
     color: white;
+    font-weight: bolder;
+
   }
   
   /* Grid Layout */
   .people-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
     gap: 30px;
   }
   
@@ -85,7 +96,7 @@
   
   .card-image-container {
     position: relative;
-    padding-top: 75%;
+    padding-top: 80%;
     overflow: hidden;
   }
   
@@ -111,20 +122,22 @@
     color: #1a3e5a;
     font-size: 1.3rem;
     margin-bottom: 12px;
+    font-weight: bold;
   }
   
   .card-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
     margin-bottom: 16px;
   }
   
   .tag {
-    padding: 4px 12px;
-    background: #f8fafc;
-    border-radius: 12px;
-    color: #45B7D1;
+    padding: 4px 10px;
+    background: rgb(250, 247, 247);
+    border-radius: 8px;
+    color: #1a3e5a;
+    font-weight: bold;
     font-size: 0.8rem;
     text-transform: capitalize;
   }
@@ -133,6 +146,7 @@
     color: #435c73;
     font-size: 0.95rem;
     line-height: 1.5;
+    font-weight: 500;
   }
   
   /* Responsive Design */

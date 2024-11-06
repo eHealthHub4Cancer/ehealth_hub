@@ -5,7 +5,7 @@ import './Profile.css';
 
 function Aedin() {
   const profileImage = require('../../Images/People/aedinculhane.png');
-  
+
   const researchInterests = [
     'Cancer Computational Genomics',
     'Digital Health',
@@ -20,17 +20,39 @@ function Aedin() {
   ];
 
   const bioParagraphs = [
-    `Aedín Culhane is a Professor of Biomedical Sciences (Cancer Genomics) in the UL School of Medicine. She is a computational oncologist with expertise in multi-omics data integration, statistical genomics, clinical bioinformatics and genomics in oncology. She has over 20 years' experience in cancer genomics, of which over 15 years were in the Dana-Farber Cancer Institute and Harvard TH Chan School of Public Health in Boston, USA.`,
-    
-    `Her recent research focuses on algorithm development and integrative data of single cell molecular data in cancer to identify molecules that regulate and can be targeted during tumour development, progression, drug response and resistance. She is a member of the Human Cell Atlas project.`,
-    
-    `She is a leader in the Bioconductor community, a global open source, open development software in R for genomics and an advocate for open source science.`
+    `Aedín Culhane is a Professor of Biomedical Sciences (Cancer Genomics) at UL School of Medicine. With expertise in multi-omics data integration, statistical genomics, and clinical bioinformatics, she has over 20 years of experience in cancer genomics, including 15 years at Dana-Farber Cancer Institute and Harvard TH Chan School of Public Health.`,
+    `Her research focuses on algorithm development and integrative analysis of single-cell molecular data in cancer to identify key molecules in tumor progression, drug response, and resistance. She is also a member of the Human Cell Atlas project.`,
+    `Aedín is a leader in the Bioconductor community, a global open-source initiative for genomics in R, and an advocate for open-source science.`
   ];
 
   const affiliations = [
-    'Director of the Limerick Digital Cancer Center',
-    'Lead the all-island eHealth-Hub for Cancer',
+    'Director, Limerick Digital Cancer Center',
+    'Lead, all-island eHealth-Hub for Cancer',
     'Member, All-Ireland Cancer Institute Steering Group'
+  ];
+
+  // Social links constant
+  const socialLinks = [
+    {
+      name: 'Twitter',
+      url: 'https://twitter.com/AedinCulhane',
+      icon: <Twitter size={20} />
+    },
+    {
+      name: 'GitHub',
+      url: 'https://github.com/aedin',
+      icon: <Github size={20} />
+    },
+    {
+      name: 'LinkedIn',
+      url: 'https://www.linkedin.com/in/aedinculhane',
+      icon: <Linkedin size={20} />
+    },
+    {
+      name: 'Google Scholar',
+      url: 'https://scholar.google.com/citations?user=O8OszPcAAAAJ&hl=en',
+      icon: null // Google Scholar has no specific icon from 'lucide-react'
+    }
   ];
 
   return (
@@ -47,71 +69,56 @@ function Aedin() {
       {/* Hero Section */}
       <div className="profile-hero">
         <div className="hero-content">
-          <div className="hero-left">
-            <div className="hero-image-wrapper">
-              <img src={profileImage} alt="Prof Aedin Culhane" className="hero-image" />
-            </div>
+          <div className="hero-image-wrapper hero-left">
+            <img src={profileImage} alt="Prof Aedin Culhane" className="hero-image" />
           </div>
-          
+
           <div className="hero-right">
-            <div className="hero-header">
-              <h1>Prof Aedin Culhane</h1>
-              <div className="role-badges">
-                <span className="role-badge supervisor">
-                  Project Leader
-                </span>
-                <span className="role-badge location">
-                  Limerick
-                </span>
-                <span className="role-badge institution">
-                  LDCRC
-                </span>
-              </div>
+            <h1>Prof Aedin Culhane</h1>
+            <div className="role-badges">
+              <span className="role-badge supervisor">Project Leader</span>
+              <span className="role-badge location">Limerick</span>
+              <span className="role-badge institution">LDCRC</span>
             </div>
 
-            <div className="hero-details">
-              <div className="institution-info">
-                <h2>Institution</h2>
-                <p>Professor, University of Limerick</p>
-              </div>
+            <div className="institution-info">
+              <h2>Institution</h2>
+              <p>Professor, University of Limerick</p>
+            </div>
 
-              <div className="contact-actions">
-                <a 
-                  href="https://www.ul.ie/research/prof-aedin-culhane"
-                  target="_blank" 
+            <div className="contact-actions">
+              <a 
+                href="https://www.ul.ie/research/prof-aedin-culhane"
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="action-button homepage"
+              >
+                <Home size={20} />
+                <span>Homepage</span>
+                <ExternalLink size={16} />
+              </a>
+              <a 
+                href="mailto:aedin.culhane@ul.ie"
+                className="action-button email"
+              >
+                <Mail size={20} />
+                <span>Email</span>
+              </a>
+            </div>
+
+            <div className="social-links">
+              {socialLinks.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.url}
+                  target="_blank"
                   rel="noopener noreferrer"
-                  className="action-button homepage"
+                  className={`social-button ${link.name.toLowerCase()}`}
                 >
-                  <Home size={20} />
-                  <span>Homepage</span>
-                  <ExternalLink size={16} />
+                  {link.icon && link.icon}
+                  <span>{link.name}</span>
                 </a>
-                <a 
-                  href="mailto:aedin.culhane@ul.ie"
-                  className="action-button email"
-                >
-                  <Mail size={20} />
-                  <span>Email</span>
-                </a>
-              </div>
-
-              <div className="social-links">
-                <a href="https://twitter.com/AedinCulhane" target="_blank" rel="noopener noreferrer" className="social-button">
-                  <Twitter size={20} />
-                  <span>Twitter</span>
-                </a>
-                <a href="https://github.com/aedin" target="_blank" rel="noopener noreferrer" className="social-button">
-                  <Github size={20} />
-                  <span>GitHub</span>
-                </a>
-                <a href="https://www.linkedin.com/in/aedinculhane" target="_blank" rel="noopener noreferrer" className="social-button">
-                  <Linkedin size={20} />
-                  <span>LinkedIn</span>
-                </a>
-                <a href="https://scholar.google.com/citations?user=O8OszPcAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="social-button scholar">
-                  <span>Google Scholar</span>
-                </a>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -129,7 +136,7 @@ function Aedin() {
             {bioParagraphs.map((paragraph, index) => (
               <p key={index} className="bio-paragraph">{paragraph}</p>
             ))}
-            
+
             <div className="affiliations-list">
               <h3>Current Positions</h3>
               <ul>
