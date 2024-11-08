@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/ehealth_hub/static/css/main.15d7f1f8.css",
+    "main.css": "/ehealth_hub/static/css/main.81e99281.css",
     "main.js": "/ehealth_hub/static/js/main.def996cf.js",
     "static/js/453.6411f75a.chunk.js": "/ehealth_hub/static/js/453.6411f75a.chunk.js",
     "static/media/LDCRC_BuildingTogether_April_2023.jpeg": "/ehealth_hub/static/media/LDCRC_BuildingTogether_April_2023.d6e9dc07a944ad211b5e.jpeg",
@@ -38,12 +38,12 @@
     "static/media/slick.ttf": "/ehealth_hub/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/ehealth_hub/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/ehealth_hub/index.html",
-    "main.15d7f1f8.css.map": "/ehealth_hub/static/css/main.15d7f1f8.css.map",
+    "main.81e99281.css.map": "/ehealth_hub/static/css/main.81e99281.css.map",
     "main.def996cf.js.map": "/ehealth_hub/static/js/main.def996cf.js.map",
     "453.6411f75a.chunk.js.map": "/ehealth_hub/static/js/453.6411f75a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.15d7f1f8.css",
+    "static/css/main.81e99281.css",
     "static/js/main.def996cf.js"
   ]
 }
