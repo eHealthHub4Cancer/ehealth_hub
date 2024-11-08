@@ -2394,6 +2394,10 @@
     font-size: 2rem;
   }
 
+  .news-article-container {
+    padding: 40px 18px;
+  }
+
   .key-details,
   .salary-grid,
   .areas-grid {
