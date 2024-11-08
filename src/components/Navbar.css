@@ -176,7 +176,8 @@ body {
     }
 
     .dropdown-content a {
-        padding: 12px 24px;
+        padding: 6px 10px;
+        font-size: 1em;
     }
 
     .navbar-container {

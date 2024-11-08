@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, Calendar, User, ExternalLink, MapPin, Users, Globe } from 'lucide-react';
+import { ChevronLeft, Calendar, User, ExternalLink, MapPin, Globe } from 'lucide-react';
 import './NewsArticle.css';
 
 function OHDSIMeeting() {
@@ -15,11 +15,12 @@ function OHDSIMeeting() {
 
       {/* Article Header */}
       <div className="article-header">
-        <div className="article-categories">
+        {/* <div className="article-categories">
           <span className="category-tag">USA</span>
           <span className="category-tag">CONFERENCE</span>
           <span className="category-tag">OHDSI</span>
-        </div>
+        </div> */}
+        <br/>
         <h1>eHealth-Hub at the OHDSI 2022 meeting</h1>
         <div className="article-meta">
           <div className="meta-item">
@@ -37,13 +38,14 @@ function OHDSIMeeting() {
       <div className="conference-image-container">
         <img 
           src={require('../../Images/News/2022_OHDSI_meeting_WashingtonDC.jpg')}
-          alt="OHDSI 2022 Symposium Group Photo" 
+          alt="OHDSI 2022 Symposium attendees in Washington DC" 
           className="conference-main-image"
         />
         <div className="image-overlay">
           <span>OHDSI 2022 Symposium Attendees in Bethesda, Washington DC</span>
         </div>
       </div>
+
 
       {/* Event Details Banner */}
       <div className="event-details-grid">
@@ -99,6 +101,7 @@ function OHDSIMeeting() {
 
         <div className="conference-link-section">
           <h2>Learn More About OHDSI 2022</h2>
+          <br/>
           <a 
             href="https://ohdsi.org/ohdsi2022symposium/"
             target="_blank"

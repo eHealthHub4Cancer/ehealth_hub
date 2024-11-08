@@ -15,12 +15,13 @@ function BCNITalk() {
 
       {/* Article Header */}
       <div className="article-header">
-        <div className="article-categories">
+        {/* <div className="article-categories">
           <span className="category-tag">CONFERENCE</span>
           <span className="category-tag">GALWAY</span>
           <span className="category-tag">BLOOD CANCER</span>
           <span className="category-tag">TALK</span>
-        </div>
+        </div> */}
+        <br/>
         <h1>BCNI Talk</h1>
         <div className="article-meta">
           <div className="meta-item">

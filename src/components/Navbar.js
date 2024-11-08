@@ -9,10 +9,14 @@ function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation();
 
-  const handleClick = () => setClick(!click);
+  const handleClick = () => {
+    setClick(!click);
+    setDropdownOpen(false); // Close dropdown when main menu is toggled
+  };
+
   const closeMenu = () => {
     setClick(false);
-    setDropdownOpen(false); // Close dropdown when menu is closed
+    setDropdownOpen(false); // Close dropdown when a menu item is clicked
   };
 
   const toggleDropdown = () => {

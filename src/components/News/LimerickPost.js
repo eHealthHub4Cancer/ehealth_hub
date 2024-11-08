@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, Calendar, User, ExternalLink, MapPin, Users, Eye } from 'lucide-react';
+import { ChevronLeft, Calendar, User, ExternalLink, Users, Eye } from 'lucide-react';
 import './NewsArticle.css';
 
 function LimerickPost() {
@@ -15,10 +15,11 @@ function LimerickPost() {
 
       {/* Article Header */}
       <div className="article-header">
-        <div className="article-categories">
+        {/* <div className="article-categories">
           <span className="category-tag">NEWS ARTICLE</span>
           <span className="category-tag">LIMERICK</span>
-        </div>
+        </div> */}
+        <br/>
         <h1>Limerick and Belfast researchers tackle 'future cancer epidemic'</h1>
         <div className="article-meta">
           <div className="meta-item">
@@ -44,9 +45,9 @@ function LimerickPost() {
             alt="Professors Ruth Clifford and Aedin Culhane" 
             className="feature-image"
           />
-          <div className="image-caption">
+          {/* <div className="image-caption">
             Professor Ruth Clifford, Consultant Haematologist at University Hospital Limerick with Professor Aedin Culhane, Professor of Cancer Genomics at University of Limerick who is leading the All Island eHealth Hub for Cancer
-          </div>
+          </div> */}
         </div>
       </div>
 

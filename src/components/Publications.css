@@ -1,15 +1,43 @@
 .publications-container {
     display: flex;
-    max-width: 1400px;
+    /* max-width: 1400px; */
     margin-top: 50px;
-    padding: 40px 20px;
+    padding: 80px 150px;
     gap: 40px;
+    font-family: 'Montserrat', sans-serif;
   }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination-button {
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .pagination-button:hover {
+    background-color: #d0d0d0;
+  }
+  
+  .pagination-button.active {
+    background-color: #1d373d;
+    color: white;
+  }  
   
   .publications-sidebar {
     width: 280px;
     flex-shrink: 0;
-    /* margin-top: 40px; */
+    position: relative;
+    top: 0;
+    left: 0
   }
   
   .sidebar-content {
@@ -42,17 +70,21 @@
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 0.95rem;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+
   }
   
   .year-link:hover {
-    background: rgba(69, 183, 209, 0.1);
-    color: #45B7D1;
+    background: rgba(18, 42, 46, 0.1);
+    color:#1a3e5a;
   }
   
   .year-link.active {
-    background: #45B7D1;
+    background: #1a3e5a;
     color: white;
+    font-weight: 600;
   }
   
   .publications-content {
@@ -101,7 +133,7 @@
   
   .publication-number {
     font-size: 1.1rem;
-    color: #45B7D1;
+    color: #1a3e5a;
     font-weight: 600;
     flex-shrink: 0;
   }
@@ -130,22 +162,31 @@
     padding: 8px 16px;
     background: #f8fafc;
     border-radius: 20px;
-    color: #45B7D1;
+    color: #1a3e5a;
+    font-weight: 600;
     text-decoration: none;
     font-size: 0.9rem;
     transition: all 0.3s ease;
   }
   
   .meta-link:hover {
-    background: #45B7D1;
+    background: #1a3e5a;
     color: white;
+    font-weight: 600;
   }
   
   /* Mobile Responsiveness */
+  @media (max-width: 1440px) {
+    .publications-container {
+      padding: 80px 60px;
+
+    }
+  }
   @media (max-width: 1024px) {
     .publications-container {
       flex-direction: column;
     }
+  
   
     .publications-sidebar {
       width: 100%;
@@ -173,6 +214,21 @@
     .publications-container {
       padding: 20px 15px;
     }
+
+    .publications-sidebar {
+      position: fixed;
+      width: 100%;
+      height: auto;
+      top: 0;
+      left: 0;
+      background-color: white;
+      padding-top: 80px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .publications-content{
+    margin-top: 14em;
+  }
   
     .publications-content h1 {
       font-size: 2rem;
@@ -211,3 +267,5 @@
       font-size: 0.95rem;
     }
   }
+
+  

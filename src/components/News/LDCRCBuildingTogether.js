@@ -15,11 +15,12 @@ function LDCRCBuildingTogether() {
 
       {/* Article Header */}
       <div className="article-header">
-        <div className="article-categories">
+        {/* <div className="article-categories">
           <span className="category-tag">LDCRC</span>
           <span className="category-tag">CONNECTED HEALTH</span>
           <span className="category-tag">TALK</span>
-        </div>
+        </div> */}
+        <br/>
         <h1>LDCRC Building Together Event</h1>
         <div className="article-meta">
           <div className="meta-item">

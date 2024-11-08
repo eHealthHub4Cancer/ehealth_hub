@@ -8,6 +8,7 @@ function News() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [sortOrder, setSortOrder] = useState('newest');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const newsItems = [
     {
@@ -142,6 +143,8 @@ function News() {
     }
   ];
 
+  const itemsPerPage = 8; // Set the number of items to display per page
+
   // Filter news items based on search and categories
   const filteredNews = newsItems.filter(item => {
     const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -157,6 +160,15 @@ function News() {
     const dateB = new Date(b.date);
     return sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
   });
+
+  // Calculate pagination variables
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = sortedNews.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(sortedNews.length / itemsPerPage);
+
+  // Handle page change
+  const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   // Get all unique categories
   const allCategories = [...new Set(newsItems.flatMap(item => item.categories))].sort();
@@ -205,6 +217,7 @@ function News() {
                       ? prev.filter(c => c !== category)
                       : [...prev, category]
                   );
+                  setCurrentPage(1); // Reset to first page on filter change
                 }}
               >
                 {category} ({newsItems.filter(item => item.categories.includes(category)).length})
@@ -216,7 +229,7 @@ function News() {
 
       {/* News Grid */}
       <div className="news-grid">
-        {sortedNews.map(item => (
+        {currentItems.map(item => (
           <article
             key={item.id}
             className="news-card"
@@ -253,6 +266,21 @@ function News() {
       {filteredNews.length === 0 && (
         <div className="no-results">
           <p>No news articles found matching your criteria.</p>
+        </div>
+      )}
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="pagination">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i + 1}
+              className={`pagination-button ${currentPage === i + 1 ? 'active' : ''}`}
+              onClick={() => handlePageChange(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
         </div>
       )}
     </div>

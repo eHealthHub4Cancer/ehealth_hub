@@ -10,9 +10,9 @@
 }
 
 .footer-content {
-    max-width: 1400px;
+    /* max-width: 1400px; */
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0 120px;
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 2fr;
     gap: 40px;
@@ -201,6 +201,12 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1440px){
+  .footer-content {
+    /* max-width: 1400px; */
+    padding: 0 40px;
+  }
+}
 @media (max-width: 1024px) {
     .footer-content {
         grid-template-columns: repeat(2, 1fr);
