@@ -1,9 +1,8 @@
 .initiatives-section {
-  padding: 100px 0;
+  padding: 100px 100px;
   background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
   overflow: hidden;
   position: relative;
-
 }
 
 .initiatives-section::before,
@@ -28,7 +27,7 @@
 }
 
 .initiatives-container {
-  max-width: 1400px;
+  /* max-width: 1400px; */
   margin: 0 10px;
   padding: 0 40px;
   font-family: 'Montserrat', sans-serif;
@@ -179,6 +178,11 @@
   font-weight: 500;
 }
 
+@media (max-width: 1440px){
+  .initiatives-section {
+    padding: 100px 0px;
+  }
+}
 /* Adjustments for smaller screens */
 @media (max-width: 992px) {
   .content-grid {

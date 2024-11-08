@@ -15,11 +15,12 @@ function BelfastAgreement25() {
 
       {/* Article Header */}
       <div className="article-header">
-        <div className="article-categories">
+        {/* <div className="article-categories">
           <span className="category-tag">BELFAST</span>
           <span className="category-tag">GOOD FRIDAY</span>
           <span className="category-tag">CONFERENCE</span>
-        </div>
+        </div> */}
+        <br/>
         <h1>Belfast Agreement 25 Cancer Showcase</h1>
         <div className="article-meta">
           <div className="meta-item">
@@ -40,7 +41,7 @@ function BelfastAgreement25() {
           alt="Belfast Agreement 25 Cancer Showcase Event" 
           className="article-image"
         />
-        <div className="image-caption">
+        <div className="image-caption sec">
           Prof Aedin Culhane and Prof Mark Lawler met Tánaiste Micheál Martin at the Belfast Agreement 25 Cancer Showcase event
         </div>
       </div>
@@ -67,8 +68,7 @@ function BelfastAgreement25() {
             </ul>
           </div>
 
-          <p>Prof Aedin Culhane and Prof Mark Lawler met Tánaiste Micheál Martin at the Belfast Agreement 25 Cancer Showcase event in April to discuss greater cross-border collaboration on cancer research.</p>
-
+          <p className='sec'>Prof Aedin Culhane and Prof Mark Lawler met Tánaiste Micheál Martin at the Belfast Agreement 25 Cancer Showcase event in April to discuss greater cross-border collaboration on cancer research.</p>
           <div className="impact-section">
             <h2>Impact & Legacy</h2>
             <p>The event highlighted the significant progress made in cancer research and care through cross-border collaboration since the Good Friday Agreement, while emphasizing the importance of continued partnership for future advances in cancer treatment and research.</p>

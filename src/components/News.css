@@ -1,8 +1,10 @@
 .news-container {
-    max-width: 1400px;
+    /* max-width: 1400px; */
     margin: 0 auto;
-    margin-top: 60px;
-    padding: 40px 20px;
+    margin-top: 80px;
+    padding: 40px 120px;
+    font-family: 'Montserrat', sans-serif;
+
   }
   
   /* Header Section */
@@ -29,6 +31,8 @@
     align-items: center;
     background: white;
     border-radius: 12px;
+    font-family: 'Montserrat', sans-serif;
+
     padding: 12px 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   }
@@ -39,6 +43,8 @@
     margin-left: 12px;
     font-size: 1rem;
     outline: none;
+    font-family: 'Montserrat', sans-serif;
+
   }
   
   .sort-control select {
@@ -50,11 +56,16 @@
     font-size: 0.95rem;
     color: #1a3e5a;
     cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+
   }
   
   /* Categories Filter */
   .categories-filter {
     margin-bottom: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
   }
   
   .filter-header {
@@ -62,9 +73,9 @@
     align-items: center;
     gap: 10px;
     margin-bottom: 16px;
-    color: #1a3e5a;
+    color: #09141c;
     font-size: 1.1rem;
-    font-weight: 500;
+    font-weight: bold;
   }
   
   .category-tags {
@@ -76,22 +87,24 @@
   .category-tag {
     padding: 8px 16px;
     border-radius: 20px;
-    background: #f8fafc;
+    background: #ffffff;
     border: none;
-    color: #435c73;
+    color: #0e1012;
     font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.3s ease;
   }
   
   .category-tag:hover {
-    background: rgba(69, 183, 209, 0.1);
-    color: #45B7D1;
+    background: #1d373d;
+    color: white;
+    font-weight: 600;
   }
   
   .category-tag.active {
-    background: #45B7D1;
+    background: #1d373d;
     color: white;
+    font-weight: 600;
   }
   
   /* News Grid */
@@ -143,11 +156,13 @@
     background: rgba(255, 255, 255, 0.9);
     border-radius: 12px;
     font-size: 0.8rem;
-    color: #45B7D1;
+    color: #082830;
+    font-weight:bold;
   }
   
   .news-content {
     padding: 24px;
+    font-weight: 500;
   }
   
   .news-content h2 {
@@ -158,7 +173,7 @@
   }
   
   .news-excerpt {
-    color: #435c73;
+    color: #15212d;
     font-size: 0.95rem;
     line-height: 1.6;
     margin-bottom: 20px;
@@ -167,8 +182,9 @@
   .news-meta {
     display: flex;
     gap: 20px;
-    color: #666;
+    color: #1d1c1c;
     font-size: 0.9rem;
+    font-weight: 600;
   }
   
   .meta-item {
@@ -185,6 +201,11 @@
   }
   
   /* Responsive Design */
+  @media (max-width: 1440px){
+    .news-container {
+      padding: 40px 80px;
+    }
+  }
   @media (max-width: 1024px) {
     .news-grid {
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

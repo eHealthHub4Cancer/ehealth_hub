@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, Calendar, User, ExternalLink, Clock, Share2, Newspaper } from 'lucide-react';
+import { ChevronLeft, Calendar, User, ExternalLink, Clock, Newspaper } from 'lucide-react';
 import './NewsArticle.css';
 
 function RTEBrainstorm() {
@@ -15,10 +15,11 @@ function RTEBrainstorm() {
 
       {/* Article Header */}
       <div className="article-header">
-        <div className="article-categories">
+        {/* <div className="article-categories">
           <span className="category-tag">RTE</span>
           <span className="category-tag">NEWS ARTICLE</span>
-        </div>
+        </div> */}
+        <br/>
         <h1>A race against time: catching missed cancer cases due to Covid</h1>
         <div className="article-meta">
           <div className="meta-item">
@@ -76,7 +77,7 @@ function RTEBrainstorm() {
           </div>
         </div>
 
-        <div className="article-summary">
+        <div className="article-summary2">
           <h2>Article Summary</h2>
           <p>In May 2022, the eHealthHub lead Prof Aedin Culhane and Prof Mark Lawler spoke with RTE Brainstorm about the pressing need for harmonization of clinical cancer health data, to enable health research to tackle COVID-19 and Cancer</p>
         </div>
@@ -89,6 +90,7 @@ function RTEBrainstorm() {
 
         <div className="article-cta">
           <h2>Read the Full Article</h2>
+          <br/>
           <a 
             href="https://www.rte.ie/brainstorm/2022/0519/1299916-cancer-treatment-diagnosis-covid-delays-data-ireland-europe/"
             target="_blank"
@@ -98,24 +100,6 @@ function RTEBrainstorm() {
             <span>Read on RTE Brainstorm</span>
             <ExternalLink size={16} />
           </a>
-        </div>
-
-        <div className="share-section">
-          <h3>Share This Article</h3>
-          <div className="share-buttons">
-            <a href="#" className="share-button facebook">
-              <i className="fab fa-facebook-f"></i>
-              Facebook
-            </a>
-            <a href="#" className="share-button twitter">
-              <i className="fab fa-twitter"></i>
-              Twitter
-            </a>
-            <a href="#" className="share-button linkedin">
-              <i className="fab fa-linkedin-in"></i>
-              LinkedIn
-            </a>
-          </div>
         </div>
       </div>
 

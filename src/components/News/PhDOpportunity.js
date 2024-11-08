@@ -15,10 +15,11 @@ function PhDOpportunity() {
 
       {/* Article Header */}
       <div className="article-header">
-        <div className="article-categories">
+        {/* <div className="article-categories">
           <span className="category-tag">PHD</span>
           <span className="category-tag">RESEARCH OPPORTUNITY</span>
-        </div>
+        </div> */}
+        <br/>
         <h1>Interested in a Fully-Funded PhD?</h1>
         <div className="article-meta">
           <div className="meta-item">

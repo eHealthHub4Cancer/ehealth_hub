@@ -1,5 +1,5 @@
 .collaborators-section {
-    padding: 80px 0;
+    padding: 80px 120px;
     background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
     overflow: hidden;
     position: relative;
@@ -28,7 +28,7 @@
 
   
 .collaborators-container {
-    max-width: 1400px;
+    /* max-width: 1400px; */
     margin: 0 5px;
     padding: 0 40px;
     display: flex;
@@ -226,11 +226,19 @@ blockquote {
 }
 
 /* Responsive Design */
+@media (max-width: 1444px) {
+    .collaborators-section {
+        padding: 80px 30px;
+    }
+}
 @media (max-width: 1024px) {
     .collaborators-container {
         flex-direction: column;
         padding: 20px;
         gap: 40px;
+    }
+    .collaborators-section {
+        padding: 80px 0px;
     }
 
     .collaborators-content {

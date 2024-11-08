@@ -15,11 +15,12 @@ function HRBConference() {
 
       {/* Article Header */}
       <div className="article-header">
-        <div className="article-categories">
+        {/* <div className="article-categories">
           <span className="category-tag">CONFERENCE</span>
           <span className="category-tag">DUBLIN</span>
           <span className="category-tag">VIDEO</span>
-        </div>
+        </div> */}
+        <br/>
         <h1>National HRB Conference "Personalised Medicine in Ireland"</h1>
         <div className="article-meta">
           <div className="meta-item">

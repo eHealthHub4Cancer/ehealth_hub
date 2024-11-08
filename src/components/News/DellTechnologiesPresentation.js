@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, Calendar, User, ExternalLink, Play, MonitorPlay, UserCheck, Microscope } from 'lucide-react';
+import { ChevronLeft, Calendar, User, ExternalLink, MonitorPlay, UserCheck, Microscope } from 'lucide-react';
 import './NewsArticle.css';
 
 function DellTechnologiesPresentation() {
@@ -15,11 +15,12 @@ function DellTechnologiesPresentation() {
 
       {/* Article Header */}
       <div className="article-header">
-        <div className="article-categories">
+        {/* <div className="article-categories">
           <span className="category-tag">DELL TECHNOLOGIES</span>
           <span className="category-tag">CONNECTED HEALTH</span>
           <span className="category-tag">TALK</span>
-        </div>
+        </div> */}
+        <br/>
         <h1>Prof Mark Lawler and DELL Technologies</h1>
         <div className="article-meta">
           <div className="meta-item">
@@ -84,9 +85,9 @@ function DellTechnologiesPresentation() {
         <div className="presentation-details">
           <p>This talk was extremely informative for all participants to gain insights into the next generation of diagnostics, the healthcare digital workplace of the future and the interesting world of personalised medicine.</p>
         </div>
-
         <div className="program-link">
           <h2>Digital Futures in Healthcare Program</h2>
+          <br/>
           <a 
             href="https://www.dell.com/en-ie/dt/microsites/digital-futures-in-healthcare.htm#scroll=off"
             target="_blank"

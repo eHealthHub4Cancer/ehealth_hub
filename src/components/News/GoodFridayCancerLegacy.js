@@ -15,12 +15,13 @@ function GoodFridayCancerLegacy() {
 
       {/* Article Header */}
       <div className="article-header">
-        <div className="article-categories">
+        {/* <div className="article-categories">
           <span className="category-tag">BELFAST</span>
           <span className="category-tag">GOOD FRIDAY</span>
           <span className="category-tag">CANCER RESEARCH</span>
           <span className="category-tag">ALL ISLAND</span>
-        </div>
+        </div> */}
+        <br/>
         <h1>All-Island study highlights the cancer legacy of the Good Friday Agreement</h1>
         <div className="article-meta">
           <div className="meta-item">

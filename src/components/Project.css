@@ -475,6 +475,10 @@
     .projects-container {
       padding: 0 20px;
     }
+
+    .visualization-sidebar{
+      display: none;
+    }
   
     .intro-card h1 {
       font-size: 2.4rem;

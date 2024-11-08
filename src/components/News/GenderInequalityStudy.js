@@ -15,10 +15,11 @@ function GenderInequalityStudy() {
 
       {/* Article Header */}
       <div className="article-header">
-        <div className="article-categories">
+        {/* <div className="article-categories">
           <span className="category-tag">CANCER RESEARCH</span>
           <span className="category-tag">GENDER</span>
-        </div>
+        </div> */}
+        <br/>
         <h1>New study highlights significant gender inequality and bias in cancer research</h1>
         <div className="article-meta">
           <div className="meta-item">

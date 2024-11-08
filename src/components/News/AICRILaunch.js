@@ -15,10 +15,11 @@ function AICRILaunch() {
 
       {/* Article Header */}
       <div className="article-header">
-        <div className="article-categories">
+        {/* <div className="article-categories">
           <span className="category-tag">AICRI</span>
           <span className="category-tag">DUBLIN</span>
-        </div>
+        </div> */}
+        <br/>
         <h1>AICRI Launch</h1>
         <div className="article-meta">
           <div className="meta-item">

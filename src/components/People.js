@@ -6,7 +6,10 @@ import './People.css';
 function People() {
   const navigate = useNavigate();
   const [selectedFilters, setSelectedFilters] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   
+  const itemsPerPage = 5; // Set the number of people per page
+
   const people = [
     {
       id: 1,
@@ -91,6 +94,7 @@ function People() {
         ? prev.filter(t => t !== tag)
         : [...prev, tag]
     );
+    setCurrentPage(1); // Reset to the first page on filter change
   };
 
   const filteredPeople = people.filter(person =>
@@ -100,6 +104,14 @@ function People() {
   const getTagCount = (tag) => {
     return people.filter(person => person.tags.includes(tag)).length;
   };
+
+  // Pagination calculations
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredPeople.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredPeople.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="people-container">
@@ -127,7 +139,7 @@ function People() {
       </div>
 
       <div className="people-grid">
-        {filteredPeople.map(person => (
+        {currentItems.map(person => (
           <div
             key={person.id}
             className="person-card"
@@ -150,6 +162,21 @@ function People() {
           </div>
         ))}
       </div>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="pagination">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i + 1}
+              className={`pagination-button ${currentPage === i + 1 ? 'active' : ''}`}
+              onClick={() => handlePageChange(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
