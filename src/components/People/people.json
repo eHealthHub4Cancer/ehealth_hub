@@ -1,0 +1,84 @@
+{
+    "people": [
+      {
+        "name": "Dr Shirin Moghaddam",
+        "title": "Mathematics and Statistics, Faculty Of Science & Engineering, University of Limerick",
+        "image": "ShirinMoghaddam.jpeg",
+        "tags": ["PROJECT SUPERVISOR", "LIMERICK"],
+        "route": "/people/shirin",
+        "slug": "shirin-001"
+      },
+      {
+        "name": "Dr Katie Crowley",
+        "title": "Associate Professor Computer Science & Health Informatics, Funded Investigator, Lero, University of Limerick",
+        "image": "KatieCrowley.png",
+        "tags": ["PROJECT SUPERVISOR", "LIMERICK", "LDCRC"],
+        "route": "/people/katie",
+        "slug": "katie-001"
+      },
+      {
+        "name": "Prof Aedin Culhane",
+        "title": "Professor, University of Limerick",
+        "image": "aedinculhane.png",
+        "tags": ["PROJECT LEADER", "LIMERICK", "LDCRC"],
+        "route": "/people/aedin",
+        "slug": "aedin-001"
+      },
+      {
+        "name": "Prof Bill Watson",
+        "title": "Professor, University College Dublin",
+        "image": "BillWatson.jpeg",
+        "tags": ["PROJECT SUPERVISOR", "DUBLIN", "UCD"],
+        "route": "/people/bill",
+        "slug": "bill-001"
+      },
+      {
+        "name": "Prof Ian Overton",
+        "title": "Reader, School of Medicine, Dentistry and Biomedical Sciences, Patrick G Johnston Centre for Cancer Research, Queens University, Belfast",
+        "image": "ianOverton.png",
+        "tags": ["PROJECT SUPERVISOR", "BELFAST", "QUB"],
+        "route": "/people/ian",
+        "slug": "ian-001"
+      },
+      {
+        "name": "Prof Mark Lawler",
+        "title": "Professor, Queens University Belfast",
+        "image": "MarkLawler.jpg",
+        "tags": ["PROJECT LEADER", "BELFAST", "QUB"],
+        "route": "/people/mark",
+        "slug": "mark-001"
+      },
+      {
+        "name": "Prof Nina Orfali",
+        "title": "Consultant Haematologist, St. James's Hospital Dublin",
+        "image": "NinaOrfali.png",
+        "tags": ["PROJECT SUPERVISOR", "DUBLIN", "ST JAMES"],
+        "route": "/people/nina",
+        "slug": "nina-001"
+      },
+      {
+        "name": "Prof Ruth Clifford",
+        "title": "Consultant Haematologist, University Hospital Limerick",
+        "image": "RuthClifford.jpg",
+        "tags": ["PROJECT LEADER", "LIMERICK", "LDCRC"],
+        "route": "/people/ruth",
+        "slug": "ruth-001"
+      },
+      {
+        "name": "Prof Simon McDade",
+        "title": "Reader, Patrick G Johnston Centre for Cancer Research, Queens University, Belfast",
+        "image": "simonmcdade.png",
+        "tags": ["PROJECT SUPERVISOR", "BELFAST", "QUB"],
+        "route": "/people/simon",
+        "slug": "simeon-001"
+      },
+      {
+        "name": "David Chibuike Ikechi Akwuru",
+        "title": "Doctoral Student in Digital Health in Cancer Research, University of Limerick",
+        "image": "DavidAkwuru.jpg",
+        "tags": ["Doctoral Student", "UL", "LIMERICK", "Lero"],
+        "route": "----",
+        "slug": "david-001"
+      }
+    ]
+  }  

@@ -1,0 +1,57 @@
+{
+    "profile": {
+      "name": "<Name>",
+      "image": "<ImageFileName>",
+      "institution": {
+        "title": "<InstitutionTitle>",
+        "location": "<InstitutionLocation>"
+      },
+      "role_badges": [
+        "<RoleBadge1>",
+        "<RoleBadge2>",
+        "<RoleBadge3>"
+      ],
+      "homepage_url": "<HomepageURL>",
+      "email": "<Email>",
+      "affiliations": [
+        "<Affiliation1>", 
+        "<Affiliation2>",
+        "<Affiliationn>"
+    ],
+      "bio": [
+        "<BioParagraph1>",
+        "<BioParagraph2>",
+        "<BioParagraph3>"
+      ],
+      "research_interests": [
+        "<ResearchInterest1>",
+        "<ResearchInterest2>",
+        "<ResearchInterest3>"
+      ],
+      "positions": [
+        "<Position1>",
+        "<Position2>",
+        "<Position3>"
+      ],
+      "key_initiatives": [
+        {
+          "title": "<InitiativeTitle1>",
+          "link": "<InitiativeLink1>"
+        },
+        {
+          "title": "<InitiativeTitle2>",
+          "link": "<InitiativeLink2>"
+        }
+      ],
+      "social_links": [
+        {
+          "name": "<SocialPlatform1>",
+          "url": "<SocialLink1>"
+        },
+        {
+          "name": "<SocialPlatform2>",
+          "url": "<SocialLink2>"
+        }
+      ]
+    }
+  }

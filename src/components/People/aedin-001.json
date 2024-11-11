@@ -1,0 +1,71 @@
+{
+    "profile": {
+      "name": "Prof Aedin Culhane",
+      "image": "aedinculhane.png",
+      "institution": {
+        "title": "Professor",
+        "location": "University of Limerick"
+      },
+      "role_badges": [
+        "Project Leader",
+        "Limerick",
+        "LDCRC"
+      ],
+      "homepage_url": "https://www.ul.ie/research/prof-aedin-culhane",
+      "email": "aedin.culhane@ul.ie",
+      "affiliations": [
+        "Director, Limerick Digital Cancer Center",
+        "Lead, all-island eHealth-Hub for Cancer",
+        "Member, All-Ireland Cancer Institute Steering Group"
+      ],
+      "bio": [
+        "Aedín Culhane is a Professor of Biomedical Sciences (Cancer Genomics) at UL School of Medicine. With expertise in multi-omics data integration, statistical genomics, and clinical bioinformatics, she has over 20 years of experience in cancer genomics, including 15 years at Dana-Farber Cancer Institute and Harvard TH Chan School of Public Health.",
+        "Her research focuses on algorithm development and integrative analysis of single-cell molecular data in cancer to identify key molecules in tumor progression, drug response, and resistance. She is also a member of the Human Cell Atlas project.",
+        "Aedín is a leader in the Bioconductor community, a global open-source initiative for genomics in R, and an advocate for open-source science."
+      ],
+      "research_interests": [
+        "Cancer Computational Genomics",
+        "Digital Health",
+        "Single Cell Genomics",
+        "Spatial Biology",
+        "Cancer Genomics",
+        "Algorithm Development",
+        "Immune-Oncology",
+        "Genomics Programs",
+        "Real World Evidence",
+        "Open Science"
+      ],
+      "associated_institutions": [
+        {
+          "name": "Dana-Farber Cancer Institute",
+          "url": "https://www.dana-farber.org/research/departments-centers/data-science"
+        },
+        {
+          "name": "Harvard TH Chan School of Public Health",
+          "url": "https://www.hsph.harvard.edu/biostatistics"
+        },
+        {
+          "name": "Bioconductor Project",
+          "url": "https://www.bioconductor.org"
+        }
+      ],
+      "social_links": [
+        {
+          "name": "Twitter",
+          "url": "https://twitter.com/AedinCulhane"
+        },
+        {
+          "name": "GitHub",
+          "url": "https://github.com/aedin"
+        },
+        {
+          "name": "LinkedIn",
+          "url": "https://www.linkedin.com/in/aedinculhane"
+        },
+        {
+          "name": "Google Scholar",
+          "url": "https://scholar.google.com/citations?user=O8OszPcAAAAJ&hl=en"
+        }
+      ]
+    }
+  }  

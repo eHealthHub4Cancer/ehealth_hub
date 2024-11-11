@@ -1,0 +1,60 @@
+{
+    "profile": {
+      "name": "Prof Ian Overton",
+      "image": "ianOverton.png",
+      "institution": {
+        "title": "Reader",
+        "location": "School of Medicine, Dentistry and Biomedical Sciences, Patrick G Johnston Centre for Cancer Research, Queens University, Belfast"
+      },
+      "role_badges": [
+        "Project Supervisor",
+        "Belfast",
+        "QUB"
+      ],
+      "homepage_url": "https://pure.qub.ac.uk/en/persons/ian-overton",
+      "email": "I.Overton@qub.ac.uk",
+      "bio": [
+        "Prof Ian Overton is a Reader in the School of Medicine, Dentistry and Biomedical Sciences at Queen's University Belfast, where he leads research at the intersection of computational biology and cancer medicine. His work focuses on understanding the complex molecular mechanisms that drive cancer progression and treatment resistance.",
+        "Prof Overton's research employs sophisticated computational approaches to decode how cancer cells spread throughout the body (metastasis) and develop resistance to treatments - two critical factors that account for the majority of cancer-related deaths. His lab integrates vast amounts of molecular data, including DNA and protein information, to map and analyze the intricate networks that control cellular function.",
+        "Using advanced statistical inference and machine learning techniques, Prof Overton's team processes billions of data points to reveal the molecular logic underlying health and disease. This computational approach is fundamental to modern biology, enabling the interpretation of complex systems through large-scale data analysis.",
+        "A key focus of his work is developing software solutions that can meaningfully interpret large datasets and inform clinical decision-making, particularly in predicting patient responses to specific treatments. His research aims to identify molecular 'weak points' that could be targeted for personalized cancer treatments, ultimately working to translate these findings into practical medical applications through collaboration with clinical colleagues."
+      ],
+      "research_interests": [
+        "Cancer Metastasis",
+        "Drug Resistance Mechanisms",
+        "Machine Learning in Medicine",
+        "Network Biology",
+        "Molecular Systems Biology",
+        "Computational Biology",
+        "Cancer Personalized Medicine",
+        "Patient Stratification",
+        "Big Data Analytics",
+        "Clinical Decision Support"
+      ],
+      "research_areas": [
+        {
+          "title": "Molecular Control in Cancer",
+          "description": "Understanding cell phenotypic plasticity in metastasis and drug resistance to identify molecular 'Achilles' heels' for personalized medicine"
+        },
+        {
+          "title": "Patient Stratification",
+          "description": "Developing more effective approaches for cancer patient stratification and treatment pathway optimization"
+        },
+        {
+          "title": "Computational Methods",
+          "description": "Generation of novel algorithms and computational workflows for advanced cancer research and treatment"
+        }
+      ],
+      "social_links": [
+        {
+          "name": "Twitter",
+          "url": "https://x.com/IOvertonScience"
+        },
+        {
+          "name": "Google Scholar",
+          "url": "https://scholar.google.com/citations?user=-jpF9EgAAAAJ&hl=en"
+        }
+      ]
+    }
+  }
+  

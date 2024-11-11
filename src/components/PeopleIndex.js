@@ -73,10 +73,10 @@ function People() {
             <div
               key={person.person_id}
               className="person-card"
-              onClick={() => navigate(`/people/${person.slug}`)}
+              onClick={() => navigate(person.route)}
             >
               <div className="card-image-container">
-                <img     src={require(`../Images/People/${person.image}`)} alt={person.name} className="card-image" />
+                <img src={person.image} alt={person.name} className="card-image" />
               </div>
               <div className="card-content">
                 <h3>{person.name}</h3>

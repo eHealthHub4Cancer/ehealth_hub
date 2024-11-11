@@ -1,0 +1,69 @@
+{
+    "profile": {
+      "name": "Akwuru David Chibuike Ikechi",
+      "image": "DavidAkwuru.jpg",
+      "institution": {
+        "title": "University of Limerick",
+        "location": "Limerick, Ireland"
+      },
+      "role_badges": [
+        "PhD Student",
+        "Researcher",
+        "Commonwealth Scholar"
+      ],
+      "homepage_url": "https://ng.linkedin.com/in/david-akwuru",
+      "email": "akwuru.david@ul.ie",
+      "affiliations": [
+        "Prof. Katie Crowley",
+        "Prof. Nina Orfali",
+        "Prof. Aedin Culhane"
+      ],
+      "bio": [
+        "Hi, I am Akwuru David Chibuike Ikechi, a Doctoral student at the University of Limerick. My research focuses on developing a framework for all-island federated clinical data in myeloid malignancies (AML), under the supervision of Prof. Katie Crowley, Prof. Nina Orfali, and Prof. Aedin Culhane.",
+        "I hold a bachelor's degree in Computer Science from the University of Port Harcourt, Nigeria, and a master's degree in Digital Health from the University of St. Andrews, United Kingdom, sponsored by the Commonwealth Scholarship Commission. My engagement in interdisciplinary studies, which blend computing and healthcare, particularly in cancer research, has driven my passion to leverage computing to improve clinical outcomes.",
+        "Progress in my research includes conducting a comprehensive landscape analysis of myeloid clinical data across institutions in both Ireland and Northern Ireland. This work has allowed me to identify key gaps and challenges in data collection and standardization. Currently, I am working on a scoping review to gather broader evidence on how AML data is managed, shared, and standardized, especially in high-income countries, with a view to adapting these insights to the Irish context."
+      ],
+      "research_interests": [
+        "Federated Data Sharing",
+        "Myeloid Malignancies",
+        "Cancer Research",
+        "Machine Learning in Healthcare",
+        "Biomedical Imaging",
+        "Software Development",
+        "Algorithms"
+      ],
+      "positions": [
+        "PhD Student at University of Limerick",
+        "Research Assistant at University of St. Andrews"
+      ],
+      "key_initiatives": [
+        {
+          "title": "BCNI Symposium",
+          "link": ""
+        },
+        {
+          "title": "Lero Summit in Athlone",
+          "link": ""
+        },
+        {
+          "title": "OHDSI HDRUK Conference in the UK",
+          "link": ""
+        }
+      ],
+      "social_links": [
+        {
+          "name": "LinkedIn",
+          "url": "https://www.linkedin.com/in/david-akwuru/"
+        },
+        {
+          "name": "Twitter",
+          "url": ""
+        },
+        {
+            "name": "Github",
+            "url": "https://github.com/DavidIkechi?tab=repositories"
+        }
+      ]
+    }
+  }
+
