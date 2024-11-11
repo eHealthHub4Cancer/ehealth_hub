@@ -1,12 +1,13 @@
 {
   "files": {
-    "main.css": "/ehealth_hub/static/css/main.81e99281.css",
-    "main.js": "/ehealth_hub/static/js/main.def996cf.js",
+    "main.css": "/ehealth_hub/static/css/main.cabb29a0.css",
+    "main.js": "/ehealth_hub/static/js/main.0ceeea7e.js",
     "static/js/453.6411f75a.chunk.js": "/ehealth_hub/static/js/453.6411f75a.chunk.js",
     "static/media/LDCRC_BuildingTogether_April_2023.jpeg": "/ehealth_hub/static/media/LDCRC_BuildingTogether_April_2023.d6e9dc07a944ad211b5e.jpeg",
     "static/media/hdruk.jpg": "/ehealth_hub/static/media/hdruk.bfa37263bb7639d1cc40.jpg",
     "static/media/BCNI_meeting.png": "/ehealth_hub/static/media/BCNI_meeting.dfbf91b670079b78500a.png",
     "static/media/BrainStorm (1).png": "/ehealth_hub/static/media/BrainStorm (1).e945dfcfd0db9b248958.png",
+    "static/media/DavidAkwuru.jpg": "/ehealth_hub/static/media/DavidAkwuru.78dc32aa16d8c027d6fd.jpg",
     "static/media/2022_Apr_LimerickPost_Update.png": "/ehealth_hub/static/media/2022_Apr_LimerickPost_Update.b1c65f61535d7f2d75fe.png",
     "static/media/postdoc.png": "/ehealth_hub/static/media/postdoc.c8071d11182fe9f8f47b.png",
     "static/media/AICRI_launch.jpeg": "/ehealth_hub/static/media/AICRI_launch.83330f35286de94abb6e.jpeg",
@@ -33,17 +34,18 @@
     "static/media/overview.jpeg": "/ehealth_hub/static/media/overview.823c11e5a1ab1b5e5e22.jpeg",
     "static/media/Slide1.jpeg": "/ehealth_hub/static/media/Slide1.5934e05d59a4606534be.jpeg",
     "static/media/RuthClifford.jpg": "/ehealth_hub/static/media/RuthClifford.42b1b7dc9b6cbe485923.jpg",
+    "static/media/NinaOrfali.jpeg": "/ehealth_hub/static/media/NinaOrfali.3fc3707be671bac4f46a.jpeg",
     "static/media/slick.svg": "/ehealth_hub/static/media/slick.2630a3e3eab21c607e21.svg",
     "static/media/slick.eot": "/ehealth_hub/static/media/slick.a4e97f5a2a64f0ab1323.eot",
     "static/media/slick.ttf": "/ehealth_hub/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/ehealth_hub/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/ehealth_hub/index.html",
-    "main.81e99281.css.map": "/ehealth_hub/static/css/main.81e99281.css.map",
-    "main.def996cf.js.map": "/ehealth_hub/static/js/main.def996cf.js.map",
+    "main.cabb29a0.css.map": "/ehealth_hub/static/css/main.cabb29a0.css.map",
+    "main.0ceeea7e.js.map": "/ehealth_hub/static/js/main.0ceeea7e.js.map",
     "453.6411f75a.chunk.js.map": "/ehealth_hub/static/js/453.6411f75a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.81e99281.css",
-    "static/js/main.def996cf.js"
+    "static/css/main.cabb29a0.css",
+    "static/js/main.0ceeea7e.js"
   ]
 }
