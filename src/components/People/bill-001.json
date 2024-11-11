@@ -1,0 +1,60 @@
+{
+    "profile": {
+      "name": "Prof Bill Watson",
+      "image": "BillWatson.jpeg",
+      "institution": {
+        "title": "Professor",
+        "location": "University College Dublin"
+      },
+      "role_badges": [
+        "Project Supervisor",
+        "Dublin",
+        "UCD"
+      ],
+      "homepage_url": "https://people.ucd.ie/william.watson/grants",
+      "email": "william.watson@ucd.ie",
+      "affiliations": [
+        "Head of Pathology",
+        "Director, Biomedical Health and Life Science BSc"
+      ],
+      "bio": [
+        "Professor Bill Watson is a distinguished Professor of Cancer Biology in the UCD School of Medicine, where he serves as Head of Pathology and Director of the Biomedical Health and Life Science honours BSc programme. His expertise spans fundamental cancer biology and translational research, with a particular focus on prostate cancer.",
+        "Professor Watson's academic journey began with his PhD in Biochemistry from University College Cork in 1995, followed by post-doctoral research at the University of Toronto and Toronto General Hospital in Canada. In 1997, he joined University College Dublin as a college Lecturer in the Department of Surgery at the Mater Misericordiae University Hospital, where he has since built an internationally recognized research program.",
+        "As the lead Principal Investigator of the Prostate Cancer Research Consortium (PCRC), Professor Watson directs a multidisciplinary team of scientists and clinicians addressing crucial clinical challenges in prostate cancer. His research utilizes cutting-edge technologies at the Conway Institute to study cellular and molecular pathways, working closely with clinical collaborators to advance our understanding of prostate cancer initiation and progression.",
+        "His research has attracted significant funding from prestigious bodies including Science Foundation Ireland, the Health Research Board, Enterprise Ireland, Irish Cancer Society, Prostate Cancer Foundation, and Movember. With an H-index of 55, his work has been published in leading peer-reviewed journals such as European Urology, Cancers, BJU International, Oncotarget, and Molecular Oncology."
+      ],
+      "research_interests": [
+        "Prostate Cancer Biology",
+        "Biomarker Discovery",
+        "Treatment Resistance",
+        "Molecular Pathways",
+        "Translational Research",
+        "Cancer Therapeutics",
+        "Clinical Biomarkers",
+        "Cancer Progression",
+        "Therapy Resistance",
+        "Precision Medicine"
+      ],
+      "research_focus": [
+        {
+          "title": "Biomarker Discovery and Validation",
+          "description": "Leveraging PCRC resources to identify and validate biomarkers for prostate cancer grade and stage, informing treatment strategies"
+        },
+        {
+          "title": "Therapy Resistance Mechanisms",
+          "description": "Investigating resistance to androgen ablation therapy and chemotherapy through genomic and bioinformatic approaches"
+        },
+        {
+          "title": "Translational Research",
+          "description": "Bridging laboratory discoveries with clinical applications through international collaborations and the Movember Global Action Plan"
+        }
+      ],
+      "social_links": [
+        {
+          "name": "Google Scholar",
+          "url": "https://scholar.google.com/citations?user=3sIZx1sAAAAJ&hl=en"
+        }
+      ]
+    }
+  }
+  

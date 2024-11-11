@@ -1,0 +1,60 @@
+{
+    "profile": {
+      "name": "Dr. Simon McDade",
+      "image": "simonmcdade.png",
+      "institution": {
+        "title": "Reader",
+        "location": "Patrick G Johnston Centre for Cancer Research, Queens University, Belfast"
+      },
+      "role_badges": [
+        "Project Supervisor",
+        "Belfast",
+        "QUB"
+      ],
+      "homepage_url": "https://www.qub.ac.uk/schools/mdbs/Research/find-a-phd-supervisor/dr-simon-mcdade.html",
+      "email": "askmhls@qub.ac.uk",
+      "bio": [
+        "Dr Simon McDade is a Reader at the Patrick G Johnston Centre for Cancer Research, Queens University Belfast, where he leads the Functional Genomics (FGG) laboratory. His research combines cutting-edge genomic technologies with innovative data analysis approaches to develop novel treatment strategies for cancer patients.",
+        "At the forefront of cancer genomics research, Dr McDade's laboratory specializes in utilizing a comprehensive range of genomic technologies including RNA-seq, ChIP-seq, and CRISPR screening. This work is complemented by the development of sophisticated integrative data analysis tools, bridging the gap between complex genomic data and clinical applications.",
+        "Dr McDade's research particularly focuses on understanding transcription factor dysfunction in cancer, with special emphasis on the p53 family. His team's work aims to identify genes and processes altered by mutation or de-regulation that could be exploited for diagnostic or therapeutic purposes. This research spans multiple cancer types, including colorectal, prostate, and squamous cancers.",
+        "Under Dr McDade's leadership, the laboratory has developed significant expertise in epigenetic research and computational tool development, including the creation of specialized data analysis and Shiny applications. His team welcomes diverse expertise, from biological sciences to computational analysis, fostering an interdisciplinary approach to cancer research."
+      ],
+      "research_interests": [
+        "Functional Genomics",
+        "Cancer Transcription Factors",
+        "Integrative Data Analysis",
+        "CRISPR Technology",
+        "Epigenetics",
+        "Cancer Therapeutics",
+        "Computational Biology",
+        "Molecular Diagnostics",
+        "Precision Medicine",
+        "Bioinformatics"
+      ],
+      "research_areas": [
+        {
+          "title": "Genomic Technologies",
+          "description": "Utilizing RNA-seq, ChIP-seq, and CRISPR screening to understand cancer mechanisms"
+        },
+        {
+          "title": "Cancer Biology",
+          "description": "Focus on transcription factor dysfunction in colorectal, prostate, and squamous cancers"
+        },
+        {
+          "title": "Computational Tools",
+          "description": "Development of data analysis tools and Shiny applications for cancer research"
+        }
+      ],
+      "social_links": [
+        {
+          "name": "LinkedIn",
+          "url": "https://www.linkedin.com/in/simonmcdade/"
+        },
+        {
+          "name": "Google Scholar",
+          "url": "https://scholar.google.co.uk/citations?user=3TXRQVSOwGMC&hl=en"
+        }
+      ]
+    }
+  }
+  

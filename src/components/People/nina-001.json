@@ -1,0 +1,59 @@
+{
+    "profile": {
+      "name": "Dr. Nina Orfali",
+      "image": "NinaOrfali.png",
+      "institution": {
+        "title": "Consultant Haematologist",
+        "location": "St. James's Hospital Dublin"
+      },
+      "role_badges": [
+        "Project Supervisor",
+        "Dublin",
+        "St James"
+      ],
+      "homepage_url": "https://www.stjames.ie/services/hope/nationalstemcelltransplantunit/",
+      "email": "conneallysec@stjames.ie",
+      "bio": [
+        "Dr Nina Orfali is a Consultant Haematologist at St. James's Hospital Dublin, where she joined the team in 2020. As a member of the Adult Bone Marrow Transplant team, she brings extensive international experience and specialized expertise in stem cell transplantation and myeloid malignancies.",
+        "A medical graduate of NUI Galway, Dr Orfali's career path reflects a commitment to both clinical excellence and research innovation. Her early training included internal medicine experience at both Galway University Hospital and the prestigious Mayo Clinic in Minnesota. She further developed her expertise through laboratory research at the Cork Cancer Research Centre and Weill Cornell University in New York, earning her PhD from UCC for groundbreaking work on autophagy in leukaemic cell differentiation.",
+        "After completing her haematology specialist training in Ireland, Dr Orfali pursued advanced specialization in stem cell transplantation through a two-year fellowship at Cornell University in New York. This international experience has helped shape her current research focus, which includes developing strategies to reduce relapse and strengthen immune system function post-donor stem cell transplantation.",
+        "Currently, Dr Orfali's research concentrates on the significance and prognostic impact of gene mutations in myeloid disease, maintaining active collaborations with researchers at Cornell University. She is particularly focused on myeloid malignancies, including acute myeloid leukaemia, myelodysplastic syndromes, and myeloproliferative disorders."
+      ],
+      "research_interests": [
+        "Myeloid Malignancies",
+        "Stem Cell Transplantation",
+        "Cellular Therapy",
+        "Translational Medicine",
+        "Autophagy Research",
+        "Immune System Enhancement",
+        "Gene Mutation Analysis",
+        "Differentiation Therapy",
+        "Post-transplant Care",
+        "Clinical Research"
+      ],
+      "qualifications": [
+        "MB BCh BAO - NUI Galway",
+        "MRCPI - Royal College of Physicians of Ireland",
+        "FRCPath - Royal College of Pathology, UK",
+        "PhD - University College Cork"
+      ],
+      "memberships": [
+        "Royal College of Physicians of Ireland",
+        "Royal College of Pathology, UK",
+        "Haematology Association of Ireland (HAI)",
+        "American Society of Haematology (ASH)",
+        "American Society of Transplantation and Cellular Therapy (ASTCT)"
+      ],
+      "social_links": [
+        {
+          "name": "LinkedIn",
+          "url": "https://www.linkedin.com/in/nina-orfali-mb-mrcpi-frcpath-phd-9a782668/"
+        },
+        {
+          "name": "ResearchGate",
+          "url": "https://www.researchgate.net/profile/Nina-Orfali"
+        }
+      ]
+    }
+  }
+  

@@ -116,6 +116,9 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  background: linear-gradient(135deg, #435c73 70%, #4ECDC4 100%);
+  color: white;
+  font-weight: bolder;
 }
 
 .role-badge.supervisor {
