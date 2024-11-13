@@ -79,6 +79,14 @@
         "tags": ["Doctoral Student", "UL", "LIMERICK", "Lero"],
         "route": "----",
         "slug": "david-001"
+      },
+      {
+        "name": "Jeremiah Seyi Akintomide",
+        "title": "Doctoral Student in Digital Health in Cancer Research, University of Limerick",
+        "image": "JeremiahAkintomide.png",
+        "tags": ["Doctoral Student", "UL", "LIMERICK", "Lero"],
+        "route": "----",
+        "slug": "jeremiah-001"
       }
     ]
   }  
