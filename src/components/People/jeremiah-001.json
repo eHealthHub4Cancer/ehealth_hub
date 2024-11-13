@@ -1,0 +1,65 @@
+{
+    "profile": {
+      "name": "Jeremiah Akintomide",
+      "image": "JeremiahAkintomide.png",
+      "institution": {
+        "title": "University of Limerick",
+        "location": "Limerick, Ireland"
+      },
+      "role_badges": [
+        "PhD Student",
+        "Researcher",
+        "Commonwealth Scholar"
+      ],
+      "homepage_url": "https://pure.ul.ie/en/persons/jeremiah-akintomide",
+      "email": "Jeremiah.Akintomide@ul.ie",
+      "affiliations": [
+        "Dr. Katie Crowley",
+        "Dr. Amir Jalali"
+      ],
+      "bio": [
+        "PhD researcher at the University of Limerick, focusing on advancing prostate cancer detection through digital health technologies and standardized healthcare data frameworks.",
+        "I hold an MSc in Health Data Science with Distinction from the University of St Andrews and a BSc in Computer Science with First Class Honours. My research centers on improving prostate cancer detection and treatment by using digital health technologies and standardizing healthcare data across institutions with the OMOP (Observational Medical Outcomes Partnership) Common Data Model.",
+        "Using OHDSI (Observational Health Data Sciences and Informatics) tools, I aim to transform institutional data into a unified format to facilitate data-driven clinical insights. The ultimate goal of my project is to develop a Clinical Decision Support System (CDSS) that reduces unnecessary prostate biopsies, minimizing patient risk and enhancing diagnostic accuracy. This research is part of an All-Island initiative promoting cross-border collaboration in healthcare across Ireland."
+      ],
+      "research_interests": [
+        "Digital Health Technologies",
+        "Prostate Cancer",
+        "Federated Data Standardization",
+        "Machine Learning in Healthcare",
+        "Biomedical Informatics"
+      ],
+      "positions": [
+        "PhD Student at University of Limerick"
+      ],
+      "key_initiatives": [
+        {
+          "title": "IPCOR Initiative",
+          "link": "https://www.ipcor.ie/"
+        },
+        {
+          "title": "Lero Summit in Athlone",
+          "link": "https://lero.ie/"
+        },
+        {
+          "title": "HDR UK Prostate Cancer Symposium",
+          "link": "https://www.hdruk.ac.uk/hdruk-conference-2024/"
+        }
+      ],
+      "social_links": [
+        {
+          "name": "LinkedIn",
+          "url": "https://pure.ul.ie/en/persons/jeremiah-akintomide"
+        },
+        {
+          "name": "Twitter",
+          "url": "https://x.com/Prof_Seyii"
+        },
+        {
+          "name": "GitHub",
+          "url": "https://github.com/Profjay22"
+        }
+      ]
+    }
+  }
+  
