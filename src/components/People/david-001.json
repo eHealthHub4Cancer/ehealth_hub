@@ -13,17 +13,17 @@
       ],
       "homepage_url": "https://ng.linkedin.com/in/david-akwuru",
       "email": "akwuru.david@ul.ie",
-      "affiliations": [
+      "supervisors": [
         "Prof. Katie Crowley",
         "Prof. Nina Orfali",
         "Prof. Aedin Culhane"
       ],
       "bio": [
-        "Hi, I am Akwuru David Chibuike Ikechi, a Doctoral student at the University of Limerick. My research focuses on developing a framework for all-island federated clinical data in myeloid malignancies (AML), under the supervision of Prof. Katie Crowley, Prof. Nina Orfali, and Prof. Aedin Culhane.",
-        "I hold a bachelor's degree in Computer Science from the University of Port Harcourt, Nigeria, and a master's degree in Digital Health from the University of St. Andrews, United Kingdom, sponsored by the Commonwealth Scholarship Commission. My engagement in interdisciplinary studies, which blend computing and healthcare, particularly in cancer research, has driven my passion to leverage computing to improve clinical outcomes.",
-        "Progress in my research includes conducting a comprehensive landscape analysis of myeloid clinical data across institutions in both Ireland and Northern Ireland. This work has allowed me to identify key gaps and challenges in data collection and standardization. Currently, I am working on a scoping review to gather broader evidence on how AML data is managed, shared, and standardized, especially in high-income countries, with a view to adapting these insights to the Irish context."
+        "Hi, I'm Akwuru David Chibuike Ikechi, a Doctoral student at the University of Limerick. My research focuses on building a framework for harmonizing data and enabling the federated sharing of AML cancer data across all of Ireland, under the guidance of Prof. Katie Crowley, Prof. Nina Orfali, and Prof. Aedin Culhane. We aim to adopt the OHDSI OMOP Common Data Model to harmonize AML data across healthcare institutions in Ireland and Northern Ireland, fostering improved research and clinical outcomes through interoperable data systems.",
+        "I hold a Bachelor's degree in Computer Science from the University of Port Harcourt, Nigeria, and a Master's degree in Digital Health from the University of St. Andrews, United Kingdom, sponsored by the Commonwealth Scholarship Commission. My academic journey has been shaped by an interdisciplinary approach, bridging computing and healthcare to address critical challenges, especially in cancer research. This experience fuels my drive to leverage technology for enhanced clinical care and outcomes",
+        "As part of my doctoral research, I have conducted a comprehensive landscape analysis of myeloid clinical data across institutions on the island of Ireland, identifying key gaps in data collection, sharing, and standardization. Currently, I am working on a scoping review to examine best practices for AML data management, sharing, and standardization in high-income countries, with the goal of adapting these strategies to benefit the Irish healthcare system. Ultimately, my work intends to create a unified framework for AML data that enhances interoperability, facilitates federated sharing, and improves collaborative research efforts across institutions. As Nelson Mandela once said, 'It always seems impossible until it is done.' This quote inspires my mission to overcome the challenges in harmonizing healthcare data and making meaningful progress in cancer research."
       ],
-      "research_interests": [
+        "research_interests": [
         "Federated Data Sharing",
         "Myeloid Malignancies",
         "Cancer Research",
@@ -33,21 +33,20 @@
         "Algorithms"
       ],
       "positions": [
-        "PhD Student at University of Limerick",
-        "Research Assistant at University of St. Andrews"
+        "PhD Student at University of Limerick"
       ],
       "key_initiatives": [
         {
           "title": "BCNI Symposium",
-          "link": ""
+          "link": "https://www.bloodcancers.ie/bloodcancers/newsevents/bcni-blood-cancer-symposium---friday-24th-may-2024.html"
         },
         {
           "title": "Lero Summit in Athlone",
-          "link": ""
+          "link": "https://www.ul.ie/news/five-university-of-limerick-researchers-presented-with-prestigious-lero-awards"
         },
         {
           "title": "OHDSI HDRUK Conference in the UK",
-          "link": ""
+          "link": "https://www.hdruk.ac.uk/hdruk-conference-2024/"
         }
       ],
       "social_links": [
@@ -57,7 +56,7 @@
         },
         {
           "name": "Twitter",
-          "url": ""
+          "url": "https://x.com/AkwuruI"
         },
         {
             "name": "Github",
