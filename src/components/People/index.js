@@ -42,6 +42,7 @@ import { useParams } from 'react-router-dom';
     research_interests, memberships,
     research_areas, qualifications,
     positions, key_initiatives,
+    supervisors,
     associated_institutions,
     social_links
   } = profile;
@@ -143,6 +144,17 @@ import { useParams } from 'react-router-dom';
                 <p key={index} className="bio-paragraph">{paragraph}</p>
               ))}
 
+             {supervisors && (
+                <div className="affiliations-list">
+                  <h3>Supervisors</h3>
+                  <ul>
+                    {supervisors.map((affiliation, index) => (
+                      <li key={index}>{affiliation}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               {affiliations && (
                 <div className="affiliations-list">
                   <h3>Current Positions</h3>
@@ -217,8 +229,8 @@ import { useParams } from 'react-router-dom';
                 </ul>
                 </div>
                 }
-
             </div>
+            
             {positions &&
             <div className="positions-section">
               <h3>Current Positions</h3>
