@@ -4,7 +4,7 @@
         "name": "Dr Shirin Moghaddam",
         "title": "Mathematics and Statistics, Faculty Of Science & Engineering, University of Limerick",
         "image": "ShirinMoghaddam.jpeg",
-        "tags": ["PROJECT SUPERVISOR", "LIMERICK"],
+        "tags": ["Project Supervisor", "Limerick"],
         "route": "/people/shirin",
         "slug": "shirin-001"
       },
@@ -12,7 +12,7 @@
         "name": "Dr Katie Crowley",
         "title": "Associate Professor Computer Science & Health Informatics, Funded Investigator, Lero, University of Limerick",
         "image": "KatieCrowley.png",
-        "tags": ["PROJECT SUPERVISOR", "LIMERICK", "LDCRC"],
+        "tags": ["Project Supervisor", "Limerick", "LDCRC"],
         "route": "/people/katie",
         "slug": "katie-001"
       },
@@ -20,7 +20,7 @@
         "name": "Prof Aedin Culhane",
         "title": "Professor, University of Limerick",
         "image": "aedinculhane.png",
-        "tags": ["PROJECT LEADER", "LIMERICK", "LDCRC"],
+        "tags": ["Project Leader", "Limerick", "LDCRC"],
         "route": "/people/aedin",
         "slug": "aedin-001"
       },
@@ -28,7 +28,7 @@
         "name": "Prof Bill Watson",
         "title": "Professor, University College Dublin",
         "image": "BillWatson.jpeg",
-        "tags": ["PROJECT SUPERVISOR", "DUBLIN", "UCD"],
+        "tags": ["Project Supervisor", "Dublin", "UCD"],
         "route": "/people/bill",
         "slug": "bill-001"
       },
@@ -36,7 +36,7 @@
         "name": "Prof Ian Overton",
         "title": "Reader, School of Medicine, Dentistry and Biomedical Sciences, Patrick G Johnston Centre for Cancer Research, Queens University, Belfast",
         "image": "ianOverton.png",
-        "tags": ["PROJECT SUPERVISOR", "BELFAST", "QUB"],
+        "tags": ["Project Supervisor", "Belfast", "QUB"],
         "route": "/people/ian",
         "slug": "ian-001"
       },
@@ -44,7 +44,7 @@
         "name": "Prof Mark Lawler",
         "title": "Professor, Queens University Belfast",
         "image": "MarkLawler.jpg",
-        "tags": ["PROJECT LEADER", "BELFAST", "QUB"],
+        "tags": ["Project Leader", "Belfast", "QUB"],
         "route": "/people/mark",
         "slug": "mark-001"
       },
@@ -52,7 +52,7 @@
         "name": "Prof Nina Orfali",
         "title": "Consultant Haematologist, St. James's Hospital Dublin",
         "image": "NinaOrfali.png",
-        "tags": ["PROJECT SUPERVISOR", "DUBLIN", "ST JAMES"],
+        "tags": ["Project Supervisor", "Dublin", "St James"],
         "route": "/people/nina",
         "slug": "nina-001"
       },
@@ -60,7 +60,7 @@
         "name": "Prof Ruth Clifford",
         "title": "Consultant Haematologist, University Hospital Limerick",
         "image": "RuthClifford.jpg",
-        "tags": ["PROJECT LEADER", "LIMERICK", "LDCRC"],
+        "tags": ["Project Leader", "Limerick", "LDCRC"],
         "route": "/people/ruth",
         "slug": "ruth-001"
       },
@@ -68,7 +68,7 @@
         "name": "Prof Simon McDade",
         "title": "Reader, Patrick G Johnston Centre for Cancer Research, Queens University, Belfast",
         "image": "simonmcdade.png",
-        "tags": ["PROJECT SUPERVISOR", "BELFAST", "QUB"],
+        "tags": ["Project Supervisor", "Belfast", "QUB"],
         "route": "/people/simon",
         "slug": "simeon-001"
       },
@@ -76,7 +76,7 @@
         "name": "David Chibuike Ikechi Akwuru",
         "title": "Doctoral Student in Digital Health in Cancer Research, University of Limerick",
         "image": "DavidAkwuru.jpg",
-        "tags": ["Doctoral Student", "UL", "LIMERICK", "Lero"],
+        "tags": ["Doctoral Student", "UL", "Limerick", "Lero"],
         "route": "----",
         "slug": "david-001"
       },
@@ -84,7 +84,7 @@
         "name": "Jeremiah Seyi Akintomide",
         "title": "Doctoral Student in Digital Health in Cancer Research, University of Limerick",
         "image": "JeremiahAkintomide.png",
-        "tags": ["Doctoral Student", "UL", "LIMERICK", "Lero"],
+        "tags": ["Doctoral Student", "UL", "Limerick", "Lero"],
         "route": "----",
         "slug": "jeremiah-001"
       }
