@@ -61,7 +61,7 @@ function People() {
                   className={`filter-tag ${selectedFilters.includes(tag) ? 'active' : ''}`}
                   onClick={() => toggleFilter(tag)}
                 >
-                  {tag.charAt(0) + tag.slice(1).toLowerCase()} ({getTagCount(tag)})
+                  {tag} ({getTagCount(tag)})
                 </button>
               ))}
             </div>
@@ -83,7 +83,7 @@ function People() {
                 <div className="card-tags">
                   {person.tags.map(tag => (
                     <span key={tag} className="tag">
-                      {tag.toLowerCase()}
+                      {tag}
                     </span>
                   ))}
                 </div>
