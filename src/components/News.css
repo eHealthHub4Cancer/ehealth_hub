@@ -1,5 +1,5 @@
 .news-container {
-    /* max-width: 1400px; */
+    position: relative;
     margin: 0 auto;
     margin-top: 80px;
     padding: 40px 120px;
@@ -249,4 +249,35 @@
     .news-content h2 {
       font-size: 1.2rem;
     }
+  }
+
+  .loader-container {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .loader-text {
+    color: #1a3e5a;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-top: 20px;
+  }
+  
+  .loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
   }

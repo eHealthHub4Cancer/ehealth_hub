@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Filter, Calendar, User } from 'lucide-react';
+import { ClipLoader } from 'react-spinners';
 import './News.css';
 
 function GoogleSheetNews() {
   const navigate = useNavigate();
   const [newsItems, setNewsItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filterLoading, setFilterLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -43,6 +45,7 @@ function GoogleSheetNews() {
 
   const fetchNews = useCallback(async () => {
     try {
+      setLoading(true);
       const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSTKMvqBJMCJPvUPIyk1M-l03Yyd57wmo_0pevGrZoHuRIS0qv0r5mwo4WK97gEQWVLXadmrCK5TXVK/pub?gid=0&single=true&output=csv');
       
       if (!response.ok) {
@@ -59,7 +62,7 @@ function GoogleSheetNews() {
         author: row[3] || '',
         categories: (row[4] || '').split(',').map(cat => cat.trim()).filter(Boolean),
         image: row[5] || '',
-        slug: row[6] || generateSlug(row[0]), // Use provided slug or generate from title
+        slug: row[6] || generateSlug(row[0]), 
       }));
 
       setNewsItems(news);
@@ -75,6 +78,15 @@ function GoogleSheetNews() {
   useEffect(() => {
     fetchNews();
   }, [fetchNews]);
+
+  const handleFilterChange = async (newCategories) => {
+    setFilterLoading(true);
+    setSelectedCategories(newCategories);
+    setCurrentPage(1);
+    // Add a small delay to show loading state
+    await new Promise(resolve => setTimeout(resolve, 300));
+    setFilterLoading(false);
+  };
 
   const filteredNews = newsItems.filter(item => {
     const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -97,18 +109,45 @@ function GoogleSheetNews() {
 
   const allCategories = [...new Set(newsItems.flatMap(item => item.categories))].filter(Boolean).sort();
 
-  if (loading) return <div className="news-container">Loading news...</div>;
-  if (error) return (
-    <div className="news-container">
-      <h1>News from the eHealth-Hub for Cancer</h1>
-      <div style={{ color: 'red', margin: '20px 0' }}>
-        {error}
+  if (loading) {
+    return (
+      <div className="news-container">
+        <div className="loader-container">
+          <ClipLoader
+            color="#1a3e5a"
+            loading={loading}
+            size={50}
+            aria-label="Loading News"
+          />
+          <p className="loader-text">Loading News...</p>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 
+  if (error) {
+    return (
+      <div className="news-container">
+        <h1>News from the eHealth-Hub for Cancer</h1>
+        <div style={{ color: 'red', margin: '20px 0' }}>
+          {error}
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="news-container">
+      {filterLoading && (
+        <div className="loading-overlay">
+          <ClipLoader
+            color="#1a3e5a"
+            loading={true}
+            size={40}
+            aria-label="Updating Results"
+          />
+        </div>
+      )}
+
       <div className="news-header">
         <h1>News from the eHealth-Hub for Cancer</h1>
         
@@ -145,12 +184,11 @@ function GoogleSheetNews() {
                 key={category}
                 className={`category-tag ${selectedCategories.includes(category) ? 'active' : ''}`}
                 onClick={() => {
-                  setSelectedCategories(prev =>
-                    prev.includes(category)
-                      ? prev.filter(c => c !== category)
-                      : [...prev, category]
+                  handleFilterChange(
+                    selectedCategories.includes(category)
+                      ? selectedCategories.filter(c => c !== category)
+                      : [...selectedCategories, category]
                   );
-                  setCurrentPage(1);
                 }}
               >
                 {category} ({newsItems.filter(item => item.categories.includes(category)).length})
@@ -168,7 +206,15 @@ function GoogleSheetNews() {
             onClick={() => navigate(`/news/${item.slug}`)}
           >
             <div className="news-image-container">
-              <img src={item.image} alt={item.title} className="news-image" />
+              <img 
+                src={item.image} 
+                alt={item.title} 
+                className="news-image"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = '/placeholder-image.jpg';
+                }}
+              />
               <div className="news-categories">
                 {item.categories.map(category => (
                   <span key={category} className="category-label">
