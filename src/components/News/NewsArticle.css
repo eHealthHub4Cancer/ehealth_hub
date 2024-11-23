@@ -2426,3 +2426,17 @@
     justify-content: center;
   }
 }
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.loader-container p {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #4a4a4a;
+}
