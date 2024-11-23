@@ -6,7 +6,7 @@ import HomePage from "./components/HomePage";
 import About from './components/About';
 import People from './components/People';
 import Projects from './components/Projects';
-import News from './components/News';
+// import News from './components/News';
 import Talks from "./components/Talks";
 import Publications from './components/Publications';
 import Index from "./components/People/index";
@@ -41,8 +41,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/people" element={<People />} />
             <Route path="/projects" element={<Projects />} />
-            <Route path="/news" element={<News />} />
-            <Route path="/test" element={<GoogleSheetNews />} />
+            <Route path="/news" element={<GoogleSheetNews />} />
             <Route path="/news/:slug" element={<NewsArticle />} />
             <Route path="/people/:slug" element={<Index />} />
             <Route path="/news/gender-inequality-study" element={<GenderInequalityStudy />} />
