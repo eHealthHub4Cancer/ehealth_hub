@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/ehealth_hub/static/css/main.cabb29a0.css",
-    "main.js": "/ehealth_hub/static/js/main.fc8fc3d5.js",
+    "main.css": "/ehealth_hub/static/css/main.f8ae3848.css",
+    "main.js": "/ehealth_hub/static/js/main.28f028a6.js",
     "static/js/453.6411f75a.chunk.js": "/ehealth_hub/static/js/453.6411f75a.chunk.js",
     "static/media/LDCRC_BuildingTogether_April_2023.jpeg": "/ehealth_hub/static/media/LDCRC_BuildingTogether_April_2023.d6e9dc07a944ad211b5e.jpeg",
     "static/media/JeremiahAkintomide.png": "/ehealth_hub/static/media/JeremiahAkintomide.2b23fb371aa3457fa390.png",
@@ -13,7 +13,6 @@
     "static/media/postdoc.png": "/ehealth_hub/static/media/postdoc.c8071d11182fe9f8f47b.png",
     "static/media/AICRI_launch.jpeg": "/ehealth_hub/static/media/AICRI_launch.83330f35286de94abb6e.jpeg",
     "static/media/NinaOrfali.png": "/ehealth_hub/static/media/NinaOrfali.cd86c778e9db9c517328.png",
-    "static/media/2022_HRB_Conference.png": "/ehealth_hub/static/media/2022_HRB_Conference.f0334a4856b9d5cb52cb.png",
     "static/media/2023_Belfast Photo 1.jpeg": "/ehealth_hub/static/media/2023_Belfast Photo 1.d3925174e925eb26cfc3.jpeg",
     "static/media/QUB_logo.jpg": "/ehealth_hub/static/media/QUB_logo.c99cde69bcc13566a734.jpg",
     "static/media/DELL.PNG": "/ehealth_hub/static/media/DELL.58dd732f2620408c3364.PNG",
@@ -24,7 +23,6 @@
     "static/media/eHealthHub_logo.png": "/ehealth_hub/static/media/eHealthHub_logo.f62372b947784763e8f9.png",
     "static/media/NSRP_Logo.png": "/ehealth_hub/static/media/NSRP_Logo.b6a0400f48b6113f4940.png",
     "static/media/simonmcdade.png": "/ehealth_hub/static/media/simonmcdade.dd6f84d39a1ca1209092.png",
-    "static/media/lungcancer.jpg": "/ehealth_hub/static/media/lungcancer.d4b1df80cecfb51f46dc.jpg",
     "static/media/Computer_Stockphoto.PNG": "/ehealth_hub/static/media/Computer_Stockphoto.37b9c65d341945a446b4.PNG",
     "static/media/KatieCrowley.png": "/ehealth_hub/static/media/KatieCrowley.606cd4bb794da308e7e2.png",
     "static/media/aedinculhane.png": "/ehealth_hub/static/media/aedinculhane.1cb521eb1ea4b46e033e.png",
@@ -41,12 +39,12 @@
     "static/media/slick.ttf": "/ehealth_hub/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/ehealth_hub/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/ehealth_hub/index.html",
-    "main.cabb29a0.css.map": "/ehealth_hub/static/css/main.cabb29a0.css.map",
-    "main.fc8fc3d5.js.map": "/ehealth_hub/static/js/main.fc8fc3d5.js.map",
+    "main.f8ae3848.css.map": "/ehealth_hub/static/css/main.f8ae3848.css.map",
+    "main.28f028a6.js.map": "/ehealth_hub/static/js/main.28f028a6.js.map",
     "453.6411f75a.chunk.js.map": "/ehealth_hub/static/js/453.6411f75a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.cabb29a0.css",
-    "static/js/main.fc8fc3d5.js"
+    "static/css/main.f8ae3848.css",
+    "static/js/main.28f028a6.js"
   ]
 }
