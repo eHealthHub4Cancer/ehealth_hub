@@ -11,6 +11,9 @@ import {
     Clock, 
     Building,
     Users,
+    MonitorPlay,
+    UserCheck, 
+    Microscope 
 } from 'lucide-react';
 import { ClipLoader } from 'react-spinners';
 import './NewsArticle.css';
@@ -474,6 +477,111 @@ function NewsArticle() {
             </div>
           </>
         );
+
+        case 'presentation':
+            return (
+                <>
+                    <div className="article-header">
+                        <div className="article-categories">
+                            {article.categories.map(category => (
+                                <span key={category} className="category-tag">
+                                    {category}
+                                </span>
+                            ))}
+                        </div>
+                        <h1>{article.title}</h1>
+                        <div className="article-meta">
+                            <div className="meta-item">
+                                <Calendar size={18} />
+                                <span>{article.date}</span>
+                            </div>
+                            <div className="meta-item">
+                                <User size={18} />
+                                <span>{article.author}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="video-banner">
+                        <img 
+                            src={article.image} 
+                            alt={article.title}
+                            className="video-banner-image"
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = '/placeholder-image.jpg';
+                            }}
+                        />
+                    </div>
+
+                    <div className="article-content">
+                        <div className="presentation-summary">
+                            <h2>Presentation Overview</h2>
+                            <p>{article.excerpt}</p>
+                        </div>
+
+                        {article.eventDetails && (
+                            <div className="speaker-info">
+                                <div className="speaker-credentials">
+                                    <h3>About the Speaker</h3>
+                                    <p>{`${article.eventDetails.Speaker}, ${article.eventDetails.Role}`}</p>
+                                </div>
+                            </div>
+                        )}
+
+                        {article.keyPoints && article.keyPoints.length > 0 && (
+                            <div className="talk-highlights">
+                                <h2>Key Topics Covered</h2>
+                                <div className="highlights-grid">
+                                    {article.keyPoints.map((point, index) => {
+                                        const [title, description] = point.split(':');
+                                        return (
+                                            <div key={index} className="highlight-card">
+                                                <div className="highlight-icon">
+                                                    {index === 0 && <MonitorPlay size={24} />}
+                                                    {index === 1 && <UserCheck size={24} />}
+                                                    {index === 2 && <Microscope size={24} />}
+                                                </div>
+                                                <div className="highlight-content">
+                                                    <h3>{title}</h3>
+                                                    <p>{description}</p>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+
+                        {article.content && article.content.length > 0 && (
+                            <div className="presentation-details">
+                                {article.content.map((paragraph, index) => (
+                                    <p key={index}>{paragraph}</p>
+                                ))}
+                            </div>
+                        )}
+
+                        {article.relatedLinks && article.relatedLinks.length > 0 && (
+                            <div className="program-link">
+                                <h2>{article.eventDetails['Event Title'] || 'Learn More'}</h2>
+                                {article.relatedLinks.map((link, index) => (
+                                    <a
+                                        key={index}
+                                        href={ensureValidUrl(link.url)}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="program-button"
+                                        onClick={(e) => handleExternalLink(e, link.url)}
+                                    >
+                                        <span>{link.title}</span>
+                                        <ExternalLink size={16} />
+                                    </a>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </>
+            );
 
       default:
         return null;
