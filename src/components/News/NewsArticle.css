@@ -739,7 +739,7 @@
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s ease;
-    margin: 20px 0;
+    margin: 20px 10px;
   }
   
   .learn-more-button:hover {
@@ -936,6 +936,7 @@
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s ease;
+    margin-top: 20px;
   }
   
   .program-button:hover {
@@ -1297,6 +1298,7 @@
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s ease;
+    margin: 20px 10px;
   }
   
   .conference-link-button:hover {
