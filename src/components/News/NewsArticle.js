@@ -585,119 +585,133 @@ function NewsArticle() {
             );
 
             case 'conference':
-                return (
-                    <>
-                        <div className="article-header">
-                            <div className="article-categories">
-                                {article.categories.map(category => (
-                                    <span key={category} className="category-tag">
-                                        {category}
-                                    </span>
-                                ))}
-                            </div>
-                            <h1>{article.title}</h1>
-                            <div className="article-meta">
-                                <div className="meta-item">
-                                    <Calendar size={18} />
-                                    <span>{article.date}</span>
-                                </div>
-                                <div className="meta-item">
-                                    <User size={18} />
-                                    <span>{article.author}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="conference-image-container">
-                            <img 
-                                src={article.image}
-                                alt={article.title}
-                                className="conference-main-image"
-                                onError={(e) => {
-                                    e.target.onerror = null;
-                                    e.target.src = '/placeholder-image.jpg';
-                                }}
-                            />
-                            {article.eventDetails['Image Caption'] && (
-                                <div className="image-overlay">
-                                    <span>{article.eventDetails['Image Caption']}</span>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="event-details-grid">
-                            <div className="event-detail-card">
-                                <MapPin size={24} />
-                                <div>
-                                    <h3>Location</h3>
-                                    <p>{article.eventDetails.Location}</p>
-                                </div>
-                            </div>
-                            <div className="event-detail-card">
-                                <Calendar size={24} />
-                                <div>
-                                    <h3>Date</h3>
-                                    <p>{article.eventDetails.Date}</p>
-                                </div>
-                            </div>
-                            <div className="event-detail-card">
-                                <Globe size={24} />
-                                <div>
-                                    <h3>Type</h3>
-                                    <p>{article.eventDetails.Type}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="article-content">
-                            <div className="symposium-overview">
-                                <h2>Symposium Overview</h2>
-                                {article.content.map((paragraph, index) => (
-                                    <p key={index}>{paragraph}</p>
-                                ))}
-                            </div>
-
-                            {article.keyPoints && article.keyPoints.length > 0 && (
-                                <div className="conference-highlights">
-                                    <div className="highlights-container">
-                                        <h2>Key Aspects</h2>
-                                        <div className="highlights-grid">
-                                            {article.keyPoints.map((point, index) => {
-                                                const [title, description] = point.split(':');
-                                                return (
-                                                    <div key={index} className="highlight-item">
-                                                        <h3>{title}</h3>
-                                                        <p>{description}</p>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-
-                            {article.relatedLinks && article.relatedLinks.length > 0 && (
-                                <div className="conference-link-section">
-                                    <h2>Learn More About {article.title}</h2>
-                                    <br/>
-                                    {article.relatedLinks.map((link, index) => (
-                                        <a
-                                            key={index}
-                                            href={ensureValidUrl(link.url)}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="conference-link-button"
-                                            onClick={(e) => handleExternalLink(e, link.url)}
-                                        >
-                                            <span>{link.title}</span>
-                                            <ExternalLink size={16} />
-                                        </a>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </>
-                );
+              return (
+                  <>
+                      <div className="article-header">
+                          <div className="article-categories">
+                              {article.categories.map(category => (
+                                  <span key={category} className="category-tag">
+                                      {category}
+                                  </span>
+                              ))}
+                          </div>
+                          <h1>{article.title}</h1>
+                          <div className="article-meta">
+                              <div className="meta-item">
+                                  <Calendar size={18} />
+                                  <span>{article.date}</span>
+                              </div>
+                              <div className="meta-item">
+                                  <User size={18} />
+                                  <span>{article.author}</span>
+                              </div>
+                          </div>
+                      </div>
+          
+                      <div className="conference-image-container">
+                          <img 
+                              src={article.image}
+                              alt={article.title}
+                              className="conference-main-image"
+                              onError={(e) => {
+                                  e.target.onerror = null;
+                                  e.target.src = '/placeholder-image.jpg';
+                              }}
+                          />
+                          {article.eventDetails['Image Caption'] && (
+                              <div className="image-overlay">
+                                  <span>{article.eventDetails['Image Caption']}</span>
+                              </div>
+                          )}
+                      </div>
+          
+                      <div className="event-details-grid">
+                          <div className="event-detail-card">
+                              <MapPin size={24} />
+                              <div>
+                                  <h3>Location</h3>
+                                  <p>{article.eventDetails.Location}</p>
+                              </div>
+                          </div>
+                          <div className="event-detail-card">
+                              <Calendar size={24} />
+                              <div>
+                                  <h3>Date</h3>
+                                  <p>{article.eventDetails.Date}</p>
+                              </div>
+                          </div>
+                          <div className="event-detail-card">
+                              <Globe size={24} />
+                              <div>
+                                  <h3>Type</h3>
+                                  <p>{article.eventDetails.Type}</p>
+                              </div>
+                          </div>
+                      </div>
+          
+                    <div className="article-content">
+                      <div className="symposium-overview">
+                        <h2>Symposium Overview</h2>
+                        {article.content.map((paragraph, index) => {
+                            // Check if the paragraph contains a pipe character
+                            if (paragraph.includes('|')) {
+                                return paragraph.split('|').map((subParagraph, subIndex) => (
+                                    <p key={`${index}-${subIndex}`} style={{ marginBottom: '1.5em' }}>
+                                        {subParagraph.trim()}
+                                    </p>
+                                ));
+                            } else {
+                                return (
+                                    <p key={index} style={{ marginBottom: '1.5em' }}>
+                                        {paragraph}
+                                    </p>
+                                );
+                            }
+                        })}
+                      </div>
+          
+                          {article.keyPoints && article.keyPoints.length > 0 && (
+                              <div className="conference-highlights">
+                                  <div className="highlights-container">
+                                      <h2>Key Aspects</h2>
+                                      <div className="highlights-grid">
+                                          {article.keyPoints.map((point, index) => {
+                                              const [title, description] = point.split(':');
+                                              return (
+                                                  <div key={index} className="highlight-item">
+                                                      <h3>{title}</h3>
+                                                      <p>{description}</p>
+                                                  </div>
+                                              );
+                                          })}
+                                      </div>
+                                  </div>
+                              </div>
+                          )}
+          
+                          {article.relatedLinks && article.relatedLinks.length > 0 && (
+                              <div className="conference-link-section">
+                                  <h2>Learn More About {article.title}</h2>
+                                  <br/>
+                                  {article.relatedLinks.map((link, index) => (
+                                      <a
+                                          key={index}
+                                          href={ensureValidUrl(link.url)}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="conference-link-button"
+                                          onClick={(e) => handleExternalLink(e, link.url)}
+                                      >
+                                          <span>{link.title}</span>
+                                          <ExternalLink size={16} />
+                                      </a>
+                                  ))}
+                              </div>
+                          )}
+                      </div>
+                  </>
+              );
+          
 
       default:
         return null;
