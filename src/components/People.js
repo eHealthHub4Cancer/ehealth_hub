@@ -8,7 +8,7 @@ function People() {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedFilters, setSelectedFilters] = useState([]);
-    const itemsPerPage = 5; // set the number of people per page.
+    const itemsPerPage = 10; // set the number of people per page.
 
     // Add a unique person_id to each person in PeopleData.people
     const peopleWithIds = PeopleData.people.map((person, index) => ({
