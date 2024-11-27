@@ -2443,3 +2443,23 @@
   font-size: 1rem;
   color: #4a4a4a;
 }
+
+.normal-spacing {
+  margin-bottom: 1em;
+}
+
+.large-spacing {
+  margin-bottom: 3em !important; /* Increased from 2.5em for more noticeable effect */
+}
+
+/* For grid items */
+.highlights-grid .large-spacing {
+  margin-bottom: 3em !important;
+}
+
+/* For link buttons */
+.conference-link-button.large-spacing,
+.program-button.large-spacing,
+.learn-more-button.large-spacing {
+  margin-bottom: 2em !important;
+}
