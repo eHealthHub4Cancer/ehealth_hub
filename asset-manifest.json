@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/ehealth_hub/static/css/main.0e491196.css",
-    "main.js": "/ehealth_hub/static/js/main.07e10a1b.js",
+    "main.css": "/ehealth_hub/static/css/main.7ff98d90.css",
+    "main.js": "/ehealth_hub/static/js/main.b7dd5034.js",
     "static/js/453.6411f75a.chunk.js": "/ehealth_hub/static/js/453.6411f75a.chunk.js",
     "static/media/LDCRC_BuildingTogether_April_2023.jpeg": "/ehealth_hub/static/media/LDCRC_BuildingTogether_April_2023.d6e9dc07a944ad211b5e.jpeg",
     "static/media/JeremiahAkintomide.png": "/ehealth_hub/static/media/JeremiahAkintomide.2b23fb371aa3457fa390.png",
@@ -39,12 +39,12 @@
     "static/media/slick.ttf": "/ehealth_hub/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/ehealth_hub/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/ehealth_hub/index.html",
-    "main.0e491196.css.map": "/ehealth_hub/static/css/main.0e491196.css.map",
-    "main.07e10a1b.js.map": "/ehealth_hub/static/js/main.07e10a1b.js.map",
+    "main.7ff98d90.css.map": "/ehealth_hub/static/css/main.7ff98d90.css.map",
+    "main.b7dd5034.js.map": "/ehealth_hub/static/js/main.b7dd5034.js.map",
     "453.6411f75a.chunk.js.map": "/ehealth_hub/static/js/453.6411f75a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0e491196.css",
-    "static/js/main.07e10a1b.js"
+    "static/css/main.7ff98d90.css",
+    "static/js/main.b7dd5034.js"
   ]
 }
