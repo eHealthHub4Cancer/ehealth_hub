@@ -50,6 +50,7 @@
     padding: 8px 16px;
     background: #f8fafc;
     border: none;
+    text-transform: none !important;
     border-radius: 20px;
     color: #435c73;
     cursor: pointer;

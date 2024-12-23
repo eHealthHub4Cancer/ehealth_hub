@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 import { Home, Mail, ChevronRight, ExternalLink, Twitter, Github, Linkedin } from 'lucide-react';
 import './Profile.css';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import API_ENDPOINTS from "../api/config";
+import DOMPurify from "dompurify";
+
+
 
   const Index = () => {
   const { slug } = useParams();
@@ -17,8 +22,10 @@ import { useParams } from 'react-router-dom';
 
       // Fetch profile data based on the slug
       try {
-        const data = require(`./${slug}.json`);
-        setProfile(data.profile);
+        const response = await axios.get(`${API_ENDPOINTS.PEOPLE_INFORMATION}${slug}/`, { withCredentials: true });
+        const data = response.data;
+        setProfile(data);
+        console.log(data)
         // console.log(data.profile)
       } catch (error) {
         console.error('Error fetching profile:', error);
@@ -33,11 +40,12 @@ import { useParams } from 'react-router-dom';
   }
 
   const {
-    name, image,
-    institution, role_badges,
+    people, image,
+    full_name,
+    institution, role_badge,
     homepage_url, email,
     affiliations,
-    bio, expertise,
+    about_user, areas_of_expertise,
     research_focus,
     research_interests, memberships,
     research_areas, qualifications,
@@ -55,7 +63,7 @@ import { useParams } from 'react-router-dom';
         <ChevronRight size={16} />
         <Link to="/people">Directory</Link>
         <ChevronRight size={16} />
-        <span>{name}</span>
+        <span>{people}</span>
       </nav>
 
       {/* Hero Section */}
@@ -63,24 +71,25 @@ import { useParams } from 'react-router-dom';
         <div className="hero-content">
           {image && (
             <div className="hero-image-wrapper hero-left">
-              <img src={require(`../../Images/People/${image}`)} alt={name} className="hero-image" />
+              <img src={image} alt={people} className="hero-image" />
             </div>
           )}
 
           <div className="hero-right">
-            <h1>{name}</h1>
-            {role_badges && (
+            <h1>{full_name}</h1>
+            {role_badge && (
               <div className="role-badges">
-                {role_badges.map((badge, index) => (
+                {role_badge.map((badge, index) => (
                   <span key={index} className={`role-badge ${badge.toLowerCase().replace(/ /g, '-')}`}>{badge}</span>
                 ))}
               </div>
+
             )}
 
             {institution && (
               <div className="institution-info">
                 <h2>Institution</h2>
-                <p>{institution.title}, {institution.location}</p>
+                <p>{institution}</p>
               </div>
             )}
 
@@ -129,76 +138,26 @@ import { useParams } from 'react-router-dom';
           </div>
         </div>
       </div>
-
       {/* Main Content Sections */}
       <div className="profile-sections">
         {/* About Section */}
-        {bio && (
+        {about_user && (
           <section className="content-section about-section">
             <div className="section-header">
               <h2>About</h2>
               <div className="section-line"></div>
             </div>
             <div className="section-content">
-              {bio.map((paragraph, index) => (
-                <p key={index} className="bio-paragraph">{paragraph}</p>
-              ))}
+              <div 
+                className="bio-paragraph" 
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(about_user) }}>
+              </div>
 
-             {supervisors && (
-                <div className="affiliations-list">
-                  <h3>Supervisors</h3>
-                  <ul>
-                    {supervisors.map((affiliation, index) => (
-                      <li key={index}>{affiliation}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {affiliations && (
-                <div className="affiliations-list">
-                  <h3>Current Positions</h3>
-                  <ul>
-                    {affiliations.map((affiliation, index) => (
-                      <li key={index}>{affiliation}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {research_focus && (
-                <div className="research-focus-section">
-                    <h3>Research focus</h3>
-                    <div className="research-focus-grid">
-                    {research_focus.map((focus, index) => (
-                    <div key={index} className="research-focus-card">
-                        <h4>{focus.title}</h4>
-                        <p>{focus.description}</p>
-                    </div>
-                    ))}
-                    </div>
-                </div>
-              )}
-
-            {research_areas &&
-            <div className="research-areas-section">
-            <h3>Key Research Areas</h3>
-            <div className="research-areas-grid">
-                {research_areas.map((area, index) => (
-                <div key={index} className="research-area-card">
-                    <h4>{area.title}</h4>
-                    <p>{area.description}</p>
-                </div>
-                ))}
-            </div>
-            </div>
-            }
-
-            {expertise &&
+              {areas_of_expertise &&
             <div className="expertise-section">
             <h3>Areas of Expertise</h3>
             <ul className="expertise-list">
-              {expertise.map((item, index) => (
+              {areas_of_expertise.map((item, index) => (
                 <li key={index} className="expertise-item">
                   {item}
                 </li>
@@ -206,7 +165,38 @@ import { useParams } from 'react-router-dom';
             </ul>
           </div>
             }
-
+             {research_areas &&
+            <div className="research-areas-section">
+            <h3>Key Research Areas</h3>
+            <div className="research-areas-grid">
+                {research_areas.map((area, index) => (
+                <div key={index} className="research-area-card">
+                    <h4>{area.name}</h4>
+                    <p>{area.description}</p>
+                </div>
+                ))}
+            </div>
+            </div>
+            }
+            {key_initiatives &&
+            <div className="key-initiatives">
+              <h3>Key Initiatives</h3>
+              <div className="initiatives-grid">
+                {key_initiatives.map((initiative, index) => (
+                  <a 
+                    key={index}
+                    href={initiative.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="initiative-card"
+                  >
+                    <span className="initiative-title">{initiative.name}</span>
+                    <ExternalLink size={16} />
+                  </a>
+                ))}
+              </div>
+            </div>
+            }
             <div className='credentials-section'>
                 {qualifications &&
                 <div className="qualifications">
@@ -230,61 +220,11 @@ import { useParams } from 'react-router-dom';
                 </div>
                 }
             </div>
-            
-            {positions &&
-            <div className="positions-section">
-              <h3>Current Positions</h3>
-              <ul className="positions-list">
-                {positions.map((position, index) => (
-                  <li key={index} className="position-item">
-                    {position}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            }
-            {key_initiatives &&
-            <div className="key-initiatives">
-              <h3>Key Initiatives</h3>
-              <div className="initiatives-grid">
-                {key_initiatives.map((initiative, index) => (
-                  <a 
-                    key={index}
-                    href={initiative.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="initiative-card"
-                  >
-                    <span className="initiative-title">{initiative.title}</span>
-                    <ExternalLink size={16} />
-                  </a>
-                ))}
-              </div>
-            </div>
-            }
-              {associated_institutions && (
-                <div className="external-links">
-                  <h3>Associated Institutions</h3>
-                  <div className="institution-links">
-                    {associated_institutions.map((institution, index) => (
-                      <a 
-                        key={index}
-                        href={institution.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {institution.name}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </section>
-        )}
-
-        {/* Research Interests Section */}
-        {research_interests && (
+          </div>
+        </section>
+      )}
+      {/* Research Interests Section */}
+      {research_interests && (
           <section className="content-section interests-section">
             <div className="section-header">
               <h2>Research Interests</h2>
@@ -308,8 +248,7 @@ import { useParams } from 'react-router-dom';
             </div>
           </section>
         )}
-      </div>
-
+      </div> 
       {/* Footer Navigation */}
       <div className="profile-footer">
         <Link to="/people" className="back-to-directory">

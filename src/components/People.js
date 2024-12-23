@@ -1,23 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Filter } from 'lucide-react';
 import './People.css';
-import PeopleData from './People/people.json';
+import API_ENDPOINTS from "./api/config";
+import axios from 'axios';
 
 function People() {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedFilters, setSelectedFilters] = useState([]);
     const itemsPerPage = 5; // set the number of people per page.
+    const [people, setPeople] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    // add people from the axios request to the state.
+    useEffect(() => {
+      const fetchPeople = async () => {
+        try {
+          const response = await axios.get(API_ENDPOINTS.PEOPLE, { withCredentials: true });
+          const data = response.data;
+          // Add a unique person_id to each person in PeopleData.people
+          const peopleWithIds = data.map((person, index) => ({
+              ...person,
+              person_id: index + 1
+          }));
+          setPeople(peopleWithIds);
+          console.log(peopleWithIds);
+          console.log(data.tags);
+        } catch (error) {
+          setError(error.message); // Handle any errors
+        } finally {
+          setLoading(false); // Set loading to false once data is fetched
+        }
+      };
 
-    // Add a unique person_id to each person in PeopleData.people
-    const peopleWithIds = PeopleData.people.map((person, index) => ({
-        ...person,
-        person_id: index + 1
-    }));
-
+      fetchPeople();
+    }, []); // Empty dependency array ensures this runs once when the component mounts
+  
     // get all the unique tags for filter options.
-    const allTags = [...new Set(peopleWithIds.flatMap(person => person.tags))];
+    const allTags = [...new Set(people.flatMap(person => person.tags))];
     
     const toggleFilter = (tag) => {
         setSelectedFilters(prev => 
@@ -28,12 +49,12 @@ function People() {
         setCurrentPage(1); // reset to the first page on filter change.
     };
 
-    const filteredPeople = peopleWithIds.filter(person => 
+    const filteredPeople = people.filter(person => 
         selectedFilters.length === 0 || selectedFilters.some(tag => person.tags.includes(tag))
     );
 
     const getTagCount = (tag) => {
-        return peopleWithIds.filter(person => person.tags.includes(tag)).length;
+        return people.filter(person => person.tags.includes(tag)).length;
     };
 
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -61,7 +82,7 @@ function People() {
                   className={`filter-tag ${selectedFilters.includes(tag) ? 'active' : ''}`}
                   onClick={() => toggleFilter(tag)}
                 >
-                  {tag.charAt(0) + tag.slice(1).toLowerCase()} ({getTagCount(tag)})
+                  {tag.charAt(0) + tag.slice(1)} ({getTagCount(tag)})
                 </button>
               ))}
             </div>
@@ -76,18 +97,18 @@ function People() {
               onClick={() => navigate(`/people/${person.slug}`)}
             >
               <div className="card-image-container">
-                <img     src={require(`../Images/People/${person.image}`)} alt={person.name} className="card-image" />
+                <img src={person.image} alt={person.full_name} className="card-image" />
               </div>
               <div className="card-content">
-                <h3>{person.name}</h3>
+                <h3>{person.full_title_name}</h3>
                 <div className="card-tags">
                   {person.tags.map(tag => (
                     <span key={tag} className="tag">
-                      {tag.toLowerCase()}
+                      {tag}
                     </span>
                   ))}
                 </div>
-                <p className="card-title">{person.title}</p>
+                <p className="card-title">{person.association}</p>
               </div>
             </div>
           ))}

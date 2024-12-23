@@ -231,11 +231,12 @@
   margin-bottom: 20px;
   font-size: 0.950rem;
   font-weight: 500;
+  padding-bottom: 20px;
 }
 
-.bio-paragraph:last-child {
+/* .bio-paragraph:last-child {
   margin-bottom: 0;
-}
+} */
 
 /* Research Interests */
 .interests-grid {
@@ -244,6 +245,31 @@
   gap: 10px;
   padding: 20px;
 }
+
+.bio-paragraph ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.bio-paragraph li {
+  color: #1f2a34;
+  padding: 8px 0;
+  padding-left: 24px;
+  position: relative;
+  font-weight: 500;
+}
+
+.bio-paragraph li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #435c73;
+  font-size: 1.2rem;
+}
+
+/* .bio-paragraph:last-child {
+  margin-bottom: 0;
+} */
 
 .interest-card {
   background: linear-gradient(135deg, #f8fafc 0%, #f0f9ff 100%);
@@ -528,6 +554,7 @@
 
 .key-initiatives {
   margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .key-initiatives h3 {
