@@ -27,10 +27,13 @@ import RTEBrainstorm from "./components/News/RTEBrainstorm";
 import LimerickPost from "./components/News/LimerickPost";
 import Postdoc from "./components/News/Postdoc";
 import ScrollToTop from "./components/ScrollToTop Component";
+import { GlobalDataProvider } from "./components/globaldatacontext";
+
 import './App.css'; 
 
 function App() {
   return (
+    <GlobalDataProvider>
     <Router basename="/">
       <ScrollToTop />
       <div className="app-container">
@@ -64,6 +67,7 @@ function App() {
         <Footer />
       </div>
     </Router>
+    </GlobalDataProvider>
   );
 }
 

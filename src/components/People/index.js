@@ -1,42 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Home, Mail, ChevronRight, ExternalLink, Twitter, Github, Linkedin } from 'lucide-react';
-import './Profile.css';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import API_ENDPOINTS from "../api/config";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Home, Mail, ChevronRight, ExternalLink, Twitter, Github, Linkedin } from "lucide-react";
+import "./Profile.css";
+import { useParams } from "react-router-dom";
 import DOMPurify from "dompurify";
+import { useGlobalData } from "../globaldatacontext";
+import Loader from "../loader";
 
-
-
-  const Index = () => {
+const Index = () => {
   const { slug } = useParams();
-  const [profile, setProfile] = useState(null);
+  const { personInformation, loading, progress, error, fetchPersonInformation } = useGlobalData();
 
+  // Fetch person information when the slug changes
   useEffect(() => {
-    const fetchProfile = async () => {
-      if (!slug) {
-        console.warn('No slug provided. Skipping profile fetch.');
-        return;
-      }
+    if (slug) {
+      fetchPersonInformation(slug);
+    }
+  }, [slug, fetchPersonInformation]);
 
-      // Fetch profile data based on the slug
-      try {
-        const response = await axios.get(`${API_ENDPOINTS.PEOPLE_INFORMATION}${slug}/`, { withCredentials: true });
-        const data = response.data;
-        setProfile(data);
-        console.log(data)
-        // console.log(data.profile)
-      } catch (error) {
-        console.error('Error fetching profile:', error);
-      }
-    };
-
-    fetchProfile();
-  }, [slug]);  
-
-  if (!profile) {
-    return <div>Loading...</div>;
+  // Handle loading and error states
+  if (loading) return <Loader percentage={progress} dataName="person" />;
+  if (error) return <p>Error: {error}</p>;
+  if (!personInformation && !loading) {
+    return <p>No data available for this person.</p>;
   }
 
   const {
@@ -44,16 +30,14 @@ import DOMPurify from "dompurify";
     full_name,
     institution, role_badge,
     homepage_url, email,
-    affiliations,
     about_user, areas_of_expertise,
-    research_focus,
     research_interests, memberships,
     research_areas, qualifications,
-    positions, key_initiatives,
-    supervisors,
-    associated_institutions,
+    key_initiatives,
     social_links
-  } = profile;
+  } = personInformation;
+
+  // console.log(profile.areas_of_expertise)
 
   return (
     <div className="profile-container">
@@ -153,7 +137,7 @@ import DOMPurify from "dompurify";
                 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(about_user) }}>
               </div>
 
-              {areas_of_expertise &&
+            {areas_of_expertise && areas_of_expertise.length > 0 &&
             <div className="expertise-section">
             <h3>Areas of Expertise</h3>
             <ul className="expertise-list">
@@ -165,7 +149,7 @@ import DOMPurify from "dompurify";
             </ul>
           </div>
             }
-             {research_areas &&
+             {research_areas && research_areas.length > 0 &&
             <div className="research-areas-section">
             <h3>Key Research Areas</h3>
             <div className="research-areas-grid">
@@ -178,7 +162,7 @@ import DOMPurify from "dompurify";
             </div>
             </div>
             }
-            {key_initiatives &&
+            {key_initiatives && key_initiatives.length > 0 &&
             <div className="key-initiatives">
               <h3>Key Initiatives</h3>
               <div className="initiatives-grid">
@@ -198,7 +182,7 @@ import DOMPurify from "dompurify";
             </div>
             }
             <div className='credentials-section'>
-                {qualifications &&
+                {qualifications && qualifications.length > 0 &&
                 <div className="qualifications">
                 <h3>Qualifications</h3>
                 <ul className="credentials-list">
@@ -209,7 +193,7 @@ import DOMPurify from "dompurify";
               </div>
                 }
 
-                {memberships &&
+                {memberships && memberships.length > 0 &&
                 <div className="memberships">
                 <h3>Professional Memberships</h3>
                 <ul className="credentials-list">
@@ -224,7 +208,7 @@ import DOMPurify from "dompurify";
         </section>
       )}
       {/* Research Interests Section */}
-      {research_interests && (
+      {research_interests && research_interests.length > 0 && (
           <section className="content-section interests-section">
             <div className="section-header">
               <h2>Research Interests</h2>
