@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.1ae8a2d9.css",
+    "main.css": "/static/css/main.c4ebb49a.css",
     "main.js": "/static/js/main.8d6c8196.js",
     "static/js/453.6411f75a.chunk.js": "/static/js/453.6411f75a.chunk.js",
     "static/media/LDCRC_BuildingTogether_April_2023.jpeg": "/static/media/LDCRC_BuildingTogether_April_2023.d6e9dc07a944ad211b5e.jpeg",
@@ -28,12 +28,12 @@
     "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/index.html",
-    "main.1ae8a2d9.css.map": "/static/css/main.1ae8a2d9.css.map",
+    "main.c4ebb49a.css.map": "/static/css/main.c4ebb49a.css.map",
     "main.8d6c8196.js.map": "/static/js/main.8d6c8196.js.map",
     "453.6411f75a.chunk.js.map": "/static/js/453.6411f75a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1ae8a2d9.css",
+    "static/css/main.c4ebb49a.css",
     "static/js/main.8d6c8196.js"
   ]
 }
