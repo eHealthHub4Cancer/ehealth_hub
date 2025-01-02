@@ -424,6 +424,10 @@
   color: #435c73;
 }
 
+.bio-paragraph li{
+  color: #2c3e4e !important;
+}
+
 /* Footer Navigation */
 .profile-footer {
   margin-top: 40px;
