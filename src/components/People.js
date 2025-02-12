@@ -10,7 +10,7 @@ function People() {
   const { people: globalPeople, loading, progress, error } = useGlobalData();
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedFilters, setSelectedFilters] = useState([]);
-  const itemsPerPage = 6; // Set the number of people per page.
+  const itemsPerPage = 100; // Set the number of people per page.
 
   // Ensure globalPeople is defined before proceeding
   const people = globalPeople || [];
