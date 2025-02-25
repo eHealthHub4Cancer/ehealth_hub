@@ -17,6 +17,11 @@ function People() {
   // Get all unique tags for filter options
   const allTags = [...new Set(people.flatMap((person) => person.tags || []))];
 
+  // Function to count occurrences of each tag
+  const getTagCount = (tag) => {
+    return people.filter((person) => person.tags?.includes(tag)).length;
+  };
+
   const toggleFilter = (tag) => {
     setSelectedFilters((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
@@ -60,7 +65,7 @@ function People() {
                 onClick={() => toggleFilter(tag)}
                 aria-pressed={selectedFilters.includes(tag)}
               >
-                {tag.charAt(0).toUpperCase() + tag.slice(1)}
+                {tag.charAt(0).toUpperCase() + tag.slice(1)} ({getTagCount(tag)})
               </button>
             ))}
           </div>
