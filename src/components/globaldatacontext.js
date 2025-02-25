@@ -14,34 +14,27 @@ export const GlobalDataProvider = ({ children }) => {
   const simulateProgressiveFetch = useCallback(async (fetchFunction) => {
     const totalSteps = 5;
     let result = null;
-  
     try {
-      // Perform the fetch outside the loop to decouple progress simulation
       const fetchPromise = fetchFunction();
-  
       for (let step = 1; step <= totalSteps; step++) {
-        await new Promise((resolve) => setTimeout(resolve, 200)); // Simulate delay
-        setProgress((prev) => Math.min(prev + 100 / totalSteps, 100)); // Update progress incrementally
-  
+        await new Promise((resolve) => setTimeout(resolve, 200));
+        setProgress((prev) => Math.min(prev + 100 / totalSteps, 100));
         if (step === totalSteps || result) {
-          result = await fetchPromise; // Wait for the fetch to complete
+          result = await fetchPromise;
         }
       }
     } catch (error) {
       throw error;
     }
-  
     return result;
   }, []);
-  
 
   // Fetch the list of people on initialization
   useEffect(() => {
     const fetchGlobalData = async () => {
       setLoading(true);
       setProgress(0);
-      setError(null); // Reset error
-
+      setError(null);
       try {
         const peopleData = await simulateProgressiveFetch(getPeople);
         setPeople(peopleData);
@@ -51,28 +44,33 @@ export const GlobalDataProvider = ({ children }) => {
         setLoading(false);
       }
     };
-
     fetchGlobalData();
   }, [simulateProgressiveFetch]);
 
-  // Fetch individual person information by slug
+  // Fetch individual person information by slug.
+  // If a 404 error is encountered, we simply set personInformation to null.
   const fetchPersonInformation = useCallback(async (slug) => {
     setLoading(true);
     setProgress(0);
-    setError(null); // Reset error
-
+    setError(null);
     try {
       const personData = await simulateProgressiveFetch(() =>
         getPersonInformation(slug)
       );
       setPersonInformation(personData);
     } catch (err) {
-      setError(err.message);
+      if (err.message.includes("404")) {
+        // Treat 404 as "no data" rather than an error.
+        setPersonInformation(null);
+      } else {
+        setError(err.message);
+      }
     } finally {
       setLoading(false);
     }
   }, [simulateProgressiveFetch]);
 
+  // Expose the context values including fetchPersonInformation.
   return (
     <GlobalDataContext.Provider
       value={{
