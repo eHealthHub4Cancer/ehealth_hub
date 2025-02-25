@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Filter } from "lucide-react";
 import "./People.css";
-import { useGlobalData } from "./globaldatacontext"; // Import the hook
+import { useGlobalData } from "./globaldatacontext";
 import Loader from "./loader";
 
 function People() {
   const navigate = useNavigate();
   const { people: globalPeople, loading, progress, error } = useGlobalData();
-  const [currentPage, setCurrentPage] = useState(1);
+  const [visibleCount, setVisibleCount] = useState(12); // Start with 12 people
   const [selectedFilters, setSelectedFilters] = useState([]);
-  const itemsPerPage = 100; // Set the number of people per page.
 
   // Ensure globalPeople is defined before proceeding
   const people = globalPeople || [];
@@ -22,7 +21,6 @@ function People() {
     setSelectedFilters((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
-    setCurrentPage(1); // Reset to the first page on filter change.
   };
 
   const filteredPeople = people.filter(
@@ -31,18 +29,15 @@ function People() {
       selectedFilters.some((tag) => person.tags?.includes(tag))
   );
 
-  const getTagCount = (tag) => {
-    return people.filter((person) => person.tags?.includes(tag)).length;
+  // Show only up to the current `visibleCount`
+  const visiblePeople = filteredPeople.slice(0, visibleCount);
+
+  // Load More function
+  const loadMore = () => {
+    setVisibleCount((prev) => prev + 12); // Increase by 12 each time
   };
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredPeople.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(filteredPeople.length / itemsPerPage);
-
-  const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
-
-  if (loading) return <Loader percentage={progress} dataName="people"/>;
+  if (loading) return <Loader percentage={progress} dataName="people" />;
   if (error) return <p>Error: {error}</p>;
   if (!people.length) return <p>No people data available.</p>;
 
@@ -65,7 +60,7 @@ function People() {
                 onClick={() => toggleFilter(tag)}
                 aria-pressed={selectedFilters.includes(tag)}
               >
-                {tag.charAt(0).toUpperCase() + tag.slice(1)} ({getTagCount(tag)})
+                {tag.charAt(0).toUpperCase() + tag.slice(1)}
               </button>
             ))}
           </div>
@@ -73,8 +68,8 @@ function People() {
       </div>
 
       <div className="people-grid">
-        {currentItems.length > 0 ? (
-          currentItems.map((person) => (
+        {visiblePeople.length > 0 ? (
+          visiblePeople.map((person) => (
             <div
               key={person.person_id || person.slug}
               className="person-card"
@@ -105,19 +100,12 @@ function People() {
         )}
       </div>
 
-      {/* Pagination Controls */}
-      {totalPages > 1 && (
-        <div className="pagination">
-          {Array.from({ length: totalPages }, (_, i) => (
-            <button
-              key={i + 1}
-              className={`pagination-button ${currentPage === i + 1 ? "active" : ""}`}
-              onClick={() => handlePageChange(i + 1)}
-              aria-current={currentPage === i + 1 ? "page" : undefined}
-            >
-              {i + 1}
-            </button>
-          ))}
+      {/* Load More Button */}
+      {visibleCount < filteredPeople.length && (
+        <div className="load-more-container">
+          <button onClick={loadMore} className="load-more-button">
+            Load More
+          </button>
         </div>
       )}
     </div>
