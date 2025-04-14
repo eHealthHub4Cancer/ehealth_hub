@@ -1,0 +1,401 @@
+/* src/components/AdminCalendar.css */
+.admin-calendar-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+  }
+  
+  /* Header styling */
+  .admin-header {
+    background-color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .admin-header h1 {
+    color: #3066BE;
+    font-size: 1.8rem;
+    margin: 0;
+  }
+  
+  .logout-button {
+    background-color: transparent;
+    border: 1px solid #dc3545;
+    color: #dc3545;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+  
+  .logout-button:hover {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  /* Main content layout */
+  .admin-content {
+    display: flex;
+    flex: 1;
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  /* Sidebar styling */
+  .admin-sidebar {
+    width: 280px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    align-self: flex-start;
+  }
+  
+  .sidebar-section {
+    margin-bottom: 25px;
+  }
+  
+  .sidebar-section h3 {
+    color: #333;
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .add-event-button {
+    width: 100%;
+    background-color: #3066BE;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+  }
+  
+  .add-event-button:hover {
+    background-color: #2553a0;
+  }
+  
+  .category-list, .instruction-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .category-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .category-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .category-label {
+    color: #444;
+  }
+  
+  .instruction-list li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 8px;
+    color: #555;
+    font-size: 0.9rem;
+  }
+  
+  .instruction-list li:before {
+    content: '•';
+    position: absolute;
+    left: 5px;
+    color: #3066BE;
+  }
+  
+  /* Calendar main area */
+  .calendar-main {
+    flex: 1;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    min-height: 600px;
+  }
+  
+  /* Loading and error states */
+  .loading-container, .error-message {
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(48, 102, 190, 0.2);
+    border-radius: 50%;
+    border-top-color: #3066BE;
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 15px;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .loading-container p {
+    color: #555;
+  }
+  
+  .error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    min-height: auto;
+  }
+  
+  /* Modal styling */
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .event-modal {
+    background-color: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .modal-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.3rem;
+  }
+  
+  .close-button {
+    background-color: rgba(0, 0, 0, 0.05);
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #000;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+    opacity: 1;
+    position: relative;
+    z-index: 5;
+  }
+  
+  .close-button:hover {
+    background-color: #e0e0e0;
+    color: #000;
+  }
+  
+  /* Form styling */
+  .event-form {
+    padding: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #3066BE;
+    box-shadow: 0 0 0 2px rgba(48, 102, 190, 0.2);
+  }
+  
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .checkbox-group input {
+    width: auto;
+  }
+  
+  .checkbox-group label {
+    margin-bottom: 0;
+  }
+  
+  .form-hint {
+    display: block;
+    margin-top: 5px;
+    color: #6c757d;
+    font-size: 0.85rem;
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+  }
+  
+  .save-button, .delete-button, .cancel-button {
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+  
+  .save-button {
+    background-color: #3066BE;
+    color: white;
+    border: none;
+    flex: 1;
+  }
+  
+  .save-button:hover {
+    background-color: #2553a0;
+  }
+  
+  .delete-button {
+    background-color: transparent;
+    border: 1px solid #dc3545;
+    color: #dc3545;
+  }
+  
+  .delete-button:hover {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .cancel-button {
+    background-color: transparent;
+    border: 1px solid #6c757d;
+    color: #6c757d;
+  }
+  
+  .cancel-button:hover {
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  /* Calendar customizations */
+  .fc .fc-button-primary {
+    background-color: #3066BE;
+    border-color: #3066BE;
+  }
+  
+  .fc .fc-button-primary:hover {
+    background-color: #2553a0;
+    border-color: #2553a0;
+  }
+  
+  .fc .fc-button-primary:disabled {
+    background-color: #92aad6;
+    border-color: #92aad6;
+  }
+  
+  .fc .fc-event {
+    cursor: pointer;
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .admin-content {
+      flex-direction: column;
+    }
+    
+    .admin-sidebar {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    
+    .admin-header h1 {
+      font-size: 1.4rem;
+    }
+    
+    .form-row {
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .form-actions {
+      flex-direction: column;
+    }
+    
+    .event-modal {
+      width: 95%;
+    }
+  }

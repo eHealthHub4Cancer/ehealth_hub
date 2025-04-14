@@ -29,6 +29,12 @@ import Postdoc from "./components/News/Postdoc";
 import ScrollToTop from "./components/ScrollToTop Component";
 import { GlobalDataProvider } from "./components/globaldatacontext";
 
+// New calendar components
+import Login from "./components/Login";
+import PrivateRoute from "./components/PrivateRoute";
+import AdminCalendar from "./components/AdminCalendar";
+import PublicCalendar from "./components/PublicCalendar";
+
 import './App.css'; 
 
 // Error redirect handler component to prevent navigation to not-found people
@@ -86,6 +92,18 @@ const AppWithRouter = () => {
               <Route path="/news/limerick-post" element={<LimerickPost />} />
               <Route path="/output/talks" element={<Talks />} />
               <Route path="/output/publications" element={<Publications />} />
+              
+              {/* New routes for calendar functionality */}
+              <Route path="/calendar" element={<PublicCalendar />} />
+              <Route path="/login" element={<Login />} />
+              <Route 
+                path="/admin/calendar" 
+                element={
+                  <PrivateRoute>
+                    <AdminCalendar />
+                  </PrivateRoute>
+                } 
+              />
             </Routes>
           </main>
           <Footer />
