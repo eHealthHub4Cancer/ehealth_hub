@@ -29,6 +29,7 @@ const AdminCalendar = () => {
   const [meetingLink, setMeetingLink] = useState('');
   const [category, setCategory] = useState('');
   const [addToCalendarEnabled, setAddToCalendarEnabled] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
 
   // Category options with their colors
   const categoryColors = getCategoryColors();
@@ -50,7 +51,8 @@ const AdminCalendar = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const fetchedEvents = await getEvents();
+      // Admin sees all events, including hidden ones
+      const fetchedEvents = await getEvents(true);
       setEvents(fetchedEvents);
     } catch (err) {
       console.error("Error fetching events:", err);
@@ -119,7 +121,8 @@ const AdminCalendar = () => {
       location: event.extendedProps.location || '',
       meetingLink: event.extendedProps.meetingLink || '',
       category: event.extendedProps.category || 'other',
-      addToCalendarEnabled: event.extendedProps.addToCalendarEnabled !== false
+      addToCalendarEnabled: event.extendedProps.addToCalendarEnabled !== false,
+      isVisible: event.extendedProps.isVisible !== false
     });
     
     setTitle(event.title);
@@ -132,6 +135,7 @@ const AdminCalendar = () => {
     setMeetingLink(event.extendedProps.meetingLink || '');
     setCategory(event.extendedProps.category || 'other');
     setAddToCalendarEnabled(event.extendedProps.addToCalendarEnabled !== false);
+    setIsVisible(event.extendedProps.isVisible !== false);
     
     setShowEventModal(true);
   };
@@ -148,6 +152,7 @@ const AdminCalendar = () => {
     setMeetingLink('');
     setCategory('meeting');
     setAddToCalendarEnabled(true);
+    setIsVisible(true);
   };
 
   // Close event modal and reset form
@@ -187,7 +192,8 @@ const AdminCalendar = () => {
       meetingLink,
       category,
       color: categoryColors[category] || categoryColors.other,
-      addToCalendarEnabled
+      addToCalendarEnabled,
+      isVisible
     };
     
     try {
@@ -227,17 +233,20 @@ const AdminCalendar = () => {
   // Format events for FullCalendar
   const formattedEvents = events.map(event => ({
     id: event.id,
-    title: event.title,
+    title: event.title + (event.isVisible === false ? ' (Hidden)' : ''),
     start: event.start,
     end: event.end,
-    backgroundColor: event.color,
-    borderColor: event.color,
+    backgroundColor: event.isVisible === false ? '#cccccc' : event.color,
+    borderColor: event.isVisible === false ? '#aaaaaa' : event.color,
+    textColor: event.isVisible === false ? '#666666' : undefined,
+    classNames: event.isVisible === false ? ['hidden-event'] : [],
     extendedProps: {
       description: event.description,
       location: event.location,
       meetingLink: event.meetingLink,
       category: event.category,
-      addToCalendarEnabled: event.addToCalendarEnabled
+      addToCalendarEnabled: event.addToCalendarEnabled,
+      isVisible: event.isVisible
     }
   }));
 
@@ -459,6 +468,18 @@ const AdminCalendar = () => {
                 />
                 <label htmlFor="addToCalendar">
                   Enable "Add to Calendar" option for users
+                </label>
+              </div>
+              
+              <div className="form-group checkbox-group">
+                <input
+                  id="isVisible"
+                  type="checkbox"
+                  checked={isVisible}
+                  onChange={(e) => setIsVisible(e.target.checked)}
+                />
+                <label htmlFor="isVisible">
+                  Visible to public (uncheck to hide from public calendar)
                 </label>
               </div>
               

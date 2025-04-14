@@ -6,7 +6,8 @@ import {
     doc, 
     getDocs, 
     query, 
-    orderBy, 
+    orderBy,
+    where,
     getDoc,
     Timestamp 
   } from 'firebase/firestore';
@@ -23,10 +24,23 @@ import {
   };
   
   // Get all events
-  export const getEvents = async () => {
+  export const getEvents = async (includeHidden = false) => {
     try {
       const eventsCollection = collection(db, EVENTS_COLLECTION);
-      const eventsQuery = query(eventsCollection, orderBy('start', 'asc'));
+      let eventsQuery;
+      
+      if (includeHidden) {
+        // For admin: get all events including hidden ones
+        eventsQuery = query(eventsCollection, orderBy('start', 'asc'));
+      } else {
+        // For public view: only get visible events
+        eventsQuery = query(
+          eventsCollection, 
+          where('isVisible', '==', true),
+          orderBy('start', 'asc')
+        );
+      }
+      
       const snapshot = await getDocs(eventsQuery);
       
       return snapshot.docs.map(doc => {
@@ -75,6 +89,11 @@ import {
       // Auto-assign color based on category if not provided
       if (!eventData.color && eventData.category) {
         eventData.color = CATEGORY_COLORS[eventData.category] || CATEGORY_COLORS.other;
+      }
+      
+      // Set visibility to true by default if not specified
+      if (eventData.isVisible === undefined) {
+        eventData.isVisible = true;
       }
       
       // Convert JavaScript Date objects to Firestore Timestamps
@@ -151,27 +170,65 @@ import {
   
   // Generate iCalendar format for "Add to Calendar" functionality
   export const generateICalString = (event) => {
+    // Format date to proper iCal format: YYYYMMDDTHHMMSSZ
     const formatDate = (date) => {
-      return date.toISOString().replace(/-|:|\.\d+/g, '');
+      const pad = (num) => (num < 10 ? '0' + num : num);
+      
+      const d = new Date(date);
+      return d.getUTCFullYear() +
+        pad(d.getUTCMonth() + 1) +
+        pad(d.getUTCDate()) + 'T' +
+        pad(d.getUTCHours()) +
+        pad(d.getUTCMinutes()) +
+        pad(d.getUTCSeconds()) + 'Z';
     };
     
+    // Ensure we have proper Date objects
     const startDate = formatDate(new Date(event.start));
     const endDate = formatDate(new Date(event.end));
     
-    // Create description with meeting link if available
+    // Properly encode description and summary
     let description = event.description || '';
     if (event.meetingLink) {
-      description += description ? '\n\nJoin meeting: ' + event.meetingLink : 'Join meeting: ' + event.meetingLink;
+      description += description ? '\\n\\nJoin meeting: ' + event.meetingLink : 'Join meeting: ' + event.meetingLink;
     }
+    
+    // Escape special characters in text fields
+    const escapeText = (text) => {
+      if (!text) return '';
+      return text
+        .replace(/\\/g, '\\\\')
+        .replace(/;/g, '\\;')
+        .replace(/,/g, '\\,')
+        .replace(/\n/g, '\\n');
+    };
+    
+    const escapedTitle = escapeText(event.title);
+    const escapedDesc = escapeText(description);
+    const escapedLocation = escapeText(event.location || '');
+    
+    // Create a unique identifier for the event
+    const uid = `event-${Date.now()}-${Math.random().toString(36).substr(2, 9)}@ehealthhub.ie`;
+    
+    // Current timestamp for DTSTAMP
+    const now = formatDate(new Date());
     
     return `BEGIN:VCALENDAR
   VERSION:2.0
+  PRODID:-//EHealthHub//Calendar//EN
+  CALSCALE:GREGORIAN
+  METHOD:PUBLISH
   BEGIN:VEVENT
-  SUMMARY:${event.title}
+  UID:${uid}
+  DTSTAMP:${now}
   DTSTART:${startDate}
   DTEND:${endDate}
-  DESCRIPTION:${description}
-  LOCATION:${event.location || ''}
+  SUMMARY:${escapedTitle}
+  DESCRIPTION:${escapedDesc}
+  LOCATION:${escapedLocation}
+  STATUS:CONFIRMED
+  SEQUENCE:0
+  TRANSP:OPAQUE
   END:VEVENT
   END:VCALENDAR`;
   };

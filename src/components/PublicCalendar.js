@@ -24,7 +24,8 @@ const PublicCalendar = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const fetchedEvents = await getEvents();
+      // Public view only gets visible events (pass false to not include hidden ones)
+      const fetchedEvents = await getEvents(false);
       setEvents(fetchedEvents);
     } catch (err) {
       console.error("Error fetching events:", err);
@@ -48,7 +49,8 @@ const PublicCalendar = () => {
       meetingLink: event.extendedProps.meetingLink,
       category: event.extendedProps.category,
       color: event.backgroundColor,
-      addToCalendarEnabled: event.extendedProps.addToCalendarEnabled
+      addToCalendarEnabled: event.extendedProps.addToCalendarEnabled,
+      isPast: event.extendedProps.isPast
     });
     
     setShowEventDetails(true);
@@ -76,22 +78,37 @@ const PublicCalendar = () => {
     return new Date(date).toLocaleDateString(undefined, options);
   };
   
+  // Check if an event is in the past
+  const isPastEvent = (eventEnd) => {
+    const now = new Date();
+    return eventEnd < now;
+  };
+  
   // Format events for FullCalendar
-  const formattedEvents = events.map(event => ({
-    id: event.id,
-    title: event.title,
-    start: event.start,
-    end: event.end,
-    backgroundColor: event.color,
-    borderColor: event.color,
-    extendedProps: {
-      description: event.description,
-      location: event.location,
-      meetingLink: event.meetingLink,
-      category: event.category,
-      addToCalendarEnabled: event.addToCalendarEnabled
-    }
-  }));
+  const formattedEvents = events.map(event => {
+    // Determine if event is in the past
+    const pastEvent = isPastEvent(event.end);
+    
+    // Apply styling based on past/future status
+    return {
+      id: event.id,
+      title: event.title,
+      start: event.start,
+      end: event.end,
+      backgroundColor: pastEvent ? '#9e9e9e' : event.color, // Grey for past events
+      borderColor: pastEvent ? '#757575' : event.color,
+      textColor: pastEvent ? '#f5f5f5' : undefined, // Light text for past events
+      classNames: pastEvent ? ['past-event'] : [],
+      extendedProps: {
+        description: event.description,
+        location: event.location,
+        meetingLink: event.meetingLink,
+        category: event.category,
+        addToCalendarEnabled: event.addToCalendarEnabled,
+        isPast: pastEvent
+      }
+    };
+  });
   
   // Add event to external calendar
   const addToCalendar = (type) => {
@@ -174,14 +191,16 @@ const PublicCalendar = () => {
       {showEventDetails && selectedEvent && (
         <div className="modal-backdrop" onClick={handleCloseDetails}>
           <div className="event-details-modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-header" style={{backgroundColor: selectedEvent.color}}>
+            <div className="modal-header" style={{backgroundColor: selectedEvent.isPast ? '#9e9e9e' : selectedEvent.color}}>
               <h2>{selectedEvent.title}</h2>
+              {selectedEvent.isPast && <span className="past-event-badge">Past Event</span>}
               <button 
                 className="close-button" 
                 onClick={handleCloseDetails}
                 aria-label="Close"
+                title="Close"
               >
-                ×
+                &times;
               </button>
             </div>
             
@@ -221,7 +240,7 @@ const PublicCalendar = () => {
                 </div>
               )}
               
-              {selectedEvent.addToCalendarEnabled && (
+              {selectedEvent.addToCalendarEnabled && !selectedEvent.isPast && (
                 <div className="calendar-actions">
                   <h3>Add to Your Calendar</h3>
                   <div className="calendar-buttons">
@@ -244,6 +263,12 @@ const PublicCalendar = () => {
                       iCal Download
                     </button>
                   </div>
+                </div>
+              )}
+              
+              {selectedEvent.isPast && (
+                <div className="past-event-notice">
+                  <p>This event has already taken place.</p>
                 </div>
               )}
             </div>
