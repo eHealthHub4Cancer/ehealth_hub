@@ -164,8 +164,10 @@ const AdminCalendar = () => {
     setIsRecurring(!!event.extendedProps.recurrence);
     if (event.extendedProps.recurrence) {
       const rule = RRule.fromString(event.extendedProps.recurrence.rrule);
-      setRecurrenceFrequency(rule.options.freq === RRule.WEEKLY ? 'weekly' : 'monthly');
-      setRecurrenceInterval(rule.options.interval || 1);
+      // Determine frequency and interval
+      const isMonthly = event.extendedProps.recurrence.isMonthly; // Check if stored as monthly
+      setRecurrenceFrequency(isMonthly ? 'monthly' : 'weekly');
+      setRecurrenceInterval(isMonthly ? (rule.options.interval || 4) / 4 : rule.options.interval || 1);
       setRecurrenceEndDate(rule.options.until ? rule.options.until.toISOString().substring(0, 10) : '');
     } else {
       setRecurrenceFrequency('weekly');
@@ -227,14 +229,19 @@ const AdminCalendar = () => {
     // Create recurrence rule if applicable
     let recurrence = null;
     if (isRecurring) {
+      const isMonthly = recurrenceFrequency === 'monthly';
+      const interval = isMonthly ? parseInt(recurrenceInterval) * 4 : parseInt(recurrenceInterval); // 1 month = 4 weeks
       const rruleOptions = {
-        freq: recurrenceFrequency === 'weekly' ? RRule.WEEKLY : RRule.MONTHLY,
+        freq: RRule.WEEKLY, // Always use WEEKLY for consistency
         dtstart: start,
-        interval: parseInt(recurrenceInterval),
+        interval,
         until: recurrenceEndDate ? new Date(recurrenceEndDate) : null
       };
       const rule = new RRule(rruleOptions);
-      recurrence = { rrule: rule.toString() };
+      recurrence = {
+        rrule: rule.toString(),
+        isMonthly // Store flag to indicate monthly for UI
+      };
     }
     
     // Create event object
@@ -502,11 +509,13 @@ const AdminCalendar = () => {
                         min="1"
                         value={recurrenceInterval}
                         onChange={(e) => setRecurrenceInterval(e.target.value)}
-                        placeholder="e.g., 1 for every week, 3 for every 3 weeks"
+                        placeholder={recurrenceFrequency === 'weekly' ? 'e.g., 1 for every week' : 'e.g., 1 for every 4 weeks'}
                         required
                       />
                       <small className="form-hint">
-                        Enter the number of {recurrenceFrequency === 'weekly' ? 'weeks' : 'months'} between occurrences
+                        {recurrenceFrequency === 'weekly'
+                          ? 'Enter the number of weeks between occurrences'
+                          : 'Enter the number of months (1 month = 4 weeks) between occurrences'}
                       </small>
                     </div>
                   </div>

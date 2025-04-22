@@ -13,29 +13,69 @@ const PublicCalendar = () => {
   const [error, setError] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showEventDetails, setShowEventDetails] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState('');
 
   // Load events on component mount
   useEffect(() => {
     fetchEvents();
   }, []);
 
+  // Update countdown timer when selectedEvent changes
+  useEffect(() => {
+    if (!selectedEvent || !showEventDetails) {
+      setTimeRemaining('');
+      return;
+    }
+
+    const updateTimer = () => {
+      const now = new Date();
+      const start = new Date(selectedEvent.start);
+      const end = new Date(selectedEvent.end || new Date(start.getTime() + 60 * 60 * 1000));
+
+      if (now >= end) {
+        setTimeRemaining('Event Ended');
+        return;
+      }
+      if (now >= start) {
+        setTimeRemaining('Event In Progress');
+        return;
+      }
+
+      const diffMs = start - now;
+      if (diffMs <= 0) {
+        setTimeRemaining('Event Started');
+        return;
+      }
+
+      const hours = Math.floor(diffMs / (1000 * 60 * 60));
+      const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+      setTimeRemaining(
+        `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+      );
+    };
+
+    updateTimer(); // Initial update
+    const intervalId = setInterval(updateTimer, 1000); // Update every second
+
+    return () => clearInterval(intervalId); // Cleanup on unmount or when selectedEvent changes
+  }, [selectedEvent, showEventDetails]);
+
   // Fetch events from Firestore and generate recurring instances
   const fetchEvents = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      // Public view only gets visible events
       const fetchedEvents = await getEvents(false);
-      // Generate recurring event instances
       const formattedEvents = fetchedEvents.flatMap(event => {
-        // Create extendedProps explicitly
         const eventExtendedProps = {
           description: event.description,
           location: event.location,
           meetingLink: event.meetingLink,
           category: event.category,
           addToCalendarEnabled: event.addToCalendarEnabled,
-          originalId: event.id // Store original event ID
+          originalId: event.id
         };
 
         if (event.recurrence && event.recurrence.rrule) {
@@ -44,12 +84,12 @@ const PublicCalendar = () => {
           const end = new Date(event.end);
           const duration = end.getTime() - start.getTime();
           const instances = rule.between(
-            new Date(), // Start from today
-            new Date(new Date().setFullYear(new Date().getFullYear() + 1)) // Up to 1 year
+            new Date(),
+            new Date(new Date().setFullYear(new Date().getFullYear() + 1))
           );
           return instances.map(instance => ({
             ...event,
-            id: `${event.id}_${instance.getTime()}`, // Unique ID for each instance
+            id: `${event.id}_${instance.getTime()}`,
             start: instance,
             end: new Date(instance.getTime() + duration),
             extendedProps: eventExtendedProps
@@ -73,7 +113,7 @@ const PublicCalendar = () => {
   const handleEventClick = (arg) => {
     const event = arg.event;
     setSelectedEvent({
-      id: event.extendedProps.originalId || event.id, // Use original ID for recurring events
+      id: event.extendedProps.originalId || event.id,
       title: event.title,
       start: event.start,
       end: event.end || new Date(event.start.getTime() + 60 * 60 * 1000),
@@ -83,7 +123,8 @@ const PublicCalendar = () => {
       category: event.extendedProps.category,
       color: event.backgroundColor,
       addToCalendarEnabled: event.extendedProps.addToCalendarEnabled,
-      isPast: event.extendedProps.isPast
+      isPast: event.extendedProps.isPast,
+      recurrence: event.extendedProps.recurrence // Include recurrence for display
     });
     setShowEventDetails(true);
   };
@@ -133,7 +174,8 @@ const PublicCalendar = () => {
         category: event.extendedProps.category,
         addToCalendarEnabled: event.extendedProps.addToCalendarEnabled,
         isPast: pastEvent,
-        originalId: event.extendedProps.originalId
+        originalId: event.extendedProps.originalId,
+        recurrence: event.recurrence
       }
     };
   });
@@ -229,6 +271,22 @@ const PublicCalendar = () => {
                 <span className="detail-label">End:</span>
                 <span className="detail-value">{formatDate(selectedEvent.end)}</span>
               </div>
+
+              <div className="event-detail2">
+                <span className="detail-label">Time left: </span>
+                <span className="detail-value">{timeRemaining}</span>
+              </div>
+
+              {selectedEvent.recurrence && (
+                <div className="event-detail">
+                  <span className="detail-label">Repeats:</span>
+                  <span className="detail-value">
+                    {selectedEvent.recurrence.isMonthly
+                      ? `Every ${selectedEvent.recurrence.rrule.match(/INTERVAL=(\d+)/)[1] / 4} months (${selectedEvent.recurrence.rrule.match(/INTERVAL=(\d+)/)[1]} weeks)`
+                      : `Every ${selectedEvent.recurrence.rrule.match(/INTERVAL=(\d+)/)[1]} weeks`}
+                  </span>
+                </div>
+              )}
 
               {selectedEvent.location && (
                 <div className="event-detail">
