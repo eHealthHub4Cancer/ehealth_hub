@@ -15,12 +15,10 @@ const PublicCalendar = () => {
   const [showEventDetails, setShowEventDetails] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState('');
 
-  // Load events on component mount
   useEffect(() => {
     fetchEvents();
   }, []);
 
-  // Update countdown timer when selectedEvent changes
   useEffect(() => {
     if (!selectedEvent || !showEventDetails) {
       setTimeRemaining('');
@@ -66,7 +64,6 @@ const PublicCalendar = () => {
     return () => clearInterval(intervalId);
   }, [selectedEvent, showEventDetails]);
 
-  // Fetch events from Firestore and generate recurring instances
   const fetchEvents = async () => {
     setIsLoading(true);
     setError(null);
@@ -93,18 +90,32 @@ const PublicCalendar = () => {
             new Date(),
             new Date(new Date().setFullYear(new Date().getFullYear() + 1))
           );
-          return instances.map(instance => ({
-            ...event,
-            id: `${event.id}_${instance.getTime()}`,
-            start: instance,
-            end: new Date(instance.getTime() + duration),
-            extendedProps: eventExtendedProps,
-            allDay: event.isStartAllDay && event.isEndAllDay
-          }));
+          const exceptions = event.exceptions || [];
+          return instances.map(instance => {
+            const instanceDate = instance.toISOString().substring(0, 10);
+            const exception = exceptions.find(ex => ex.date === instanceDate);
+            return {
+              ...event,
+              id: `${event.id}_${instance.getTime()}`,
+              start: exception ? new Date(exception.start) : instance,
+              end: exception ? new Date(exception.end) : new Date(instance.getTime() + duration),
+              extendedProps: {
+                ...eventExtendedProps,
+                isStartAllDay: exception ? exception.isStartAllDay : event.isStartAllDay,
+                isEndAllDay: exception ? exception.isEndAllDay : event.isEndAllDay,
+                isException: !!exception,
+                instanceDate: instanceDate
+              },
+              allDay: exception ? exception.isStartAllDay && exception.isEndAllDay : event.isStartAllDay && event.isEndAllDay
+            };
+          });
         }
         return [{
           ...event,
-          extendedProps: eventExtendedProps,
+          extendedProps: {
+            ...eventExtendedProps,
+            isException: false
+          },
           allDay: event.isStartAllDay && event.isEndAllDay
         }];
       });
@@ -117,7 +128,6 @@ const PublicCalendar = () => {
     }
   };
 
-  // Handle event click to show details
   const handleEventClick = (arg) => {
     const event = arg.event;
     setSelectedEvent({
@@ -134,18 +144,17 @@ const PublicCalendar = () => {
       isPast: event.extendedProps.isPast,
       isStartAllDay: event.extendedProps.isStartAllDay || false,
       isEndAllDay: event.extendedProps.isEndAllDay || false,
-      recurrence: event.extendedProps.recurrence
+      recurrence: event.extendedProps.recurrence,
+      isException: event.extendedProps.isException || false
     });
     setShowEventDetails(true);
   };
 
-  // Close event details modal
   const handleCloseDetails = () => {
     setShowEventDetails(false);
     setSelectedEvent(null);
   };
 
-  // Format date for display
   const formatDate = (date, isAllDay) => {
     if (!date) return '';
     const options = {
@@ -158,16 +167,13 @@ const PublicCalendar = () => {
     return new Date(date).toLocaleDateString(undefined, options);
   };
 
-  // Check if an event is in the past
   const isPastEvent = (eventEnd) => {
     const now = new Date();
     return eventEnd < now;
   };
 
-  // Format events for FullCalendar
   const formattedEvents = events.map(event => {
     const isPast = isPastEvent(event.end);
-    // Check if the event spans multiple days
     const startDate = new Date(event.start).toISOString().substring(0, 10);
     const endDate = new Date(event.end).toISOString().substring(0, 10);
     const isMultiDay = startDate !== endDate;
@@ -195,19 +201,19 @@ const PublicCalendar = () => {
         originalId: event.extendedProps.originalId,
         isStartAllDay: event.extendedProps.isStartAllDay,
         isEndAllDay: event.extendedProps.isEndAllDay,
-        recurrence: event.recurrence
+        recurrence: event.recurrence,
+        isException: event.extendedProps.isException,
+        instanceDate: event.extendedProps.instanceDate
       }
     };
   });
 
-  // Add event to external calendar
   const addToCalendar = (type) => {
     if (!selectedEvent) return;
     const url = generateCalendarLink(selectedEvent, type);
     window.open(url, '_blank');
   };
 
-  // Download as iCal file
   const downloadIcal = () => {
     if (!selectedEvent) return;
     try {
@@ -264,7 +270,6 @@ const PublicCalendar = () => {
         )}
       </main>
 
-      {/* Event Details Modal */}
       {showEventDetails && selectedEvent && (
         <div className="modal-backdrop" onClick={handleCloseDetails}>
           <div className="event-details-modal" onClick={e => e.stopPropagation()}>
@@ -293,7 +298,7 @@ const PublicCalendar = () => {
               </div>
 
               <div className="event-detail">
-                <span className="detail-label">Time left:</span>
+                <span className="detail-label">Time Remaining:</span>
                 <span className="detail-value">{timeRemaining}</span>
               </div>
 
@@ -311,6 +316,7 @@ const PublicCalendar = () => {
                         ? `Every ${interval / 4} month${interval / 4 !== 1 ? 's' : ''} (${interval} weeks)`
                         : `Every ${interval} week${interval !== 1 ? 's' : ''}`;
                     })()}
+                    {selectedEvent.isException && ' (Modified instance)'}
                   </span>
                 </div>
               )}

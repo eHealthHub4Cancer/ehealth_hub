@@ -17,8 +17,8 @@ const AdminCalendar = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const [editMode, setEditMode] = useState('series');
 
-  // Form state
   const [title, setTitle] = useState('');
   const [startDate, setStartDate] = useState('');
   const [startTime, setStartTime] = useState('');
@@ -32,13 +32,11 @@ const AdminCalendar = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [isStartAllDay, setIsStartAllDay] = useState(false);
   const [isEndAllDay, setIsEndAllDay] = useState(false);
-  // Recurrence state
   const [isRecurring, setIsRecurring] = useState(false);
   const [recurrenceFrequency, setRecurrenceFrequency] = useState('weekly');
   const [recurrenceInterval, setRecurrenceInterval] = useState(1);
   const [recurrenceEndDate, setRecurrenceEndDate] = useState('');
 
-  // Category options with their colors
   const categoryColors = getCategoryColors();
   const categoryOptions = [
     { value: 'meeting', label: 'Meeting' },
@@ -48,19 +46,16 @@ const AdminCalendar = () => {
     { value: 'other', label: 'Other' }
   ];
 
-  // Recurrence frequency options
   const recurrenceOptions = [
     { value: 'daily', label: 'Daily' },
     { value: 'weekly', label: 'Weekly' },
     { value: 'monthly', label: 'Monthly' }
   ];
 
-  // Load events on component mount
   useEffect(() => {
     fetchEvents();
   }, []);
 
-  // Fetch events from Firestore and generate recurring instances
   const fetchEvents = async () => {
     setIsLoading(true);
     setError(null);
@@ -76,17 +71,33 @@ const AdminCalendar = () => {
             new Date(),
             new Date(new Date().setFullYear(new Date().getFullYear() + 1))
           );
-          return instances.map(instance => ({
-            ...event,
-            id: `${event.id}_${instance.getTime()}`,
-            start: instance,
-            end: new Date(instance.getTime() + duration),
-            allDay: event.isStartAllDay && event.isEndAllDay
-          }));
+          const exceptions = event.exceptions || [];
+          return instances.map(instance => {
+            const instanceDate = instance.toISOString().substring(0, 10);
+            const exception = exceptions.find(ex => ex.date === instanceDate);
+            return {
+              ...event,
+              id: `${event.id}_${instance.getTime()}`,
+              start: exception ? new Date(exception.start) : instance,
+              end: exception ? new Date(exception.end) : new Date(instance.getTime() + duration),
+              allDay: exception ? exception.isStartAllDay && exception.isEndAllDay : event.isStartAllDay && event.isEndAllDay,
+              extendedProps: {
+                ...event.extendedProps,
+                isStartAllDay: exception ? exception.isStartAllDay : event.isStartAllDay,
+                isEndAllDay: exception ? exception.isEndAllDay : event.isEndAllDay,
+                isException: !!exception,
+                instanceDate: instanceDate
+              }
+            };
+          });
         }
         return [{
           ...event,
-          allDay: event.isStartAllDay && event.isEndAllDay
+          allDay: event.isStartAllDay && event.isEndAllDay,
+          extendedProps: {
+            ...event.extendedProps,
+            isException: false
+          }
         }];
       });
       setEvents(formattedEvents);
@@ -98,7 +109,6 @@ const AdminCalendar = () => {
     }
   };
 
-  // Handle user logout
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -108,7 +118,6 @@ const AdminCalendar = () => {
     }
   };
 
-  // Handle date click to create new event
   const handleDateClick = (arg) => {
     const clickedDate = new Date(arg.date);
     const formattedDate = clickedDate.toISOString().substring(0, 10);
@@ -139,10 +148,10 @@ const AdminCalendar = () => {
     setStartTime(defaultStartTime);
     setEndTime(defaultEndTime);
     setEditingEvent(null);
+    setEditMode('series');
     setShowEventModal(true);
   };
 
-  // Handle event click to edit existing event
   const handleEventClick = (arg) => {
     const event = arg.event;
     const eventStart = event.start;
@@ -161,7 +170,9 @@ const AdminCalendar = () => {
       isVisible: event.extendedProps.isVisible !== false,
       isStartAllDay: event.extendedProps.isStartAllDay || false,
       isEndAllDay: event.extendedProps.isEndAllDay || false,
-      recurrence: event.extendedProps.recurrence
+      recurrence: event.extendedProps.recurrence,
+      instanceDate: event.extendedProps.instanceDate,
+      exceptions: event.exceptions || []
     });
     
     setTitle(event.title);
@@ -190,16 +201,17 @@ const AdminCalendar = () => {
         isMonthly ? (rule.options.interval || 4) / 4 : rule.options.interval || 1
       );
       setRecurrenceEndDate(rule.options.until ? rule.options.until.toISOString().substring(0, 10) : '');
+      setEditMode(event.extendedProps.isException ? 'instance' : 'series');
     } else {
       setRecurrenceFrequency('weekly');
       setRecurrenceInterval(1);
       setRecurrenceEndDate('');
+      setEditMode('series');
     }
     
     setShowEventModal(true);
   };
 
-  // Reset form fields
   const resetForm = () => {
     setTitle('');
     setStartDate('');
@@ -218,16 +230,15 @@ const AdminCalendar = () => {
     setRecurrenceFrequency('weekly');
     setRecurrenceInterval(1);
     setRecurrenceEndDate('');
+    setEditMode('series');
   };
 
-  // Close event modal and reset form
   const handleCloseModal = () => {
     setShowEventModal(false);
     resetForm();
     setEditingEvent(null);
   };
 
-  // Handle form submission for creating/updating event
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -251,7 +262,6 @@ const AdminCalendar = () => {
       return;
     }
     
-    // Create start and end dates
     let start, end;
     if (isStartAllDay) {
       start = new Date(`${startDate}T00:00:00`);
@@ -269,9 +279,8 @@ const AdminCalendar = () => {
       return;
     }
     
-    // Create recurrence rule if applicable
     let recurrence = null;
-    if (isRecurring) {
+    if (isRecurring && editMode === 'series') {
       const isMonthly = recurrenceFrequency === 'monthly';
       const interval = isMonthly ? parseInt(recurrenceInterval) * 4 : parseInt(recurrenceInterval);
       const rruleOptions = {
@@ -285,9 +294,10 @@ const AdminCalendar = () => {
         rrule: rule.toString(),
         isMonthly
       };
+    } else if (editingEvent && editingEvent.recurrence) {
+      recurrence = editingEvent.recurrence;
     }
     
-    // Create event object
     const eventData = {
       title,
       start,
@@ -301,12 +311,27 @@ const AdminCalendar = () => {
       isVisible,
       isStartAllDay,
       isEndAllDay,
-      recurrence
+      recurrence,
+      exceptions: editingEvent && editingEvent.exceptions ? editingEvent.exceptions : []
     };
     
     try {
       if (editingEvent) {
-        await updateEvent(editingEvent.id, eventData);
+        if (editMode === 'instance' && editingEvent.recurrence && editingEvent.instanceDate) {
+          const existingExceptions = eventData.exceptions || [];
+          const instanceDate = editingEvent.instanceDate;
+          const updatedExceptions = existingExceptions.filter(ex => ex.date !== instanceDate).concat([{
+            date: instanceDate,
+            start: start.toISOString(),
+            end: end.toISOString(),
+            isStartAllDay,
+            isEndAllDay
+          }]);
+          eventData.exceptions = updatedExceptions;
+          await updateEvent(editingEvent.id, eventData);
+        } else {
+          await updateEvent(editingEvent.id, eventData);
+        }
       } else {
         await addEvent(eventData);
       }
@@ -319,7 +344,10 @@ const AdminCalendar = () => {
     }
   };
 
-  // Handle event deletion
+  const handleEditModeSelect = (mode) => {
+    setEditMode(mode);
+  };
+
   const handleDeleteEvent = async () => {
     if (!editingEvent || !editingEvent.id) return;
     
@@ -335,9 +363,7 @@ const AdminCalendar = () => {
     }
   };
 
-  // Format events for FullCalendar
   const formattedEvents = events.map(event => {
-    // Check if the event spans multiple days
     const startDate = new Date(event.start).toISOString().substring(0, 10);
     const endDate = new Date(event.end).toISOString().substring(0, 10);
     const isMultiDay = startDate !== endDate;
@@ -354,7 +380,7 @@ const AdminCalendar = () => {
       classNames: [
         event.isVisible === false ? 'hidden-event' : '',
         (event.isStartAllDay && event.isEndAllDay && isMultiDay) ? 'multi-day-event' : ''
-      ].filter(Boolean), // Add multi-day-event class for multi-day all-day events
+      ].filter(Boolean),
       extendedProps: {
         description: event.description,
         location: event.location,
@@ -364,7 +390,9 @@ const AdminCalendar = () => {
         isVisible: event.isVisible,
         isStartAllDay: event.isStartAllDay,
         isEndAllDay: event.isEndAllDay,
-        recurrence: event.recurrence
+        recurrence: event.recurrence,
+        instanceDate: event.extendedProps?.instanceDate,
+        isException: event.extendedProps?.isException || false
       }
     };
   });
@@ -451,7 +479,6 @@ const AdminCalendar = () => {
         </main>
       </div>
       
-      {/* Event Modal */}
       {showEventModal && (
         <div className="modal-backdrop">
           <div className="event-modal">
@@ -467,6 +494,28 @@ const AdminCalendar = () => {
             </div>
             
             <form onSubmit={handleSubmit} className="event-form">
+              {editingEvent && editingEvent.recurrence && (
+                <div className="form-group">
+                  <label>Edit:</label>
+                  <div className="edit-mode-buttons">
+                    <button
+                      type="button"
+                      className={editMode === 'instance' ? 'active' : ''}
+                      onClick={() => handleEditModeSelect('instance')}
+                    >
+                      This event only
+                    </button>
+                    <button
+                      type="button"
+                      className={editMode === 'series' ? 'active' : ''}
+                      onClick={() => handleEditModeSelect('series')}
+                    >
+                      All events in the series
+                    </button>
+                  </div>
+                </div>
+              )}
+              
               <div className="form-group">
                 <label htmlFor="title">Event Title *</label>
                 <input
@@ -517,7 +566,7 @@ const AdminCalendar = () => {
                 
                 {!isStartAllDay && (
                   <div className="form-group">
-                    <label htmlFor="startTime">Start Time *</label>
+                    <label htmlFor="startTime">Multi-day event (Start Time) *</label>
                     <input
                       id="startTime"
                       type="time"
@@ -543,7 +592,7 @@ const AdminCalendar = () => {
                 
                 {!isEndAllDay && (
                   <div className="form-group">
-                    <label htmlFor="endTime">End Time *</label>
+                    <label htmlFor="endTime">Multi-day event (End Time) *</label>
                     <input
                       id="endTime"
                       type="time"
@@ -555,20 +604,20 @@ const AdminCalendar = () => {
                 )}
               </div>
               
-              {/* Recurrence Fields */}
               <div className="form-group checkbox-group">
                 <input
                   id="isRecurring"
                   type="checkbox"
                   checked={isRecurring}
                   onChange={(e) => setIsRecurring(e.target.checked)}
+                  disabled={editMode === 'instance'}
                 />
                 <label htmlFor="isRecurring">
                   This is a recurring event
                 </label>
               </div>
               
-              {isRecurring && (
+              {isRecurring && editMode === 'series' && (
                 <>
                   <div className="form-row">
                     <div className="form-group">

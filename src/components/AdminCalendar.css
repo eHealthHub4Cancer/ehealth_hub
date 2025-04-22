@@ -406,6 +406,58 @@
     opacity: 0.7;
     border-style: dashed !important;
   }
+
+  /* AdminCalendar.css */
+.edit-mode-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.edit-mode-buttons button {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.edit-mode-buttons button:hover {
+  background-color: #e0e0e0;
+}
+
+.edit-mode-buttons button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+/* Ensure multi-day all-day events have padding (from earlier updates) */
+.fc-daygrid-event.multi-day-event {
+  margin: 2px 4px;
+  padding: 2px 4px;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.fc-daygrid-event.fc-event-all-day {
+  margin: 2px 4px;
+  padding: 2px 4px;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.fc-daygrid-event.multi-day-event .fc-event-title {
+  padding: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fc-daygrid-event.multi-day-event {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
   
   /* Mobile responsiveness */
   @media (max-width: 768px) {
