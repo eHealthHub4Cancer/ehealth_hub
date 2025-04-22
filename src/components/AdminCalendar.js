@@ -1,4 +1,3 @@
-// src/components/AdminCalendar.js
 import React, { useState, useEffect } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
@@ -8,6 +7,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { getEvents, addEvent, updateEvent, deleteEvent, getCategoryColors } from '../services/eventService';
+import { RRule } from 'rrule';
 import './AdminCalendar.css';
 
 const AdminCalendar = () => {
@@ -30,6 +30,11 @@ const AdminCalendar = () => {
   const [category, setCategory] = useState('');
   const [addToCalendarEnabled, setAddToCalendarEnabled] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
+  // Recurrence state
+  const [isRecurring, setIsRecurring] = useState(false);
+  const [recurrenceFrequency, setRecurrenceFrequency] = useState('weekly');
+  const [recurrenceInterval, setRecurrenceInterval] = useState(1); // Default to every 1 week/month
+  const [recurrenceEndDate, setRecurrenceEndDate] = useState('');
 
   // Category options with their colors
   const categoryColors = getCategoryColors();
@@ -41,19 +46,43 @@ const AdminCalendar = () => {
     { value: 'other', label: 'Other' }
   ];
 
+  // Recurrence frequency options
+  const recurrenceOptions = [
+    { value: 'weekly', label: 'Weekly' },
+    { value: 'monthly', label: 'Monthly' }
+  ];
+
   // Load events on component mount
   useEffect(() => {
     fetchEvents();
   }, []);
 
-  // Fetch events from Firestore
+  // Fetch events from Firestore and generate recurring instances
   const fetchEvents = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      // Admin sees all events, including hidden ones
       const fetchedEvents = await getEvents(true);
-      setEvents(fetchedEvents);
+      const formattedEvents = fetchedEvents.flatMap(event => {
+        if (event.recurrence) {
+          const rule = RRule.fromString(event.recurrence.rrule);
+          const start = new Date(event.start);
+          const end = new Date(event.end);
+          const duration = end.getTime() - start.getTime();
+          const instances = rule.between(
+            new Date(),
+            new Date(new Date().setFullYear(new Date().getFullYear() + 1))
+          );
+          return instances.map(instance => ({
+            ...event,
+            id: `${event.id}_${instance.getTime()}`,
+            start: instance,
+            end: new Date(instance.getTime() + duration)
+          }));
+        }
+        return [event];
+      });
+      setEvents(formattedEvents);
     } catch (err) {
       console.error("Error fetching events:", err);
       setError("Failed to load events. Please refresh the page.");
@@ -74,11 +103,8 @@ const AdminCalendar = () => {
 
   // Handle date click to create new event
   const handleDateClick = (arg) => {
-    // Set default times for new event (9am - 10am)
     const clickedDate = new Date(arg.date);
     const formattedDate = clickedDate.toISOString().substring(0, 10);
-    
-    // Default to current time if clicked on today, otherwise 9am
     let defaultStartTime;
     const today = new Date();
     if (
@@ -92,8 +118,6 @@ const AdminCalendar = () => {
     } else {
       defaultStartTime = '09:00';
     }
-    
-    // Default end time is 1 hour after start time
     const endTimeHour = parseInt(defaultStartTime.split(':')[0]) + 1;
     const defaultEndTime = `${endTimeHour.toString().padStart(2, '0')}:${defaultStartTime.split(':')[1]}`;
     
@@ -110,10 +134,10 @@ const AdminCalendar = () => {
   const handleEventClick = (arg) => {
     const event = arg.event;
     const eventStart = event.start;
-    const eventEnd = event.end || new Date(eventStart.getTime() + 60 * 60 * 1000); // Default to 1 hour after start if no end time
+    const eventEnd = event.end || new Date(eventStart.getTime() + 60 * 60 * 1000);
     
     setEditingEvent({
-      id: event.id,
+      id: event.id.split('_')[0],
       title: event.title,
       start: eventStart,
       end: eventEnd,
@@ -122,7 +146,8 @@ const AdminCalendar = () => {
       meetingLink: event.extendedProps.meetingLink || '',
       category: event.extendedProps.category || 'other',
       addToCalendarEnabled: event.extendedProps.addToCalendarEnabled !== false,
-      isVisible: event.extendedProps.isVisible !== false
+      isVisible: event.extendedProps.isVisible !== false,
+      recurrence: event.extendedProps.recurrence
     });
     
     setTitle(event.title);
@@ -136,6 +161,19 @@ const AdminCalendar = () => {
     setCategory(event.extendedProps.category || 'other');
     setAddToCalendarEnabled(event.extendedProps.addToCalendarEnabled !== false);
     setIsVisible(event.extendedProps.isVisible !== false);
+    setIsRecurring(!!event.extendedProps.recurrence);
+    if (event.extendedProps.recurrence) {
+      const rule = RRule.fromString(event.extendedProps.recurrence.rrule);
+      // Determine frequency and interval
+      const isMonthly = event.extendedProps.recurrence.isMonthly; // Check if stored as monthly
+      setRecurrenceFrequency(isMonthly ? 'monthly' : 'weekly');
+      setRecurrenceInterval(isMonthly ? (rule.options.interval || 4) / 4 : rule.options.interval || 1);
+      setRecurrenceEndDate(rule.options.until ? rule.options.until.toISOString().substring(0, 10) : '');
+    } else {
+      setRecurrenceFrequency('weekly');
+      setRecurrenceInterval(1);
+      setRecurrenceEndDate('');
+    }
     
     setShowEventModal(true);
   };
@@ -153,6 +191,10 @@ const AdminCalendar = () => {
     setCategory('meeting');
     setAddToCalendarEnabled(true);
     setIsVisible(true);
+    setIsRecurring(false);
+    setRecurrenceFrequency('weekly');
+    setRecurrenceInterval(1);
+    setRecurrenceEndDate('');
   };
 
   // Close event modal and reset form
@@ -166,20 +208,40 @@ const AdminCalendar = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validate form
     if (!title || !startDate || !startTime || !endDate || !endTime) {
       alert('Please fill in all required fields');
       return;
     }
     
-    // Create start and end dates
+    if (isRecurring && (!recurrenceInterval || recurrenceInterval < 1)) {
+      alert('Please enter a valid recurrence interval (1 or greater)');
+      return;
+    }
+    
     const start = new Date(`${startDate}T${startTime}`);
     const end = new Date(`${endDate}T${endTime}`);
     
-    // Validate dates
     if (end <= start) {
       alert('End time must be after start time');
       return;
+    }
+    
+    // Create recurrence rule if applicable
+    let recurrence = null;
+    if (isRecurring) {
+      const isMonthly = recurrenceFrequency === 'monthly';
+      const interval = isMonthly ? parseInt(recurrenceInterval) * 4 : parseInt(recurrenceInterval); // 1 month = 4 weeks
+      const rruleOptions = {
+        freq: RRule.WEEKLY, // Always use WEEKLY for consistency
+        dtstart: start,
+        interval,
+        until: recurrenceEndDate ? new Date(recurrenceEndDate) : null
+      };
+      const rule = new RRule(rruleOptions);
+      recurrence = {
+        rrule: rule.toString(),
+        isMonthly // Store flag to indicate monthly for UI
+      };
     }
     
     // Create event object
@@ -193,19 +255,17 @@ const AdminCalendar = () => {
       category,
       color: categoryColors[category] || categoryColors.other,
       addToCalendarEnabled,
-      isVisible
+      isVisible,
+      recurrence
     };
     
     try {
       if (editingEvent) {
-        // Update existing event
         await updateEvent(editingEvent.id, eventData);
       } else {
-        // Create new event
         await addEvent(eventData);
       }
       
-      // Refresh events
       await fetchEvents();
       handleCloseModal();
     } catch (err) {
@@ -246,7 +306,8 @@ const AdminCalendar = () => {
       meetingLink: event.meetingLink,
       category: event.category,
       addToCalendarEnabled: event.addToCalendarEnabled,
-      isVisible: event.isVisible
+      isVisible: event.isVisible,
+      recurrence: event.recurrence
     }
   }));
 
@@ -336,7 +397,7 @@ const AdminCalendar = () => {
       {showEventModal && (
         <div className="modal-backdrop">
           <div className="event-modal">
-          <div className="modal-header">
+            <div className="modal-header">
               <h2>{editingEvent ? 'Edit Event' : 'Add New Event'}</h2>
               <button 
                 className="close-button" 
@@ -407,6 +468,69 @@ const AdminCalendar = () => {
                   />
                 </div>
               </div>
+              
+              {/* Recurrence Fields */}
+              <div className="form-group checkbox-group">
+                <input
+                  id="isRecurring"
+                  type="checkbox"
+                  checked={isRecurring}
+                  onChange={(e) => setIsRecurring(e.target.checked)}
+                />
+                <label htmlFor="isRecurring">
+                  This is a recurring event
+                </label>
+              </div>
+              
+              {isRecurring && (
+                <>
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label htmlFor="recurrenceFrequency">Recurrence Frequency *</label>
+                      <select
+                        id="recurrenceFrequency"
+                        value={recurrenceFrequency}
+                        onChange={(e) => setRecurrenceFrequency(e.target.value)}
+                        required
+                      >
+                        {recurrenceOptions.map(option => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    
+                    <div className="form-group">
+                      <label htmlFor="recurrenceInterval">Repeat Every *</label>
+                      <input
+                        id="recurrenceInterval"
+                        type="number"
+                        min="1"
+                        value={recurrenceInterval}
+                        onChange={(e) => setRecurrenceInterval(e.target.value)}
+                        placeholder={recurrenceFrequency === 'weekly' ? 'e.g., 1 for every week' : 'e.g., 1 for every 4 weeks'}
+                        required
+                      />
+                      <small className="form-hint">
+                        {recurrenceFrequency === 'weekly'
+                          ? 'Enter the number of weeks between occurrences'
+                          : 'Enter the number of months (1 month = 4 weeks) between occurrences'}
+                      </small>
+                    </div>
+                  </div>
+                  
+                  <div className="form-group">
+                    <label htmlFor="recurrenceEndDate">Recurrence End Date (optional)</label>
+                    <input
+                      id="recurrenceEndDate"
+                      type="date"
+                      value={recurrenceEndDate}
+                      onChange={(e) => setRecurrenceEndDate(e.target.value)}
+                    />
+                  </div>
+                </>
+              )}
               
               <div className="form-group">
                 <label htmlFor="description">Description</label>
