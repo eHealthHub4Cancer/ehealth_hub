@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.ee42ba64.css",
-    "main.js": "/static/js/main.5f41dab4.js",
+    "main.js": "/static/js/main.c2b43448.js",
     "static/js/453.6411f75a.chunk.js": "/static/js/453.6411f75a.chunk.js",
     "static/media/Cancer-Research-UL.jpg": "/static/media/Cancer-Research-UL.cea648545bb9e86a250a.jpg",
     "static/media/LDCRC_BuildingTogether_April_2023.jpeg": "/static/media/LDCRC_BuildingTogether_April_2023.d6e9dc07a944ad211b5e.jpeg",
@@ -30,11 +30,11 @@
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/index.html",
     "main.ee42ba64.css.map": "/static/css/main.ee42ba64.css.map",
-    "main.5f41dab4.js.map": "/static/js/main.5f41dab4.js.map",
+    "main.c2b43448.js.map": "/static/js/main.c2b43448.js.map",
     "453.6411f75a.chunk.js.map": "/static/js/453.6411f75a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ee42ba64.css",
-    "static/js/main.5f41dab4.js"
+    "static/js/main.c2b43448.js"
   ]
 }
