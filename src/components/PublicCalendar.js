@@ -47,19 +47,23 @@ const PublicCalendar = () => {
         return;
       }
 
-      const hours = Math.floor(diffMs / (1000 * 60 * 60));
-      const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
-
-      setTimeRemaining(
-        `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
-      );
+      if (selectedEvent.isStartAllDay) {
+        const days = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+        setTimeRemaining(`${days} day${days !== 1 ? 's' : ''} remaining`);
+      } else {
+        const hours = Math.floor(diffMs / (1000 * 60 * 60));
+        const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+        setTimeRemaining(
+          `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+        );
+      }
     };
 
-    updateTimer(); // Initial update
-    const intervalId = setInterval(updateTimer, 1000); // Update every second
+    updateTimer();
+    const intervalId = setInterval(updateTimer, 1000);
 
-    return () => clearInterval(intervalId); // Cleanup on unmount or when selectedEvent changes
+    return () => clearInterval(intervalId);
   }, [selectedEvent, showEventDetails]);
 
   // Fetch events from Firestore and generate recurring instances
@@ -75,7 +79,9 @@ const PublicCalendar = () => {
           meetingLink: event.meetingLink,
           category: event.category,
           addToCalendarEnabled: event.addToCalendarEnabled,
-          originalId: event.id
+          originalId: event.id,
+          isStartAllDay: event.isStartAllDay || false,
+          isEndAllDay: event.isEndAllDay || false
         };
 
         if (event.recurrence && event.recurrence.rrule) {
@@ -92,12 +98,14 @@ const PublicCalendar = () => {
             id: `${event.id}_${instance.getTime()}`,
             start: instance,
             end: new Date(instance.getTime() + duration),
-            extendedProps: eventExtendedProps
+            extendedProps: eventExtendedProps,
+            allDay: event.isStartAllDay && event.isEndAllDay
           }));
         }
         return [{
           ...event,
-          extendedProps: eventExtendedProps
+          extendedProps: eventExtendedProps,
+          allDay: event.isStartAllDay && event.isEndAllDay
         }];
       });
       setEvents(formattedEvents);
@@ -124,7 +132,9 @@ const PublicCalendar = () => {
       color: event.backgroundColor,
       addToCalendarEnabled: event.extendedProps.addToCalendarEnabled,
       isPast: event.extendedProps.isPast,
-      recurrence: event.extendedProps.recurrence // Include recurrence for display
+      isStartAllDay: event.extendedProps.isStartAllDay || false,
+      isEndAllDay: event.extendedProps.isEndAllDay || false,
+      recurrence: event.extendedProps.recurrence
     });
     setShowEventDetails(true);
   };
@@ -136,15 +146,14 @@ const PublicCalendar = () => {
   };
 
   // Format date for display
-  const formatDate = (date) => {
+  const formatDate = (date, isAllDay) => {
     if (!date) return '';
     const options = {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
       day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+      ...(isAllDay ? {} : { hour: '2-digit', minute: '2-digit' })
     };
     return new Date(date).toLocaleDateString(undefined, options);
   };
@@ -163,6 +172,7 @@ const PublicCalendar = () => {
       title: event.title,
       start: event.start,
       end: event.end,
+      allDay: event.isStartAllDay && event.isEndAllDay,
       backgroundColor: pastEvent ? '#9e9e9e' : event.color,
       borderColor: pastEvent ? '#757575' : event.color,
       textColor: pastEvent ? '#f5f5f5' : undefined,
@@ -175,6 +185,8 @@ const PublicCalendar = () => {
         addToCalendarEnabled: event.extendedProps.addToCalendarEnabled,
         isPast: pastEvent,
         originalId: event.extendedProps.originalId,
+        isStartAllDay: event.extendedProps.isStartAllDay,
+        isEndAllDay: event.extendedProps.isEndAllDay,
         recurrence: event.recurrence
       }
     };
@@ -264,16 +276,16 @@ const PublicCalendar = () => {
             <div className="modal-content">
               <div className="event-detail">
                 <span className="detail-label">Start:</span>
-                <span className="detail-value">{formatDate(selectedEvent.start)}</span>
+                <span className="detail-value">{formatDate(selectedEvent.start, selectedEvent.isStartAllDay)}</span>
               </div>
 
               <div className="event-detail">
                 <span className="detail-label">End:</span>
-                <span className="detail-value">{formatDate(selectedEvent.end)}</span>
+                <span className="detail-value">{formatDate(selectedEvent.end, selectedEvent.isEndAllDay)}</span>
               </div>
 
-              <div className="event-detail2">
-                <span className="detail-label">Time left: </span>
+              <div className="event-detail">
+                <span className="detail-label">Time Remaining:</span>
                 <span className="detail-value">{timeRemaining}</span>
               </div>
 
@@ -281,9 +293,16 @@ const PublicCalendar = () => {
                 <div className="event-detail">
                   <span className="detail-label">Repeats:</span>
                   <span className="detail-value">
-                    {selectedEvent.recurrence.isMonthly
-                      ? `Every ${selectedEvent.recurrence.rrule.match(/INTERVAL=(\d+)/)[1] / 4} months (${selectedEvent.recurrence.rrule.match(/INTERVAL=(\d+)/)[1]} weeks)`
-                      : `Every ${selectedEvent.recurrence.rrule.match(/INTERVAL=(\d+)/)[1]} weeks`}
+                    {(() => {
+                      const rule = RRule.fromString(selectedEvent.recurrence.rrule);
+                      const interval = rule.options.interval;
+                      if (rule.options.freq === RRule.DAILY) {
+                        return `Every ${interval} day${interval !== 1 ? 's' : ''}`;
+                      }
+                      return selectedEvent.recurrence.isMonthly
+                        ? `Every ${interval / 4} month${interval / 4 !== 1 ? 's' : ''} (${interval} weeks)`
+                        : `Every ${interval} week${interval !== 1 ? 's' : ''}`;
+                    })()}
                   </span>
                 </div>
               )}

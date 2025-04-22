@@ -30,10 +30,12 @@ const AdminCalendar = () => {
   const [category, setCategory] = useState('');
   const [addToCalendarEnabled, setAddToCalendarEnabled] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
+  const [isStartAllDay, setIsStartAllDay] = useState(false);
+  const [isEndAllDay, setIsEndAllDay] = useState(false);
   // Recurrence state
   const [isRecurring, setIsRecurring] = useState(false);
   const [recurrenceFrequency, setRecurrenceFrequency] = useState('weekly');
-  const [recurrenceInterval, setRecurrenceInterval] = useState(1); // Default to every 1 week/month
+  const [recurrenceInterval, setRecurrenceInterval] = useState(1);
   const [recurrenceEndDate, setRecurrenceEndDate] = useState('');
 
   // Category options with their colors
@@ -48,6 +50,7 @@ const AdminCalendar = () => {
 
   // Recurrence frequency options
   const recurrenceOptions = [
+    { value: 'daily', label: 'Daily' }, // Added Daily option
     { value: 'weekly', label: 'Weekly' },
     { value: 'monthly', label: 'Monthly' }
   ];
@@ -77,10 +80,14 @@ const AdminCalendar = () => {
             ...event,
             id: `${event.id}_${instance.getTime()}`,
             start: instance,
-            end: new Date(instance.getTime() + duration)
+            end: new Date(instance.getTime() + duration),
+            allDay: event.isStartAllDay && event.isEndAllDay
           }));
         }
-        return [event];
+        return [{
+          ...event,
+          allDay: event.isStartAllDay && event.isEndAllDay
+        }];
       });
       setEvents(formattedEvents);
     } catch (err) {
@@ -105,21 +112,26 @@ const AdminCalendar = () => {
   const handleDateClick = (arg) => {
     const clickedDate = new Date(arg.date);
     const formattedDate = clickedDate.toISOString().substring(0, 10);
-    let defaultStartTime;
-    const today = new Date();
-    if (
-      clickedDate.getDate() === today.getDate() &&
-      clickedDate.getMonth() === today.getMonth() &&
-      clickedDate.getFullYear() === today.getFullYear()
-    ) {
-      const hours = today.getHours().toString().padStart(2, '0');
-      const minutes = today.getMinutes().toString().padStart(2, '0');
-      defaultStartTime = `${hours}:${minutes}`;
-    } else {
-      defaultStartTime = '09:00';
+    let defaultStartTime = '';
+    let defaultEndTime = '';
+    if (!isStartAllDay) {
+      const today = new Date();
+      if (
+        clickedDate.getDate() === today.getDate() &&
+        clickedDate.getMonth() === today.getMonth() &&
+        clickedDate.getFullYear() === today.getFullYear()
+      ) {
+        const hours = today.getHours().toString().padStart(2, '0');
+        const minutes = today.getMinutes().toString().padStart(2, '0');
+        defaultStartTime = `${hours}:${minutes}`;
+      } else {
+        defaultStartTime = '09:00';
+      }
     }
-    const endTimeHour = parseInt(defaultStartTime.split(':')[0]) + 1;
-    const defaultEndTime = `${endTimeHour.toString().padStart(2, '0')}:${defaultStartTime.split(':')[1]}`;
+    if (!isEndAllDay) {
+      const endTimeHour = parseInt(defaultStartTime.split(':')[0] || 9) + 1;
+      defaultEndTime = `${endTimeHour.toString().padStart(2, '0')}:${defaultStartTime.split(':')[1] || '00'}`;
+    }
     
     resetForm();
     setStartDate(formattedDate);
@@ -147,27 +159,36 @@ const AdminCalendar = () => {
       category: event.extendedProps.category || 'other',
       addToCalendarEnabled: event.extendedProps.addToCalendarEnabled !== false,
       isVisible: event.extendedProps.isVisible !== false,
+      isStartAllDay: event.extendedProps.isStartAllDay || false,
+      isEndAllDay: event.extendedProps.isEndAllDay || false,
       recurrence: event.extendedProps.recurrence
     });
     
     setTitle(event.title);
     setStartDate(eventStart.toISOString().substring(0, 10));
-    setStartTime(eventStart.toTimeString().substring(0, 5));
+    setStartTime(event.extendedProps.isStartAllDay ? '' : eventStart.toTimeString().substring(0, 5));
     setEndDate(eventEnd.toISOString().substring(0, 10));
-    setEndTime(eventEnd.toTimeString().substring(0, 5));
+    setEndTime(event.extendedProps.isEndAllDay ? '' : eventEnd.toTimeString().substring(0, 5));
     setDescription(event.extendedProps.description || '');
     setLocation(event.extendedProps.location || '');
     setMeetingLink(event.extendedProps.meetingLink || '');
     setCategory(event.extendedProps.category || 'other');
     setAddToCalendarEnabled(event.extendedProps.addToCalendarEnabled !== false);
     setIsVisible(event.extendedProps.isVisible !== false);
+    setIsStartAllDay(event.extendedProps.isStartAllDay || false);
+    setIsEndAllDay(event.extendedProps.isEndAllDay || false);
     setIsRecurring(!!event.extendedProps.recurrence);
     if (event.extendedProps.recurrence) {
       const rule = RRule.fromString(event.extendedProps.recurrence.rrule);
-      // Determine frequency and interval
-      const isMonthly = event.extendedProps.recurrence.isMonthly; // Check if stored as monthly
-      setRecurrenceFrequency(isMonthly ? 'monthly' : 'weekly');
-      setRecurrenceInterval(isMonthly ? (rule.options.interval || 4) / 4 : rule.options.interval || 1);
+      const isMonthly = event.extendedProps.recurrence.isMonthly;
+      setRecurrenceFrequency(
+        rule.options.freq === RRule.DAILY ? 'daily' :
+        isMonthly ? 'monthly' : 'weekly'
+      );
+      setRecurrenceInterval(
+        rule.options.freq === RRule.DAILY ? rule.options.interval || 1 :
+        isMonthly ? (rule.options.interval || 4) / 4 : rule.options.interval || 1
+      );
       setRecurrenceEndDate(rule.options.until ? rule.options.until.toISOString().substring(0, 10) : '');
     } else {
       setRecurrenceFrequency('weekly');
@@ -191,6 +212,8 @@ const AdminCalendar = () => {
     setCategory('meeting');
     setAddToCalendarEnabled(true);
     setIsVisible(true);
+    setIsStartAllDay(false);
+    setIsEndAllDay(false);
     setIsRecurring(false);
     setRecurrenceFrequency('weekly');
     setRecurrenceInterval(1);
@@ -208,8 +231,18 @@ const AdminCalendar = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!title || !startDate || !startTime || !endDate || !endTime) {
+    if (!title || !startDate || !endDate) {
       alert('Please fill in all required fields');
+      return;
+    }
+    
+    if (!isStartAllDay && !startTime) {
+      alert('Please fill in start time for timed start');
+      return;
+    }
+    
+    if (!isEndAllDay && !endTime) {
+      alert('Please fill in end time for timed end');
       return;
     }
     
@@ -218,11 +251,21 @@ const AdminCalendar = () => {
       return;
     }
     
-    const start = new Date(`${startDate}T${startTime}`);
-    const end = new Date(`${endDate}T${endTime}`);
+    // Create start and end dates
+    let start, end;
+    if (isStartAllDay) {
+      start = new Date(`${startDate}T00:00:00`);
+    } else {
+      start = new Date(`${startDate}T${startTime}`);
+    }
+    if (isEndAllDay) {
+      end = new Date(`${endDate}T23:59:59`);
+    } else {
+      end = new Date(`${endDate}T${endTime}`);
+    }
     
     if (end <= start) {
-      alert('End time must be after start time');
+      alert('End date/time must be after start date/time');
       return;
     }
     
@@ -230,9 +273,9 @@ const AdminCalendar = () => {
     let recurrence = null;
     if (isRecurring) {
       const isMonthly = recurrenceFrequency === 'monthly';
-      const interval = isMonthly ? parseInt(recurrenceInterval) * 4 : parseInt(recurrenceInterval); // 1 month = 4 weeks
+      const interval = isMonthly ? parseInt(recurrenceInterval) * 4 : parseInt(recurrenceInterval);
       const rruleOptions = {
-        freq: RRule.WEEKLY, // Always use WEEKLY for consistency
+        freq: recurrenceFrequency === 'daily' ? RRule.DAILY : RRule.WEEKLY,
         dtstart: start,
         interval,
         until: recurrenceEndDate ? new Date(recurrenceEndDate) : null
@@ -240,7 +283,7 @@ const AdminCalendar = () => {
       const rule = new RRule(rruleOptions);
       recurrence = {
         rrule: rule.toString(),
-        isMonthly // Store flag to indicate monthly for UI
+        isMonthly
       };
     }
     
@@ -256,6 +299,8 @@ const AdminCalendar = () => {
       color: categoryColors[category] || categoryColors.other,
       addToCalendarEnabled,
       isVisible,
+      isStartAllDay,
+      isEndAllDay,
       recurrence
     };
     
@@ -296,6 +341,7 @@ const AdminCalendar = () => {
     title: event.title + (event.isVisible === false ? ' (Hidden)' : ''),
     start: event.start,
     end: event.end,
+    allDay: event.isStartAllDay && event.isEndAllDay,
     backgroundColor: event.isVisible === false ? '#cccccc' : event.color,
     borderColor: event.isVisible === false ? '#aaaaaa' : event.color,
     textColor: event.isVisible === false ? '#666666' : undefined,
@@ -307,6 +353,8 @@ const AdminCalendar = () => {
       category: event.category,
       addToCalendarEnabled: event.addToCalendarEnabled,
       isVisible: event.isVisible,
+      isStartAllDay: event.isStartAllDay,
+      isEndAllDay: event.isEndAllDay,
       recurrence: event.recurrence
     }
   }));
@@ -421,6 +469,30 @@ const AdminCalendar = () => {
                 />
               </div>
               
+              <div className="form-group checkbox-group">
+                <input
+                  id="isStartAllDay"
+                  type="checkbox"
+                  checked={isStartAllDay}
+                  onChange={(e) => setIsStartAllDay(e.target.checked)}
+                />
+                <label htmlFor="isStartAllDay">
+                  All-day start
+                </label>
+              </div>
+              
+              <div className="form-group checkbox-group">
+                <input
+                  id="isEndAllDay"
+                  type="checkbox"
+                  checked={isEndAllDay}
+                  onChange={(e) => setIsEndAllDay(e.target.checked)}
+                />
+                <label htmlFor="isEndAllDay">
+                  All-day end
+                </label>
+              </div>
+              
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="startDate">Start Date *</label>
@@ -433,16 +505,18 @@ const AdminCalendar = () => {
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label htmlFor="startTime">Start Time *</label>
-                  <input
-                    id="startTime"
-                    type="time"
-                    value={startTime}
-                    onChange={(e) => setStartTime(e.target.value)}
-                    required
-                  />
-                </div>
+                {!isStartAllDay && (
+                  <div className="form-group">
+                    <label htmlFor="startTime">Start Time *</label>
+                    <input
+                      id="startTime"
+                      type="time"
+                      value={startTime}
+                      onChange={(e) => setStartTime(e.target.value)}
+                      required
+                    />
+                  </div>
+                )}
               </div>
               
               <div className="form-row">
@@ -457,16 +531,18 @@ const AdminCalendar = () => {
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label htmlFor="endTime">End Time *</label>
-                  <input
-                    id="endTime"
-                    type="time"
-                    value={endTime}
-                    onChange={(e) => setEndTime(e.target.value)}
-                    required
-                  />
-                </div>
+                {!isEndAllDay && (
+                  <div className="form-group">
+                    <label htmlFor="endTime">End Time *</label>
+                    <input
+                      id="endTime"
+                      type="time"
+                      value={endTime}
+                      onChange={(e) => setEndTime(e.target.value)}
+                      required
+                    />
+                  </div>
+                )}
               </div>
               
               {/* Recurrence Fields */}
@@ -509,13 +585,17 @@ const AdminCalendar = () => {
                         min="1"
                         value={recurrenceInterval}
                         onChange={(e) => setRecurrenceInterval(e.target.value)}
-                        placeholder={recurrenceFrequency === 'weekly' ? 'e.g., 1 for every week' : 'e.g., 1 for every 4 weeks'}
+                        placeholder={
+                          recurrenceFrequency === 'daily' ? 'e.g., 1 for every day' :
+                          recurrenceFrequency === 'weekly' ? 'e.g., 1 for every week' :
+                          'e.g., 1 for every 4 weeks'
+                        }
                         required
                       />
                       <small className="form-hint">
-                        {recurrenceFrequency === 'weekly'
-                          ? 'Enter the number of weeks between occurrences'
-                          : 'Enter the number of months (1 month = 4 weeks) between occurrences'}
+                        {recurrenceFrequency === 'daily' ? 'Enter the number of days between occurrences' :
+                         recurrenceFrequency === 'weekly' ? 'Enter the number of weeks between occurrences' :
+                         'Enter the number of months (1 month = 4 weeks) between occurrences'}
                       </small>
                     </div>
                   </div>
