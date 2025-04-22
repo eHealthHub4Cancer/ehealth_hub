@@ -166,24 +166,32 @@ const PublicCalendar = () => {
 
   // Format events for FullCalendar
   const formattedEvents = events.map(event => {
-    const pastEvent = isPastEvent(event.end);
+    const isPast = isPastEvent(event.end);
+    // Check if the event spans multiple days
+    const startDate = new Date(event.start).toISOString().substring(0, 10);
+    const endDate = new Date(event.end).toISOString().substring(0, 10);
+    const isMultiDay = startDate !== endDate;
+
     return {
       id: event.id,
       title: event.title,
       start: event.start,
       end: event.end,
       allDay: event.isStartAllDay && event.isEndAllDay,
-      backgroundColor: pastEvent ? '#9e9e9e' : event.color,
-      borderColor: pastEvent ? '#757575' : event.color,
-      textColor: pastEvent ? '#f5f5f5' : undefined,
-      classNames: pastEvent ? ['past-event'] : [],
+      backgroundColor: isPast ? '#9e9e9e' : event.color,
+      borderColor: isPast ? '#757575' : event.color,
+      textColor: isPast ? '#f5f5f5' : undefined,
+      classNames: [
+        isPast ? 'past-event' : '',
+        (event.isStartAllDay && event.isEndAllDay && isMultiDay) ? 'multi-day-event' : ''
+      ].filter(Boolean),
       extendedProps: {
         description: event.extendedProps.description,
         location: event.extendedProps.location,
         meetingLink: event.extendedProps.meetingLink,
         category: event.extendedProps.category,
         addToCalendarEnabled: event.extendedProps.addToCalendarEnabled,
-        isPast: pastEvent,
+        isPast: isPast,
         originalId: event.extendedProps.originalId,
         isStartAllDay: event.extendedProps.isStartAllDay,
         isEndAllDay: event.extendedProps.isEndAllDay,
@@ -285,7 +293,7 @@ const PublicCalendar = () => {
               </div>
 
               <div className="event-detail">
-                <span className="detail-label">Time Remaining:</span>
+                <span className="detail-label">Time left:</span>
                 <span className="detail-value">{timeRemaining}</span>
               </div>
 

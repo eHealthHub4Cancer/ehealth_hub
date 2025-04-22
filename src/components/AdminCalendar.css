@@ -7,6 +7,34 @@
     padding-top: 80px;
   }
   
+  /* Ensure multi-day all-day events have padding */
+.fc-daygrid-event.multi-day-event {
+  margin: 2px 4px; /* Add margin to create spacing around the event */
+  padding: 2px 4px; /* Add padding inside the event */
+  box-sizing: border-box; /* Ensure padding doesn't increase width */
+  border-radius: 4px; /* Optional: rounded corners for better aesthetics */
+}
+
+/* Optional: Adjust single-day all-day events for consistency */
+.fc-daygrid-event.fc-event-all-day {
+  margin: 2px 4px;
+  padding: 2px 4px;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+/* Ensure text is readable and centered */
+.fc-daygrid-event.multi-day-event .fc-event-title {
+  padding: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Optional: Add subtle border for better contrast */
+.fc-daygrid-event.multi-day-event {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
   /* Header styling */
   .admin-header {
     background-color: white;
