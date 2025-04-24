@@ -14,6 +14,68 @@
     margin-bottom: 30px;
   }
   
+  .event-detail {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  .detail-label {
+    font-weight: bold;
+    margin-right: 10px;
+    min-width: 100px;
+  }
+  
+  /* Updated style for event-time-left */
+  .event-time-left {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    color: #2e7d32; /* Dark green for visibility */
+    background-color: #e8f5e9; /* Light green background */
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #c8e6c9;
+    display: inline-block;
+    letter-spacing: 1px;
+    line-height: 1.5;
+  }
+  
+  /* New styles for filter section */
+  .filter-section {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .filter-section h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .filter-checkbox {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .filter-checkbox input {
+    margin-right: 5px;
+    accent-color: #4caf50;
+  }
+  
+  .filter-checkbox:hover {
+    color: #000;
+  }
+
   .event-detail2 .detail-value {
     color: rgb(98, 0, 255);
     font-size: 1.2em;

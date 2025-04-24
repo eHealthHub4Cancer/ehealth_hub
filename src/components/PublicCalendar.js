@@ -13,7 +13,23 @@ const PublicCalendar = () => {
   const [error, setError] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showEventDetails, setShowEventDetails] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState('');
+  const [timeLeft, setTimeLeft] = useState('');
+  const [eventFilters, setEventFilters] = useState({
+    meeting: true,
+    conference: true,
+    deadline: true,
+    workshop: true,
+    other: true
+  });
+  const [allFiltersChecked, setAllFiltersChecked] = useState(true);
+
+  const categoryOptions = [
+    { value: 'meeting', label: 'Meeting' },
+    { value: 'conference', label: 'Conference' },
+    { value: 'deadline', label: 'Deadline' },
+    { value: 'workshop', label: 'Workshop' },
+    { value: 'other', label: 'Other' }
+  ];
 
   const dayOptions = [
     { value: 'MO', label: 'Monday' },
@@ -54,7 +70,7 @@ const PublicCalendar = () => {
 
   useEffect(() => {
     if (!selectedEvent || !showEventDetails) {
-      setTimeRemaining('');
+      setTimeLeft('');
       return;
     }
 
@@ -64,29 +80,61 @@ const PublicCalendar = () => {
       const end = new Date(selectedEvent.end || new Date(start.getTime() + 60 * 60 * 1000));
 
       if (now >= end) {
-        setTimeRemaining('Event Ended');
+        setTimeLeft('Event Ended');
         return;
       }
       if (now >= start) {
-        setTimeRemaining('Event In Progress');
+        setTimeLeft('Event In Progress');
         return;
       }
 
       const diffMs = start - now;
       if (diffMs <= 0) {
-        setTimeRemaining('Event Started');
+        setTimeLeft('Event Started');
         return;
       }
 
+      // Calculate time components
+      const totalSeconds = Math.floor(diffMs / 1000);
+      const totalMinutes = Math.floor(totalSeconds / 60);
+      const totalHours = Math.floor(totalMinutes / 60);
+      const totalDays = Math.floor(totalHours / 24);
+
+      // Calculate years, months, and remaining days
+      const startDate = new Date(now);
+      const endDate = new Date(start);
+      const years = endDate.getFullYear() - startDate.getFullYear();
+      let months = (endDate.getFullYear() - startDate.getFullYear()) * 12 + (endDate.getMonth() - startDate.getMonth());
+      let days = endDate.getDate() - startDate.getDate();
+
+      if (days < 0) {
+        months -= 1;
+        const prevMonth = new Date(endDate.getFullYear(), endDate.getMonth(), 0);
+        days += prevMonth.getDate();
+      }
+
+      if (months < 0) {
+        months += 12;
+      }
+
+      // Adjust days for months and years
+      const remainingDaysAfterYears = totalDays - (years * 365); // Approximate year as 365 days
+      const remainingDaysAfterMonths = remainingDaysAfterYears - (months * 30); // Approximate month as 30 days
+      const weeks = Math.floor(remainingDaysAfterMonths / 7);
+      const daysAfterWeeks = remainingDaysAfterMonths % 7;
+      const hours = totalHours % 24;
+      const minutes = totalMinutes % 60;
+      const seconds = totalSeconds % 60;
+
       if (selectedEvent.isStartAllDay) {
-        const days = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-        setTimeRemaining(`${days} day${days !== 1 ? 's' : ''} remaining`);
+        // For all-day events, show only years, months, weeks, and days
+        setTimeLeft(
+          `YR: ${years.toString().padStart(2, '0')}, MN: ${months.toString().padStart(2, '0')}, WK: ${weeks.toString().padStart(2, '0')}, DD: ${daysAfterWeeks.toString().padStart(2, '0')}`
+        );
       } else {
-        const hours = Math.floor(diffMs / (1000 * 60 * 60));
-        const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
-        setTimeRemaining(
-          `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+        // For non-all-day events, show full format
+        setTimeLeft(
+          `YR: ${years.toString().padStart(2, '0')}, MN: ${months.toString().padStart(2, '0')}, WK: ${weeks.toString().padStart(2, '0')}, DD: ${daysAfterWeeks.toString().padStart(2, '0')}, HR: ${hours.toString().padStart(2, '0')}, MIN: ${minutes.toString().padStart(2, '0')}, SEC: ${seconds.toString().padStart(2, '0')}`
         );
       }
     };
@@ -210,42 +258,70 @@ const PublicCalendar = () => {
     return eventEnd < now;
   };
 
-  const formattedEvents = events.map(event => {
-    const isPast = isPastEvent(event.end);
-    const startDate = new Date(event.start).toISOString().substring(0, 10);
-    const endDate = new Date(event.end).toISOString().substring(0, 10);
-    const isMultiDay = startDate !== endDate;
+  const handleFilterChange = (category) => {
+    setEventFilters(prevFilters => {
+      const newFilters = { ...prevFilters, [category]: !prevFilters[category] };
+      // Update "check all" state based on whether all filters are checked
+      const allChecked = Object.values(newFilters).every(value => value);
+      setAllFiltersChecked(allChecked);
+      return newFilters;
+    });
+  };
 
-    return {
-      id: event.id,
-      title: event.title,
-      start: event.start,
-      end: event.end,
-      allDay: event.isStartAllDay && event.isEndAllDay,
-      backgroundColor: isPast ? '#9e9e9e' : event.color,
-      borderColor: isPast ? '#757575' : event.color,
-      textColor: isPast ? '#f5f5f5' : undefined,
-      classNames: [
-        isPast ? 'past-event' : '',
-        (event.isStartAllDay && event.isEndAllDay && isMultiDay) ? 'multi-day-event' : '',
-        event.extendedProps.isException ? 'exception-event' : ''
-      ].filter(Boolean),
-      extendedProps: {
-        description: event.extendedProps.description,
-        location: event.extendedProps.location,
-        meetingLink: event.extendedProps.meetingLink,
-        category: event.extendedProps.category,
-        addToCalendarEnabled: event.extendedProps.addToCalendarEnabled,
-        isPast: isPast,
-        originalId: event.extendedProps.originalId,
-        isStartAllDay: event.extendedProps.isStartAllDay,
-        isEndAllDay: event.extendedProps.isEndAllDay,
-        recurrence: event.recurrence,
-        isException: event.extendedProps.isException,
-        instanceDate: event.extendedProps.instanceDate
-      }
-    };
-  });
+  const handleCheckAll = () => {
+    const newCheckedState = !allFiltersChecked;
+    setAllFiltersChecked(newCheckedState);
+    setEventFilters({
+      meeting: newCheckedState,
+      conference: newCheckedState,
+      deadline: newCheckedState,
+      workshop: newCheckedState,
+      other: newCheckedState
+    });
+  };
+
+  const formattedEvents = events
+    .filter(event => {
+      const activeFilters = Object.keys(eventFilters).filter(key => eventFilters[key]);
+      // If no filters are selected, show all events
+      return activeFilters.length === 0 || activeFilters.includes(event.extendedProps.category);
+    })
+    .map(event => {
+      const isPast = isPastEvent(event.end);
+      const startDate = new Date(event.start).toISOString().substring(0, 10);
+      const endDate = new Date(event.end).toISOString().substring(0, 10);
+      const isMultiDay = startDate !== endDate;
+
+      return {
+        id: event.id,
+        title: event.title,
+        start: event.start,
+        end: event.end,
+        allDay: event.isStartAllDay && event.isEndAllDay,
+        backgroundColor: isPast ? '#9e9e9e' : event.color,
+        borderColor: isPast ? '#757575' : event.color,
+        textColor: isPast ? '#f5f5f5' : undefined,
+        classNames: [
+          isPast ? 'past-event' : '',
+          (event.isStartAllDay && event.isEndAllDay && isMultiDay) ? 'multi-day-event' : '',
+          event.extendedProps.isException ? 'exception-event' : ''
+        ].filter(Boolean),
+        extendedProps: {
+          description: event.extendedProps.description,
+          location: event.extendedProps.location,
+          meetingLink: event.extendedProps.meetingLink,
+          category: event.extendedProps.category,
+          addToCalendarEnabled: event.extendedProps.addToCalendarEnabled,
+          isPast: isPast,
+          originalId: event.extendedProps.originalId,
+          isStartAllDay: event.extendedProps.isStartAllDay,
+          isEndAllDay: event.extendedProps.isEndAllDay,
+          recurrence: event.recurrence,
+          isException: event.extendedProps.isException,
+          instanceDate: event.extendedProps.instanceDate
+        }
+      };
+    });
 
   const addToCalendar = (type) => {
     if (!selectedEvent) return;
@@ -337,8 +413,8 @@ const PublicCalendar = () => {
               </div>
 
               <div className="event-detail">
-                <span className="detail-label">Time Remaining:</span>
-                <span className="detail-value">{timeRemaining}</span>
+                <span className="detail-label">Time Left:</span>
+                <span className="event-time-left">{timeLeft}</span>
               </div>
 
               {selectedEvent.recurrence && (
@@ -354,8 +430,8 @@ const PublicCalendar = () => {
                       if (rule.options.freq === RRule.YEARLY) {
                         return `Every ${interval} year${interval !== 1 ? 's' : ''} on ${monthOptions.find(m => m.value === rule.options.bymonth)?.label} ${rule.options.bymonthday}`;
                       }
-                      if (selectedEvent.recurrence.isMonthly && rule.options.byday && rule.options.bysetpos) {
-                        return `Every ${interval} month${interval !== 1 ? 's' : ''} on the ${setPosOptions.find(p => p.value === rule.options.bysetpos[0])?.label} ${dayOptions.find(d => d.value === rule.options.byday[0])?.label}`;
+                      if (selectedEvent.recurrence.isMonthly && rule.options.byweekday && rule.options.bysetpos) {
+                        return `Every ${interval} month${interval !== 1 ? 's' : ''} on the ${setPosOptions.find(p => p.value === rule.options.bysetpos[0])?.label} ${dayOptions.find(d => d.value === rule.options.byweekday[0])?.label}`;
                       }
                       return selectedEvent.recurrence.isMonthly
                         ? `Every ${interval / 4} month${interval / 4 !== 1 ? 's' : ''} on day ${rule.options.bymonthday}`
