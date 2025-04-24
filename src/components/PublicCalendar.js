@@ -15,6 +15,39 @@ const PublicCalendar = () => {
   const [showEventDetails, setShowEventDetails] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState('');
 
+  const dayOptions = [
+    { value: 'MO', label: 'Monday' },
+    { value: 'TU', label: 'Tuesday' },
+    { value: 'WE', label: 'Wednesday' },
+    { value: 'TH', label: 'Thursday' },
+    { value: 'FR', label: 'Friday' },
+    { value: 'SA', label: 'Saturday' },
+    { value: 'SU', label: 'Sunday' }
+  ];
+
+  const setPosOptions = [
+    { value: 1, label: 'First' },
+    { value: 2, label: 'Second' },
+    { value: 3, label: 'Third' },
+    { value: 4, label: 'Fourth' },
+    { value: -1, label: 'Last' }
+  ];
+
+  const monthOptions = [
+    { value: 1, label: 'January' },
+    { value: 2, label: 'February' },
+    { value: 3, label: 'March' },
+    { value: 4, label: 'April' },
+    { value: 5, label: 'May' },
+    { value: 6, label: 'June' },
+    { value: 7, label: 'July' },
+    { value: 8, label: 'August' },
+    { value: 9, label: 'September' },
+    { value: 10, label: 'October' },
+    { value: 11, label: 'November' },
+    { value: 12, label: 'December' }
+  ];
+
   useEffect(() => {
     fetchEvents();
   }, []);
@@ -94,11 +127,16 @@ const PublicCalendar = () => {
           return instances.map(instance => {
             const instanceDate = instance.toISOString().substring(0, 10);
             const exception = exceptions.find(ex => ex.date === instanceDate);
+            if (exception && exception.deleted) return [];
             return {
               ...event,
               id: `${event.id}_${instance.getTime()}`,
               start: exception ? new Date(exception.start) : instance,
               end: exception ? new Date(exception.end) : new Date(instance.getTime() + duration),
+              title: exception?.title || event.title,
+              description: exception?.description || event.description,
+              location: exception?.location || event.location,
+              meetingLink: exception?.meetingLink || event.meetingLink,
               extendedProps: {
                 ...eventExtendedProps,
                 isStartAllDay: exception ? exception.isStartAllDay : event.isStartAllDay,
@@ -108,7 +146,7 @@ const PublicCalendar = () => {
               },
               allDay: exception ? exception.isStartAllDay && exception.isEndAllDay : event.isStartAllDay && event.isEndAllDay
             };
-          });
+          }).filter(Boolean);
         }
         return [{
           ...event,
@@ -189,7 +227,8 @@ const PublicCalendar = () => {
       textColor: isPast ? '#f5f5f5' : undefined,
       classNames: [
         isPast ? 'past-event' : '',
-        (event.isStartAllDay && event.isEndAllDay && isMultiDay) ? 'multi-day-event' : ''
+        (event.isStartAllDay && event.isEndAllDay && isMultiDay) ? 'multi-day-event' : '',
+        event.extendedProps.isException ? 'exception-event' : ''
       ].filter(Boolean),
       extendedProps: {
         description: event.extendedProps.description,
@@ -312,8 +351,14 @@ const PublicCalendar = () => {
                       if (rule.options.freq === RRule.DAILY) {
                         return `Every ${interval} day${interval !== 1 ? 's' : ''}`;
                       }
+                      if (rule.options.freq === RRule.YEARLY) {
+                        return `Every ${interval} year${interval !== 1 ? 's' : ''} on ${monthOptions.find(m => m.value === rule.options.bymonth)?.label} ${rule.options.bymonthday}`;
+                      }
+                      if (selectedEvent.recurrence.isMonthly && rule.options.byday && rule.options.bysetpos) {
+                        return `Every ${interval} month${interval !== 1 ? 's' : ''} on the ${setPosOptions.find(p => p.value === rule.options.bysetpos[0])?.label} ${dayOptions.find(d => d.value === rule.options.byday[0])?.label}`;
+                      }
                       return selectedEvent.recurrence.isMonthly
-                        ? `Every ${interval / 4} month${interval / 4 !== 1 ? 's' : ''} (${interval} weeks)`
+                        ? `Every ${interval / 4} month${interval / 4 !== 1 ? 's' : ''} on day ${rule.options.bymonthday}`
                         : `Every ${interval} week${interval !== 1 ? 's' : ''}`;
                     })()}
                     {selectedEvent.isException && ' (Modified instance)'}
