@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import './Navbar.css';
 import logo from '../Images/logo/eHealthHub_logo.png';
+
 function Navbar() {
   const [click, setClick] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -59,6 +60,11 @@ function Navbar() {
           <li className="nav-item">
             <Link to="/news" className={`nav-links ${getActiveClass('/news')}`} onClick={closeMenu}>
               News
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/calendar" className={`nav-links ${getActiveClass('/calendar')}`} onClick={closeMenu}>
+              Events
             </Link>
           </li>
           <li
