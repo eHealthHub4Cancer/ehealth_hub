@@ -352,7 +352,7 @@ const PublicCalendar = () => {
     <div className="public-calendar-container">
       <header className="calendar-header">
         <h1>eHealth Hub Event Calendar</h1>
-        <p>Stay up to date with our upcoming events, conferences, and deadlines</p>
+        <p>Stay up to date with upcoming events, conferences, and deadlines</p>
       </header>
 
       <main className="calendar-main-public">
