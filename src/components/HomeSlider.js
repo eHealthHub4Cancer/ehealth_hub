@@ -8,6 +8,7 @@ import "./Slider.css";
 import image1 from '../Images/sliders/2022_OHDSI_meeting_WashingtonDC.jpg';
 import image2 from '../Images/sliders/2023_Belfast Photo 1.jpeg';
 import image3 from '../Images/sliders/Cancer-Research-UL.jpg';
+import image4 from '../Images/sliders/ehealth-people.jpeg'
 import image5 from '../Images/sliders/ul-research-centre-Clifford_Culhane2.jpeg';
 import image6 from '../Images/sliders/hdruk.jpg'
 
@@ -74,6 +75,7 @@ function HomeSlider() {
       <div className="slider-container">
         <Slider {...settings}>
 
+       
         <div className="slide">
             <div className="slide-image-container">
               <img src={image3} alt="OHDSI Meeting in Washington DC" />
@@ -87,6 +89,21 @@ function HomeSlider() {
               </div>
             </div>
           </div>
+
+          <div className="slide">
+            <div className="slide-image-container">
+              <img src={image4} alt="OHDSI Meeting in Washington DC" />
+              <div className="slide-overlay"></div>
+            </div>
+            <div className="slide-caption">
+              <div className="caption-content">
+                <h2>2025, All-Island Forum on Cancer Data</h2>
+                <div className="caption-divider"></div>
+                <p>Sharing innovative approaches to securely share and analyze cancer data to advance research and benefit patients.</p>
+              </div>
+            </div>
+          </div>
+
 
           <div className="slide">
             <div className="slide-image-container">
