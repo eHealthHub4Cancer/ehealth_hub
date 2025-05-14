@@ -1,103 +1,108 @@
 const PublicationsData = {
     2024: [
       {
-        id: 1,
+        id: 1, 
+        citation: "Lawler M, Culhane A, Heenan D, Keatley D, Bennett D, Gaynor S, Lowery M, McCabe S. \"Harnessing the Power of Data to Transform Cancer Research, Care and Innovation Across the Island of Ireland\". Eng. In: eHealth Hub for Cancer. May 2025.",
+        pdfUrl: "https://raw.githubusercontent.com/eHealthHub4Cancer/Harnessing-the-Power-of-Data-to-Transform-Cancer-Research/main/Harnessing%20the%20Power%20of%20Data%20for%20Cancer%2005-25%20090525%20Digital.pdf"
+      },
+      {
+        id: 2,
         citation: "Ward ZJ, Atun R, Aggarwal A, Lawler M, Hricak H.  \"Investing in cancer care in the UK: why aren't we acting on the evidence?\". Eng. In: Lancet Oncol. 25.12 (Dec. 2024), pp. 1522-1524.",
         doi: "10.1016/S1470-2045(24)00634-X",
         pmid: "39542007"
       },
       {
-        id: 2,
+        id: 3,
         citation: "Popescu RA, Sullivan R, Aggarwal A, Lopes David BB, Valciņa O, Al Sendi M, Lawler M, Charalambous A, Aapro M, Hall C, Eniu A, Selby P. \"Improving cancer outcomes through enhanced leadership and strategy training for cancer healthcare professionals - A course developed by the European School of Oncology (ESO), the European Cancer Organization (ECO) and Sharing Progress in Cancer Care (SPCC)\". Eng. In: J Cancer Policy. 43 (Nov. 2024), p. 100517.",
         doi: "10.1016/j.jcpo.2024.100517",
         pmid: "39510379"
       },
       {
-        id: 3,
+        id: 4,
         citation: "Faupel-Badger J, Kohaar I, Bahl M, Chan AT, Campbell JD, Ding L, De Marzo AM, Maitra A, Merrick DT, Hawk ET, Wistuba II, Ghobrial IM, Lippman SM, Lu KH, Lawler M, Kay NE, Tlsty TD, Rebbeck TR, Srivastava S. \"Defining precancer: a grand challenge for the cancer community\". Eng. In: Nat Rev Cancer. 24.11 (Nov. 2024), pp. 792-809.",
         doi: "10.1038/s41568-024-00744-0",
         pmid: "39354069"
       },
       {
-        id: 4,
+        id: 5,
         citation: "Lawler M, Aggarwal A, Gralow J, Sullivan R, Price P\"The UK needs to be a leader, not a lagger, in the global cancer effort\". Eng. In: Lancet Oncol. 25.10 (Oct. 2024), pp. 1253-1254.",
         doi: "10.1016/S1470-2045(24)00448-0",
         pmid: "39178864"
       },
       {
-        id: 5,
+        id: 6,
         citation: "Naidoo KL, Dorward J, Chinniah K, Lawler M, Nattar Y, Bottomley C, Archary M. \"Changes in the medical admissions and mortality amongst children in four South African hospitals following the COVID-19 pandemic: A five-year review\". Eng. In: PLOS Glob Public Health. 4.9 (Sep. 2024), p. e0002829.",
         doi: "10.1371/journal.pgph.0002829",
         pmid: "39292683"
       },
       {
-        id: 6,
+        id: 7,
         citation: "Lawler M, Scocca G, Meunier F. \"Ending financial discrimination for cancer survivors: embedding the Right to be Forgotten in legislation across Europe\". Eng. In: Lancet Oncol. 25.9 (Sep. 2024), pp. 1123-1126.",
         doi: "10.1016/S1470-2045(24)00312-7",
         pmid: "39151444"
       },
       {
-        id: 7,
+        id: 8,
         citation: "Lawler M, Keeling P, Kholmanskikh O, Minnaard W, Moehlig-Zuttermeister H, Normanno N, Philip R, Popp C, Salgado R, Santiago-Walker AE, Trullas A, van Doorn-Khosrovani SBVW, Vart R, Vermeulen J, Vitaloni M, Verweij J. \"Empowering effective biomarker-driven precision oncology: A call to action\". Eng. In: Eur J Cancer. 209 (Sep. 2024), p. 114225.",
         doi: "10.1016/j.ejca.2024.114225",
         pmid: "39053288"
       },
       {
-        id: 8,
+        id: 9,
         citation: "Ghebreyesus TA, Mired D, Sullivan R, Mueller A, Charalambous A, Kacharian A, Tsagkaris C, Soto-Perez-de-Celis E, Grigoryan H, Gralow J, Ilbawi A, Ghanem K, Mula-Hussain L, Mikkelsen B, Yimer M, Hammad N, Arakelyan S, Kutluk T, Salman Z, Lawler M, Tamamyan G, Babak MV, Arakelyan J. \"A manifesto on improving cancer care in conflict-impacted populations\". Eng. In: Lancet. 404.10451 (Aug. 2024), p. 427.",
         doi: "10.1016/S0140-6736(24)01023-7",
         pmid: "39097383"
       },
       {
-        id: 9,
+        id: 10,
         citation: "Carrera PM, Curigliano G, Santini D, Sharp L, Chan RJ, Pisu M, Perrone F, Karjalainen S, Numico G, Cherny N, Winkler E, Amador ML, Fitch M, Lawler M, Meunier F, Khera N, Pentheroudakis G, Trapani D, Ripamonti CI. \"ESMO expert consensus statements on the screening and management of financial toxicity in patients with cancer\". Eng. In: ESMO Open. 9.5 (May. 2024), p. 102992.",
         doi: "10.1016/j.esmoop.2024.102992",
         pmid: "38626634"
       },
       {
-        id: 10,
+        id: 11,
         citation: "SMalla SB, Byrne RM, Lafarge MW, Corry SM, Fisher NC, Tsantoulis PK, Mills ML, Ridgway RA, Lannagan TRM, Najumudeen AK, Gilroy KL, Amirkhah R, Maguire SL, Mulholland EJ, Belnoue-Davis HL, Grassi E, Viviani M, Rogan E, Redmond KL, Sakhnevych S, McCooey AJ, Bull C, Hoey E, Sinevici N, Hall H, Ahmaderaghi B, Domingo E, Blake A, Richman SD, Isella C, Miller C, Bertotti A, Trusolino L, Loughrey MB, Kerr EM, Tejpar S; S:CORT consortium; Maughan TS, Lawler M, Campbell AD, Leedham SJ, Koelzer VH, Sansom OJ, Dunne PD. \"Pathway level subtyping identifies a slow-cycling biological phenotype associated with poor clinical outcomes in colorectal cancer\". Eng. In: Nat Genet. 56.3 (Mar. 2024), pp. 458-472.",
         doi: "10.1038/s41588-024-01654-5",
         pmid: "38351382"
       },
       {
-        id: 11,
+        id: 12,
         citation: "McFerran E, Donaldson S, Dolan O, Lawler M. \"Skin in the game: The cost consequences of skin cancer diagnosis, treatment and care in Northern Ireland\". Eng. In: J Cancer Policy. 39 (Mar. 2024), p. 100468.",
         doi: "10.1016/j.jcpo.2024.100468",
         pmid: "38311308"
       },
       {
-        id: 12,
+        id: 13,
         citation: "Nelson D, Selby P, Kane R, Harding-Bell A, Kenny A, McPeake K, Cooke S, Hogue T, Oliver K, Gussy M, Lawler M. \"Implementing the European code of cancer practice in rural settings\". Eng. In: J Cancer Policy. 39 (Mar. 2024), p. 100465.",
         doi: "10.1016/j.jcpo.2023.100465",
         pmid: "38184144"
       },
       {
-        id: 13,
+        id: 14,
         citation: "Connolly H, Delimata N, Galway K, Kiely B, Lawler M, Mulholland J, O'Grady M, Connolly D. \"Exploration of Evaluation Practices in Social Prescribing Services in Ireland: A Cross-Sectional Observational Study\". Eng. In: Healthcare (Basel). 12.2 (Jan. 2024), p. 219.",
         doi: "10.3390/healthcare12020219",
         pmid: "38255106"
       },
       {
-        id: 14,
+        id: 15,
         citation: "Aggarwal A, Choudhury A, Fearnhead N, Kearns P, Kirby A, Lawler M, Quinlan S, Palmieri C, Roques T, Simcock R, Walter FM, Price P, Sullivan R. \"The future of cancer care in the UK-time for a radical and sustainable National Cancer Plan\". Eng. In: Lancet Oncol. 25.1 (Jan. 2024), pp. e6-e17.",
         doi: "10.1016/S1470-2045(23)00511-9",
         pmid: "37977167"
       },
       {
-        id: 15,
+        id: 16,
         citation: "Riba M, Sala C, Culhane AC, Flobak Å, Patocs A, Boye K, Plevova K, Pospíšilová Š, Gandolfi G, Morelli MJ, Bucci G, Edsjö A, Lassen U, Al-Shahrour F, Lopez-Bigas N, Hovland R, Cuppen E, Valencia A, Poirel HA, Rosenquist R, Scollen S, Arenas Marquez J, Belien J, De Nicolo A, De Maria R, Torrents D, Tonon G. \"The 1+Million Genomes Minimal Dataset for Cancer\". Eng. In: Nat Genet. 56.5 (May. 2024), pp. 733-736.",
         doi: "10.1038/s41588-024-01721-x",
         pmid: "38702538"
       },
       {
-        id: 16,
+        id: 17,
         citation: "Shah R, Loo CE, Hanna NM, Hughes S, Mafra A, Fink H, McFerran E, Garcia M, Acharya S, Langselius O, Frick C, Niyigaba J, Lasebikan N, Steinberg J, Sullivan R, Bray F, Ilbawi AM, Ginsburg O, Chiam K, Cylus J, Caruana M, David M, Hui H, Canfell K, Soerjomataram I. \"Global review of COVID-19 mitigation strategies and their impact on cancer service disruptions\". Eng. In: J Cancer Policy. 41 (Sep. 2024), p. 100486.",
         doi: "10.1016/j.jcpo.2024.100486",
         pmid: "38830535"
       },
       {
-        id: 17,
+        id: 18,
         citation: "McFerran E, Donaldson S, Dolan O, Lawler M. \"Skin in the game: The cost consequences of skin cancer diagnosis, treatment and care in Northern Ireland\". Eng. In: J Cancer Policy. 39 (Mar. 2024), p. 100468.",
         doi: "10.1016/j.jcpo.2024.100468",
         pmid: "38311308"
