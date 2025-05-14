@@ -1,10 +1,10 @@
 const PublicationsData = {
     2024: [
-      {
-        id: 1, 
-        citation: "Lawler M, Culhane A, Heenan D, Keatley D, Bennett D, Gaynor S, Lowery M, McCabe S. \"Harnessing the Power of Data to Transform Cancer Research, Care and Innovation Across the Island of Ireland\". Eng. In: eHealth Hub for Cancer. May 2025.",
-        pdfUrl: "https://raw.githubusercontent.com/eHealthHub4Cancer/Harnessing-the-Power-of-Data-to-Transform-Cancer-Research/main/Harnessing%20the%20Power%20of%20Data%20for%20Cancer%2005-25%20090525%20Digital.pdf"
-      },
+      // {
+      //   id: 1, 
+      //   citation: "Lawler M, Culhane A, Heenan D, Keatley D, Bennett D, Gaynor S, Lowery M, McCabe S. \"Harnessing the Power of Data to Transform Cancer Research, Care and Innovation Across the Island of Ireland\". Eng. In: eHealth Hub for Cancer. May 2025.",
+      //   pdfUrl: "https://raw.githubusercontent.com/eHealthHub4Cancer/Harnessing-the-Power-of-Data-to-Transform-Cancer-Research/main/Harnessing%20the%20Power%20of%20Data%20for%20Cancer%2005-25%20090525%20Digital.pdf"
+      // },
       {
         id: 2,
         citation: "Ward ZJ, Atun R, Aggarwal A, Lawler M, Hricak H.  \"Investing in cancer care in the UK: why aren't we acting on the evidence?\". Eng. In: Lancet Oncol. 25.12 (Dec. 2024), pp. 1522-1524.",
