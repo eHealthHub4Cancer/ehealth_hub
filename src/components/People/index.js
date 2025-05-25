@@ -18,21 +18,19 @@ const Index = () => {
   const { slug } = useParams();
   const {
     personInformation,
-    loading,
-    progress,
+    personLoading,
+    personProgress,
     error,
     fetchPersonInformation,
     resetPersonInformation,
   } = useGlobalData();
 
-  // Fetch the person's information when the slug changes
   useEffect(() => {
     if (slug) {
       fetchPersonInformation(slug);
     }
   }, [slug, fetchPersonInformation]);
 
-  // Reset personInformation on unmount to clear stale data
   useEffect(() => {
     return () => {
       if (resetPersonInformation) {
@@ -41,15 +39,14 @@ const Index = () => {
     };
   }, [resetPersonInformation]);
 
-  if (loading) return <Loader percentage={progress} dataName="person" />;
+  // Use personLoading instead of general loading
+  if (personLoading) return <Loader percentage={personProgress} dataName="person" />;
   if (error) return <p>Error: {error}</p>;
 
-  // Use the full_name for breadcrumb, falling back to a default text if it's not available.
   const fullName = personInformation?.full_name || "Profile Not Found";
 
   return (
     <div className="profile-container">
-      {/* Breadcrumb Navigation */}
       <nav className="breadcrumb">
         <Link to="/people">People</Link>
         <ChevronRight size={16} />
@@ -58,12 +55,10 @@ const Index = () => {
         <span>{fullName}</span>
       </nav>
 
-      {/* If there's no personInformation (profile not found), show fallback content */}
       {!personInformation ? (
         <p>No data available for this person.</p>
       ) : (
         <>
-          {/* Hero Section */}
           <div className="profile-hero">
             <div className="hero-content">
               {personInformation.image && (
@@ -72,10 +67,10 @@ const Index = () => {
                     src={personInformation.image}
                     alt={fullName}
                     className="hero-image"
+                    loading="lazy"
                   />
                 </div>
               )}
-
               <div className="hero-right">
                 <h1>{fullName}</h1>
                 {personInformation.role_badge && (
@@ -92,14 +87,12 @@ const Index = () => {
                     ))}
                   </div>
                 )}
-
                 {personInformation.institution && (
                   <div className="institution-info">
                     <h2>Institution</h2>
                     <p>{personInformation.institution}</p>
                   </div>
                 )}
-
                 <div className="contact-actions">
                   {personInformation.homepage_url && (
                     <a
@@ -123,7 +116,6 @@ const Index = () => {
                     </a>
                   )}
                 </div>
-
                 {personInformation.social_links && (
                   <div className="social-links">
                     {personInformation.social_links.map((link, index) => (
@@ -145,10 +137,7 @@ const Index = () => {
               </div>
             </div>
           </div>
-
-          {/* Main Content Sections */}
           <div className="profile-sections">
-            {/* About Section with Fallback */}
             <section className="content-section about-section">
               <div className="section-header">
                 <h2>About</h2>
@@ -244,7 +233,6 @@ const Index = () => {
                   )}
               </div>
             </section>
-
             {personInformation.research_interests &&
               personInformation.research_interests.length > 0 && (
                 <section className="content-section interests-section">
@@ -271,8 +259,6 @@ const Index = () => {
                 </section>
               )}
           </div>
-
-          {/* Footer Navigation */}
           <div className="profile-footer">
             <Link to="/people" className="back-to-directory">
               ← Back to Directory

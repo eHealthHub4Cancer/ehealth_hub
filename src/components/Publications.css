@@ -90,6 +90,7 @@
   .publications-content {
     flex: 1;
     min-width: 0;
+    margin-top: 80px;
   }
   
   .publications-content h1 {
@@ -266,7 +267,13 @@
     .publication-text {
       font-size: 0.95rem;
     }
+
+    .content-section{
+      margin-top: 80px;
+    }
+
   }
+  
 
   .publications-container {
     display: flex;
@@ -493,6 +500,7 @@
   .publication-content {
     flex: 1;
     padding: 15px 20px;
+    
   }
   
   .publication-text {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Filter } from "lucide-react";
 import "./People.css";
@@ -7,26 +7,28 @@ import Loader from "./loader";
 
 function People() {
   const navigate = useNavigate();
-  const { people: globalPeople, loading, progress, error } = useGlobalData();
-  const [visibleCount, setVisibleCount] = useState(12); // Start with 12 people
+  const { 
+    people: globalPeople, 
+    peopleLoading, 
+    peopleProgress, 
+    error
+  } = useGlobalData();
+  
+  const [visibleCount, setVisibleCount] = useState(12);
   const [selectedFilters, setSelectedFilters] = useState([]);
 
-  // Ensure globalPeople is defined before proceeding
   const people = globalPeople || [];
-
-  // Get all unique tags for filter options
   const allTags = [...new Set(people.flatMap((person) => person.tags || []))];
 
-  // Function to count occurrences of each tag
-  const getTagCount = (tag) => {
+  const getTagCount = useCallback((tag) => {
     return people.filter((person) => person.tags?.includes(tag)).length;
-  };
+  }, [people]);
 
-  const toggleFilter = (tag) => {
+  const toggleFilter = useCallback((tag) => {
     setSelectedFilters((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
-  };
+  }, []);
 
   const filteredPeople = people.filter(
     (person) =>
@@ -34,15 +36,14 @@ function People() {
       selectedFilters.some((tag) => person.tags?.includes(tag))
   );
 
-  // Show only up to the current `visibleCount`
   const visiblePeople = filteredPeople.slice(0, visibleCount);
 
-  // Load More function
-  const loadMore = () => {
-    setVisibleCount((prev) => prev + 12); // Increase by 12 each time
-  };
+  const loadMore = useCallback(() => {
+    setVisibleCount((prev) => prev + 12);
+  }, []);
 
-  if (loading) return <Loader percentage={progress} dataName="people" />;
+  // Use peopleLoading instead of general loading
+  if (peopleLoading) return <Loader percentage={peopleProgress} dataName="people" />;
   if (error) return <p>Error: {error}</p>;
   if (!people.length) return <p>No people data available.</p>;
 
@@ -50,13 +51,11 @@ function People() {
     <div className="people-container">
       <div className="people-header">
         <h1>People</h1>
-
         <div className="filter-section">
           <div className="filter-header">
-            <Filter size={20} />
+            <Filter size={24} />
             <span>Categories</span>
           </div>
-
           <div className="filter-tags">
             {allTags.map((tag) => (
               <button
@@ -71,7 +70,6 @@ function People() {
           </div>
         </div>
       </div>
-
       <div className="people-grid">
         {visiblePeople.length > 0 ? (
           visiblePeople.map((person) => (
@@ -82,9 +80,13 @@ function People() {
             >
               <div className="card-image-container">
                 <img
-                  src={person.image || "default-image.jpg"}
+                  src={person.image || "/default-image.jpg"}
                   alt={person.full_name || "Unknown"}
                   className="card-image"
+                  loading="lazy"
+                  onError={(e) => {
+                    e.target.src = "/default-image.jpg";
+                  }}
                 />
               </div>
               <div className="card-content">
@@ -104,8 +106,6 @@ function People() {
           <p>No people match the selected filters.</p>
         )}
       </div>
-
-      {/* Load More Button */}
       {visibleCount < filteredPeople.length && (
         <div className="load-more-container">
           <button onClick={loadMore} className="load-more-button">
@@ -117,4 +117,4 @@ function People() {
   );
 }
 
-export default People;
+export default React.memo(People);
