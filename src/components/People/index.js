@@ -19,7 +19,6 @@ const Index = () => {
   const {
     personInformation,
     personLoading,
-    personProgress,
     error,
     fetchPersonInformation,
     resetPersonInformation,
@@ -40,7 +39,7 @@ const Index = () => {
   }, [resetPersonInformation]);
 
   // Use personLoading instead of general loading
-  if (personLoading) return <Loader percentage={personProgress} dataName="person" />;
+  if (personLoading) return <Loader dataName="person" />;
   if (error) return <p>Error: {error}</p>;
 
   const fullName = personInformation?.full_name || "Profile Not Found";

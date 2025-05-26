@@ -5,7 +5,10 @@ function Loader({ percentage, dataName }) {
   return (
     <div className="loader">
       <div className="spinner"></div>
-      <p>Loading {dataName}... {percentage}%</p>
+      <p>
+        Loading {dataName}...
+        {percentage !== undefined && ` ${percentage}%`}
+      </p>
     </div>
   );
 }

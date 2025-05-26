@@ -1,6 +1,6 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Filter } from "lucide-react";
+import { Filter, RefreshCw } from "lucide-react";
 import "./People.css";
 import { useGlobalData } from "./globaldatacontext";
 import Loader from "./loader";
@@ -10,8 +10,9 @@ function People() {
   const { 
     people: globalPeople, 
     peopleLoading, 
-    peopleProgress, 
-    error
+    error,
+    refreshCache,
+    preloadVisiblePeople
   } = useGlobalData();
   
   const [visibleCount, setVisibleCount] = useState(12);
@@ -42,15 +43,38 @@ function People() {
     setVisibleCount((prev) => prev + 12);
   }, []);
 
+  // Preload visible people when they change
+  useEffect(() => {
+    if (visiblePeople.length > 0) {
+      // Small delay to avoid preloading during rapid state changes
+      const timer = setTimeout(() => {
+        preloadVisiblePeople(visiblePeople);
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [visiblePeople, preloadVisiblePeople]);
+
   // Use peopleLoading instead of general loading
-  if (peopleLoading) return <Loader percentage={peopleProgress} dataName="people" />;
+  if (peopleLoading) return <Loader dataName="people" />;
   if (error) return <p>Error: {error}</p>;
   if (!people.length) return <p>No people data available.</p>;
 
   return (
     <div className="people-container">
       <div className="people-header">
-        <h1>People</h1>
+        <div className="header-top">
+          <h1>People</h1>
+          <button 
+            onClick={refreshCache} 
+            className="refresh-button"
+            disabled={peopleLoading}
+            title="Refresh to get latest updates"
+          >
+            <RefreshCw size={18} className={peopleLoading ? 'spinning' : ''} />
+            {peopleLoading ? 'Refreshing...' : 'Refresh'}
+          </button>
+        </div>
         <div className="filter-section">
           <div className="filter-header">
             <Filter size={24} />
@@ -117,4 +141,4 @@ function People() {
   );
 }
 
-export default React.memo(People);
+export default People;

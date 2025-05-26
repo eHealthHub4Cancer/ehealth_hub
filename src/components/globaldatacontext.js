@@ -4,7 +4,7 @@ import { getPeople, getPersonInformation } from "./api";
 // Constants for caching
 const PEOPLE_CACHE_KEY = 'people_data_cache';
 const PERSON_INFO_CACHE_KEY = 'person_info_cache';
-const CACHE_EXPIRY = 60 * 60 * 1000; // 1 hour in milliseconds
+const CACHE_EXPIRY = 3 * 60 * 60 * 1000; // 3 hours in milliseconds
 
 const GlobalDataContext = createContext();
 
@@ -16,10 +16,6 @@ export const GlobalDataProvider = ({ children }) => {
   const [peopleLoading, setPeopleLoading] = useState(false);
   const [personLoading, setPersonLoading] = useState(false);
   
-  // Separate progress states
-  const [peopleProgress, setPeopleProgress] = useState(0);
-  const [personProgress, setPersonProgress] = useState(0);
-  
   const [error, setError] = useState(null);
 
   // Check cache for data
@@ -30,6 +26,8 @@ export const GlobalDataProvider = ({ children }) => {
         const { timestamp, data } = JSON.parse(cached);
         if (Date.now() - timestamp <= CACHE_EXPIRY) {
           return data;
+        } else {
+          localStorage.removeItem(key);
         }
       }
     } catch (e) {
@@ -50,29 +48,79 @@ export const GlobalDataProvider = ({ children }) => {
     }
   };
 
-  // Fetch the list of people on initialization
+  // Batch preload person details for a specific set of people (pagination-aware)
+  const preloadVisiblePeople = useCallback(async (visiblePeople) => {
+    if (!visiblePeople?.length) return;
+
+    const cachedPersonInfo = getCachedData(PERSON_INFO_CACHE_KEY) || {};
+    const slugsToPreload = visiblePeople
+      .map(person => person.slug)
+      .filter(slug => !cachedPersonInfo[slug]); // Only preload uncached people
+
+    if (slugsToPreload.length === 0) {
+      console.log(' All visible people already cached');
+      return;
+    }
+
+    console.log(` Preloading ${slugsToPreload.length} visible people...`);
+    
+    // Batch load in groups of 3
+    const batchSize = 3;
+    const personInfoMap = { ...cachedPersonInfo };
+    
+    for (let i = 0; i < slugsToPreload.length; i += batchSize) {
+      const batch = slugsToPreload.slice(i, i + batchSize);
+      
+      const batchPromises = batch.map(async (slug) => {
+        try {
+          const personData = await getPersonInformation(slug);
+          personInfoMap[slug] = personData;
+          console.log(` Preloaded: ${slug}`);
+        } catch (err) {
+          console.warn(` Failed to preload: ${slug}`);
+        }
+      });
+      
+      await Promise.all(batchPromises);
+    }
+
+    // Update cache with newly preloaded data
+    setCachedData(PERSON_INFO_CACHE_KEY, personInfoMap);
+    console.log(`✅ Preloaded ${slugsToPreload.length} people details`);
+  }, []);
+
+  // Fetch ONLY the people list (fast initial load)
   useEffect(() => {
-    const fetchGlobalData = async () => {
+    const fetchPeopleList = async () => {
       setPeopleLoading(true);
-      setPeopleProgress(0);
       setError(null);
       
       try {
         // Check cache first
         const cachedPeople = getCachedData(PEOPLE_CACHE_KEY);
         if (cachedPeople) {
+          console.log(`Loaded ${cachedPeople.length} people from cache`);
           setPeople(cachedPeople);
-          setPeopleProgress(100);
           setPeopleLoading(false);
+          
+          // Preload first 12 people silently
+          setTimeout(() => {
+            const firstTwelve = cachedPeople.slice(0, 12);
+            preloadVisiblePeople(firstTwelve);
+          }, 100);
           return;
         }
 
         // Fetch from API
-        setPeopleProgress(50);
         const peopleData = await getPeople();
         setPeople(peopleData);
         setCachedData(PEOPLE_CACHE_KEY, peopleData);
-        setPeopleProgress(100);
+        console.log(`Loaded ${peopleData.length} people from API`);
+        
+        // Preload first 12 people
+        const firstTwelve = peopleData.slice(0, 12);
+        await preloadVisiblePeople(firstTwelve);
+        
       } catch (err) {
         setError(err.message);
       } finally {
@@ -80,27 +128,28 @@ export const GlobalDataProvider = ({ children }) => {
       }
     };
     
-    fetchGlobalData();
-  }, []);
+    fetchPeopleList();
+  }, [preloadVisiblePeople]);
 
-  // Fetch individual person information by slug
+  // Fetch individual person information by slug (instant if preloaded)
   const fetchPersonInformation = useCallback(async (slug) => {
+    console.log(` Fetching person: ${slug}`);
+    
     setPersonLoading(true);
-    setPersonProgress(0);
     setError(null);
     
     try {
       // Check cache first
       const cachedPersonInfo = getCachedData(PERSON_INFO_CACHE_KEY);
       if (cachedPersonInfo && cachedPersonInfo[slug]) {
+        console.log(` INSTANT: ${slug} loaded from cache`);
         setPersonInformation(cachedPersonInfo[slug]);
-        setPersonProgress(100);
         setPersonLoading(false);
         return;
       }
 
-      // Fetch from API
-      setPersonProgress(50);
+      // Fallback: fetch from API if not preloaded
+      console.log(` API FETCH: ${slug}`);
       const personData = await getPersonInformation(slug);
       setPersonInformation(personData);
 
@@ -108,7 +157,6 @@ export const GlobalDataProvider = ({ children }) => {
       const updatedCache = { ...(getCachedData(PERSON_INFO_CACHE_KEY) || {}), [slug]: personData };
       setCachedData(PERSON_INFO_CACHE_KEY, updatedCache);
       
-      setPersonProgress(100);
     } catch (err) {
       if (err.message.includes("404")) {
         setPersonInformation(null);
@@ -120,11 +168,28 @@ export const GlobalDataProvider = ({ children }) => {
     }
   }, []);
 
+  // Refresh only the people list (fast refresh)
+  const refreshCache = useCallback(async () => {
+    console.log(' Refreshing people list...');
+    localStorage.removeItem(PEOPLE_CACHE_KEY);
+    
+    setPeopleLoading(true);
+    try {
+      const peopleData = await getPeople();
+      setPeople(peopleData);
+      setCachedData(PEOPLE_CACHE_KEY, peopleData);
+      console.log(` Refreshed ${peopleData.length} people`);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setPeopleLoading(false);
+    }
+  }, []);
+
   // Reset personInformation
   const resetPersonInformation = useCallback(() => {
     setPersonInformation(null);
     setError(null);
-    setPersonProgress(0);
   }, []);
 
   return (
@@ -138,14 +203,11 @@ export const GlobalDataProvider = ({ children }) => {
         personLoading,
         loading: peopleLoading || personLoading, // Legacy support
         
-        // Expose separate progress states  
-        peopleProgress,
-        personProgress,
-        progress: personLoading ? personProgress : peopleProgress, // Legacy support
-        
         error,
         fetchPersonInformation,
+        preloadVisiblePeople,
         resetPersonInformation,
+        refreshCache,
       }}
     >
       {children}
