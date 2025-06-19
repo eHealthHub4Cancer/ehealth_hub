@@ -36,6 +36,13 @@ import PrivateRoute from "./components/PrivateRoute";
 import AdminCalendar from "./components/AdminCalendar";
 import PublicCalendar from "./components/PublicCalendar";
 
+import BlogEditor from "./components/BlogEditor";
+import UserDashboard from "./components/UserDashboard";
+import AdminDashboard from "./components/AdminDashboard";
+import PublicBlogPage from "./components/PublicBlogPage";
+import BlogPostView from "./components/BlogPostView";
+
+
 import './App.css'; 
 
 // Error redirect handler component to prevent navigation to not-found people
@@ -93,14 +100,19 @@ const AppWithRouter = () => {
               <Route path="/news/limerick-post" element={<LimerickPost />} />
               <Route path="/output/talks" element={<Talks />} />
               <Route path="/output/publications" element={<Publications />} />
-              
+              <Route path="/blog-editor" element={<PrivateRoute><BlogEditor /></PrivateRoute>} />
+              <Route path="/blog-editor/:id" element={<PrivateRoute><BlogEditor /></PrivateRoute>} />
+              <Route path="/blog-dashboard" element={<PrivateRoute><UserDashboard /></PrivateRoute>} />     
+              <Route path="/blog-admin" element={<PrivateRoute requiredRole="admin"><AdminDashboard /></PrivateRoute>} />
+              <Route path="/blog" element={<PublicBlogPage />} />
+              <Route path="/blog/:id" element={<BlogPostView />} />
               {/* New routes for calendar functionality */}
               <Route path="/calendar" element={<PublicCalendar />} />
               <Route path="/login" element={<Login />} />
               <Route 
                 path="/admin/calendar" 
                 element={
-                  <PrivateRoute>
+                  <PrivateRoute requiredRole="admin">
                     <AdminCalendar />
                   </PrivateRoute>
                 } 

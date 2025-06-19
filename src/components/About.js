@@ -46,7 +46,7 @@ const About = () => {
                    className="highlight-link">
                   HEA Shared Island North-South Research Programme
                 </a>
-                . The eHealthHub for Cancer is lead by UL and QUB and partners with clinical and academic researchers in UCD, RCSI, UG, UCC.
+                . The eHealth-Hub for Cancer is led by the University of Limerick (UL) and Queen's University Belfast (QUB), and partners with clinical and academic researchers from the University College Dublin (UCD), Royal College of Surgeons in Ireland (RCSI), University of Galway (UG), University College Cork (UCC), and Trinity College Dublin (TCD).
               </p>
             </div>
           </section>

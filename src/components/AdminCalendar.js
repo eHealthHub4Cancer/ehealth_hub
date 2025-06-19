@@ -719,11 +719,19 @@ const AdminCalendar = () => {
 
   return (
     <div className="admin-calendar-container">
-      <header className="admin-header">
+      <header className="cal-admin-header">
         <h1>eHealth Hub Calendar Management</h1>
-        <button className="logout-button" onClick={handleLogout}>
-          Sign Out
-        </button>
+        <div className="admin-nav-buttons">
+          <button 
+            className="nav-button blog-admin-btn"
+            onClick={() => navigate('/blog-admin')}
+          >
+            📝 Blog Admin
+          </button>
+          <button className="logout-button" onClick={handleLogout}>
+            Sign Out
+          </button>
+        </div>
       </header>
       
       <div className="admin-content">

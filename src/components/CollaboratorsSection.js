@@ -17,7 +17,7 @@ function CollaboratorsSection() {
     { name: 'University of Limerick (UL)', role: 'Lead Institution', link: 'https://www.ul.ie/' },
     { name: "Queen's University Belfast (QUB)", role: 'Research Partner', link: 'https://www.qub.ac.uk/' },
     { name: 'National Cancer Registry Ireland (NCRI)', role: 'Data Registry', link: 'https://www.ncri.ie/' },
-    { name: 'RCSI, UCD, NUIG, and UCC', role: 'Academic Partners', link: 'https://www.rcsi.com/' }
+    { name: 'Royal College of Surgeons in Ireland (RCSI), University College Dublin (UCD), University of Galway (UG), University College Cork (UCC), and Trinity College Dublin (TCD)', role: 'Academic Partners', link: 'https://www.rcsi.com/' }
   ];
 
   return (
