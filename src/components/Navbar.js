@@ -67,6 +67,11 @@ function Navbar() {
               Events
             </Link>
           </li>
+          <li className="nav-item">
+            <Link to="/blog" className={`nav-links ${getActiveClass('/blog')}`} onClick={closeMenu}>
+              Blog
+            </Link>
+          </li>
           <li
             className="nav-item dropdown"
             onMouseEnter={() => window.innerWidth > 768 && setDropdownOpen(true)}
