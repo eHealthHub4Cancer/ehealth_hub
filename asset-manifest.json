@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.9acfe0bd.css",
-    "main.js": "/static/js/main.1ec4ab6e.js",
+    "main.css": "/static/css/main.359cfaa2.css",
+    "main.js": "/static/js/main.8fdb4425.js",
     "static/js/453.6411f75a.chunk.js": "/static/js/453.6411f75a.chunk.js",
     "static/media/Cancer-Research-UL.jpg": "/static/media/Cancer-Research-UL.cea648545bb9e86a250a.jpg",
     "static/media/LDCRC_BuildingTogether_April_2023.jpeg": "/static/media/LDCRC_BuildingTogether_April_2023.d6e9dc07a944ad211b5e.jpeg",
@@ -22,6 +22,7 @@
     "static/media/Computer_Stockphoto.PNG": "/static/media/Computer_Stockphoto.37b9c65d341945a446b4.PNG",
     "static/media/LDCRC_Logo_fixed.png": "/static/media/LDCRC_Logo_fixed.608f951f46bcd2d3362a.png",
     "static/media/eHealth.png": "/static/media/eHealth.add01f1f12a41e0877d5.png",
+    "static/media/OHDSI_Logo.png": "/static/media/OHDSI_Logo.13c6ea72c3d8e6b37a9b.png",
     "static/media/IrishNews_gender.jpg": "/static/media/IrishNews_gender.354fec680a04935de745.jpg",
     "static/media/overview.jpeg": "/static/media/overview.823c11e5a1ab1b5e5e22.jpeg",
     "static/media/Slide1.jpeg": "/static/media/Slide1.5934e05d59a4606534be.jpeg",
@@ -30,12 +31,12 @@
     "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/index.html",
-    "main.9acfe0bd.css.map": "/static/css/main.9acfe0bd.css.map",
-    "main.1ec4ab6e.js.map": "/static/js/main.1ec4ab6e.js.map",
+    "main.359cfaa2.css.map": "/static/css/main.359cfaa2.css.map",
+    "main.8fdb4425.js.map": "/static/js/main.8fdb4425.js.map",
     "453.6411f75a.chunk.js.map": "/static/js/453.6411f75a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9acfe0bd.css",
-    "static/js/main.1ec4ab6e.js"
+    "static/css/main.359cfaa2.css",
+    "static/js/main.8fdb4425.js"
   ]
 }
