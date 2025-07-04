@@ -60,6 +60,11 @@ function Navbar() {
             </Link>
           </li>
           <li className="nav-item">
+            <Link to="/ohdsi-ireland" className={`nav-links ${getActiveClass('/ohdsi-ireland')}`} onClick={closeMenu}>
+              OHDSI Ireland
+            </Link>
+          </li>
+          <li className="nav-item">
             <Link to="/news" className={`nav-links ${getActiveClass('/news')}`} onClick={closeMenu}>
               News
             </Link>
