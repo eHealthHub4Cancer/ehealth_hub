@@ -42,6 +42,8 @@ import AdminDashboard from "./components/AdminDashboard";
 import PublicBlogPage from "./components/PublicBlogPage";
 import BlogPostView from "./components/BlogPostView";
 
+// Import OHDSI Ireland component
+import OHDSIIreland from "./components/OHDSIIreland";
 
 import './App.css'; 
 
@@ -100,6 +102,7 @@ const AppWithRouter = () => {
               <Route path="/news/limerick-post" element={<LimerickPost />} />
               <Route path="/output/talks" element={<Talks />} />
               <Route path="/output/publications" element={<Publications />} />
+              <Route path="/ohdsi-ireland" element={<OHDSIIreland />} />
               <Route path="/blog-editor" element={<PrivateRoute><BlogEditor /></PrivateRoute>} />
               <Route path="/blog-editor/:id" element={<PrivateRoute><BlogEditor /></PrivateRoute>} />
               <Route path="/blog-dashboard" element={<PrivateRoute><UserDashboard /></PrivateRoute>} />     

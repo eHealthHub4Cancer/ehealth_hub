@@ -39,15 +39,16 @@ const About = () => {
             <h1>About eHealthHub for Cancer</h1>
             <div className="content-block">
               <p>
-                The eHealthHub for Cancer is an all-island emerging hub of excellence funded by the Irish Higher Education Authority{' '}
+              The eHealth-Hub, is a Strand II project  funded under the North South Research Programme (NSRP){' '}
                 <a href="https://hea.ie/2021/08/09/hea-launch-e40-million-north-south-research-programme-2021/" 
                    target="_blank" 
                    rel="noopener noreferrer" 
                    className="highlight-link">
-                  HEA Shared Island North-South Research Programme
+                  NSRP North-South Research Programme
                 </a>
                 . The eHealth-Hub for Cancer is led by the University of Limerick (UL) and Queen's University Belfast (QUB), and partners with clinical and academic researchers from the University College Dublin (UCD), Royal College of Surgeons in Ireland (RCSI), University of Galway (UG), University College Cork (UCC), and Trinity College Dublin (TCD).
               </p>
+              
             </div>
           </section>
 

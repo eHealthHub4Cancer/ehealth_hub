@@ -41,10 +41,12 @@ const FundingSection = () => {
             <h2 className="funding-title">Funding Sources</h2>
             <div className="accent-line"></div>
             <p className="funding-description">
-              The <span className="highlight">eHealth-Hub for Cancer</span> is an emerging hub of 
-              excellence funded under the Higher Education Authority Shared Island North-South Program. 
-              This research initiative is driven by significant contributions to enhance cross-border 
-              collaboration and improve cancer research across the island of Ireland.
+              The <span className="highlight">eHealth-Hub for Cancer</span> is a Strand II project 
+              funded under the North South Research Programme (NSRP). 
+              The NSRP is a collaborative scheme funded through the Government’s Shared Island Fund. 
+              It is being administered by the Higher Education Authority (HEA) on behalf of 
+              the Department of Further and Higher Education, Research, Innovation and Science
+
             </p>
             <button 
               className="learn-more-btn" 

@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import './Navbar.css';
 import logo from '../Images/logo/eHealthHub_logo.png';
+import nsrp_logo from '../Images/logo/NSRP_Logo.png'
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -32,6 +33,7 @@ function Navbar() {
       <div className="navbar-container">
         <Link to="/" className="navbar-logo" onClick={closeMenu}>
           <img src={logo} alt="eHealthHub Logo" />
+          <img src={nsrp_logo} alt= 'NSRP Logo' />
         </Link>
         <div className="menu-icon" onClick={handleClick}>
           {click ? <FaTimes /> : <FaBars />}

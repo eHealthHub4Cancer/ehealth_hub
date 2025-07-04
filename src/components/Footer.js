@@ -66,7 +66,7 @@ const Footer = () => {
           </div>
           
           <div className="sponsors">
-            <h4>Sponsored By</h4>
+            <h4>Funded By</h4>
             <div className="sponsor-logo">
               <a href="https://www.nsrp.ie" target="_blank" rel="noopener noreferrer">
                 <img src={NSRPLogo} alt="NSRP Logo" />
