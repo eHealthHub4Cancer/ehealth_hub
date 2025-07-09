@@ -316,21 +316,41 @@ function NewsArticle() {
               </div>
 
               <div className="salary-info">
-                <h2>Salary Scales</h2>
+                <h2>Salary Information</h2>
                 <div className="salary-grid">
+                  {/* General Salary Range */}
+                  {article.additionalResources['Salary Range'] && (
+                    <div className="salary-card salary-range">
+                      <h3>Salary Range</h3>
+                      <p>{article.additionalResources['Salary Range'].value}</p>
+                    </div>
+                  )}
+                  
+                  {/* Postdoctoral Level 1 */}
                   {article.additionalResources['Salary PD1'] && (
                     <div className="salary-card pd1">
-                      <h3>PD1</h3>
+                      <h3>Postdoctoral Level 1 (PD1)</h3>
                       <p>{article.additionalResources['Salary PD1'].value}</p>
                     </div>
                   )}
+                  
+                  {/* Postdoctoral Level 2 */}
                   {article.additionalResources['Salary PD2'] && (
                     <div className="salary-card pd2">
-                      <h3>PD2</h3>
+                      <h3>Postdoctoral Level 2 (PD2)</h3>
                       <p>{article.additionalResources['Salary PD2'].value}</p>
                     </div>
                   )}
                 </div>
+  
+                {/* Additional salary notes if needed */}
+                {article.additionalResources['Salary Notes'] && (
+                  <div className="salary-notes">
+                    <p className="salary-disclaimer">
+                      <strong>Note:</strong> {article.additionalResources['Salary Notes'].value}
+                    </p>
+                  </div>
+                )}
               </div>
 
               <div className="project-areas">

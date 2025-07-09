@@ -2464,3 +2464,94 @@
   margin-bottom: 2em !important;
 }
 
+/* Enhanced Salary Section Styles - Matching Your Design System */
+.salary-info {
+  margin: 40px 0;
+}
+
+.salary-info h2 {
+  color: #1a3e5a;
+  margin-bottom: 24px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.salary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.salary-card {
+  padding: 24px;
+  border-radius: 16px;
+  text-align: center;
+  color: white;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.salary-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.salary-card h3 {
+  color: white;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.salary-card p {
+  color: rgba(255, 255, 255, 1);
+  margin: 0;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* Specific styling for different salary types - matching your gradient system */
+.salary-range {
+  background: linear-gradient(135deg, #1a3e5a 90%, #4ECDC4 100%);
+}
+
+.salary-card.pd1 {
+  background: linear-gradient(135deg, #1a3e5a 90%, #4ECDC4 100%);
+}
+
+.salary-card.pd2 {
+  background: linear-gradient(135deg, #1a3e5a 90%, #45B7D1 100%);
+}
+
+/* Salary notes styling - matching your design patterns */
+.salary-notes {
+  margin-top: 24px;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.salary-disclaimer {
+  color: #435c73;
+  font-size: 0.95rem;
+  margin: 0;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.salary-disclaimer strong {
+  color: #1a3e5a;
+}
+
+/* Responsive design matching your breakpoints */
+@media (max-width: 768px) {
+  .salary-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .salary-card {
+    padding: 20px;
+  }
+}
