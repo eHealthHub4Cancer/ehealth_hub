@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.b5adc535.css",
-    "main.js": "/static/js/main.40a8a02c.js",
+    "main.js": "/static/js/main.c230ddc1.js",
     "static/js/453.6411f75a.chunk.js": "/static/js/453.6411f75a.chunk.js",
     "static/media/Cancer-Research-UL.jpg": "/static/media/Cancer-Research-UL.cea648545bb9e86a250a.jpg",
     "static/media/LDCRC_BuildingTogether_April_2023.jpeg": "/static/media/LDCRC_BuildingTogether_April_2023.d6e9dc07a944ad211b5e.jpeg",
@@ -17,10 +17,10 @@
     "static/media/ul-research-centre-Clifford_Culhane2.jpeg": "/static/media/ul-research-centre-Clifford_Culhane2.fbf9a92e530704d2159f.jpeg",
     "static/media/2022_OHDSI_meeting_WashingtonDC.jpg": "/static/media/2022_OHDSI_meeting_WashingtonDC.2647284557aa5fef210f.jpg",
     "static/media/ehealth-people.jpeg": "/static/media/ehealth-people.2c4c2e23eb28eb13352d.jpeg",
+    "static/media/NSRP_Correct.jpg": "/static/media/NSRP_Correct.6d8eef75a0df9ef0a390.jpg",
     "static/media/eHealthHub_logo.png": "/static/media/eHealthHub_logo.f62372b947784763e8f9.png",
-    "static/media/NSRP_Logo.png": "/static/media/NSRP_Logo.b6a0400f48b6113f4940.png",
     "static/media/Computer_Stockphoto.PNG": "/static/media/Computer_Stockphoto.37b9c65d341945a446b4.PNG",
-    "static/media/LDCRC_Logo_fixed.png": "/static/media/LDCRC_Logo_fixed.608f951f46bcd2d3362a.png",
+    "static/media/LDCRC Irish.png": "/static/media/LDCRC Irish.166e463ff79eddbe9483.png",
     "static/media/eHealth.png": "/static/media/eHealth.add01f1f12a41e0877d5.png",
     "static/media/OHDSI_Logo.png": "/static/media/OHDSI_Logo.13c6ea72c3d8e6b37a9b.png",
     "static/media/IrishNews_gender.jpg": "/static/media/IrishNews_gender.354fec680a04935de745.jpg",
@@ -32,11 +32,11 @@
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/index.html",
     "main.b5adc535.css.map": "/static/css/main.b5adc535.css.map",
-    "main.40a8a02c.js.map": "/static/js/main.40a8a02c.js.map",
+    "main.c230ddc1.js.map": "/static/js/main.c230ddc1.js.map",
     "453.6411f75a.chunk.js.map": "/static/js/453.6411f75a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b5adc535.css",
-    "static/js/main.40a8a02c.js"
+    "static/js/main.c230ddc1.js"
   ]
 }
