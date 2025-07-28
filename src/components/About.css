@@ -1,4 +1,3 @@
-
 /* Base Layout */
 .about-page {
   background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
@@ -29,6 +28,7 @@
 .feature-card p{
   text-align: left;
 }
+
 /* Sidebar Navigation */
 .about-sidebar {
   position: sticky;
@@ -247,6 +247,56 @@
   transform: scale(1.02);
 }
 
+/* Advisory Board Styles */
+.advisory-board-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+  margin: 40px 0;
+}
+
+.advisory-member {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border-left: 4px solid #66b2ff;
+}
+
+.advisory-member:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border-left-color: #1a3e5a;
+}
+
+.member-info h4 {
+  margin: 0 0 12px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1a3e5a;
+}
+
+.member-link {
+  color: #66b2ff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.member-link:hover {
+  color: #1a3e5a;
+  text-decoration: underline;
+}
+
+.member-info p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #546e7a;
+  font-weight: 500;
+}
+
 /* Links */
 .highlight-link {
   color: #66b2ff;
@@ -318,6 +368,10 @@
   .contribution-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .advisory-board-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 992px) {
@@ -335,6 +389,10 @@
 
   .stat-cards {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .advisory-board-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -361,7 +419,8 @@
   }
 
   .stat-cards,
-  .contribution-grid {
+  .contribution-grid,
+  .advisory-board-grid {
     grid-template-columns: 1fr;
     gap: 20px;
   }
@@ -372,6 +431,18 @@
 
   .feature-card {
     padding: 20px;
+  }
+
+  .advisory-member {
+    padding: 20px;
+  }
+
+  .member-info h4 {
+    font-size: 1.1rem;
+  }
+
+  .member-info p {
+    font-size: 0.9rem;
   }
 }
 
@@ -413,6 +484,18 @@
 
   .contribution-icon {
     font-size: 1.5rem;
+  }
+
+  .advisory-member {
+    padding: 18px;
+  }
+
+  .member-info h4 {
+    font-size: 1rem;
+  }
+
+  .member-info p {
+    font-size: 0.85rem;
   }
 
   .page-navigation button {

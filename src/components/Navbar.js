@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import './Navbar.css';
 import logo from '../Images/logo/eHealthHub_logo.png';
-import nsrp_logo from '../Images/logo/NSRP_Logo.png'
+import nsrp_logo from '../Images/logo/NSRP_Correct.jpg'
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -31,10 +31,19 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <Link to="/" className="navbar-logo" onClick={closeMenu}>
-          <img src={logo} alt="eHealthHub Logo" />
-          <img src={nsrp_logo} alt= 'NSRP Logo' />
-        </Link>
+        <div className="navbar-logos">
+          <Link to="/" className="navbar-logo ehealth-logo" onClick={closeMenu}>
+            <img src={logo} alt="eHealthHub Logo" />
+          </Link>
+          <a 
+            href="https://hea.ie/policy/research-policy/north-south-research-programme/" 
+            className="navbar-logo nsrp-logo" 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            <img src={nsrp_logo} alt="NSRP Logo" />
+          </a>
+        </div>
         <div className="menu-icon" onClick={handleClick}>
           {click ? <FaTimes /> : <FaBars />}
         </div>

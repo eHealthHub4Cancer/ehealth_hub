@@ -26,6 +26,7 @@ const About = () => {
             <ul>
               <li><button onClick={() => scrollToSection('about')}>About</button></li>
               <li><button onClick={() => scrollToSection('motivation')}>Motivation</button></li>
+              <li><button onClick={() => scrollToSection('advisory-board')}>Scientific Advisory Board</button></li>
               <li><button onClick={() => scrollToSection('interoperability')}>Interoperability in Health Care Data</button></li>
               <li><button onClick={() => scrollToSection('ehealthhub')}>The eHealth-Hub for Cancer</button></li>
               <li><button onClick={() => scrollToSection('contribution')}>Contribution to Goals</button></li>
@@ -39,7 +40,7 @@ const About = () => {
             <h1>About eHealthHub for Cancer</h1>
             <div className="content-block">
               <p>
-              The eHealth-Hub, is a Strand II project  funded under the North South Research Programme (NSRP){' '}
+              The eHealth-Hub, is a Strand II project  funded under the North South Research Programme (NSRP){' '}
                 <a href="https://hea.ie/2021/08/09/hea-launch-e40-million-north-south-research-programme-2021/" 
                    target="_blank" 
                    rel="noopener noreferrer" 
@@ -87,6 +88,125 @@ const About = () => {
                     Ireland-Northern Ireland-US National Cancer Institute Memorandum of Understanding
                   </a>
                 </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="advisory-board" className="content-section" data-aos="fade-up">
+            <h2>eHealth Hub for Cancer Scientific Advisory Board</h2>
+            <div className="content-block"> 
+              <div className="advisory-board-grid">
+                <div className="advisory-member">
+                  <div className="member-info">
+                    <h4>
+                      <a href="https://www.leedsth.nhs.uk/about/press-media/media-experts/professor-geoff-hall/" 
+                         target="_blank" 
+                         rel="noopener noreferrer" 
+                         className="member-link">
+                        Professor Geoff Hall
+                      </a>
+                    </h4>
+                    <p>Professor of Digital Health, Leeds University, Chief Clinical Information Officer for Leeds Teaching Hospitals, UK</p>
+                  </div>
+                </div>
+
+                <div className="advisory-member">
+                  <div className="member-info">
+                    <h4>
+                      <a href="https://www.abdn.ac.uk/people/lesley.anderson" 
+                         target="_blank" 
+                         rel="noopener noreferrer" 
+                         className="member-link">
+                        Professor Lesley Anderson
+                      </a>
+                    </h4>
+                    <p>Professor in Health Data Science, University of Aberdeen, UK</p>
+                  </div>
+                </div>
+
+                <div className="advisory-member">
+                  <div className="member-info">
+                    <h4>
+                      <a href="https://www.bme.jhu.edu/people/faculty/paul-nagy/" 
+                         target="_blank" 
+                         rel="noopener noreferrer" 
+                         className="member-link">
+                        Associate Professor Paul Nagy
+                      </a>
+                    </h4>
+                    <p>Program Director Informatics and Data Science, Johns Hopkins University, USA</p>
+                  </div>
+                </div>
+
+                <div className="advisory-member">
+                  <div className="member-info">
+                    <h4>
+                      <a href="https://ie.linkedin.com/in/angela-clayton-lea-mba-7970881b" 
+                         target="_blank" 
+                         rel="noopener noreferrer" 
+                         className="member-link">
+                        Ms Angela Clayton-Lea
+                      </a>
+                    </h4>
+                    <p>Chief Operations Officer at Cancer Trials Ireland, Ireland</p>
+                  </div>
+                </div>
+
+                <div className="advisory-member">
+                  <div className="member-info">
+                    <h4>
+                      <a href="https://martincurley.eu/" 
+                         target="_blank" 
+                         rel="noopener noreferrer" 
+                         className="member-link">
+                        Prof Martin Curley
+                      </a>
+                    </h4>
+                    <p>Professor of Innovation, Maynooth University and Digital Health Leader, Ireland</p>
+                  </div>
+                </div>
+
+                <div className="advisory-member">
+                  <div className="member-info">
+                    <h4>
+                      <a href="https://www.turing.ac.uk/people/external-researchers/debbie-keatley" 
+                         target="_blank" 
+                         rel="noopener noreferrer" 
+                         className="member-link">
+                        Ms Debbie Keatley
+                      </a>
+                    </h4>
+                    <p>Member Data Advisory Board, Cancer Research UK and member of the Northern Ireland cancer Research Consumer Forum</p>
+                  </div>
+                </div>
+
+                <div className="advisory-member">
+                  <div className="member-info">
+                    <h4>
+                      <a href="https://uk.linkedin.com/in/xosegb" 
+                         target="_blank" 
+                         rel="noopener noreferrer" 
+                         className="member-link">
+                        Dr Xose Fernandez
+                      </a>
+                    </h4>
+                    <p>Head Digital Oncology Network for Europe, IQVIA UK</p>
+                  </div>
+                </div>
+
+                <div className="advisory-member">
+                  <div className="member-info">
+                    <h4>
+                      <a href="https://ie.linkedin.com/in/gilles-ducorroy-9b90768" 
+                         target="_blank" 
+                         rel="noopener noreferrer" 
+                         className="member-link">
+                        Mr Giles Ducorroy
+                      </a>
+                    </h4>
+                    <p>Head Real World Evidence Services, Novartis, Ireland</p>
+                  </div>
+                </div>
               </div>
             </div>
           </section>

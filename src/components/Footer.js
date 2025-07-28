@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
-import NSRPLogo from '../Images/logo/NSRP_Logo.png';
-import LDCRCLogo from '../Images/logo/LDCRC_Logo_fixed.png';
+import NSRPLogo from '../Images/logo/NSRP_Correct.jpg';
+import LDCRCLogo from '../Images/logo/LDCRC Irish.png';
 import QUBLogo from '../Images/logo/QUB_logo.jpg';
 
 const Footer = () => {
@@ -54,7 +54,7 @@ const Footer = () => {
           <div className="lead-organizations">
             <h4>Lead Organizations</h4>
             <div className="org-logos">
-              <a href="https://www.ul.ie" target="_blank" rel="noopener noreferrer" 
+              <a href="https://www.ul.ie/limerick-dcrc" target="_blank" rel="noopener noreferrer" 
                  className="org-logo">
                 <img src={LDCRCLogo} alt="LDCRC Logo" />
               </a>
@@ -68,7 +68,7 @@ const Footer = () => {
           <div className="sponsors">
             <h4>Funded By</h4>
             <div className="sponsor-logo">
-              <a href="https://www.nsrp.ie" target="_blank" rel="noopener noreferrer">
+              <a href="https://hea.ie/policy/research-policy/north-south-research-programme/" target="_blank" rel="noopener noreferrer">
                 <img src={NSRPLogo} alt="NSRP Logo" />
               </a>
             </div>
