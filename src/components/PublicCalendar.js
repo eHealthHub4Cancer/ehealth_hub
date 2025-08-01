@@ -3,7 +3,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { getEvents, generateCalendarLink, generateICalString } from '../services/eventService';
+import { getEvents, generateCalendarLink, generateICalString, getCategoryColors } from '../services/eventService';
 import { RRule } from 'rrule';
 import './PublicCalendar.css';
 
@@ -23,6 +23,9 @@ const PublicCalendar = () => {
   });
   const [allFiltersChecked, setAllFiltersChecked] = useState(true);
 
+  // Get category colors from service (same as AdminCalendar)
+  const categoryColors = getCategoryColors();
+  
   const categoryOptions = [
     { value: 'meeting', label: 'Meeting' },
     { value: 'conference', label: 'Conference' },
@@ -298,8 +301,8 @@ const PublicCalendar = () => {
         start: event.start,
         end: event.end,
         allDay: event.isStartAllDay && event.isEndAllDay,
-        backgroundColor: isPast ? '#9e9e9e' : event.color,
-        borderColor: isPast ? '#757575' : event.color,
+        backgroundColor: isPast ? '#9e9e9e' : (categoryColors[event.extendedProps.category] || categoryColors.other),
+        borderColor: isPast ? '#757575' : (categoryColors[event.extendedProps.category] || categoryColors.other),
         textColor: isPast ? '#f5f5f5' : undefined,
         classNames: [
           isPast ? 'past-event' : '',
@@ -355,35 +358,104 @@ const PublicCalendar = () => {
         <p>Stay up to date with upcoming events, conferences, and deadlines</p>
       </header>
 
-      <main className="calendar-main-public">
-        {isLoading ? (
-          <div className="loading-container">
-            <div className="loading-spinner"></div>
-            <p>Loading calendar events...</p>
+      <div className="calendar-content-wrapper">
+        {/* Sidebar with Legend and Filters */}
+        <aside className="calendar-sidebar">
+          {/* Event Categories Legend */}
+          <div className="sidebar-section">
+            <h3>📅 Event Categories</h3>
+            <ul className="category-legend">
+              {categoryOptions.map(cat => (
+                <li key={cat.value} className="legend-item">
+                  <span 
+                    className="legend-color" 
+                    style={{backgroundColor: categoryColors[cat.value]}}
+                  ></span>
+                  <span className="legend-label">{cat.label}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-        ) : error ? (
-          <div className="error-message">{error}</div>
-        ) : (
-          <FullCalendar
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            initialView="dayGridMonth"
-            headerToolbar={{
-              left: 'prev,next today',
-              center: 'title',
-              right: 'dayGridMonth,timeGridWeek'
-            }}
-            events={formattedEvents}
-            eventClick={handleEventClick}
-            height="auto"
-            eventTimeFormat={{
-              hour: '2-digit',
-              minute: '2-digit',
-              meridiem: false,
-              hour12: false
-            }}
-          />
-        )}
-      </main>
+
+          {/* Filter Controls */}
+          <div className="sidebar-section">
+            <h3>🔍 Filter Events</h3>
+            <div className="filter-controls">
+              <label className="filter-item check-all">
+                <input
+                  type="checkbox"
+                  checked={allFiltersChecked}
+                  onChange={handleCheckAll}
+                />
+                <span className="filter-label">Show All Categories</span>
+              </label>
+              
+              {categoryOptions.map(cat => (
+                <label key={cat.value} className="filter-item">
+                  <input
+                    type="checkbox"
+                    checked={eventFilters[cat.value]}
+                    onChange={() => handleFilterChange(cat.value)}
+                  />
+                  <span 
+                    className="filter-color" 
+                    style={{backgroundColor: categoryColors[cat.value]}}
+                  ></span>
+                  <span className="filter-label">{cat.label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Event Stats */}
+          <div className="sidebar-section">
+            <h3>📊 Event Summary</h3>
+            <div className="event-stats">
+              <div className="stat-item">
+                <span className="stat-number">{formattedEvents.length}</span>
+                <span className="stat-label">Visible Events</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">
+                  {formattedEvents.filter(e => !e.extendedProps.isPast).length}
+                </span>
+                <span className="stat-label">Upcoming</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        {/* Main Calendar */}
+        <main className="calendar-main-public">
+          {isLoading ? (
+            <div className="loading-container">
+              <div className="loading-spinner"></div>
+              <p>Loading calendar events...</p>
+            </div>
+          ) : error ? (
+            <div className="error-message">{error}</div>
+          ) : (
+            <FullCalendar
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+              initialView="dayGridMonth"
+              headerToolbar={{
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek'
+              }}
+              events={formattedEvents}
+              eventClick={handleEventClick}
+              height="auto"
+              eventTimeFormat={{
+                hour: '2-digit',
+                minute: '2-digit',
+                meridiem: false,
+                hour12: false
+              }}
+            />
+          )}
+        </main>
+      </div>
 
       {showEventDetails && selectedEvent && (
         <div className="modal-backdrop" onClick={handleCloseDetails}>

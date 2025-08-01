@@ -20,6 +20,39 @@ const areEqual = (prevProps, nextProps) => {
   return true; // Prevent re-renders (no props expected)
 };
 
+// Function to determine person's priority group
+const getPersonPriority = (person) => {
+  const tags = person.tags || [];
+  const lowerTags = tags.map(tag => tag.toLowerCase());
+  
+  if (lowerTags.includes('project leader') || lowerTags.includes('project-leader')) {
+    return 1; // Highest priority
+  } else if (lowerTags.includes('project supervisor') || lowerTags.includes('project-supervisor')) {
+    return 2; // Second priority
+  } else {
+    return 3; // Lowest priority (others)
+  }
+};
+
+// Custom sorting function
+const sortPeople = (people) => {
+  return people.sort((a, b) => {
+    const priorityA = getPersonPriority(a);
+    const priorityB = getPersonPriority(b);
+    
+    // First, sort by priority group
+    if (priorityA !== priorityB) {
+      return priorityA - priorityB;
+    }
+    
+    // Within the same priority group, sort alphabetically by full_title_name or full_name
+    const nameA = (a.full_title_name || a.full_name || 'Untitled').toLowerCase();
+    const nameB = (b.full_title_name || b.full_name || 'Untitled').toLowerCase();
+    
+    return nameA.localeCompare(nameB);
+  });
+};
+
 function People() {
   console.log("People.js rendered"); // Debug re-renders
   const navigate = useNavigate();
@@ -31,10 +64,11 @@ function People() {
     preloadVisiblePeople,
   } = useGlobalData();
 
-  const [visibleCount, setVisibleCount] = useState(12);
+  const [visibleCount, setVisibleCount] = useState(28);
   const [selectedFilters, setSelectedFilters] = useState([]);
 
-  const people = globalPeople || [];
+  // Sort people using custom sorting function
+  const people = globalPeople ? sortPeople([...globalPeople]) : [];
   const allTags = [...new Set(people.flatMap((person) => person.tags || []))];
 
   const getTagCount = useCallback((tag) => {
@@ -49,6 +83,7 @@ function People() {
     );
   }, []);
 
+  // Apply filters and maintain sorting
   const filteredPeople = people.filter(
     (person) =>
       selectedFilters.length === 0 ||
@@ -125,39 +160,49 @@ function People() {
           </div>
         </div>
       </div>
+
+      {/* Optional: Show sorting info */}
+      <div className="sorting-info">
+        <small className="sort-description">
+          Showing: Project Leaders → Project Supervisors → Others (alphabetically within each group)
+        </small>
+      </div>
+
       <div className="people-grid">
         {people.length > 0 ? (
           visiblePeople.length > 0 ? (
-            visiblePeople.map((person) => (
-              <div
-                key={person.person_id || person.slug}
-                className="person-card"
-                onClick={() => navigate(`/people/${person.slug}`)}
-              >
-                <div className="card-image-container">
-                  <img
-                    src={person.image || "/default-image.jpg"}
-                    alt={person.full_name || "Unknown"}
-                    className="card-image"
-                    loading="lazy"
-                    onError={(e) => {
-                      e.target.src = "/default-image.jpg";
-                    }}
-                  />
-                </div>
-                <div className="card-content">
-                  <h3>{person.full_title_name || "Untitled"}</h3>
-                  <div className="card-tags">
-                    {person.tags?.map((tag, index) => (
-                      <span key={`${tag}-${index}`} className="tag">
-                        {tag}
-                      </span>
-                    ))}
+            visiblePeople.map((person) => {
+              return (
+                <div
+                  key={person.person_id || person.slug}
+                  className={`person-card priority-${getPersonPriority(person)}`}
+                  onClick={() => navigate(`/people/${person.slug}`)}
+                >
+                  <div className="card-image-container">
+                    <img
+                      src={person.image || "/default-image.jpg"}
+                      alt={person.full_name || "Unknown"}
+                      className="card-image"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.target.src = "/default-image.jpg";
+                      }}
+                    />
                   </div>
-                  <p className="card-title">{person.association || "No association"}</p>
+                  <div className="card-content">
+                    <h3>{person.full_title_name || "Untitled"}</h3>
+                    <div className="card-tags">
+                      {person.tags?.map((tag, index) => (
+                        <span key={`${tag}-${index}`} className="tag">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <p className="card-title">{person.association || "No association"}</p>
+                  </div>
                 </div>
-              </div>
-            ))
+              );
+            })
           ) : (
             <p>No people match the selected filters.</p>
           )
@@ -168,7 +213,7 @@ function People() {
       {visibleCount < filteredPeople.length && (
         <div className="load-more-container">
           <button onClick={loadMore} className="load-more-button">
-            Load More
+            Load More ({filteredPeople.length - visibleCount} remaining)
           </button>
         </div>
       )}
