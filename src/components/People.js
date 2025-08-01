@@ -162,11 +162,11 @@ function People() {
       </div>
 
       {/* Optional: Show sorting info */}
-      <div className="sorting-info">
+      {/* <div className="sorting-info">
         <small className="sort-description">
           Showing: Project Leaders → Project Supervisors → Others (alphabetically within each group)
         </small>
-      </div>
+      </div> */}
 
       <div className="people-grid">
         {people.length > 0 ? (
