@@ -147,7 +147,7 @@
 /* Optimized image container with better aspect ratio */
 .card-image-container {
   position: relative;
-  padding-top: 75%; /* Adjusted for better portrait proportions */
+  padding-top: 110%; /* Adjusted for better portrait proportions */
   overflow: hidden;
   background: linear-gradient(135deg, #f8f9fa, #e9ecef);
 }
