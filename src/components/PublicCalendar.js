@@ -158,6 +158,7 @@ const PublicCalendar = () => {
           description: event.description,
           location: event.location,
           meetingLink: event.meetingLink,
+          meetingInfoLink: event.meetingInfoLink, // New field
           category: event.category,
           addToCalendarEnabled: event.addToCalendarEnabled,
           originalId: event.id,
@@ -188,6 +189,7 @@ const PublicCalendar = () => {
               description: exception?.description || event.description,
               location: exception?.location || event.location,
               meetingLink: exception?.meetingLink || event.meetingLink,
+              meetingInfoLink: exception?.meetingInfoLink || event.meetingInfoLink, // New field
               extendedProps: {
                 ...eventExtendedProps,
                 isStartAllDay: exception ? exception.isStartAllDay : event.isStartAllDay,
@@ -227,6 +229,7 @@ const PublicCalendar = () => {
       description: event.extendedProps.description,
       location: event.extendedProps.location,
       meetingLink: event.extendedProps.meetingLink,
+      meetingInfoLink: event.extendedProps.meetingInfoLink, // New field
       category: event.extendedProps.category,
       color: event.backgroundColor,
       addToCalendarEnabled: event.extendedProps.addToCalendarEnabled,
@@ -313,6 +316,7 @@ const PublicCalendar = () => {
           description: event.extendedProps.description,
           location: event.extendedProps.location,
           meetingLink: event.extendedProps.meetingLink,
+          meetingInfoLink: event.extendedProps.meetingInfoLink, // New field
           category: event.extendedProps.category,
           addToCalendarEnabled: event.extendedProps.addToCalendarEnabled,
           isPast: isPast,
@@ -527,6 +531,17 @@ const PublicCalendar = () => {
                   <span className="detail-value">
                     <a href={selectedEvent.meetingLink} target="_blank" rel="noopener noreferrer" className="meeting-link">
                       Join online meeting
+                    </a>
+                  </span>
+                </div>
+              )}
+
+              {selectedEvent.meetingInfoLink && (
+                <div className="event-detail">
+                  <span className="detail-label">More Info:</span>
+                  <span className="detail-value">
+                    <a href={selectedEvent.meetingInfoLink} target="_blank" rel="noopener noreferrer" className="meeting-link">
+                      Conference details & registration
                     </a>
                   </span>
                 </div>

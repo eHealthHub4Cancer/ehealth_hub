@@ -27,6 +27,7 @@ const AdminCalendar = () => {
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
   const [meetingLink, setMeetingLink] = useState('');
+  const [meetingInfoLink, setMeetingInfoLink] = useState(''); // New field
   const [category, setCategory] = useState('');
   const [addToCalendarEnabled, setAddToCalendarEnabled] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
@@ -262,6 +263,7 @@ const AdminCalendar = () => {
       description: event.extendedProps.description || '',
       location: event.extendedProps.location || '',
       meetingLink: event.extendedProps.meetingLink || '',
+      meetingInfoLink: event.extendedProps.meetingInfoLink || '', // New field
       category: event.extendedProps.category || 'other',
       addToCalendarEnabled: event.extendedProps.addToCalendarEnabled !== false,
       isVisible: event.extendedProps.isVisible !== false,
@@ -280,6 +282,7 @@ const AdminCalendar = () => {
     setDescription(event.extendedProps.description || '');
     setLocation(event.extendedProps.location || '');
     setMeetingLink(event.extendedProps.meetingLink || '');
+    setMeetingInfoLink(event.extendedProps.meetingInfoLink || ''); // New field
     setCategory(event.extendedProps.category || 'other');
     setAddToCalendarEnabled(event.extendedProps.addToCalendarEnabled !== false);
     setIsVisible(event.extendedProps.isVisible !== false);
@@ -369,6 +372,7 @@ const AdminCalendar = () => {
     setDescription('');
     setLocation('');
     setMeetingLink('');
+    setMeetingInfoLink(''); // New field
     setCategory('meeting');
     setAddToCalendarEnabled(true);
     setIsVisible(true);
@@ -590,6 +594,7 @@ const AdminCalendar = () => {
       description,
       location,
       meetingLink,
+      meetingInfoLink, // New field
       category,
       color: categoryColors[category] || categoryColors.other,
       addToCalendarEnabled,
@@ -699,12 +704,13 @@ const AdminCalendar = () => {
       classNames: [
         event.isVisible === false ? 'hidden-event' : '',
         (event.isStartAllDay && event.isEndAllDay && isMultiDay) ? 'multi-day-event' : '',
-        event.extendedProps.isException ? 'exception-event' : ''
+        event.extendedProps?.isException ? 'exception-event' : ''
       ].filter(Boolean),
       extendedProps: {
         description: event.description,
         location: event.location,
         meetingLink: event.meetingLink,
+        meetingInfoLink: event.meetingInfoLink, // New field
         category: event.category,
         addToCalendarEnabled: event.addToCalendarEnabled,
         isVisible: event.isVisible,
@@ -894,7 +900,7 @@ const AdminCalendar = () => {
                 
                 {!isStartAllDay && (
                   <div className="form-group">
-                    <label htmlFor="startTime">Multi-day event (Start Time) *</label>
+                    <label htmlFor="startTime">Start Time *</label>
                     <input
                       id="startTime"
                       type="time"
@@ -920,7 +926,7 @@ const AdminCalendar = () => {
                 
                 {!isEndAllDay && (
                   <div className="form-group">
-                    <label htmlFor="endTime">Multi-day event (End Time) *</label>
+                    <label htmlFor="endTime">End Time *</label>
                     <input
                       id="endTime"
                       type="time"
@@ -1281,6 +1287,18 @@ const AdminCalendar = () => {
                   placeholder="Enter Zoom, Teams, or other meeting link"
                 />
                 <small className="form-hint">This will be included in the calendar invitation</small>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="meetingInfoLink">Meeting Info Link</label>
+                <input
+                  id="meetingInfoLink"
+                  type="url"
+                  value={meetingInfoLink}
+                  onChange={(e) => setMeetingInfoLink(e.target.value)}
+                  placeholder="Enter conference website, registration link, etc."
+                />
+                <small className="form-hint">Link to conference info, registration, or additional details</small>
               </div>
               
               <div className="form-group">
