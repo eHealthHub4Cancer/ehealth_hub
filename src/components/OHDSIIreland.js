@@ -224,6 +224,25 @@ const OHDSIIreland = () => {
             a health professional, a researcher, or someone who simply believes in our cause. 
             Join our growing community and help advance real-world evidence research in Ireland.
           </p>
+          
+          {/* New Meeting Section */}
+          <div className="meeting-info">
+            <div className="meeting-card">
+              <h3>Join Our Regular Meetings</h3>
+              <p className="meeting-schedule">
+                <strong>OHDSI Ireland meets every first Friday of the month</strong>
+              </p>
+              <a 
+                href="https://teams.microsoft.com/l/meetup-join/19%3ameeting_YjQxYjM0N2QtNGNmYy00NzA5LWI0ODItMzY5YTg4YmU2NGQz%40thread.v2/0?context=%7b%22Tid%22%3a%220084b924-3ab4-4116-9251-9939f695e54c%22%2c%22Oid%22%3a%22189dbe0d-f9e9-4dbb-a927-067b84929cd4%22%7d"
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="teams-meeting-button"
+              >
+                Join OHDSI Ireland Meeting
+              </a>
+            </div>
+          </div>
+          
           <a href="mailto:ehealth@ul.ie" className="contact-button">
             Contact Us
           </a>
