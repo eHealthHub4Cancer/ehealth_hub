@@ -1,0 +1,791 @@
+/* src/pages/AllIslandForum.css */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .forum-page {
+    min-height: 100vh;
+    background: #f5f7fa;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  
+  /* ========== HEADER ========== */
+  .forum-header {
+    background: linear-gradient(135deg, #3B6B8F 0%, #2a5570 100%);
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .forum-header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .forum-main-title {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  
+  .forum-subtitle {
+    font-size: 20px;
+    opacity: 0.95;
+    font-weight: 400;
+  }
+  
+  /* ========== YEAR TOGGLE ========== */
+  .year-toggle-container {
+    background: white;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .year-toggle {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  
+  .year-toggle button {
+    padding: 12px 32px;
+    border: 2px solid #3B6B8F;
+    background: white;
+    color: #3B6B8F;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .year-toggle button:hover {
+    background: #f0f7ff;
+    transform: translateY(-2px);
+  }
+  
+  .year-toggle button.active {
+    background: #3B6B8F;
+    color: white;
+  }
+  
+  /* ========== CONTAINER ========== */
+  .forum-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  /* ========== HERO CARD ========== */
+  .hero-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .hero-image {
+    width: 100%;
+    height: auto;
+    min-height: 400px;
+    overflow: hidden;
+    position: relative;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .hero-image img {
+    width: 100%;
+    height: auto;
+    max-height: 600px;
+    object-fit: contain;
+    object-position: center;
+  }
+  
+  .hero-content {
+    padding: 48px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #3B6B8F 0%, #2a5570 100%);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 50px;
+    margin: 0 0 28px 0;
+    box-shadow: 0 4px 12px rgba(59, 107, 143, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    float: left;
+    clear: both;
+  }
+  
+  .hero-title {
+    font-size: 40px;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 28px;
+    line-height: 1.3;
+    text-align: center;
+    clear: both;
+  }
+  
+  .hero-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    margin-bottom: 36px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    color: #555;
+    font-weight: 500;
+  }
+  
+  .info-icon {
+    font-size: 26px;
+    color: #3B6B8F;
+  }
+  
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .register-btn,
+  .submit-abstract-btn {
+    display: inline-block;
+    padding: 18px 48px;
+    background: linear-gradient(135deg, #3B6B8F 0%, #2a5570 100%);
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(59, 107, 143, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .submit-abstract-btn {
+    background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.3);
+  }
+  
+  .register-btn:hover,
+  .submit-abstract-btn:hover {
+    background: linear-gradient(135deg, #2a5570 0%, #1a3d4d 100%);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(59, 107, 143, 0.4);
+  }
+  
+  .submit-abstract-btn:hover {
+    background: linear-gradient(135deg, #F57C00 0%, #E65100 100%);
+    box-shadow: 0 10px 30px rgba(255, 152, 0, 0.4);
+  }
+  
+  /* ========== CONTENT CARDS ========== */
+  .content-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  .card-header {
+    background: #f8f9fa;
+    padding: 24px 32px;
+    border-bottom: 2px solid #e9ecef;
+  }
+  
+  .card-header h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+  }
+  
+  .card-body {
+    padding: 32px;
+  }
+  
+  .card-body p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+    margin: 0;
+  }
+  
+  .highlight-card {
+    border-left: 4px solid #3B6B8F;
+  }
+  
+  .highlight-card .card-header {
+    background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
+  }
+  
+  /* ========== AGENDA ========== */
+  .agenda-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .agenda-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border-left: 4px solid #3B6B8F;
+  }
+  
+  .agenda-time {
+    font-size: 16px;
+    font-weight: 700;
+    color: #3B6B8F;
+    padding-top: 4px;
+  }
+  
+  .agenda-details h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+  }
+  
+  .agenda-speaker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  
+  .speaker-icon {
+    font-size: 16px;
+  }
+  
+  .agenda-description {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #555;
+    margin: 0;
+  }
+  
+  /* ========== RESOURCES ========== */
+  .resource-section {
+    margin-bottom: 32px;
+  }
+  
+  .resource-section:last-child {
+    margin-bottom: 0;
+  }
+  
+  .resource-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+  }
+  
+  .resource-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .resource-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #1a1a1a;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+  
+  .resource-link:hover {
+    background: white;
+    border-color: #3B6B8F;
+    transform: translateX(8px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .resource-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  
+  .resource-text {
+    flex: 1;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .arrow {
+    font-size: 20px;
+    color: #3B6B8F;
+    font-weight: 600;
+  }
+  
+  /* ========== GALLERY CARD ========== */
+  .gallery-card .card-body {
+    text-align: center;
+  }
+  
+  .gallery-card .card-body p {
+    margin-bottom: 24px;
+    font-size: 18px;
+  }
+  
+  .gallery-btn {
+    display: inline-block;
+    padding: 14px 32px;
+    background: #3B6B8F;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .gallery-btn:hover {
+    background: #2a5570;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(59, 107, 143, 0.3);
+  }
+  
+  /* ========== SPEAKERS SECTION ========== */
+  .speakers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  
+  .speaker-card {
+    padding: 24px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border-left: 4px solid #3B6B8F;
+    transition: all 0.3s ease;
+  }
+  
+  .speaker-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    background: white;
+  }
+  
+  .speaker-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .speaker-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+  }
+  
+  .speaker-title {
+    font-size: 15px;
+    color: #3B6B8F;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .speaker-org {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+  }
+  
+  .speaker-bio {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555;
+    margin: 8px 0 0 0;
+  }
+  
+  /* ========== POSTERS SECTION ========== */
+  .poster-submission-notice {
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    padding: 24px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 24px;
+    border-left: 4px solid #FF9800;
+  }
+  
+  .poster-submission-notice p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 16px;
+  }
+  
+  .submit-poster-btn {
+    display: inline-block;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .submit-poster-btn:hover {
+    background: linear-gradient(135deg, #F57C00 0%, #E65100 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(255, 152, 0, 0.4);
+  }
+  
+  .posters-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .poster-item {
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border-left: 4px solid #3B6B8F;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .poster-item:hover {
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateX(8px);
+  }
+  
+  .poster-content {
+    flex: 1;
+  }
+  
+  .poster-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 12px 0;
+  }
+  
+  .poster-author {
+    font-size: 15px;
+    color: #555;
+    margin: 0 0 8px 0;
+  }
+  
+  .poster-author strong {
+    color: #3B6B8F;
+  }
+  
+  .poster-affiliations {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+  }
+  
+  .poster-affiliations strong {
+    color: #3B6B8F;
+  }
+  
+  .view-poster-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #3B6B8F 0%, #2a5570 100%);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  
+  .view-poster-btn:hover {
+    background: linear-gradient(135deg, #2a5570 0%, #1a3d4d 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 107, 143, 0.3);
+  }
+  
+  /* ========== LOADING STATE ========== */
+  .forum-loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 500px;
+    padding: 40px 20px;
+  }
+  
+  .forum-spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #3B6B8F;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 24px;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .forum-loading-container p {
+    font-size: 18px;
+    color: #666;
+    font-weight: 500;
+  }
+  
+  /* ========== EMPTY STATE ========== */
+  .forum-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 500px;
+    padding: 40px 20px;
+    text-align: center;
+  }
+  
+  .empty-icon {
+    font-size: 80px;
+    margin-bottom: 24px;
+  }
+  
+  .forum-empty-state h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #3B6B8F;
+    margin-bottom: 12px;
+  }
+  
+  .forum-empty-state p {
+    font-size: 18px;
+    color: #666;
+  }
+  
+  /* ========== RESPONSIVE DESIGN ========== */
+  @media (max-width: 768px) {
+    .forum-main-title {
+      font-size: 32px;
+    }
+  
+    .forum-subtitle {
+      font-size: 16px;
+    }
+  
+    .year-toggle {
+      flex-direction: column;
+    }
+  
+    .year-toggle button {
+      width: 100%;
+    }
+  
+    .forum-container {
+      padding: 24px 16px;
+    }
+  
+    .hero-image {
+      height: 250px;
+    }
+  
+    .hero-content {
+      padding: 24px;
+    }
+  
+    .hero-title {
+      font-size: 26px;
+    }
+  
+    .hero-info {
+      flex-direction: column;
+      gap: 16px;
+    }
+  
+    .info-item {
+      font-size: 16px;
+    }
+  
+    .hero-buttons {
+      flex-direction: column;
+      width: 100%;
+    }
+  
+    .register-btn,
+    .submit-abstract-btn {
+      width: 100%;
+      text-align: center;
+    }
+  
+    .card-header {
+      padding: 20px 24px;
+    }
+  
+    .card-header h3 {
+      font-size: 20px;
+    }
+  
+    .card-body {
+      padding: 24px;
+    }
+  
+    .agenda-item {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  
+    .agenda-time {
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e9ecef;
+    }
+  
+    .resource-link {
+      padding: 14px 16px;
+    }
+  
+    .resource-text {
+      font-size: 15px;
+    }
+  
+    .speakers-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .poster-item {
+      padding: 16px;
+      flex-direction: column;
+    }
+  
+    .poster-title {
+      font-size: 16px;
+    }
+  
+    .view-poster-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .forum-header {
+      padding: 40px 20px;
+    }
+  
+    .forum-main-title {
+      font-size: 26px;
+    }
+  
+    .forum-subtitle {
+      font-size: 14px;
+    }
+  
+    .hero-title {
+      font-size: 22px;
+    }
+  
+    .card-header h3 {
+      font-size: 18px;
+    }
+  
+    .agenda-details h4 {
+      font-size: 16px;
+    }
+  }
+  
+  /* ========== SMOOTH ANIMATIONS ========== */
+  .content-card,
+  .hero-card {
+    animation: fadeInUp 0.6s ease;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* ========== ACCESSIBILITY ========== */
+  button:focus-visible,
+  a:focus-visible {
+    outline: 3px solid #3B6B8F;
+    outline-offset: 4px;
+  }
+  
+  /* ========== PRINT STYLES ========== */
+  @media print {
+    .year-toggle-container,
+    .register-btn,
+    .gallery-btn {
+      display: none;
+    }
+  
+    .content-card,
+    .hero-card {
+      box-shadow: none;
+      border: 1px solid #ddd;
+      break-inside: avoid;
+    }
+  }

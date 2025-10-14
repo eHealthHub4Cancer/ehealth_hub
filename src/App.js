@@ -13,6 +13,7 @@ import Publications from './components/Publications';
 import Index from "./components/People/index";
 import GoogleSheetNews from "./components/GoogleSheetNews";
 import NewsArticle from "./components/News/NewsArticle";
+import AdminOHDSISeminars from "./components/AdminOHDSISeminars";
 
 import GenderInequalityStudy from "./components/News/GenderInequalityStudy";
 import GoodFridayCancerLegacy from "./components/News/GoodFridayCancerLegacy";
@@ -44,6 +45,10 @@ import BlogPostView from "./components/BlogPostView";
 
 // Import OHDSI Ireland component
 import OHDSIIreland from "./components/OHDSIIreland";
+
+// Import Forum components
+import AllIslandForum from "./components/AllIslandForum";
+import AdminForum from "./components/AdminForum";
 
 import './App.css'; 
 
@@ -103,13 +108,27 @@ const AppWithRouter = () => {
               <Route path="/output/talks" element={<Talks />} />
               <Route path="/output/publications" element={<Publications />} />
               <Route path="/ohdsi-ireland" element={<OHDSIIreland />} />
+              
+              {/* Blog routes */}
               <Route path="/blog-editor" element={<PrivateRoute><BlogEditor /></PrivateRoute>} />
               <Route path="/blog-editor/:id" element={<PrivateRoute><BlogEditor /></PrivateRoute>} />
               <Route path="/blog-dashboard" element={<PrivateRoute><UserDashboard /></PrivateRoute>} />     
               <Route path="/blog-admin" element={<PrivateRoute requiredRole="admin"><AdminDashboard /></PrivateRoute>} />
               <Route path="/blog" element={<PublicBlogPage />} />
               <Route path="/blog/:id" element={<BlogPostView />} />
-              {/* New routes for calendar functionality */}
+
+              {/* OHDSI Admin Route */}
+                <Route 
+                  path="/admin/ohdsi-seminars" 
+                  element={
+                    <PrivateRoute requiredRole="admin">
+                      <AdminOHDSISeminars />
+                    </PrivateRoute>
+                  } 
+                />
+
+              
+              {/* Calendar routes */}
               <Route path="/calendar" element={<PublicCalendar />} />
               <Route path="/login" element={<Login />} />
               <Route 
@@ -117,6 +136,18 @@ const AppWithRouter = () => {
                 element={
                   <PrivateRoute requiredRole="admin">
                     <AdminCalendar />
+                  </PrivateRoute>
+                } 
+              />
+              
+              {/* Forum routes */}
+              <Route path="/forum" element={<AllIslandForum />} />
+              <Route path="/all-island-forum" element={<AllIslandForum />} />
+              <Route 
+                path="/admin/forum" 
+                element={
+                  <PrivateRoute requiredRole="admin">
+                    <AdminForum />
                   </PrivateRoute>
                 } 
               />

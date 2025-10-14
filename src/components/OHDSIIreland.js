@@ -1,10 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './OHDSIIreland.css';
 import ohdsiLogo from '../Images/logo/OHDSI_Logo.png';
+import { getSeminarsByStatus } from '../services/ohdsiSeminarService';
 
 const OHDSIIreland = () => {
+  const [upcomingSeminars, setUpcomingSeminars] = useState([]);
+  const [pastSeminars, setPastSeminars] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedFlyer, setSelectedFlyer] = useState(null);
+
   useEffect(() => {
-    // Add scroll animations
+    loadSeminars();
+    setupScrollAnimations();
+  }, []);
+
+  const loadSeminars = async () => {
+    try {
+      const [upcoming, past] = await Promise.all([
+        getSeminarsByStatus('upcoming'),
+        getSeminarsByStatus('past')
+      ]);
+      setUpcomingSeminars(upcoming);
+      setPastSeminars(past);
+    } catch (error) {
+      console.error('Error loading seminars:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const setupScrollAnimations = () => {
     const observerCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -19,8 +44,7 @@ const OHDSIIreland = () => {
       rootMargin: '0px 0px -50px 0px'
     });
 
-    // Observe all sections
-    const sections = document.querySelectorAll('.ohdsi-objectives, .ohdsi-activities, .ohdsi-get-involved, .ohdsi-resources, .ohdsi-leadership');
+    const sections = document.querySelectorAll('.ohdsi-objectives, .ohdsi-activities, .ohdsi-get-involved, .ohdsi-resources, .ohdsi-leadership, .ohdsi-seminars');
     sections.forEach((section) => {
       section.style.opacity = '0';
       section.style.transform = 'translateY(30px)';
@@ -29,9 +53,8 @@ const OHDSIIreland = () => {
     });
 
     return () => observer.disconnect();
-  }, []);
+  };
 
-  // Smooth scroll function
   const scrollToGetInvolved = (e) => {
     e.preventDefault();
     const element = document.getElementById('get-involved');
@@ -41,6 +64,14 @@ const OHDSIIreland = () => {
         block: 'start'
       });
     }
+  };
+
+  const openFlyerModal = (flyerUrl) => {
+    setSelectedFlyer(flyerUrl);
+  };
+
+  const closeFlyerModal = () => {
+    setSelectedFlyer(null);
   };
 
   return (
@@ -149,6 +180,108 @@ const OHDSIIreland = () => {
           </div>
         </section>
 
+        {/* SEMINAR SERIES SECTION - NEW */}
+        {!loading && (upcomingSeminars.length > 0 || pastSeminars.length > 0) && (
+          <section className="ohdsi-seminars">
+            <h2>Seminar Series</h2>
+            <p className="seminars-intro">
+              Join our regular seminar series featuring expert speakers discussing OHDSI tools, 
+              methodologies, and real-world evidence research.
+            </p>
+
+            {/* Upcoming Seminars */}
+            {upcomingSeminars.length > 0 && (
+              <div className="seminars-section">
+                <h3 className="seminars-section-title">Upcoming Seminars</h3>
+                <div className="seminars-grid">
+                  {upcomingSeminars.map((seminar) => (
+                    <div key={seminar.id} className="seminar-card upcoming">
+                      {seminar.flyerImage && (
+                        <div className="seminar-flyer" onClick={() => openFlyerModal(seminar.flyerImage)}>
+                          <img src={seminar.flyerImage} alt={seminar.title} />
+                          <div className="flyer-overlay">
+                            <span>Click to view</span>
+                          </div>
+                        </div>
+                      )}
+                      <div className="seminar-info">
+                        <h4>{seminar.title}</h4>
+                        <div className="seminar-details">
+                          <p className="seminar-date">
+                            <strong>📅 {seminar.date}</strong>
+                            {seminar.time && <span> at {seminar.time}</span>}
+                          </p>
+                          <p className="seminar-speaker">
+                            <strong>👤 Speaker:</strong> {seminar.speaker}
+                          </p>
+                          {seminar.description && (
+                            <p className="seminar-description">{seminar.description}</p>
+                          )}
+                        </div>
+                        {seminar.teamsLink && (
+                          <a 
+                            href={seminar.teamsLink} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="seminar-button teams-button"
+                          >
+                            Join Teams Meeting
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Past Seminars */}
+            {pastSeminars.length > 0 && (
+              <div className="seminars-section">
+                <h3 className="seminars-section-title">Past Seminars</h3>
+                <div className="seminars-grid">
+                  {pastSeminars.map((seminar) => (
+                    <div key={seminar.id} className="seminar-card past">
+                      {seminar.flyerImage && (
+                        <div className="seminar-flyer" onClick={() => openFlyerModal(seminar.flyerImage)}>
+                          <img src={seminar.flyerImage} alt={seminar.title} />
+                          <div className="flyer-overlay">
+                            <span>Click to view</span>
+                          </div>
+                        </div>
+                      )}
+                      <div className="seminar-info">
+                        <h4>{seminar.title}</h4>
+                        <div className="seminar-details">
+                          <p className="seminar-date">
+                            <strong>📅 {seminar.date}</strong>
+                          </p>
+                          <p className="seminar-speaker">
+                            <strong>👤 Speaker:</strong> {seminar.speaker}
+                          </p>
+                          {seminar.description && (
+                            <p className="seminar-description">{seminar.description}</p>
+                          )}
+                        </div>
+                        {seminar.recordingLink && (
+                          <a 
+                            href={seminar.recordingLink} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="seminar-button recording-button"
+                          >
+                            Watch Recording
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </section>
+        )}
+
         {/* Resources Section */}
         <section className="ohdsi-resources">
           <h2>Resources & Information</h2>
@@ -225,7 +358,6 @@ const OHDSIIreland = () => {
             Join our growing community and help advance real-world evidence research in Ireland.
           </p>
           
-          {/* New Meeting Section */}
           <div className="meeting-info">
             <div className="meeting-card">
               <h3>Join Our Regular Meetings</h3>
@@ -248,6 +380,16 @@ const OHDSIIreland = () => {
           </a>
         </section>
       </div>
+
+      {/* Flyer Modal */}
+      {selectedFlyer && (
+        <div className="flyer-modal" onClick={closeFlyerModal}>
+          <div className="flyer-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="flyer-modal-close" onClick={closeFlyerModal}>×</button>
+            <img src={selectedFlyer} alt="Seminar Flyer" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

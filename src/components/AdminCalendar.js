@@ -728,11 +728,17 @@ const AdminCalendar = () => {
       <header className="cal-admin-header">
         <h1>eHealth Hub Calendar Management</h1>
         <div className="admin-nav-buttons">
+        <button 
+            className="nav-button blog-admin-btn"
+            onClick={() => navigate('/admin/forum')}
+          >
+            All-Island Forum
+          </button>
           <button 
             className="nav-button blog-admin-btn"
             onClick={() => navigate('/blog-admin')}
           >
-            📝 Blog Admin
+            Blog Admin
           </button>
           <button className="logout-button" onClick={handleLogout}>
             Sign Out
