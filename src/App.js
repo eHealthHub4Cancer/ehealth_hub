@@ -43,8 +43,9 @@ import AdminDashboard from "./components/AdminDashboard";
 import PublicBlogPage from "./components/PublicBlogPage";
 import BlogPostView from "./components/BlogPostView";
 
-// Import OHDSI Ireland component
+// Import OHDSI Ireland components
 import OHDSIIreland from "./components/OHDSIIreland";
+import SeminarSeries from "./components/SeminarSeries";
 
 // Import Forum components
 import AllIslandForum from "./components/AllIslandForum";
@@ -107,7 +108,10 @@ const AppWithRouter = () => {
               <Route path="/news/limerick-post" element={<LimerickPost />} />
               <Route path="/output/talks" element={<Talks />} />
               <Route path="/output/publications" element={<Publications />} />
+              
+              {/* OHDSI Ireland Routes */}
               <Route path="/ohdsi-ireland" element={<OHDSIIreland />} />
+              <Route path="/ohdsi-ireland/seminars" element={<SeminarSeries />} />
               
               {/* Blog routes */}
               <Route path="/blog-editor" element={<PrivateRoute><BlogEditor /></PrivateRoute>} />
@@ -118,15 +122,14 @@ const AppWithRouter = () => {
               <Route path="/blog/:id" element={<BlogPostView />} />
 
               {/* OHDSI Admin Route */}
-                <Route 
-                  path="/admin/ohdsi-seminars" 
-                  element={
-                    <PrivateRoute requiredRole="admin">
-                      <AdminOHDSISeminars />
-                    </PrivateRoute>
-                  } 
-                />
-
+              <Route 
+                path="/admin/ohdsi-seminars" 
+                element={
+                  <PrivateRoute requiredRole="admin">
+                    <AdminOHDSISeminars />
+                  </PrivateRoute>
+                } 
+              />
               
               {/* Calendar routes */}
               <Route path="/calendar" element={<PublicCalendar />} />

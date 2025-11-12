@@ -28,14 +28,28 @@ const AllIslandForum = () => {
       
       if (forumsData.length > 0) {
         setForums(forumsData);
-        // Set active year to the first one (2024 if exists)
-        setActiveYear(forumsData[0].year.toString());
+        // Set active year to the latest one (newest year)
+        setActiveYear(forumsData[forumsData.length - 1].year.toString());
       }
     } catch (error) {
       console.error('Error loading forum data:', error);
     } finally {
       setLoading(false);
     }
+  };
+
+  // Helper function to format text with paragraphs
+  const formatTextWithParagraphs = (text) => {
+    if (!text) return null;
+    
+    // Split by double newlines to create paragraphs
+    const paragraphs = text.split(/\n\n+/).filter(p => p.trim());
+    
+    return paragraphs.map((paragraph, index) => (
+      <p key={index} style={{ marginBottom: index < paragraphs.length - 1 ? '16px' : '0' }}>
+        {paragraph.trim()}
+      </p>
+    ));
   };
 
   if (loading) {
@@ -103,7 +117,7 @@ const AllIslandForum = () => {
                 <div className="hero-badge">
                   {currentForum.status === 'upcoming' && '🗓️ Upcoming Event'}
                   {currentForum.status === 'ongoing' && '🔴 Live Event'}
-                  {currentForum.status === 'past' && '✅ Past Event'}
+                  {currentForum.status === 'past' && '📅 Past Event'}
                 </div>
                 <h2 className="hero-title">{currentForum.title}</h2>
                 <div className="hero-info">
@@ -118,10 +132,40 @@ const AllIslandForum = () => {
                     </div>
                   )}
                 </div>
-                {currentForum.registrationLink && currentForum.status === 'upcoming' && (
-                  <a href={currentForum.registrationLink} target="_blank" rel="noopener noreferrer" className="register-btn">
-                    Register Now
-                  </a>
+                
+                {/* Action Buttons */}
+                <div className="hero-buttons">
+                  {currentForum.registrationLink && currentForum.status === 'upcoming' && (
+                    <a href={currentForum.registrationLink} target="_blank" rel="noopener noreferrer" className="register-btn">
+                      Register Now
+                    </a>
+                  )}
+                  {currentForum.posterSubmissionOpen && currentForum.submitAbstractLink && currentForum.status === 'upcoming' && (
+                    <a href={currentForum.submitAbstractLink} target="_blank" rel="noopener noreferrer" className="submit-abstract-btn">
+                      Submit Poster Abstract
+                    </a>
+                  )}
+                </div>
+
+                {/* Registration Note - Only for 2026 */}
+                {currentForum.year === 2026 && currentForum.status === 'upcoming' && (
+                  <div style={{ 
+                    marginTop: '24px', 
+                    padding: '16px 24px',
+                    background: '#f0f7ff',
+                    borderRadius: '8px',
+                    borderLeft: '4px solid #3B6B8F'
+                  }}>
+                    <p style={{ 
+                      margin: '0',
+                      fontSize: '15px', 
+                      color: '#2a5570',
+                      fontWeight: '500',
+                      textAlign: 'center'
+                    }}>
+                      Registration is free, but early sign-up is encouraged as places are limited.
+                    </p>
+                  </div>
                 )}
               </div>
             </div>
@@ -133,7 +177,7 @@ const AllIslandForum = () => {
                   <h3>About the Forum</h3>
                 </div>
                 <div className="card-body">
-                  <p>{currentForum.description}</p>
+                  {formatTextWithParagraphs(currentForum.description)}
                 </div>
               </div>
             )}
@@ -142,10 +186,10 @@ const AllIslandForum = () => {
             {currentForum.highlights && (
               <div className="content-card highlight-card">
                 <div className="card-header">
-                  <h3>✨ Key Highlights</h3>
+                  <h3>Key Highlights</h3>
                 </div>
                 <div className="card-body">
-                  <p>{currentForum.highlights}</p>
+                  {formatTextWithParagraphs(currentForum.highlights)}
                 </div>
               </div>
             )}
@@ -180,12 +224,38 @@ const AllIslandForum = () => {
               </div>
             )}
 
+            {/* Agenda Coming Soon Message - Only for 2026 when no agenda exists */}
+            {currentForum.year === 2026 && (!currentForum.agendaItems || currentForum.agendaItems.length === 0) && (
+              <div className="content-card">
+                <div className="card-header">
+                  <h3>📋 Event Agenda</h3>
+                </div>
+                <div className="card-body">
+                  <p style={{ marginBottom: '16px' }}>
+                    A full agenda will be shared in the coming weeks. Follow us on{' '}
+                    <a 
+                      href="https://www.linkedin.com/company/ehealth-hub-for-cancer/posts/?feedView=all&viewAsMember=true" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      style={{ color: '#0077b5', fontWeight: '600', textDecoration: 'none' }}
+                    >
+                      LinkedIn
+                    </a>
+                    {' '}for the latest updates and speaker announcements.
+                  </p>
+                  <p>
+                    We look forward to welcoming you back for another engaging and collaborative Forum.
+                  </p>
+                </div>
+              </div>
+            )}
+
             {/* Speakers Card */}
             {currentForum.speakers && currentForum.speakers.length > 0 && (
               <div className="content-card">
                 <div className="card-header">
                   <h3>
-                    {currentForum.status === 'upcoming' ? '🎤 Confirmed Speakers' : '🎤 Featured Speakers'}
+                    {currentForum.status === 'upcoming' ? 'Confirmed Speakers' : 'Featured Speakers'}
                   </h3>
                 </div>
                 <div className="card-body">
@@ -203,6 +273,35 @@ const AllIslandForum = () => {
                           {speaker.bio && (
                             <p className="speaker-bio">{speaker.bio}</p>
                           )}
+                          {(speaker.linkedIn || speaker.website) && (
+                            <div className="speaker-links">
+                              {speaker.linkedIn && (
+                                <a 
+                                  href={speaker.linkedIn} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer" 
+                                  className="speaker-link linkedin"
+                                  aria-label={`${speaker.name} LinkedIn profile`}
+                                >
+                                  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+                                  </svg>
+                                  LinkedIn
+                                </a>
+                              )}
+                              {speaker.website && (
+                                <a 
+                                  href={speaker.website} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer" 
+                                  className="speaker-link website"
+                                  aria-label={`${speaker.name} personal website`}
+                                >
+                                  🌐 Website
+                                </a>
+                              )}
+                            </div>
+                          )}
                         </div>
                       </div>
                     ))}
@@ -211,23 +310,13 @@ const AllIslandForum = () => {
               </div>
             )}
 
-            {/* Posters Card */}
-            {currentForum.posters && currentForum.posters.length > 0 && (
+            {/* Posters Card - Simplified for upcoming events */}
+            {currentForum.status === 'past' && currentForum.posters && currentForum.posters.length > 0 && (
               <div className="content-card">
                 <div className="card-header">
-                  <h3>
-                    {currentForum.status === 'upcoming' ? '📄 Poster Submissions' : '📄 Presented Posters'}
-                  </h3>
+                  <h3>📄 Presented Posters</h3>
                 </div>
                 <div className="card-body">
-                  {currentForum.status === 'upcoming' && currentForum.submitAbstractLink && (
-                    <div className="poster-submission-notice">
-                      <p>Submit your poster abstract for consideration at the forum.</p>
-                      <a href={currentForum.submitAbstractLink} target="_blank" rel="noopener noreferrer" className="submit-poster-btn">
-                        Submit Your Abstract
-                      </a>
-                    </div>
-                  )}
                   <div className="posters-list">
                     {currentForum.posters.map((poster, index) => (
                       <div key={poster.id || index} className="poster-item">
@@ -313,13 +402,74 @@ const AllIslandForum = () => {
             {currentForum.mediaGalleryUrl && (
               <div className="content-card gallery-card">
                 <div className="card-header">
-                  <h3>📸 Photo Gallery</h3>
+                  <h3>📷 Photo Gallery</h3>
                 </div>
                 <div className="card-body">
                   <p>View photos and highlights from the forum</p>
                   <a href={currentForum.mediaGalleryUrl} target="_blank" rel="noopener noreferrer" className="gallery-btn">
                     View Gallery
                   </a>
+                </div>
+              </div>
+            )}
+
+            {/* Sponsors Section */}
+            {currentForum.sponsors && currentForum.sponsors.length > 0 && (
+              <div className="content-card sponsors-card">
+                <div className="card-header">
+                  <h3>🤝 Thanks to Our Sponsors</h3>
+                </div>
+                <div className="card-body">
+                  <div className="sponsors-grid">
+                    {/* Group sponsors by tier */}
+                    {['platinum', 'gold', 'silver', 'bronze', 'standard'].map(tier => {
+                      const tierSponsors = currentForum.sponsors.filter(s => s.tier === tier);
+                      if (tierSponsors.length === 0) return null;
+                      
+                      return (
+                        <div key={tier} className={`sponsor-tier-group ${tier}`}>
+                          <h4 className="sponsor-tier-title">
+                            {tier.charAt(0).toUpperCase() + tier.slice(1)} Sponsors
+                          </h4>
+                          <div className="sponsor-logos">
+                            {tierSponsors.map((sponsor, index) => (
+                              <div key={sponsor.id || index} className="sponsor-logo-item">
+                                {sponsor.website ? (
+                                  <a 
+                                    href={sponsor.website} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    title={sponsor.name}
+                                    className="sponsor-link"
+                                  >
+                                    {sponsor.logo ? (
+                                      <img 
+                                        src={sponsor.logo} 
+                                        alt={sponsor.name} 
+                                        className={`sponsor-logo ${tier}`}
+                                      />
+                                    ) : (
+                                      <div className="sponsor-name">{sponsor.name}</div>
+                                    )}
+                                  </a>
+                                ) : (
+                                  sponsor.logo ? (
+                                    <img 
+                                      src={sponsor.logo} 
+                                      alt={sponsor.name} 
+                                      className={`sponsor-logo ${tier}`}
+                                    />
+                                  ) : (
+                                    <div className="sponsor-name">{sponsor.name}</div>
+                                  )
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             )}

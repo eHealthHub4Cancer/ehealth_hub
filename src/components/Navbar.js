@@ -8,16 +8,19 @@ import nsrp_logo from '../Images/logo/NSRP_Correct.jpg'
 function Navbar() {
   const [click, setClick] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [ohdsiDropdownOpen, setOhdsiDropdownOpen] = useState(false); // NEW STATE
   const location = useLocation();
 
   const handleClick = () => {
     setClick(!click);
     setDropdownOpen(false); // Close dropdown when main menu is toggled
+    setOhdsiDropdownOpen(false); // Close OHDSI dropdown too
   };
 
   const closeMenu = () => {
     setClick(false);
     setDropdownOpen(false); // Close dropdown when a menu item is clicked
+    setOhdsiDropdownOpen(false); // Close OHDSI dropdown too
   };
 
   const toggleDropdown = () => {
@@ -68,19 +71,40 @@ function Navbar() {
               Projects
             </Link>
           </li>
-          <li className="nav-item">
-            <Link to="/ohdsi-ireland" className={`nav-links ${getActiveClass('/ohdsi-ireland')}`} onClick={closeMenu}>
+          
+          {/* OHDSI Ireland with Dropdown - UPDATED */}
+          <li
+            className="nav-item dropdown"
+            onMouseEnter={() => window.innerWidth > 768 && setOhdsiDropdownOpen(true)}
+            onMouseLeave={() => window.innerWidth > 768 && setOhdsiDropdownOpen(false)}
+          >
+            <Link 
+              to="/ohdsi-ireland" 
+              className={`nav-links ${getActiveClass('/ohdsi-ireland')}`}
+              onClick={closeMenu}
+            >
               OHDSI Ireland
             </Link>
+            <ul className={`dropdown-content ${ohdsiDropdownOpen ? 'show' : ''}`}>
+              <li>
+                <Link to="/ohdsi-ireland/seminars" onClick={closeMenu}>Seminar Series</Link>
+              </li>
+            </ul>
           </li>
+          
           <li className="nav-item">
             <Link to="/news" className={`nav-links ${getActiveClass('/news')}`} onClick={closeMenu}>
               News
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/calendar" className={`nav-links ${getActiveClass('/calendar')}`} onClick={closeMenu}>
+            <Link to="/forum" className={`nav-links ${getActiveClass('/forum')}`} onClick={closeMenu}>
               Events
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/calendar" className={`nav-links ${getActiveClass('/calendar')}`} onClick={closeMenu}>
+              Calendar
             </Link>
           </li>
           <li className="nav-item">

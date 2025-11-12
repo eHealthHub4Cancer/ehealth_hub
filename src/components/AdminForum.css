@@ -102,6 +102,7 @@
     gap: 8px;
     margin-bottom: 32px;
     border-bottom: 2px solid #e0e0e0;
+    flex-wrap: wrap;
   }
   
   .admin-forum-tabs button {
@@ -208,12 +209,49 @@
   .form-group textarea {
     resize: vertical;
     min-height: 100px;
+    line-height: 1.6;
+  }
+  
+  .form-group small {
+    display: block;
+    margin-top: 6px;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.4;
   }
   
   .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
+  }
+  
+  /* ========== CHECKBOX GROUP ========== */
+  .checkbox-group {
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+  }
+  
+  .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  
+  .checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #3B6B8F;
+  }
+  
+  .checkbox-group span {
+    color: #333;
+    font-size: 15px;
   }
   
   /* ========== IMAGE UPLOAD ========== */
@@ -279,7 +317,8 @@
   }
   
   .add-item-form input,
-  .add-item-form textarea {
+  .add-item-form textarea,
+  .add-item-form select {
     padding: 12px 16px;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
@@ -290,7 +329,8 @@
   }
   
   .add-item-form input:focus,
-  .add-item-form textarea:focus {
+  .add-item-form textarea:focus,
+  .add-item-form select:focus {
     outline: none;
     border-color: #3B6B8F;
     box-shadow: 0 0 0 3px rgba(59, 107, 143, 0.1);
@@ -302,6 +342,49 @@
   
   .add-item-form.agenda-form textarea {
     grid-column: 1 / -1;
+  }
+  
+  .add-item-form.speaker-form {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .add-item-form.speaker-form textarea {
+    grid-column: 1 / -1;
+  }
+  
+  /* ========== SPONSOR FORM ========== */
+  .add-item-form.sponsor-form {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .sponsor-logo-upload {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .sponsor-logo-upload label {
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+  }
+  
+  .sponsor-logo-upload input[type="file"] {
+    padding: 10px;
+    border: 2px dashed #3B6B8F;
+    background: white;
+  }
+  
+  .sponsor-logo-preview {
+    max-width: 150px;
+    max-height: 80px;
+    object-fit: contain;
+    margin-top: 8px;
+    padding: 8px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
   }
   
   .btn-add {
@@ -394,6 +477,96 @@
   
   .btn-remove:active {
     transform: translateY(0);
+  }
+  
+  /* ========== SPONSORS LIST ========== */
+  .sponsors-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .sponsor-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .sponsor-item:hover {
+    border-color: #3B6B8F;
+    box-shadow: 0 2px 8px rgba(59, 107, 143, 0.1);
+  }
+  
+  .sponsor-logo-thumb {
+    width: 80px;
+    height: 60px;
+    object-fit: contain;
+    padding: 8px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .sponsor-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .sponsor-info strong {
+    color: #333;
+    font-size: 16px;
+  }
+  
+  .sponsor-info a {
+    color: #3B6B8F;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  
+  .sponsor-info a:hover {
+    text-decoration: underline;
+  }
+  
+  .tier-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+  
+  .tier-badge.platinum {
+    background: linear-gradient(135deg, #E5E4E2 0%, #BCC6CC 100%);
+    color: #333;
+  }
+  
+  .tier-badge.gold {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #333;
+  }
+  
+  .tier-badge.silver {
+    background: linear-gradient(135deg, #C0C0C0 0%, #808080 100%);
+    color: white;
+  }
+  
+  .tier-badge.bronze {
+    background: linear-gradient(135deg, #CD7F32 0%, #8B4513 100%);
+    color: white;
+  }
+  
+  .tier-badge.standard {
+    background: #3B6B8F;
+    color: white;
   }
   
   /* ========== AGENDA LIST ========== */
@@ -699,6 +872,11 @@
     .image-upload-group {
       grid-template-columns: 1fr;
     }
+  
+    .add-item-form.speaker-form,
+    .add-item-form.sponsor-form {
+      grid-template-columns: 1fr;
+    }
   }
   
   @media (max-width: 768px) {
@@ -732,7 +910,8 @@
       border-bottom: 1px solid #e0e0e0;
     }
   
-    .link-item {
+    .link-item,
+    .sponsor-item {
       flex-direction: column;
       gap: 12px;
       align-items: flex-start;
@@ -768,6 +947,11 @@
   
     .form-section h2 {
       font-size: 18px;
+    }
+  
+    .sponsor-logo-thumb {
+      width: 60px;
+      height: 45px;
     }
   }
   

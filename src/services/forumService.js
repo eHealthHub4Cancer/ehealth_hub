@@ -60,9 +60,11 @@ import {
         agendaItems: forumData.agendaItems || [],
         speakers: forumData.speakers || [],
         posters: forumData.posters || [],
+        sponsors: forumData.sponsors || [], // Added sponsors
         registrationLink: forumData.registrationLink || '',
         submitAbstractLink: forumData.submitAbstractLink || '',
-        status: forumData.status || 'upcoming', // upcoming, past, ongoing
+        status: forumData.status || 'upcoming',
+        posterSubmissionOpen: forumData.posterSubmissionOpen || false, // Added for poster submission control
         updatedBy: currentUser.email,
         updatedAt: Timestamp.now()
       };
@@ -188,6 +190,43 @@ import {
       return downloadURL;
     } catch (error) {
       console.error("Error uploading forum image:", error);
+      throw error;
+    }
+  };
+  
+  // Upload sponsor logo
+  export const uploadSponsorLogo = async (file, year) => {
+    try {
+      if (!file) {
+        throw new Error('No file provided');
+      }
+  
+      // Validate file type
+      const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/svg+xml'];
+      if (!validTypes.includes(file.type)) {
+        throw new Error('Invalid file type. Please upload JPG, PNG, SVG, or WebP images.');
+      }
+  
+      // Validate file size (max 2MB for logos)
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      if (file.size > maxSize) {
+        throw new Error('File size exceeds 2MB limit');
+      }
+  
+      // Create unique filename
+      const timestamp = Date.now();
+      const fileName = `sponsor-logos/${year}/${timestamp}-${file.name}`;
+      const storageRef = ref(storage, fileName);
+      
+      // Upload file
+      const snapshot = await uploadBytes(storageRef, file);
+      
+      // Get download URL
+      const downloadURL = await getDownloadURL(snapshot.ref);
+      
+      return downloadURL;
+    } catch (error) {
+      console.error("Error uploading sponsor logo:", error);
       throw error;
     }
   };
@@ -398,6 +437,8 @@ import {
         organization: speakerData.organization || '',
         bio: speakerData.bio || '',
         photo: speakerData.photo || '',
+        linkedIn: speakerData.linkedIn || '', // Added LinkedIn
+        website: speakerData.website || '', // Added website
         addedAt: Timestamp.now()
       };
   
@@ -436,6 +477,65 @@ import {
       return speakerId;
     } catch (error) {
       console.error("Error removing speaker:", error);
+      throw error;
+    }
+  };
+  
+  // ==================== SPONSOR MANAGEMENT OPERATIONS ====================
+  
+  // Add sponsor
+  export const addSponsor = async (year, sponsorData) => {
+    try {
+      const forumData = await getForumData(year);
+      
+      if (!forumData) {
+        throw new Error('Forum data not found');
+      }
+  
+      const newSponsor = {
+        id: Date.now().toString(),
+        name: sponsorData.name || '',
+        logo: sponsorData.logo || '',
+        website: sponsorData.website || '',
+        tier: sponsorData.tier || 'standard', // platinum, gold, silver, bronze, standard
+        addedAt: Timestamp.now()
+      };
+  
+      const updatedSponsors = [...(forumData.sponsors || []), newSponsor];
+      
+      await saveForumData(year, {
+        ...forumData,
+        sponsors: updatedSponsors
+      });
+  
+      return newSponsor;
+    } catch (error) {
+      console.error("Error adding sponsor:", error);
+      throw error;
+    }
+  };
+  
+  // Remove sponsor
+  export const removeSponsor = async (year, sponsorId) => {
+    try {
+      const forumData = await getForumData(year);
+      
+      if (!forumData) {
+        throw new Error('Forum data not found');
+      }
+  
+      const updatedSponsors = (forumData.sponsors || []).filter(
+        sponsor => sponsor.id !== sponsorId
+      );
+      
+      await saveForumData(year, {
+        ...forumData,
+        sponsors: updatedSponsors
+      });
+  
+      return sponsorId;
+    } catch (error) {
+      console.error("Error removing sponsor:", error);
       throw error;
     }
   };

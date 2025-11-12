@@ -129,7 +129,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 28px;
+    padding: 12px 12px;
     background: linear-gradient(135deg, #3B6B8F 0%, #2a5570 100%);
     color: white;
     font-size: 15px;
@@ -206,13 +206,11 @@
   
   .register-btn:hover,
   .submit-abstract-btn:hover {
-    background: linear-gradient(135deg, #2a5570 0%, #1a3d4d 100%);
     transform: translateY(-4px);
     box-shadow: 0 10px 30px rgba(59, 107, 143, 0.4);
   }
   
   .submit-abstract-btn:hover {
-    background: linear-gradient(135deg, #F57C00 0%, #E65100 100%);
     box-shadow: 0 10px 30px rgba(255, 152, 0, 0.4);
   }
   
@@ -241,11 +239,16 @@
     padding: 32px;
   }
   
+  /* Improved paragraph handling */
   .card-body p {
     font-size: 16px;
     line-height: 1.8;
     color: #555;
     margin: 0;
+  }
+  
+  .card-body p:not(:last-child) {
+    margin-bottom: 16px;
   }
   
   .highlight-card {
@@ -306,6 +309,180 @@
     line-height: 1.6;
     color: #555;
     margin: 0;
+  }
+  
+  /* ========== SPEAKERS SECTION ========== */
+  .speakers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  
+  .speaker-card {
+    padding: 24px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border-left: 4px solid #3B6B8F;
+    transition: all 0.3s ease;
+  }
+  
+  .speaker-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    background: white;
+  }
+  
+  .speaker-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .speaker-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+  }
+  
+  .speaker-title {
+    font-size: 15px;
+    color: #3B6B8F;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .speaker-org {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+  }
+  
+  .speaker-bio {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555;
+    margin: 8px 0 0 0;
+  }
+  
+  /* Speaker Links */
+  .speaker-links {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .speaker-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .speaker-link.linkedin {
+    background: #0077B5;
+    color: white;
+  }
+  
+  .speaker-link.linkedin:hover {
+    background: #005885;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 119, 181, 0.3);
+  }
+  
+  .speaker-link.website {
+    background: #3B6B8F;
+    color: white;
+  }
+  
+  .speaker-link.website:hover {
+    background: #2a5570;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 107, 143, 0.3);
+  }
+  
+  /* ========== POSTERS SECTION ========== */
+  .posters-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .poster-item {
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border-left: 4px solid #3B6B8F;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .poster-item:hover {
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateX(8px);
+  }
+  
+  .poster-content {
+    flex: 1;
+  }
+  
+  .poster-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 12px 0;
+  }
+  
+  .poster-author {
+    font-size: 15px;
+    color: #555;
+    margin: 0 0 8px 0;
+  }
+  
+  .poster-author strong {
+    color: #3B6B8F;
+  }
+  
+  .poster-affiliations {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+  }
+  
+  .poster-affiliations strong {
+    color: #3B6B8F;
+  }
+  
+  .view-poster-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #3B6B8F 0%, #2a5570 100%);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  
+  .view-poster-btn:hover {
+    background: linear-gradient(135deg, #2a5570 0%, #1a3d4d 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 107, 143, 0.3);
   }
   
   /* ========== RESOURCES ========== */
@@ -395,171 +572,131 @@
     box-shadow: 0 6px 16px rgba(59, 107, 143, 0.3);
   }
   
-  /* ========== SPEAKERS SECTION ========== */
-  .speakers-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 24px;
+  /* ========== SPONSORS SECTION ========== */
+  .sponsors-card {
+    margin-top: 40px;
+    border-top: 4px solid #3B6B8F;
   }
   
-  .speaker-card {
-    padding: 24px;
-    background: #f8f9fa;
-    border-radius: 12px;
-    border-left: 4px solid #3B6B8F;
-    transition: all 0.3s ease;
+  .sponsors-card .card-header {
+    background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
   }
   
-  .speaker-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    background: white;
-  }
-  
-  .speaker-info {
+  .sponsors-grid {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 40px;
   }
   
-  .speaker-name {
-    font-size: 20px;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin: 0;
-  }
-  
-  .speaker-title {
-    font-size: 15px;
-    color: #3B6B8F;
-    font-weight: 600;
-    margin: 0;
-  }
-  
-  .speaker-org {
-    font-size: 14px;
-    color: #666;
-    margin: 0;
-  }
-  
-  .speaker-bio {
-    font-size: 14px;
-    line-height: 1.6;
-    color: #555;
-    margin: 8px 0 0 0;
-  }
-  
-  /* ========== POSTERS SECTION ========== */
-  .poster-submission-notice {
-    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-    padding: 24px;
-    border-radius: 12px;
-    text-align: center;
-    margin-bottom: 24px;
-    border-left: 4px solid #FF9800;
-  }
-  
-  .poster-submission-notice p {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 16px;
-  }
-  
-  .submit-poster-btn {
-    display: inline-block;
-    padding: 14px 32px;
-    background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  
-  .submit-poster-btn:hover {
-    background: linear-gradient(135deg, #F57C00 0%, #E65100 100%);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(255, 152, 0, 0.4);
-  }
-  
-  .posters-list {
+  .sponsor-tier-group {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-  }
-  
-  .poster-item {
-    padding: 20px;
-    background: #f8f9fa;
-    border-radius: 12px;
-    border-left: 4px solid #3B6B8F;
-    transition: all 0.3s ease;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
     gap: 20px;
   }
   
-  .poster-item:hover {
-    background: white;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transform: translateX(8px);
-  }
-  
-  .poster-content {
-    flex: 1;
-  }
-  
-  .poster-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin: 0 0 12px 0;
-  }
-  
-  .poster-author {
-    font-size: 15px;
-    color: #555;
-    margin: 0 0 8px 0;
-  }
-  
-  .poster-author strong {
-    color: #3B6B8F;
-  }
-  
-  .poster-affiliations {
-    font-size: 14px;
-    color: #666;
-    margin: 0;
-    line-height: 1.5;
-  }
-  
-  .poster-affiliations strong {
-    color: #3B6B8F;
-  }
-  
-  .view-poster-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    background: linear-gradient(135deg, #3B6B8F 0%, #2a5570 100%);
-    color: white;
-    font-size: 14px;
+  .sponsor-tier-title {
+    font-size: 16px;
     font-weight: 600;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    white-space: nowrap;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e9ecef;
+    margin: 0;
   }
   
-  .view-poster-btn:hover {
-    background: linear-gradient(135deg, #2a5570 0%, #1a3d4d 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(59, 107, 143, 0.3);
+  .sponsor-tier-group.platinum .sponsor-tier-title {
+    color: #667;
+    border-color: #E5E4E2;
+  }
+  
+  .sponsor-tier-group.gold .sponsor-tier-title {
+    color: #B8860B;
+    border-color: #FFD700;
+  }
+  
+  .sponsor-tier-group.silver .sponsor-tier-title {
+    color: #666;
+    border-color: #C0C0C0;
+  }
+  
+  .sponsor-tier-group.bronze .sponsor-tier-title {
+    color: #8B4513;
+    border-color: #CD7F32;
+  }
+  
+  .sponsor-logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sponsor-logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sponsor-link {
+    display: inline-block;
+    transition: all 0.3s ease;
+  }
+  
+  .sponsor-link:hover {
+    transform: scale(1.1);
+  }
+  
+  .sponsor-logo {
+    max-height: 80px;
+    width: auto;
+    object-fit: contain;
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+  }
+  
+  .sponsor-logo.platinum {
+    max-height: 120px;
+    border-color: #E5E4E2;
+  }
+  
+  .sponsor-logo.gold {
+    max-height: 100px;
+    border-color: #FFD700;
+  }
+  
+  .sponsor-logo.silver {
+    max-height: 90px;
+    border-color: #C0C0C0;
+  }
+  
+  .sponsor-logo.bronze {
+    max-height: 80px;
+    border-color: #CD7F32;
+  }
+  
+  .sponsor-logo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sponsor-name {
+    padding: 12px 24px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #333;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+  }
+  
+  .sponsor-name:hover {
+    background: white;
+    border-color: #3B6B8F;
   }
   
   /* ========== LOADING STATE ========== */
@@ -644,7 +781,7 @@
     }
   
     .hero-image {
-      height: 250px;
+      min-height: 250px;
     }
   
     .hero-content {
@@ -709,6 +846,16 @@
       grid-template-columns: 1fr;
     }
   
+    .speaker-links {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .speaker-link {
+      width: 100%;
+      justify-content: center;
+    }
+  
     .poster-item {
       padding: 16px;
       flex-direction: column;
@@ -721,6 +868,30 @@
     .view-poster-btn {
       width: 100%;
       justify-content: center;
+    }
+  
+    .sponsor-logos {
+      gap: 16px;
+    }
+  
+    .sponsor-logo {
+      max-height: 60px;
+    }
+  
+    .sponsor-logo.platinum {
+      max-height: 80px;
+    }
+  
+    .sponsor-logo.gold {
+      max-height: 70px;
+    }
+  
+    .sponsor-logo.silver {
+      max-height: 65px;
+    }
+  
+    .sponsor-logo.bronze {
+      max-height: 60px;
     }
   }
   
@@ -778,6 +949,7 @@
   @media print {
     .year-toggle-container,
     .register-btn,
+    .submit-abstract-btn,
     .gallery-btn {
       display: none;
     }

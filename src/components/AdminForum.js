@@ -6,6 +6,7 @@ import {
   saveForumData,
   getForumData,
   uploadForumImage,
+  uploadSponsorLogo,
   getUserRole,
   addBlogLink,
   removeBlogLink,
@@ -15,6 +16,8 @@ import {
   removeAgendaItem,
   addSpeaker,
   removeSpeaker,
+  addSponsor,
+  removeSponsor,
   deleteForumData
 } from '../services/forumService';
 import './AdminForum.css';
@@ -41,23 +44,39 @@ const AdminForum = () => {
     registrationLink: '',
     submitAbstractLink: '',
     status: 'upcoming',
+    posterSubmissionOpen: false,
     blogLinks: [],
     newsLinks: [],
     agendaItems: [],
     speakers: [],
-    posters: []
+    posters: [],
+    sponsors: []
   });
 
   // Temporary form states for adding items
   const [newBlogLink, setNewBlogLink] = useState({ title: '', url: '' });
   const [newNewsLink, setNewNewsLink] = useState({ title: '', url: '' });
   const [newAgendaItem, setNewAgendaItem] = useState({ time: '', title: '', description: '', speaker: '' });
-  const [newSpeaker, setNewSpeaker] = useState({ name: '', title: '', organization: '', bio: '' });
+  const [newSpeaker, setNewSpeaker] = useState({ 
+    name: '', 
+    title: '', 
+    organization: '', 
+    bio: '', 
+    linkedIn: '', 
+    website: '' 
+  });
   const [newPoster, setNewPoster] = useState({ title: '', author: '', affiliations: '', posterLink: '' });
+  const [newSponsor, setNewSponsor] = useState({ 
+    name: '', 
+    logo: '', 
+    website: '', 
+    tier: 'standard' 
+  });
 
   // Image upload states
   const [uploadingCover, setUploadingCover] = useState(false);
   const [uploadingHero, setUploadingHero] = useState(false);
+  const [uploadingSponsorLogo, setUploadingSponsorLogo] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
 
@@ -91,11 +110,13 @@ const AdminForum = () => {
           registrationLink: data.registrationLink || '',
           submitAbstractLink: data.submitAbstractLink || '',
           status: data.status || 'upcoming',
+          posterSubmissionOpen: data.posterSubmissionOpen || false,
           blogLinks: data.blogLinks || [],
           newsLinks: data.newsLinks || [],
           agendaItems: data.agendaItems || [],
           speakers: data.speakers || [],
-          posters: data.posters || []
+          posters: data.posters || [],
+          sponsors: data.sponsors || []
         });
       } else {
         // Reset form for new year
@@ -112,11 +133,13 @@ const AdminForum = () => {
           registrationLink: '',
           submitAbstractLink: '',
           status: 'upcoming',
+          posterSubmissionOpen: false,
           blogLinks: [],
           newsLinks: [],
           agendaItems: [],
           speakers: [],
-          posters: []
+          posters: [],
+          sponsors: []
         });
       }
     } catch (error) {
@@ -127,10 +150,10 @@ const AdminForum = () => {
   };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }));
   };
 
@@ -152,6 +175,22 @@ const AdminForum = () => {
       showMessage('error', 'Error uploading image: ' + error.message);
     } finally {
       setUploading(false);
+    }
+  };
+
+  const handleSponsorLogoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploadingSponsorLogo(true);
+    try {
+      const logoUrl = await uploadSponsorLogo(file, selectedYear);
+      setNewSponsor(prev => ({ ...prev, logo: logoUrl }));
+      showMessage('success', 'Sponsor logo uploaded successfully!');
+    } catch (error) {
+      showMessage('error', 'Error uploading logo: ' + error.message);
+    } finally {
+      setUploadingSponsorLogo(false);
     }
   };
 
@@ -279,7 +318,7 @@ const AdminForum = () => {
         ...prev,
         speakers: [...prev.speakers, speaker]
       }));
-      setNewSpeaker({ name: '', title: '', organization: '', bio: '' });
+      setNewSpeaker({ name: '', title: '', organization: '', bio: '', linkedIn: '', website: '' });
       showMessage('success', 'Speaker added!');
     } catch (error) {
       showMessage('error', 'Error adding speaker: ' + error.message);
@@ -353,6 +392,39 @@ const AdminForum = () => {
     }
   };
 
+  // Sponsor handlers
+  const handleAddSponsor = async () => {
+    if (!newSponsor.name) {
+      showMessage('error', 'Please fill in sponsor name');
+      return;
+    }
+    
+    try {
+      const sponsor = await addSponsor(selectedYear, newSponsor);
+      setFormData(prev => ({
+        ...prev,
+        sponsors: [...prev.sponsors, sponsor]
+      }));
+      setNewSponsor({ name: '', logo: '', website: '', tier: 'standard' });
+      showMessage('success', 'Sponsor added!');
+    } catch (error) {
+      showMessage('error', 'Error adding sponsor: ' + error.message);
+    }
+  };
+
+  const handleRemoveSponsor = async (sponsorId) => {
+    try {
+      await removeSponsor(selectedYear, sponsorId);
+      setFormData(prev => ({
+        ...prev,
+        sponsors: prev.sponsors.filter(sponsor => sponsor.id !== sponsorId)
+      }));
+      showMessage('success', 'Sponsor removed!');
+    } catch (error) {
+      showMessage('error', 'Error removing sponsor: ' + error.message);
+    }
+  };
+
   const handleDeleteForum = async () => {
     try {
       await deleteForumData(selectedYear);
@@ -364,7 +436,6 @@ const AdminForum = () => {
       showMessage('error', 'Error deleting forum: ' + error.message);
     }
   };
-
 
   const handleClearAll = async () => {
     try {
@@ -382,11 +453,13 @@ const AdminForum = () => {
         registrationLink: '',
         submitAbstractLink: '',
         status: 'upcoming',
+        posterSubmissionOpen: false,
         blogLinks: [],
         newsLinks: [],
         agendaItems: [],
         speakers: [],
-        posters: []
+        posters: [],
+        sponsors: []
       });
       
       // Save the empty data to Firebase (effectively clearing it)
@@ -403,11 +476,13 @@ const AdminForum = () => {
         registrationLink: '',
         submitAbstractLink: '',
         status: 'upcoming',
+        posterSubmissionOpen: false,
         blogLinks: [],
         newsLinks: [],
         agendaItems: [],
         speakers: [],
-        posters: []
+        posters: [],
+        sponsors: []
       });
       
       setShowClearConfirm(false);
@@ -487,6 +562,12 @@ const AdminForum = () => {
         >
           Posters
         </button>
+        <button 
+          className={activeTab === 'sponsors' ? 'active' : ''} 
+          onClick={() => setActiveTab('sponsors')}
+        >
+          Sponsors
+        </button>
       </div>
 
       <div className="admin-forum-content">
@@ -560,9 +641,12 @@ const AdminForum = () => {
                   name="description"
                   value={formData.description}
                   onChange={handleInputChange}
-                  placeholder="Brief description of the forum..."
-                  rows="4"
+                  placeholder="Brief description of the forum. Press Enter twice for new paragraphs..."
+                  rows="6"
                 />
+                <small style={{color: '#666', fontSize: '13px', marginTop: '4px', display: 'block'}}>
+                  Tip: Press Enter twice to create new paragraphs that will display on the public page
+                </small>
               </div>
 
               <div className="form-group">
@@ -571,9 +655,12 @@ const AdminForum = () => {
                   name="highlights"
                   value={formData.highlights}
                   onChange={handleInputChange}
-                  placeholder="Key highlights from the forum (for past events)..."
-                  rows="4"
+                  placeholder="Key highlights from the forum. Press Enter twice for new paragraphs..."
+                  rows="6"
                 />
+                <small style={{color: '#666', fontSize: '13px', marginTop: '4px', display: 'block'}}>
+                  Tip: Press Enter twice to create new paragraphs that will display on the public page
+                </small>
               </div>
             </div>
 
@@ -581,22 +668,6 @@ const AdminForum = () => {
               <h2>Images</h2>
               
               <div className="image-upload-group">
-                {/* <div className="image-upload-item">
-                  <label>Hero Image</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => handleImageUpload(e, 'hero')}
-                    disabled={uploadingHero}
-                  />
-                  {uploadingHero && <p className="uploading-text">Uploading...</p>}
-                  {formData.heroImage && (
-                    <div className="image-preview">
-                      <img src={formData.heroImage} alt="Hero preview" />
-                    </div>
-                  )}
-                </div> */}
-
                 <div className="image-upload-item">
                   <label>Cover Image</label>
                   <input
@@ -616,7 +687,7 @@ const AdminForum = () => {
             </div>
 
             <div className="form-section">
-              <h2>Links</h2>
+              <h2>Links & Settings</h2>
               
               <div className="form-group">
                 <label>Media Gallery URL</label>
@@ -641,7 +712,7 @@ const AdminForum = () => {
               </div>
 
               <div className="form-group">
-                <label>Submit Abstract Link (for upcoming events)</label>
+                <label>Submit Abstract Link</label>
                 <input
                   type="url"
                   name="submitAbstractLink"
@@ -649,17 +720,32 @@ const AdminForum = () => {
                   onChange={handleInputChange}
                   placeholder="https://forms.gle/..."
                 />
+              </div>
+
+              <div className="form-group checkbox-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    name="posterSubmissionOpen"
+                    checked={formData.posterSubmissionOpen}
+                    onChange={handleInputChange}
+                  />
+                  <span>Enable Poster Abstract Submissions</span>
+                </label>
                 <small style={{color: '#666', fontSize: '13px', marginTop: '4px', display: 'block'}}>
-                  This button only shows when status is "Upcoming"
+                  When enabled, shows "Submit Abstract" button for upcoming events
                 </small>
               </div>
             </div>
           </div>
         )}
 
-        {/* CONTENT & LINKS TAB */}
+        {/* Content & Links, Agenda, Speakers tabs remain the same... */}
+        {/* Adding the new Sponsors tab */}
+
         {activeTab === 'content' && (
           <div className="tab-content">
+            {/* Same content as before */}
             <div className="form-section">
               <h2>Blog Links</h2>
               
@@ -726,7 +812,6 @@ const AdminForum = () => {
           </div>
         )}
 
-        {/* AGENDA TAB */}
         {activeTab === 'agenda' && (
           <div className="tab-content">
             <div className="form-section">
@@ -777,7 +862,6 @@ const AdminForum = () => {
           </div>
         )}
 
-        {/* SPEAKERS TAB */}
         {activeTab === 'speakers' && (
           <div className="tab-content">
             <div className="form-section">
@@ -786,7 +870,7 @@ const AdminForum = () => {
                 Add confirmed speakers for the forum. Shows as "Confirmed Speakers" for upcoming events and "Featured Speakers" for past events.
               </p>
               
-              <div className="add-item-form">
+              <div className="add-item-form speaker-form">
                 <input
                   type="text"
                   placeholder="Speaker name *"
@@ -805,6 +889,18 @@ const AdminForum = () => {
                   value={newSpeaker.organization}
                   onChange={(e) => setNewSpeaker({ ...newSpeaker, organization: e.target.value })}
                 />
+                <input
+                  type="url"
+                  placeholder="LinkedIn URL (optional)"
+                  value={newSpeaker.linkedIn}
+                  onChange={(e) => setNewSpeaker({ ...newSpeaker, linkedIn: e.target.value })}
+                />
+                <input
+                  type="url"
+                  placeholder="Personal Website (optional)"
+                  value={newSpeaker.website}
+                  onChange={(e) => setNewSpeaker({ ...newSpeaker, website: e.target.value })}
+                />
                 <textarea
                   placeholder="Bio (optional)"
                   value={newSpeaker.bio}
@@ -822,6 +918,18 @@ const AdminForum = () => {
                       {speaker.title && <p style={{margin: '4px 0', color: '#666'}}>{speaker.title}</p>}
                       {speaker.organization && <p style={{margin: '4px 0', color: '#666'}}>{speaker.organization}</p>}
                       {speaker.bio && <p style={{margin: '4px 0', fontSize: '14px', color: '#777'}}>{speaker.bio}</p>}
+                      <div style={{marginTop: '8px', display: 'flex', gap: '12px'}}>
+                        {speaker.linkedIn && (
+                          <a href={speaker.linkedIn} target="_blank" rel="noopener noreferrer" style={{fontSize: '14px', color: '#0077B5'}}>
+                            LinkedIn →
+                          </a>
+                        )}
+                        {speaker.website && (
+                          <a href={speaker.website} target="_blank" rel="noopener noreferrer" style={{fontSize: '14px', color: '#3B6B8F'}}>
+                            Website →
+                          </a>
+                        )}
+                      </div>
                     </div>
                     <button className="btn-remove" onClick={() => handleRemoveSpeaker(speaker.id)}>Remove</button>
                   </div>
@@ -831,13 +939,13 @@ const AdminForum = () => {
           </div>
         )}
 
-        {/* POSTERS TAB */}
         {activeTab === 'posters' && (
           <div className="tab-content">
             <div className="form-section">
-              <h2>Posters</h2>
+              <h2>Poster Presentations</h2>
               <p style={{color: '#666', marginBottom: '20px'}}>
-                Add poster information. For upcoming events, this shows submission info. For past events, shows presented posters.
+                For past events: Add presented posters with download links.<br />
+                For upcoming events: Enable submission button in Basic Info tab.
               </p>
               
               <div className="add-item-form">
@@ -888,6 +996,76 @@ const AdminForum = () => {
             </div>
           </div>
         )}
+
+        {activeTab === 'sponsors' && (
+          <div className="tab-content">
+            <div className="form-section">
+              <h2>Event Sponsors</h2>
+              <p style={{color: '#666', marginBottom: '20px'}}>
+                Add sponsors and their logos. They will appear at the bottom of the forum page.
+              </p>
+              
+              <div className="add-item-form sponsor-form">
+                <input
+                  type="text"
+                  placeholder="Sponsor name *"
+                  value={newSponsor.name}
+                  onChange={(e) => setNewSponsor({ ...newSponsor, name: e.target.value })}
+                />
+                <input
+                  type="url"
+                  placeholder="Sponsor website (optional)"
+                  value={newSponsor.website}
+                  onChange={(e) => setNewSponsor({ ...newSponsor, website: e.target.value })}
+                />
+                <select
+                  value={newSponsor.tier}
+                  onChange={(e) => setNewSponsor({ ...newSponsor, tier: e.target.value })}
+                >
+                  <option value="platinum">Platinum</option>
+                  <option value="gold">Gold</option>
+                  <option value="silver">Silver</option>
+                  <option value="bronze">Bronze</option>
+                  <option value="standard">Standard</option>
+                </select>
+                <div className="sponsor-logo-upload">
+                  <label>Sponsor Logo:</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleSponsorLogoUpload}
+                    disabled={uploadingSponsorLogo}
+                  />
+                  {uploadingSponsorLogo && <span className="uploading-text">Uploading...</span>}
+                  {newSponsor.logo && (
+                    <img src={newSponsor.logo} alt="Logo preview" className="sponsor-logo-preview" />
+                  )}
+                </div>
+                <button className="btn-add" onClick={handleAddSponsor}>Add Sponsor</button>
+              </div>
+
+              <div className="sponsors-list">
+                {formData.sponsors.map((sponsor) => (
+                  <div key={sponsor.id} className="sponsor-item">
+                    {sponsor.logo && (
+                      <img src={sponsor.logo} alt={sponsor.name} className="sponsor-logo-thumb" />
+                    )}
+                    <div className="sponsor-info">
+                      <strong>{sponsor.name}</strong>
+                      <span className={`tier-badge ${sponsor.tier}`}>{sponsor.tier}</span>
+                      {sponsor.website && (
+                        <a href={sponsor.website} target="_blank" rel="noopener noreferrer">
+                          Visit Website →
+                        </a>
+                      )}
+                    </div>
+                    <button className="btn-remove" onClick={() => handleRemoveSponsor(sponsor.id)}>Remove</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="admin-forum-actions">
@@ -916,6 +1094,7 @@ const AdminForum = () => {
               <li>All blog and news links</li>
               <li>All agenda items</li>
               <li>All speakers</li>
+              <li>All sponsors</li>
             </ul>
             <p className="warning-text">You can add new data after clearing.</p>
             <div className="modal-actions">

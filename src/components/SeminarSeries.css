@@ -1,0 +1,485 @@
+/* Seminar Series Page */
+.seminar-series-page {
+    min-height: 100vh;
+    background: #ffffff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  /* Hero Section */
+  .seminar-hero {
+    background: linear-gradient(135deg, #214568 0%, #2d5a7a 50%, #3a6b8f 100%);
+    color: white;
+    padding: 140px 40px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .seminar-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  }
+  
+  .seminar-hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .seminar-hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 25px;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .seminar-hero p {
+    font-size: 1.3rem;
+    opacity: 0.95;
+    line-height: 1.7;
+    color: #e0f2fe;
+  }
+  
+  /* Main Content */
+  .seminar-series-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 1.2rem;
+    color: #475569;
+  }
+  
+  .no-seminars {
+    text-align: center;
+    padding: 80px 20px;
+    font-size: 1.2rem;
+    color: #64748b;
+  }
+  
+  /* Seminars Section */
+  .seminars-section {
+    margin-bottom: 80px;
+  }
+  
+  .seminars-section:last-child {
+    margin-bottom: 0;
+  }
+  
+  .seminars-section-title {
+    font-size: 2.5rem;
+    color: #214568;
+    margin-bottom: 40px;
+    font-weight: 700;
+    text-align: center;
+    position: relative;
+    padding-bottom: 15px;
+  }
+  
+  .seminars-section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #214568, #f97316);
+    border-radius: 2px;
+  }
+  
+  .seminars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 35px;
+  }
+  
+  /* Seminar Card */
+  .seminar-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(33, 69, 104, 0.08);
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 2px solid transparent;
+  }
+  
+  .seminar-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #214568, #f97316);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+    border-radius: 20px;
+  }
+  
+  .seminar-card::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border-radius: 18px;
+    z-index: 2;
+    transition: all 0.4s ease;
+  }
+  
+  .seminar-card:hover::before {
+    opacity: 1;
+  }
+  
+  .seminar-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(33, 69, 104, 0.15);
+  }
+  
+  .seminar-card > * {
+    position: relative;
+    z-index: 3;
+  }
+  
+  /* NICE SIZE FLYER - 160px */
+  .seminar-flyer {
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    background: #f1f5f9;
+  }
+  
+  .seminar-flyer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  
+  .seminar-flyer:hover img {
+    transform: scale(1.05);
+  }
+  
+  .flyer-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(33, 69, 104, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  
+  .seminar-flyer:hover .flyer-overlay {
+    opacity: 1;
+  }
+  
+  /* Seminar Info */
+  .seminar-info {
+    padding: 28px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .seminar-info h3 {
+    font-size: 1.4rem;
+    color: #214568;
+    font-weight: 700;
+    margin-bottom: 18px;
+    line-height: 1.3;
+  }
+  
+  .seminar-details {
+    flex: 1;
+    margin-bottom: 18px;
+  }
+  
+  .seminar-date {
+    color: #214568;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .seminar-date strong {
+    font-weight: 700;
+  }
+  
+  .seminar-speaker {
+    color: #475569;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+  }
+  
+  .seminar-speaker strong {
+    color: #214568;
+    font-weight: 600;
+  }
+  
+  .seminar-description {
+    color: #64748b;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-top: 10px;
+  }
+  
+  /* Seminar Buttons */
+  .seminar-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 26px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .teams-button {
+    background: linear-gradient(135deg, #6264a7 0%, #464775 100%);
+    color: white;
+    box-shadow: 0 8px 20px rgba(98, 100, 167, 0.3);
+  }
+  
+  .teams-button:hover {
+    background: linear-gradient(135deg, #464775 0%, #33344a 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(98, 100, 167, 0.4);
+    text-decoration: none;
+    color: white;
+  }
+  
+  .recording-button {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    color: white;
+    box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
+  }
+  
+  .recording-button:hover {
+    background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(249, 115, 22, 0.4);
+    text-decoration: none;
+    color: white;
+  }
+  
+  /* Status Badges */
+  .seminar-card.upcoming {
+    border-top: 4px solid #6264a7;
+  }
+  
+  .seminar-card.past {
+    border-top: 4px solid #f97316;
+  }
+  
+  /* Flyer Modal */
+  .flyer-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+    cursor: pointer;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .flyer-modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90vh;
+    animation: scaleIn 0.3s ease;
+    cursor: default;
+  }
+  
+  @keyframes scaleIn {
+    from {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .flyer-modal-content img {
+    width: 100%;
+    height: auto;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  }
+  
+  .flyer-modal-close {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    background: white;
+    color: #214568;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 30px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .flyer-modal-close:hover {
+    background: #f97316;
+    color: white;
+    transform: rotate(90deg);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .seminars-grid {
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .seminar-hero {
+      padding: 120px 30px 60px;
+    }
+  
+    .seminar-hero h1 {
+      font-size: 2.5rem;
+    }
+  
+    .seminar-hero p {
+      font-size: 1.1rem;
+    }
+  
+    .seminar-series-content {
+      padding: 60px 30px;
+    }
+  
+    .seminars-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .seminars-section-title {
+      font-size: 2rem;
+    }
+  
+    .seminar-flyer {
+      height: 140px;
+    }
+  
+    .seminar-info {
+      padding: 24px;
+    }
+  
+    .seminar-info h3 {
+      font-size: 1.3rem;
+    }
+  
+    .flyer-modal-close {
+      top: 10px;
+      right: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .seminar-hero {
+      padding: 100px 20px 50px;
+    }
+  
+    .seminar-hero h1 {
+      font-size: 2rem;
+    }
+  
+    .seminar-hero p {
+      font-size: 1rem;
+    }
+  
+    .seminar-series-content {
+      padding: 40px 20px;
+    }
+  
+    .seminars-section-title {
+      font-size: 1.7rem;
+    }
+  
+    .seminar-flyer {
+      height: 130px;
+    }
+  
+    .seminar-info {
+      padding: 20px;
+    }
+  
+    .seminar-info h3 {
+      font-size: 1.2rem;
+    }
+  
+    .seminar-date,
+    .seminar-speaker {
+      font-size: 0.85rem;
+    }
+  
+    .seminar-description {
+      font-size: 0.85rem;
+    }
+  
+    .seminar-button {
+      padding: 11px 22px;
+      font-size: 0.9rem;
+    }
+  }
