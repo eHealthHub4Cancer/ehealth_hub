@@ -123,16 +123,28 @@ const SeminarSeries = () => {
                         <p className="seminar-description">{seminar.description}</p>
                       )}
                     </div>
-                    {seminar.recordingLink && (
-                      <a 
-                        href={seminar.recordingLink} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="seminar-button recording-button"
-                      >
-                        Watch Recording
-                      </a>
-                    )}
+                    <div className="seminar-buttons">
+                      {seminar.recordingLink && (
+                        <a 
+                          href={seminar.recordingLink} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="seminar-button recording-button"
+                        >
+                          Watch Recording
+                        </a>
+                      )}
+                      {seminar.slidesLink && (
+                        <a 
+                          href={seminar.slidesLink} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="seminar-button slides-button"
+                        >
+                          View Slides
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}

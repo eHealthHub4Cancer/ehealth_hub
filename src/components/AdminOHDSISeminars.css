@@ -485,6 +485,64 @@
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
+
+  /* ========== ADDITIONAL STYLES FOR SLIDES LINK ========== */
+
+/* Field Hint Text */
+.field-hint {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #6c757d;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Seminar Links Container */
+.seminar-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* Link Badge Variants */
+.link-badge.teams {
+  background: #6264a7;
+}
+
+.link-badge.teams:hover {
+  background: #464775;
+}
+
+.link-badge.recording {
+  background: #f97316;
+}
+
+.link-badge.recording:hover {
+  background: #ea580c;
+}
+
+.link-badge.slides {
+  background: #059669;
+}
+
+.link-badge.slides:hover {
+  background: #047857;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .seminar-links {
+    flex-direction: column;
+  }
+  
+  .link-badge {
+    text-align: center;
+    width: 100%;
+  }
+}
   
   @keyframes spin {
     0% { transform: rotate(0deg); }

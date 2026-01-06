@@ -2,15 +2,19 @@ import React, { useEffect, useState } from 'react';
 import './OHDSIIreland.css';
 import ohdsiLogo from '../Images/logo/OHDSI_Logo.png';
 import { getSeminarsByStatus } from '../services/ohdsiSeminarService';
+import { getLinkedInPostsFromSheet } from '../services/linkedInSheetService';
 
 const OHDSIIreland = () => {
   const [upcomingSeminars, setUpcomingSeminars] = useState([]);
   const [pastSeminars, setPastSeminars] = useState([]);
+  const [linkedInPosts, setLinkedInPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [linkedInLoading, setLinkedInLoading] = useState(true);
   const [selectedFlyer, setSelectedFlyer] = useState(null);
 
   useEffect(() => {
     loadSeminars();
+    loadLinkedInPosts();
     setupScrollAnimations();
   }, []);
 
@@ -29,6 +33,17 @@ const OHDSIIreland = () => {
     }
   };
 
+  const loadLinkedInPosts = async () => {
+    try {
+      const posts = await getLinkedInPostsFromSheet(5); // Fetch max 5 posts
+      setLinkedInPosts(posts);
+    } catch (error) {
+      console.error('Error loading LinkedIn posts:', error);
+    } finally {
+      setLinkedInLoading(false);
+    }
+  };
+
   const setupScrollAnimations = () => {
     const observerCallback = (entries) => {
       entries.forEach((entry) => {
@@ -44,7 +59,7 @@ const OHDSIIreland = () => {
       rootMargin: '0px 0px -50px 0px'
     });
 
-    const sections = document.querySelectorAll('.ohdsi-objectives, .ohdsi-activities, .ohdsi-get-involved, .ohdsi-resources, .ohdsi-leadership, .ohdsi-seminars');
+    const sections = document.querySelectorAll('.ohdsi-objectives, .ohdsi-activities, .ohdsi-get-involved, .ohdsi-resources, .ohdsi-leadership, .ohdsi-seminars, .ohdsi-linkedin');
     sections.forEach((section) => {
       section.style.opacity = '0';
       section.style.transform = 'translateY(30px)';
@@ -180,6 +195,59 @@ const OHDSIIreland = () => {
           </div>
         </section>
 
+        {/* LinkedIn Feed Section */}
+        <section className="ohdsi-linkedin">
+          <h2>Latest from LinkedIn</h2>
+          <p className="linkedin-intro">
+            Stay updated with our latest activities, events, and research highlights. 
+            Follow us on LinkedIn for real-time updates from the OHDSI Ireland community.
+          </p>
+          
+          {linkedInLoading ? (
+            <div className="linkedin-loading">
+              <p>Loading LinkedIn posts...</p>
+            </div>
+          ) : linkedInPosts.length > 0 ? (
+            <>
+              <div className="linkedin-feed-container">
+                {linkedInPosts.map((post) => (
+                  <div key={post.id} className="linkedin-post-wrapper">
+                    <div 
+                      dangerouslySetInnerHTML={{ __html: post.iframeCode }}
+                      className="linkedin-embed"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div className="linkedin-cta">
+                {/* <a 
+                  href="https://www.linkedin.com/company/ohdsi-ireland" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="linkedin-follow-button"
+                >
+                  <span className="linkedin-icon">in</span>
+                  Follow OHDSI Ireland on LinkedIn
+                </a> */}
+              </div>
+            </>
+          ) : (
+            <div className="linkedin-empty">
+              <p>No LinkedIn posts available at the moment. Check back soon!</p>
+              <a 
+                href="https://www.linkedin.com/company/ohdsi-ireland" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="linkedin-follow-button"
+              >
+                <span className="linkedin-icon">in</span>
+                Follow us on LinkedIn
+              </a>
+            </div>
+          )}
+        </section>
+
         {/* Resources Section */}
         <section className="ohdsi-resources">
           <h2>Resources & Information</h2>
@@ -260,16 +328,12 @@ const OHDSIIreland = () => {
             <div className="meeting-card">
               <h3>Join Our Regular Meetings</h3>
               <p className="meeting-schedule">
-                <strong>OHDSI Ireland meets every first Friday of the month</strong>
+                Our monthly node meetings take place on the <strong>first Friday of each month at 11:00 AM</strong>. 
+                To join our mailing list and access meeting details, please contact <a href="mailto:ehealth@ul.ie" className="inline-link">ehealth@ul.ie</a>.
               </p>
-              <a 
-                href="https://teams.microsoft.com/l/meetup-join/19%3ameeting_YjQxYjM0N2QtNGNmYy00NzA5LWI0ODItMzY5YTg4YmU2NGQz%40thread.v2/0?context=%7b%22Tid%22%3a%220084b924-3ab4-4116-9251-9939f695e54c%22%2c%22Oid%22%3a%22189dbe0d-f9e9-4dbb-a927-067b84929cd4%22%7d"
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="teams-meeting-button"
-              >
-                Join OHDSI Ireland Meeting
-              </a>
+              <p className="meeting-schedule">
+                You can also follow us on <a href="https://www.linkedin.com/company/ohdsi-ireland" target="_blank" rel="noopener noreferrer" className="linkedin-link">LinkedIn</a> for updates on our node activities and events.
+              </p>
             </div>
           </div>
           

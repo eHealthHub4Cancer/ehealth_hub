@@ -38,18 +38,19 @@ const AllIslandForum = () => {
     }
   };
 
-  // Helper function to format text with paragraphs
-  const formatTextWithParagraphs = (text) => {
-    if (!text) return null;
+  // Helper function to render HTML content safely
+  const renderHTMLContent = (htmlContent) => {
+    if (!htmlContent) return null;
     
-    // Split by double newlines to create paragraphs
-    const paragraphs = text.split(/\n\n+/).filter(p => p.trim());
-    
-    return paragraphs.map((paragraph, index) => (
-      <p key={index} style={{ marginBottom: index < paragraphs.length - 1 ? '16px' : '0' }}>
-        {paragraph.trim()}
-      </p>
-    ));
+    return (
+      <div 
+        dangerouslySetInnerHTML={{ __html: htmlContent }}
+        style={{ 
+          lineHeight: '1.8',
+          color: '#555'
+        }}
+      />
+    );
   };
 
   if (loading) {
@@ -177,7 +178,7 @@ const AllIslandForum = () => {
                   <h3>About the Forum</h3>
                 </div>
                 <div className="card-body">
-                  {formatTextWithParagraphs(currentForum.description)}
+                  {renderHTMLContent(currentForum.description)}
                 </div>
               </div>
             )}
@@ -189,7 +190,7 @@ const AllIslandForum = () => {
                   <h3>Key Highlights</h3>
                 </div>
                 <div className="card-body">
-                  {formatTextWithParagraphs(currentForum.highlights)}
+                  {renderHTMLContent(currentForum.highlights)}
                 </div>
               </div>
             )}

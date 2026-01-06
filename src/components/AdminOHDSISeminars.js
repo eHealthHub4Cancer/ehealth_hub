@@ -22,7 +22,7 @@ const AdminOHDSISeminars = () => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
   const [uploadingFlyer, setUploadingFlyer] = useState(false);
 
-  // Form data
+  // Form data - ADDED slidesLink
   const [formData, setFormData] = useState({
     title: '',
     date: '',
@@ -31,6 +31,7 @@ const AdminOHDSISeminars = () => {
     description: '',
     teamsLink: '',
     recordingLink: '',
+    slidesLink: '',
     flyerImage: '',
     status: 'upcoming'
   });
@@ -124,6 +125,7 @@ const AdminOHDSISeminars = () => {
         description: seminar.description || '',
         teamsLink: seminar.teamsLink || '',
         recordingLink: seminar.recordingLink || '',
+        slidesLink: seminar.slidesLink || '',
         flyerImage: seminar.flyerImage || '',
         status: seminar.status || 'upcoming'
       });
@@ -154,6 +156,7 @@ const AdminOHDSISeminars = () => {
       description: '',
       teamsLink: '',
       recordingLink: '',
+      slidesLink: '',
       flyerImage: '',
       status: 'upcoming'
     });
@@ -275,16 +278,32 @@ const AdminOHDSISeminars = () => {
           )}
 
           {formData.status === 'past' && (
-            <div className="form-group">
-              <label>Recording Link (optional)</label>
-              <input
-                type="url"
-                name="recordingLink"
-                value={formData.recordingLink}
-                onChange={handleInputChange}
-                placeholder="https://youtube.com/..."
-              />
-            </div>
+            <>
+              <div className="form-group">
+                <label>Recording Link (optional)</label>
+                <input
+                  type="url"
+                  name="recordingLink"
+                  value={formData.recordingLink}
+                  onChange={handleInputChange}
+                  placeholder="https://youtube.com/..."
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Slides Link (optional)</label>
+                <input
+                  type="url"
+                  name="slidesLink"
+                  value={formData.slidesLink}
+                  onChange={handleInputChange}
+                  placeholder="https://drive.google.com/..."
+                />
+                <p className="field-hint">
+                  💡 Tip: Share your Google Drive file and paste the link here
+                </p>
+              </div>
+            </>
           )}
 
           <div className="form-group">
@@ -346,16 +365,23 @@ const AdminOHDSISeminars = () => {
                   {seminar.description && (
                     <p className="seminar-description">{seminar.description}</p>
                   )}
-                  {seminar.teamsLink && (
-                    <a href={seminar.teamsLink} target="_blank" rel="noopener noreferrer" className="link-badge">
-                      Teams Link
-                    </a>
-                  )}
-                  {seminar.recordingLink && (
-                    <a href={seminar.recordingLink} target="_blank" rel="noopener noreferrer" className="link-badge">
-                      Recording
-                    </a>
-                  )}
+                  <div className="seminar-links">
+                    {seminar.teamsLink && (
+                      <a href={seminar.teamsLink} target="_blank" rel="noopener noreferrer" className="link-badge teams">
+                        📹 Teams Link
+                      </a>
+                    )}
+                    {seminar.recordingLink && (
+                      <a href={seminar.recordingLink} target="_blank" rel="noopener noreferrer" className="link-badge recording">
+                        ▶️ Recording
+                      </a>
+                    )}
+                    {seminar.slidesLink && (
+                      <a href={seminar.slidesLink} target="_blank" rel="noopener noreferrer" className="link-badge slides">
+                        📄 Slides
+                      </a>
+                    )}
+                  </div>
                 </div>
                 <div className="seminar-actions">
                   <button className="btn-edit" onClick={() => handleEdit(seminar.id)}>

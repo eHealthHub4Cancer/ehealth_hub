@@ -326,6 +326,54 @@
     cursor: pointer;
   }
   
+  /* ========== ADDITIONS FOR SLIDES BUTTON ========== */
+
+/* Seminar Buttons Container */
+.seminar-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Slides Button */
+.slides-button {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  color: white;
+  box-shadow: 0 8px 20px rgba(5, 150, 105, 0.3);
+}
+
+.slides-button:hover {
+  background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(5, 150, 105, 0.4);
+  text-decoration: none;
+  color: white;
+}
+
+/* Adjust existing button styles when multiple buttons present */
+.seminar-buttons .seminar-button {
+  margin-bottom: 0;
+}
+
+/* Optional: Side-by-side layout for desktop when both buttons exist */
+@media (min-width: 768px) {
+  .seminar-buttons {
+    flex-direction: row;
+  }
+  
+  .seminar-buttons .seminar-button {
+    flex: 1;
+  }
+}
+
+/* Mobile: Keep stacked */
+@media (max-width: 767px) {
+  .seminar-buttons {
+    flex-direction: column;
+  }
+}
+
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }

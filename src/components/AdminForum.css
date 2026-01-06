@@ -478,6 +478,172 @@
   .btn-remove:active {
     transform: translateY(0);
   }
+
+  /* ========== EDIT BUTTON ========== */
+  .btn-edit {
+    padding: 8px 16px;
+    background: #3B6B8F;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .btn-edit:hover {
+    background: #2a5570;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 107, 143, 0.3);
+  }
+
+  .btn-edit:active {
+    transform: translateY(0);
+  }
+
+  /* ========== MOVE BUTTONS ========== */
+  .move-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .btn-move {
+    padding: 4px 10px;
+    background: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    line-height: 1;
+  }
+
+  .btn-move:hover:not(:disabled) {
+    background: #5a6268;
+    transform: scale(1.1);
+  }
+
+  .btn-move:disabled {
+    background: #dee2e6;
+    color: #adb5bd;
+    cursor: not-allowed;
+  }
+
+  /* ========== ITEM ACTIONS ========== */
+  .item-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  /* ========== EDIT BUTTONS IN FORM ========== */
+  .edit-buttons {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 12px;
+  }
+
+  .btn-save-edit {
+    flex: 1;
+    padding: 12px 24px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-save-edit:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+  }
+
+  .btn-cancel-edit {
+    padding: 12px 24px;
+    background: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-cancel-edit:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+  }
+
+  /* ========== EDITING STATE HIGHLIGHT ========== */
+  .link-item.editing,
+  .agenda-item.editing,
+  .sponsor-item.editing {
+    border-color: #28a745;
+    background: #f0fff4;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+  }
+
+  /* ========== DRAG HANDLE ========== */
+  .drag-handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 4px;
+    cursor: grab;
+    color: #adb5bd;
+    font-size: 18px;
+    user-select: none;
+    touch-action: none;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
+
+  .drag-handle:hover {
+    color: #3B6B8F;
+    background: rgba(59, 107, 143, 0.1);
+  }
+
+  .drag-handle:active {
+    cursor: grabbing;
+  }
+
+  .drag-icon {
+    letter-spacing: 2px;
+    font-weight: bold;
+  }
+
+  /* ========== DRAGGING STATE ========== */
+  .link-item.dragging,
+  .agenda-item.dragging,
+  .sponsor-item.dragging {
+    background: #e3f2fd;
+    border-color: #2196F3;
+    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.3);
+    z-index: 1000;
+  }
+
+  /* Update item layouts to include drag handle */
+  .link-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .sponsor-item {
+    display: flex;
+    align-items: center;
+  }
   
   /* ========== SPONSORS LIST ========== */
   .sponsors-list {
@@ -575,11 +741,11 @@
     flex-direction: column;
     gap: 16px;
   }
-  
+
   .agenda-item {
-    display: grid;
-    grid-template-columns: 120px 1fr auto;
-    gap: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
     padding: 20px;
     background: white;
     border: 2px solid #e0e0e0;
@@ -587,38 +753,39 @@
     border-radius: 8px;
     transition: all 0.3s ease;
   }
-  
+
   .agenda-item:hover {
     border-color: #3B6B8F;
     box-shadow: 0 4px 12px rgba(59, 107, 143, 0.1);
-    transform: translateX(4px);
   }
-  
+
   .agenda-time {
     font-weight: 700;
     color: #3B6B8F;
     font-size: 16px;
     white-space: nowrap;
+    min-width: 100px;
   }
-  
+
   .agenda-details {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    flex: 1;
   }
-  
+
   .agenda-details strong {
     color: #333;
     font-size: 16px;
   }
-  
+
   .agenda-speaker {
     color: #666;
     font-size: 14px;
     font-style: italic;
     margin: 0;
   }
-  
+
   .agenda-description {
     color: #555;
     font-size: 14px;
@@ -861,6 +1028,37 @@
     font-weight: 500;
   }
   
+  .quill {
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 8px;
+  }
+  
+  .ql-container {
+    min-height: 200px;
+    font-size: 15px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+  
+  .ql-toolbar {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background: #f8f9fa;
+  }
+  
+  .ql-editor {
+    min-height: 200px;
+  }
+  
+  .ql-editor::before {
+    font-style: normal;
+    color: #999;
+  }
+  
+  .ql-editor p {
+    margin-bottom: 12px;
+  }
   /* ========== RESPONSIVE DESIGN ========== */
   @media (max-width: 1024px) {
     .admin-forum-header {
@@ -883,52 +1081,102 @@
     .admin-forum-container {
       padding: 20px 16px;
     }
-  
+
     .header-content h1 {
       font-size: 24px;
     }
-  
+
     .admin-forum-content {
       padding: 20px;
     }
-  
+
     .form-row {
       grid-template-columns: 1fr;
     }
-  
+
     .add-item-form.agenda-form {
       grid-template-columns: 1fr;
     }
-  
+
     .agenda-item {
       grid-template-columns: 1fr;
       gap: 12px;
     }
-  
+
     .agenda-time {
       padding-bottom: 8px;
       border-bottom: 1px solid #e0e0e0;
     }
-  
+
     .link-item,
     .sponsor-item {
       flex-direction: column;
       gap: 12px;
       align-items: flex-start;
     }
-  
+
+    .item-actions {
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+
+    .move-buttons {
+      flex-direction: row;
+    }
+
+    .btn-edit,
     .btn-remove {
+      flex: 1;
+    }
+
+    .edit-buttons {
+      flex-direction: column;
+    }
+
+    .btn-save-edit,
+    .btn-cancel-edit {
       width: 100%;
     }
-  
+
     .admin-forum-tabs {
       overflow-x: auto;
     }
-  
+
     .admin-forum-tabs button {
       white-space: nowrap;
       font-size: 14px;
       padding: 10px 16px;
+    }
+
+    /* Drag handle responsive */
+    .drag-handle {
+      padding: 12px 8px;
+    }
+
+    .agenda-item {
+      flex-wrap: wrap;
+    }
+
+    .agenda-item .drag-handle {
+      order: 1;
+    }
+
+    .agenda-item .agenda-time {
+      order: 2;
+      min-width: auto;
+    }
+
+    .agenda-item .agenda-details {
+      order: 3;
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .agenda-item .item-actions {
+      order: 4;
+      width: 100%;
+      margin-top: 12px;
     }
   }
   
