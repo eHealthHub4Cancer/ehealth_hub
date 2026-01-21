@@ -10,6 +10,7 @@ import { NewsProvider } from "./NewsContext";
 // import News from './components/News';
 import Talks from "./components/Talks";
 import Publications from './components/Publications';
+import Resources from './components/Resources';
 import Index from "./components/People/index";
 import GoogleSheetNews from "./components/GoogleSheetNews";
 import NewsArticle from "./components/News/NewsArticle";
@@ -108,7 +109,8 @@ const AppWithRouter = () => {
               <Route path="/news/limerick-post" element={<LimerickPost />} />
               <Route path="/output/talks" element={<Talks />} />
               <Route path="/output/publications" element={<Publications />} />
-              
+              <Route path="/resources" element={<Resources />} />
+
               {/* OHDSI Ireland Routes */}
               <Route path="/ohdsi-ireland" element={<OHDSIIreland />} />
               <Route path="/ohdsi-ireland/seminars" element={<SeminarSeries />} />

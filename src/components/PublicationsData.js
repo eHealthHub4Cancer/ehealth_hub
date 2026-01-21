@@ -1,4 +1,58 @@
 const PublicationsData = {
+    2026: [
+      {
+        id: 1,
+        citation: "Reardon B, Culhane AC, Van Allen EM. \"Convergence of machine learning and genomics for precision oncology\". Eng. In: Nat Rev Cancer. (Jan. 2026). Epub ahead of print.",
+        doi: "10.1038/s41568-025-00897-6",
+        pmid: "41478861"
+      },
+      {
+        id: 2,
+        citation: "Reardon B, Camp SY, O'Mahoney G, Vergara M, Lawler M, Van Allen EM, Culhane AC. \"A standard operating procedure to enable global, regionally-guided precision oncology knowledge bases\". (2026).",
+        doi: "10.5281/zenodo.18186568"
+      }
+    ],
+    2025: [
+      {
+        id: 1,
+        citation: "Couespel N, Lawler M. \"The European Cancer Pulse – From Data Intelligence to Policy Action\". Eng. In: Open Access Government (Jan. 2025).",
+        link: "https://www.openaccessgovernment.org/article/the-european-cancer-pulse-from-data-intelligence-to-policy-action/187010/"
+      },
+      {
+        id: 2,
+        citation: "Adair O, Lamrock F, O'Mahony JF, Lawler M, McFerran E. \"A comparison of international modelling methods to evaluate health economics of colorectal cancer screening: a systematic review\". Eng. In: Value Health (Jan. 2025).",
+        doi: "10.1016/j.jval.2025.01.007",
+        pmid: "39880192"
+      },
+      {
+        id: 3,
+        citation: "Shah R, Hanna NM, Loo CE, David M, Mafra A, Fink H, McFerran E, Garcia M, Ghodssighassemabadi R, Acharya S, Niyibaga J, Langselius O, Frick C, Lasebikan N, Vignat J, Steinberg J, Hughes S, Kircher CE, Goldie CL, Egger S, Sullivan R, Ginsburg O, Bray F, Caruana M, Hui H, Ilbawi AM, Canfell K, Soerjomataram I. \"The global impact of the COVID-19 pandemic on delays and disruptions in cancer care services: a systematic review and meta-analysis\". Eng. In: Nat Cancer. 6.1 (Jan. 2025), pp. 194–204.",
+        doi: "10.1038/s43018-024-00880-4",
+        pmid: "39747650"
+      },
+      {
+        id: 4,
+        citation: "Underwood S, Oguzman E, Cole J, Goldacre R, Patel N, Davies D, Friedemann-Smith C, Wright FL, Lacey B, Nicholson BD, Shepperd S, Lawler M, Morris EJA. \"Cancer inequalities in the United Kingdom and the data used to measure them: a scoping review\". Eng. In: Lancet Reg Health Eur. 52 (Mar. 2025), p. 101246.",
+        doi: "10.1016/j.lanepe.2025.101246",
+        pmid: "40115079"
+      },
+      {
+        id: 5,
+        citation: "Drnevich J, Tan FJ, Almeida-Silva F, Castelo R, Culhane AC, Davis S, Doyle MA, Geistlinger L, Ghazi AR, Holmes S, Lahti L, Mahmoud A, Nishida K, Ramos M, Rue-Albrecht K, Shih DJH, Gatto L, Soneson C. \"Learning and teaching biological data science in the Bioconductor community\". Eng. In: PLoS Comput Biol. 21.4 (Apr. 2025), e1012925.",
+        doi: "10.1371/journal.pcbi.1012925",
+        pmid: "40261894"
+      },
+      {
+        id: 6,
+        citation: "Lawler M, Culhane AC, on behalf of the eHealth Hub for Cancer. \"Harnessing the Power of Data to Transform Cancer Research, Care and Innovation across the Island of Ireland\". eHealth Hub for Cancer Report (May 2025).",
+        doi: "10.5281/zenodo.17170542"
+      },
+      {
+        id: 7,
+        citation: "Lawler M, McFerran E, Readman L, Gautama S, Koczan P, Palmer J, Wiltshire S, Pace E. \"Independent Economic Evaluation of the London Care Record\". Eng. In: London Care Record Report (May 2025).",
+        link: "https://www.onelondon.online/wp-content/uploads/2025/09/London-Care-Record-Independent-Economic-Evaluation-July-2025.pdf"
+      }
+    ],
     2024: [
       // {
       //   id: 1, 

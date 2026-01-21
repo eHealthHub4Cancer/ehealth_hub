@@ -1031,3 +1031,82 @@
       margin: 0 auto 20px;
     }
   }
+/* External Resources Section - GitHub & Zenodo */
+.external-resources {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.external-resources h3 {
+  color: #1a3e5a;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.external-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.external-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.external-link span {
+  flex: 1;
+}
+
+.external-link .external-icon {
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.external-link:hover .external-icon {
+  opacity: 1;
+}
+
+.github-link {
+  background-color: #24292e;
+  color: white;
+}
+
+.github-link:hover {
+  background-color: #1b1f23;
+  transform: translateX(3px);
+}
+
+.zenodo-link {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.zenodo-link:hover {
+  background-color: #0b5ed7;
+  transform: translateX(3px);
+}
+
+@media (max-width: 900px) {
+  .external-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .external-link {
+    flex: 1;
+    min-width: 160px;
+    justify-content: center;
+  }
+}

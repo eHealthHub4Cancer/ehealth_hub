@@ -122,10 +122,10 @@ function Navbar() {
             </span>
             <ul className={`dropdown-content ${dropdownOpen ? 'show' : ''}`}>
               <li>
-                {/* <Link to="/output/talks" onClick={closeMenu}>Talks</Link> */}
+                <Link to="/output/publications" onClick={closeMenu}>Publications</Link>
               </li>
               <li>
-                <Link to="/output/publications" onClick={closeMenu}>Publications</Link>
+                <Link to="/resources" onClick={closeMenu}>Resources</Link>
               </li>
             </ul>
           </li>

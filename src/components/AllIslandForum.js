@@ -1,4 +1,4 @@
-// src/pages/AllIslandForum.jsx
+// src/pages/AllIslandForum.js
 import React, { useState, useEffect } from 'react';
 import { getForumData } from '../services/forumService';
 import './AllIslandForum.css';
@@ -81,7 +81,7 @@ const AllIslandForum = () => {
       {/* Header Section */}
       <div className="forum-header">
         <div className="forum-header-content">
-          <h1 className="forum-main-title">All-Island Forum on Cancer Data</h1>
+          <h1 className="forum-main-title">All-Island Cancer Data Forum</h1>
           <p className="forum-subtitle">{currentForum?.subtitle || 'From Data to Impact: Roadmap for Cancer Data'}</p>
         </div>
       </div>
@@ -202,25 +202,92 @@ const AllIslandForum = () => {
                   <h3>📋 Event Agenda</h3>
                 </div>
                 <div className="card-body">
-                  <div className="agenda-list">
-                    {currentForum.agendaItems.map((item, index) => (
-                      <div key={item.id || index} className="agenda-item">
-                        <div className="agenda-time">{item.time}</div>
-                        <div className="agenda-details">
-                          <h4>{item.title}</h4>
-                          {item.speaker && (
-                            <p className="agenda-speaker">
-                              <span className="speaker-icon">👤</span>
-                              {item.speaker}
-                            </p>
-                          )}
-                          {item.description && (
-                            <p className="agenda-description">{item.description}</p>
-                          )}
-                        </div>
+                  {(() => {
+                    // Group agenda items by day
+                    const groupedItems = currentForum.agendaItems.reduce((acc, item) => {
+                      const day = item.day || '';
+                      if (!acc[day]) acc[day] = [];
+                      acc[day].push(item);
+                      return acc;
+                    }, {});
+
+                    const days = Object.keys(groupedItems);
+                    const taggedDays = days.filter(d => d !== '');
+                    const hasUntaggedItems = days.includes('');
+                    const hasTaggedItems = taggedDays.length > 0;
+
+                    // If there are both tagged and untagged items, assign untagged to the missing day
+                    if (hasUntaggedItems && hasTaggedItems) {
+                      // Find the lowest missing day number
+                      const dayNumbers = taggedDays.map(d => {
+                        const match = d.match(/Day (\d+)/i);
+                        return match ? parseInt(match[1]) : 0;
+                      }).filter(n => n > 0);
+
+                      // Determine which day the untagged items should be assigned to
+                      let assignDay = 'Day 1';
+                      if (dayNumbers.length > 0) {
+                        // If Day 1 is missing, assign to Day 1
+                        // If Day 1 exists but Day 2 is missing and we have Day 3+, assign to Day 2
+                        // Otherwise assign to the day before the lowest tagged day
+                        const minDay = Math.min(...dayNumbers);
+                        if (minDay > 1) {
+                          assignDay = 'Day 1';
+                        } else {
+                          // Day 1 exists, find the next missing day or assign to Day 1
+                          assignDay = 'Day 1';
+                        }
+                      }
+
+                      // Move untagged items to the assigned day
+                      if (!groupedItems[assignDay]) {
+                        groupedItems[assignDay] = [];
+                      }
+                      groupedItems[assignDay] = [...groupedItems[''], ...groupedItems[assignDay]];
+                      delete groupedItems[''];
+                    }
+
+                    const sortedDays = Object.keys(groupedItems).sort((a, b) => {
+                      if (a === '') return -1;
+                      if (b === '') return 1;
+                      const numA = parseInt(a.match(/\d+/)?.[0] || '0');
+                      const numB = parseInt(b.match(/\d+/)?.[0] || '0');
+                      return numA - numB;
+                    });
+
+                    const hasMultipleDays = sortedDays.some(d => d !== '');
+
+                    return (
+                      <div className="agenda-list">
+                        {sortedDays.map((day, dayIndex) => (
+                          <div key={day || 'no-day'} className="agenda-day-group">
+                            {hasMultipleDays && day && (
+                              <div className={`agenda-day-header ${day.toLowerCase().replace(' ', '-')}`}>
+                                <span className="day-label">{day}</span>
+                              </div>
+                            )}
+                            {groupedItems[day].map((item, index) => (
+                              <div key={item.id || index} className="agenda-item">
+                                <div className="agenda-time">{item.time}</div>
+                                <div className="agenda-details">
+                                  <h4>{item.title}</h4>
+                                  {item.speaker && (
+                                    <p className="agenda-speaker">
+                                      <span className="speaker-icon">👤</span>
+                                      {item.speaker}
+                                    </p>
+                                  )}
+                                  {item.description && (
+                                    <p className="agenda-description">{item.description}</p>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
+                    );
+                  })()}
                 </div>
               </div>
             )}

@@ -66,6 +66,7 @@ const SortableAgendaItem = ({ item, index, totalItems, isEditing, onEdit, onRemo
       <div className="drag-handle" {...attributes} {...listeners}>
         <span className="drag-icon">⋮⋮</span>
       </div>
+      {item.day && <div className={`agenda-day-badge ${item.day.toLowerCase().replace(' ', '-')}`}>{item.day}</div>}
       <div className="agenda-time">{item.time}</div>
       <div className="agenda-details">
         <strong>{item.title}</strong>
@@ -328,7 +329,7 @@ const AdminForum = () => {
   // Temporary form states for adding items
   const [newBlogLink, setNewBlogLink] = useState({ title: '', url: '' });
   const [newNewsLink, setNewNewsLink] = useState({ title: '', url: '' });
-  const [newAgendaItem, setNewAgendaItem] = useState({ time: '', title: '', description: '', speaker: '' });
+  const [newAgendaItem, setNewAgendaItem] = useState({ day: '', time: '', title: '', description: '', speaker: '' });
   const [newSpeaker, setNewSpeaker] = useState({ 
     name: '', 
     title: '', 
@@ -655,8 +656,8 @@ const AdminForum = () => {
 
   // Agenda handlers
   const handleAddAgendaItem = async () => {
-    if (!newAgendaItem.time || !newAgendaItem.title) {
-      showMessage('error', 'Please fill in time and title');
+    if (!newAgendaItem.title) {
+      showMessage('error', 'Please fill in the session title');
       return;
     }
     
@@ -666,7 +667,7 @@ const AdminForum = () => {
         ...prev,
         agendaItems: [...prev.agendaItems, item]
       }));
-      setNewAgendaItem({ time: '', title: '', description: '', speaker: '' });
+      setNewAgendaItem({ day: '', time: '', title: '', description: '', speaker: '' });
       showMessage('success', 'Agenda item added!');
     } catch (error) {
       showMessage('error', 'Error adding agenda item: ' + error.message);
@@ -689,6 +690,7 @@ const AdminForum = () => {
   const handleEditAgendaItem = (item) => {
     setEditingAgendaItem(item.id);
     setNewAgendaItem({
+      day: item.day || '',
       time: item.time,
       title: item.title,
       description: item.description || '',
@@ -697,8 +699,8 @@ const AdminForum = () => {
   };
 
   const handleSaveAgendaItem = async () => {
-    if (!newAgendaItem.time || !newAgendaItem.title) {
-      showMessage('error', 'Please fill in time and title');
+    if (!newAgendaItem.title) {
+      showMessage('error', 'Please fill in the session title');
       return;
     }
 
@@ -712,7 +714,7 @@ const AdminForum = () => {
       await saveForumData(selectedYear, { ...formData, agendaItems: updatedItems });
       setFormData(prev => ({ ...prev, agendaItems: updatedItems }));
       setEditingAgendaItem(null);
-      setNewAgendaItem({ time: '', title: '', description: '', speaker: '' });
+      setNewAgendaItem({ day: '', time: '', title: '', description: '', speaker: '' });
       showMessage('success', 'Agenda item updated!');
     } catch (error) {
       showMessage('error', 'Error updating agenda item: ' + error.message);
@@ -721,7 +723,7 @@ const AdminForum = () => {
 
   const handleCancelEditAgendaItem = () => {
     setEditingAgendaItem(null);
-    setNewAgendaItem({ time: '', title: '', description: '', speaker: '' });
+    setNewAgendaItem({ day: '', time: '', title: '', description: '', speaker: '' });
   };
 
   const handleMoveAgendaItem = async (itemId, direction) => {
@@ -1524,21 +1526,31 @@ const AdminForum = () => {
               </p>
 
               <div className="add-item-form agenda-form">
+                <select
+                  value={newAgendaItem.day}
+                  onChange={(e) => setNewAgendaItem({ ...newAgendaItem, day: e.target.value })}
+                  className="day-select"
+                >
+                  <option value="">No Day (Single-day event)</option>
+                  <option value="Day 1">Day 1</option>
+                  <option value="Day 2">Day 2</option>
+                  <option value="Day 3">Day 3</option>
+                </select>
                 <input
                   type="text"
-                  placeholder="Time (e.g., 9:00 AM)"
+                  placeholder="Time (optional, e.g., 9:00 AM)"
                   value={newAgendaItem.time}
                   onChange={(e) => setNewAgendaItem({ ...newAgendaItem, time: e.target.value })}
                 />
                 <input
                   type="text"
-                  placeholder="Session title"
+                  placeholder="Session title *"
                   value={newAgendaItem.title}
                   onChange={(e) => setNewAgendaItem({ ...newAgendaItem, title: e.target.value })}
                 />
                 <input
                   type="text"
-                  placeholder="Speaker name"
+                  placeholder="Speaker name (optional)"
                   value={newAgendaItem.speaker}
                   onChange={(e) => setNewAgendaItem({ ...newAgendaItem, speaker: e.target.value })}
                 />

@@ -6,7 +6,7 @@ import { FileText } from 'lucide-react';
 
 function Publications() {
   // State for active section - can be 'reports' or a year like '2024'
-  const [activeSection, setActiveSection] = useState('2024');
+  const [activeSection, setActiveSection] = useState('2026');
   const [currentPage, setCurrentPage] = useState(1);
 
   const publicationsPerPage = 5; // Number of publications per page
@@ -161,6 +161,16 @@ function Publications() {
                         >
                           <FileText size={16} />
                           <span>View PDF</span>
+                        </a>
+                      )}
+                      {pub.link && (
+                        <a
+                          href={pub.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="meta-link"
+                        >
+                          View Article
                         </a>
                       )}
                     </div>

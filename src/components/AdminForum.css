@@ -792,7 +792,42 @@
     line-height: 1.5;
     margin: 0;
   }
-  
+
+  /* ========== AGENDA DAY BADGE ========== */
+  .agenda-day-badge {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .agenda-day-badge.day-1 {
+    background: linear-gradient(135deg, #e8f4fc 0%, #d1e9f6 100%);
+    color: #2a5570;
+    border: 2px solid #3B6B8F;
+  }
+
+  .agenda-day-badge.day-2 {
+    background: linear-gradient(135deg, #e0f5f0 0%, #c8ede5 100%);
+    color: #1f7a6e;
+    border: 2px solid #2A9D8F;
+  }
+
+  .agenda-day-badge.day-3 {
+    background: linear-gradient(135deg, #f0e8f5 0%, #e1d4ed 100%);
+    color: #5c4d7d;
+    border: 2px solid #7B68A6;
+  }
+
+  /* ========== DAY SELECT DROPDOWN ========== */
+  .day-select {
+    min-width: 180px;
+  }
+
   /* ========== ACTIONS ========== */
   .admin-forum-actions {
     display: flex;
