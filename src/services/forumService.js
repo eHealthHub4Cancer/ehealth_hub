@@ -56,6 +56,7 @@ import {
         heroImage: forumData.heroImage || '',
         blogLinks: forumData.blogLinks || [],
         newsLinks: forumData.newsLinks || [],
+        resources: forumData.resources || [],
         mediaGalleryUrl: forumData.mediaGalleryUrl || '',
         agendaItems: forumData.agendaItems || [],
         speakers: forumData.speakers || [],
@@ -359,7 +360,64 @@ import {
       throw error;
     }
   };
-  
+
+  // ==================== RESOURCE MANAGEMENT OPERATIONS ====================
+
+  // Add a resource link to forum
+  export const addResource = async (year, resourceData) => {
+    try {
+      const forumData = await getForumData(year);
+
+      if (!forumData) {
+        throw new Error('Forum data not found');
+      }
+
+      const newResource = {
+        id: Date.now().toString(),
+        title: resourceData.title || '',
+        url: resourceData.url || '',
+        addedAt: Timestamp.now()
+      };
+
+      const updatedResources = [...(forumData.resources || []), newResource];
+
+      await saveForumData(year, {
+        ...forumData,
+        resources: updatedResources
+      });
+
+      return newResource;
+    } catch (error) {
+      console.error("Error adding resource:", error);
+      throw error;
+    }
+  };
+
+  // Remove a resource link from forum
+  export const removeResource = async (year, resourceId) => {
+    try {
+      const forumData = await getForumData(year);
+
+      if (!forumData) {
+        throw new Error('Forum data not found');
+      }
+
+      const updatedResources = (forumData.resources || []).filter(
+        resource => resource.id !== resourceId
+      );
+
+      await saveForumData(year, {
+        ...forumData,
+        resources: updatedResources
+      });
+
+      return resourceId;
+    } catch (error) {
+      console.error("Error removing resource:", error);
+      throw error;
+    }
+  };
+
   // ==================== AGENDA MANAGEMENT OPERATIONS ====================
   
   // Add agenda item

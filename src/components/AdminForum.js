@@ -30,6 +30,8 @@ import {
   removeBlogLink,
   addNewsLink,
   removeNewsLink,
+  addResource,
+  removeResource,
   addAgendaItem,
   removeAgendaItem,
   addSpeaker,
@@ -320,6 +322,7 @@ const AdminForum = () => {
     posterSubmissionOpen: false,
     blogLinks: [],
     newsLinks: [],
+    resources: [],
     agendaItems: [],
     speakers: [],
     posters: [],
@@ -329,6 +332,7 @@ const AdminForum = () => {
   // Temporary form states for adding items
   const [newBlogLink, setNewBlogLink] = useState({ title: '', url: '' });
   const [newNewsLink, setNewNewsLink] = useState({ title: '', url: '' });
+  const [newResource, setNewResource] = useState({ title: '', url: '' });
   const [newAgendaItem, setNewAgendaItem] = useState({ day: '', time: '', title: '', description: '', speaker: '' });
   const [newSpeaker, setNewSpeaker] = useState({ 
     name: '', 
@@ -356,6 +360,7 @@ const AdminForum = () => {
   // Edit mode states - track which item is being edited
   const [editingBlogLink, setEditingBlogLink] = useState(null);
   const [editingNewsLink, setEditingNewsLink] = useState(null);
+  const [editingResource, setEditingResource] = useState(null);
   const [editingAgendaItem, setEditingAgendaItem] = useState(null);
   const [editingSpeaker, setEditingSpeaker] = useState(null);
   const [editingPoster, setEditingPoster] = useState(null);
@@ -429,6 +434,7 @@ const AdminForum = () => {
           posterSubmissionOpen: data.posterSubmissionOpen || false,
           blogLinks: data.blogLinks || [],
           newsLinks: data.newsLinks || [],
+          resources: data.resources || [],
           agendaItems: data.agendaItems || [],
           speakers: data.speakers || [],
           posters: data.posters || [],
@@ -452,6 +458,7 @@ const AdminForum = () => {
           posterSubmissionOpen: false,
           blogLinks: [],
           newsLinks: [],
+          resources: [],
           agendaItems: [],
           speakers: [],
           posters: [],
@@ -652,6 +659,72 @@ const AdminForum = () => {
   const handleCancelEditNewsLink = () => {
     setEditingNewsLink(null);
     setNewNewsLink({ title: '', url: '' });
+  };
+
+  // Resource handlers
+  const handleAddResource = async () => {
+    if (!newResource.title || !newResource.url) {
+      showMessage('error', 'Please fill in both title and URL');
+      return;
+    }
+
+    try {
+      const resource = await addResource(selectedYear, newResource);
+      setFormData(prev => ({
+        ...prev,
+        resources: [...prev.resources, resource]
+      }));
+      setNewResource({ title: '', url: '' });
+      showMessage('success', 'Resource added!');
+    } catch (error) {
+      showMessage('error', 'Error adding resource: ' + error.message);
+    }
+  };
+
+  const handleRemoveResource = async (resourceId) => {
+    try {
+      await removeResource(selectedYear, resourceId);
+      setFormData(prev => ({
+        ...prev,
+        resources: prev.resources.filter(resource => resource.id !== resourceId)
+      }));
+      showMessage('success', 'Resource removed!');
+    } catch (error) {
+      showMessage('error', 'Error removing resource: ' + error.message);
+    }
+  };
+
+  const handleEditResource = (resource) => {
+    setEditingResource(resource.id);
+    setNewResource({ title: resource.title, url: resource.url });
+  };
+
+  const handleSaveResource = async () => {
+    if (!newResource.title || !newResource.url) {
+      showMessage('error', 'Please fill in both title and URL');
+      return;
+    }
+
+    try {
+      const updatedResources = formData.resources.map(resource =>
+        resource.id === editingResource
+          ? { ...resource, title: newResource.title, url: newResource.url }
+          : resource
+      );
+
+      await saveForumData(selectedYear, { ...formData, resources: updatedResources });
+      setFormData(prev => ({ ...prev, resources: updatedResources }));
+      setEditingResource(null);
+      setNewResource({ title: '', url: '' });
+      showMessage('success', 'Resource updated!');
+    } catch (error) {
+      showMessage('error', 'Error updating resource: ' + error.message);
+    }
+  };
+
+  const handleCancelEditResource = () => {
+    setEditingResource(null);
+    setNewResource({ title: '', url: '' });
   };
 
   // Agenda handlers
@@ -1142,12 +1215,13 @@ const AdminForum = () => {
         posterSubmissionOpen: false,
         blogLinks: [],
         newsLinks: [],
+        resources: [],
         agendaItems: [],
         speakers: [],
         posters: [],
         sponsors: []
       });
-      
+
       // Save the empty data to Firebase (effectively clearing it)
       await saveForumData(selectedYear, {
         title: `All-Island Forum on Cancer ${selectedYear}`,
@@ -1165,6 +1239,7 @@ const AdminForum = () => {
         posterSubmissionOpen: false,
         blogLinks: [],
         newsLinks: [],
+        resources: [],
         agendaItems: [],
         speakers: [],
         posters: [],
@@ -1509,6 +1584,51 @@ const AdminForum = () => {
                     <div className="item-actions">
                       <button className="btn-edit" onClick={() => handleEditNewsLink(link)}>Edit</button>
                       <button className="btn-remove" onClick={() => handleRemoveNewsLink(link.id)}>Remove</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="form-section">
+              <h2>Documents & Resources</h2>
+              <p style={{color: '#666', marginBottom: '16px'}}>
+                Add downloadable documents like booklets, PDFs, presentations, etc.
+              </p>
+
+              <div className="add-item-form">
+                <input
+                  type="text"
+                  placeholder="Resource title (e.g., Speaker Profile Booklet)"
+                  value={newResource.title}
+                  onChange={(e) => setNewResource({ ...newResource, title: e.target.value })}
+                />
+                <input
+                  type="url"
+                  placeholder="Resource URL (e.g., Zenodo or Google Drive link)"
+                  value={newResource.url}
+                  onChange={(e) => setNewResource({ ...newResource, url: e.target.value })}
+                />
+                {editingResource ? (
+                  <div className="edit-buttons">
+                    <button className="btn-save-edit" onClick={handleSaveResource}>Save Changes</button>
+                    <button className="btn-cancel-edit" onClick={handleCancelEditResource}>Cancel</button>
+                  </div>
+                ) : (
+                  <button className="btn-add" onClick={handleAddResource}>Add Resource</button>
+                )}
+              </div>
+
+              <div className="links-list">
+                {formData.resources.map((resource) => (
+                  <div key={resource.id} className={`link-item ${editingResource === resource.id ? 'editing' : ''}`}>
+                    <div className="link-info">
+                      <strong>{resource.title}</strong>
+                      <a href={resource.url} target="_blank" rel="noopener noreferrer">{resource.url}</a>
+                    </div>
+                    <div className="item-actions">
+                      <button className="btn-edit" onClick={() => handleEditResource(resource)}>Edit</button>
+                      <button className="btn-remove" onClick={() => handleRemoveResource(resource.id)}>Remove</button>
                     </div>
                   </div>
                 ))}
