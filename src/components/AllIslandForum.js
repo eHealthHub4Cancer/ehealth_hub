@@ -195,6 +195,84 @@ const AllIslandForum = () => {
               </div>
             )}
 
+            {/* Resources Section */}
+            {((currentForum.blogLinks && currentForum.blogLinks.length > 0) ||
+              (currentForum.newsLinks && currentForum.newsLinks.length > 0) ||
+              (currentForum.resources && currentForum.resources.length > 0)) && (
+              <div className="content-card">
+                <div className="card-header">
+                  <h3>📚 Resources & Coverage</h3>
+                </div>
+                <div className="card-body">
+                  {/* Documents & Downloads */}
+                  {currentForum.resources && currentForum.resources.length > 0 && (
+                    <div className="resource-section">
+                      <h4 className="resource-title">Documents & Downloads</h4>
+                      <div className="resource-grid">
+                        {currentForum.resources.map((resource, index) => (
+                          <a
+                            key={resource.id || index}
+                            href={resource.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="resource-link"
+                          >
+                            <span className="resource-icon">📄</span>
+                            <span className="resource-text">{resource.title}</span>
+                            <span className="arrow">→</span>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Blog Links */}
+                  {currentForum.blogLinks && currentForum.blogLinks.length > 0 && (
+                    <div className="resource-section">
+                      <h4 className="resource-title">Blog Posts</h4>
+                      <div className="resource-grid">
+                        {currentForum.blogLinks.map((link, index) => (
+                          <a
+                            key={link.id || index}
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="resource-link"
+                          >
+                            <span className="resource-icon">📝</span>
+                            <span className="resource-text">{link.title}</span>
+                            <span className="arrow">→</span>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* News Links */}
+                  {currentForum.newsLinks && currentForum.newsLinks.length > 0 && (
+                    <div className="resource-section">
+                      <h4 className="resource-title">News Coverage</h4>
+                      <div className="resource-grid">
+                        {currentForum.newsLinks.map((link, index) => (
+                          <a
+                            key={link.id || index}
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="resource-link"
+                          >
+                            <span className="resource-icon">📰</span>
+                            <span className="resource-text">{link.title}</span>
+                            <span className="arrow">→</span>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
             {/* Agenda Card */}
             {currentForum.agendaItems && currentForum.agendaItems.length > 0 && (
               <div className="content-card">
@@ -407,84 +485,6 @@ const AllIslandForum = () => {
                       </div>
                     ))}
                   </div>
-                </div>
-              </div>
-            )}
-
-            {/* Resources Section */}
-            {((currentForum.blogLinks && currentForum.blogLinks.length > 0) ||
-              (currentForum.newsLinks && currentForum.newsLinks.length > 0) ||
-              (currentForum.resources && currentForum.resources.length > 0)) && (
-              <div className="content-card">
-                <div className="card-header">
-                  <h3>📚 Resources & Coverage</h3>
-                </div>
-                <div className="card-body">
-                  {/* Documents & Downloads */}
-                  {currentForum.resources && currentForum.resources.length > 0 && (
-                    <div className="resource-section">
-                      <h4 className="resource-title">Documents & Downloads</h4>
-                      <div className="resource-grid">
-                        {currentForum.resources.map((resource, index) => (
-                          <a
-                            key={resource.id || index}
-                            href={resource.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="resource-link"
-                          >
-                            <span className="resource-icon">📄</span>
-                            <span className="resource-text">{resource.title}</span>
-                            <span className="arrow">→</span>
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Blog Links */}
-                  {currentForum.blogLinks && currentForum.blogLinks.length > 0 && (
-                    <div className="resource-section">
-                      <h4 className="resource-title">Blog Posts</h4>
-                      <div className="resource-grid">
-                        {currentForum.blogLinks.map((link, index) => (
-                          <a
-                            key={link.id || index}
-                            href={link.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="resource-link"
-                          >
-                            <span className="resource-icon">📝</span>
-                            <span className="resource-text">{link.title}</span>
-                            <span className="arrow">→</span>
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* News Links */}
-                  {currentForum.newsLinks && currentForum.newsLinks.length > 0 && (
-                    <div className="resource-section">
-                      <h4 className="resource-title">News Coverage</h4>
-                      <div className="resource-grid">
-                        {currentForum.newsLinks.map((link, index) => (
-                          <a
-                            key={link.id || index}
-                            href={link.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="resource-link"
-                          >
-                            <span className="resource-icon">📰</span>
-                            <span className="resource-text">{link.title}</span>
-                            <span className="arrow">→</span>
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
             )}
