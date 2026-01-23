@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.4bcac2bc.css",
-    "main.js": "/static/js/main.364fca78.js",
+    "main.css": "/static/css/main.968d764b.css",
+    "main.js": "/static/js/main.01efe7e8.js",
     "static/js/453.6411f75a.chunk.js": "/static/js/453.6411f75a.chunk.js",
     "static/media/Cancer-Research-UL.jpg": "/static/media/Cancer-Research-UL.cea648545bb9e86a250a.jpg",
     "static/media/LDCRC_BuildingTogether_April_2023.jpeg": "/static/media/LDCRC_BuildingTogether_April_2023.d6e9dc07a944ad211b5e.jpeg",
@@ -20,7 +20,7 @@
     "static/media/NSRP_Correct.jpg": "/static/media/NSRP_Correct.6d8eef75a0df9ef0a390.jpg",
     "static/media/eHealthHub_logo.png": "/static/media/eHealthHub_logo.f62372b947784763e8f9.png",
     "static/media/Computer_Stockphoto.PNG": "/static/media/Computer_Stockphoto.37b9c65d341945a446b4.PNG",
-    "static/media/LDCRC Irish.png": "/static/media/LDCRC Irish.166e463ff79eddbe9483.png",
+    "static/media/LDCRC Irish Ver.png": "/static/media/LDCRC Irish Ver.166e463ff79eddbe9483.png",
     "static/media/eHealth.png": "/static/media/eHealth.add01f1f12a41e0877d5.png",
     "static/media/OHDSI_Logo.png": "/static/media/OHDSI_Logo.13c6ea72c3d8e6b37a9b.png",
     "static/media/IrishNews_gender.jpg": "/static/media/IrishNews_gender.354fec680a04935de745.jpg",
@@ -31,12 +31,12 @@
     "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/index.html",
-    "main.4bcac2bc.css.map": "/static/css/main.4bcac2bc.css.map",
-    "main.364fca78.js.map": "/static/js/main.364fca78.js.map",
+    "main.968d764b.css.map": "/static/css/main.968d764b.css.map",
+    "main.01efe7e8.js.map": "/static/js/main.01efe7e8.js.map",
     "453.6411f75a.chunk.js.map": "/static/js/453.6411f75a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4bcac2bc.css",
-    "static/js/main.364fca78.js"
+    "static/css/main.968d764b.css",
+    "static/js/main.01efe7e8.js"
   ]
 }
