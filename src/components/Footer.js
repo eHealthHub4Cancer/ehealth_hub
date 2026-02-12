@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
 import NSRPLogo from '../Images/logo/NSRP_Correct.jpg';
-import LDCRCLogo from '../Images/logo/LDCRC Irish.png';
+import LDCRCLogo from '../Images/logo/LDCRC Irish Ver.png';
 import QUBLogo from '../Images/logo/QUB_logo.jpg';
 
 const Footer = () => {

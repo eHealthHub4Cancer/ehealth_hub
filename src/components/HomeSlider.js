@@ -11,6 +11,7 @@ import image3 from '../Images/sliders/Cancer-Research-UL.jpg';
 import image4 from '../Images/sliders/ehealth-people.jpeg'
 import image5 from '../Images/sliders/ul-research-centre-Clifford_Culhane2.jpeg';
 import image6 from '../Images/sliders/hdruk.jpg'
+import image7 from '../Images/sliders/all_island_2026.jpg'
 
 const CustomPrevArrow = ({ onClick }) => (
   <button className="slick-arrow slick-prev custom-arrow prev-arrow" onClick={onClick}>
@@ -75,10 +76,23 @@ function HomeSlider() {
       <div className="slider-container">
         <Slider {...settings}>
 
-       
-        <div className="slide">
+          <div className="slide">
             <div className="slide-image-container">
-              <img src={image3} alt="OHDSI Meeting in Washington DC" />
+              <img src={image7} alt="2nd All-Island Cancer Data Forum" />
+              <div className="slide-overlay"></div>
+            </div>
+            <div className="slide-caption">
+              <div className="caption-content">
+                <h2>2nd All-Island Cancer Data Forum</h2>
+                <div className="caption-divider"></div>
+                <p>From Data to Impact: Roadmap for Cancer Data</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="slide">
+            <div className="slide-image-container">
+              <img src={image3} alt="2025, All-Island Forum on Cancer Data" />
               <div className="slide-overlay"></div>
             </div>
             <div className="slide-caption">
@@ -92,14 +106,14 @@ function HomeSlider() {
 
           <div className="slide">
             <div className="slide-image-container">
-              <img src={image4} alt="OHDSI Meeting in Washington DC" />
+              <img src={image4} alt="Research Week 2025" />
               <div className="slide-overlay"></div>
             </div>
             <div className="slide-caption">
               <div className="caption-content">
-                <h2>2025, All-Island Forum on Cancer Data</h2>
+                <h2>Research Week 2025, Symposium on Integrated Cancer Medicine</h2>
                 <div className="caption-divider"></div>
-                <p>Sharing innovative approaches to securely share and analyze cancer data to advance research and benefit patients.</p>
+                <p>Advancing integrated approaches to cancer medicine through collaborative research.</p>
               </div>
             </div>
           </div>
@@ -126,7 +140,7 @@ function HomeSlider() {
             </div>
             <div className="slide-caption">
               <div className="caption-content">
-                <h2>2023 Belfast Photo</h2>
+                <h2>2023, Cancer Knows No Borders</h2>
                 <div className="caption-divider"></div>
                 <p>Pioneering minds behind the eHealth Hub project shaping the future of healthcare.</p>
               </div>
@@ -140,7 +154,7 @@ function HomeSlider() {
             </div>
             <div className="slide-caption">
               <div className="caption-content">
-                <h2>UL Research Centre</h2>
+                <h2>Limerick Digital Cancer Research Centre</h2>
                 <div className="caption-divider"></div>
                 <p>Key leaders driving innovation in eHealth Hub for Cancer research and development.</p>
               </div>

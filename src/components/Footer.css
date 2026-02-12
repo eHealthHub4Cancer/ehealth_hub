@@ -135,21 +135,36 @@
     margin-top: 10px;
 }
 
-.org-logo,
-.sponsor-logo {
+.org-logo {
     background: rgba(255, 255, 255, 0.9);
     padding: 10px;
     border-radius: 8px;
     transition: all 0.3s ease;
-    max-width: 120px;
+    max-width: 180px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.org-logo img,
+.sponsor-logo,
+.sponsor-logo a,
 .sponsor-logo img {
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+    padding: 0;
+}
+
+.org-logo img {
     width: 100%;
     height: auto;
     object-fit: contain;
+    display: block;
+}
+
+.sponsor-logo img {
+    max-width: 160px;
+    height: auto;
+    display: block;
 }
 
 .org-logo:hover,
@@ -258,9 +273,12 @@
         justify-content: center;
     }
 
-    .org-logo,
-    .sponsor-logo {
-        max-width: 100px;
+    .org-logo {
+        max-width: 150px;
+    }
+
+    .sponsor-logo img {
+        max-width: 140px;
     }
 
     .footer-bottom-content {
@@ -294,9 +312,12 @@
         color:#ffffff;
     }
 
-    .org-logo,
-    .sponsor-logo {
-        max-width: 80px;
+    .org-logo {
+        max-width: 120px;
+    }
+
+    .sponsor-logo img {
+        max-width: 100px;
     }
 
     .footer-bottom-links {
