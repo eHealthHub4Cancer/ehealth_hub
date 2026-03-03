@@ -1,3 +1,34 @@
+import React from "react";
+import "./People.css";
+
+function People() {
+  // Maintenance mode - AWS service temporarily unavailable
+  return (
+    <div className="people-container">
+      <div className="people-header">
+        <div className="header-top">
+          <h1>People</h1>
+        </div>
+      </div>
+
+      <div className="maintenance-notice">
+        <div className="maintenance-content">
+          <h2>Page Under Maintenance</h2>
+          <p>
+            We are currently performing maintenance on this page.
+            We apologise for any inconvenience and appreciate your patience.
+          </p>
+          <p>Please check back soon.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default People;
+
+/* ORIGINAL CODE - Restore when AWS is back online
+
 import React, { useState, useCallback, useEffect, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Filter, RefreshCw } from "lucide-react";
@@ -5,7 +36,6 @@ import "./People.css";
 import { useGlobalData } from "./globaldatacontext";
 import Loader from "./loader";
 
-// Debounce utility to limit preloading calls
 const debounce = (func, wait) => {
   let timeout;
   return (...args) => {
@@ -14,47 +44,40 @@ const debounce = (func, wait) => {
   };
 };
 
-// Custom memo comparison to log re-renders
 const areEqual = (prevProps, nextProps) => {
-  console.log("People.js memo check: prevProps", prevProps, "nextProps", nextProps);
-  return true; // Prevent re-renders (no props expected)
+  return true;
 };
 
-// Function to determine person's priority group
 const getPersonPriority = (person) => {
   const tags = person.tags || [];
   const lowerTags = tags.map(tag => tag.toLowerCase());
-  
+
   if (lowerTags.includes('project leader') || lowerTags.includes('project-leader')) {
-    return 1; // Highest priority
+    return 1;
   } else if (lowerTags.includes('project supervisor') || lowerTags.includes('project-supervisor')) {
-    return 2; // Second priority
+    return 2;
   } else {
-    return 3; // Lowest priority (others)
+    return 3;
   }
 };
 
-// Custom sorting function
 const sortPeople = (people) => {
   return people.sort((a, b) => {
     const priorityA = getPersonPriority(a);
     const priorityB = getPersonPriority(b);
-    
-    // First, sort by priority group
+
     if (priorityA !== priorityB) {
       return priorityA - priorityB;
     }
-    
-    // Within the same priority group, sort alphabetically by full_title_name or full_name
+
     const nameA = (a.full_title_name || a.full_name || 'Untitled').toLowerCase();
     const nameB = (b.full_title_name || b.full_name || 'Untitled').toLowerCase();
-    
+
     return nameA.localeCompare(nameB);
   });
 };
 
 function People() {
-  console.log("People.js rendered"); // Debug re-renders
   const navigate = useNavigate();
   const {
     people: globalPeople,
@@ -67,23 +90,19 @@ function People() {
   const [visibleCount, setVisibleCount] = useState(28);
   const [selectedFilters, setSelectedFilters] = useState([]);
 
-  // Sort people using custom sorting function
   const people = globalPeople ? sortPeople([...globalPeople]) : [];
   const allTags = [...new Set(people.flatMap((person) => person.tags || []))];
 
   const getTagCount = useCallback((tag) => {
-    console.log(`getTagCount called for tag: ${tag}`); // Debug state usage
     return people.filter((person) => person.tags?.includes(tag)).length;
   }, [people]);
 
   const toggleFilter = useCallback((tag) => {
-    console.log(`toggleFilter called for tag: ${tag}`); // Debug filter changes
     setSelectedFilters((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
   }, []);
 
-  // Apply filters and maintain sorting
   const filteredPeople = people.filter(
     (person) =>
       selectedFilters.length === 0 ||
@@ -93,20 +112,16 @@ function People() {
   const visiblePeople = filteredPeople.slice(0, visibleCount);
 
   const loadMore = useCallback(() => {
-    console.log("loadMore called"); // Debug button clicks
     setVisibleCount((prev) => prev + 12);
   }, []);
 
-  // Debounced preloading
   const debouncedPreload = useCallback(
     debounce((people) => {
-      console.log("Preloading visible people:", people.map((p) => p.slug));
       preloadVisiblePeople(people);
     }, 300),
     [preloadVisiblePeople]
   );
 
-  // Preload visible people when they change
   useEffect(() => {
     if (visiblePeople.length > 0) {
       debouncedPreload(visiblePeople);
@@ -114,7 +129,6 @@ function People() {
   }, [visiblePeople, debouncedPreload]);
 
   if (error) {
-    console.log("People.js showing error:", error); // Debug error state
     return <p>Error: {error}</p>;
   }
 
@@ -129,10 +143,7 @@ function People() {
         <div className="header-top">
           <h1>People</h1>
           <button
-            onClick={() => {
-              console.log("refreshCache called"); // Debug refresh
-              refreshCache();
-            }}
+            onClick={() => refreshCache()}
             className="refresh-button"
             disabled={peopleLoading}
             title="Refresh to get latest updates"
@@ -160,13 +171,6 @@ function People() {
           </div>
         </div>
       </div>
-
-      {/* Optional: Show sorting info */}
-      {/* <div className="sorting-info">
-        <small className="sort-description">
-          Showing: Project Leaders → Project Supervisors → Others (alphabetically within each group)
-        </small>
-      </div> */}
 
       <div className="people-grid">
         {people.length > 0 ? (
@@ -222,3 +226,5 @@ function People() {
 }
 
 export default memo(People, areEqual);
+
+*/
