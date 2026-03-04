@@ -153,7 +153,7 @@ const Index = () => {
                 ) : (
                   <p>No additional information available.</p>
                 )}
-              </div>
+              </div><br />
               {personInformation.areas_of_expertise &&
                 personInformation.areas_of_expertise.length > 0 && (
                   <div className="expertise-section">
