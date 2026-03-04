@@ -1,91 +1,102 @@
 import React, { useEffect } from 'react';
 import './CollaboratorsSection.css';
-import AOS from 'aos'; 
+import AOS from 'aos';
 import 'aos/dist/aos.css';
-import image4 from '../Images/sliders/overview.jpeg'; 
+import image4 from '../Images/sliders/overview.jpeg';
 
 function CollaboratorsSection() {
   useEffect(() => {
-    AOS.init({
-      duration: 1200,
-      once: true,
-      easing: 'ease-in-out'
-    });
+    AOS.init({ duration: 1000, once: true, easing: 'ease-in-out' });
   }, []);
 
   const collaborators = [
     { name: 'University of Limerick (UL)', role: 'Lead Institution', link: 'https://www.ul.ie/' },
     { name: "Queen's University Belfast (QUB)", role: 'Research Partner', link: 'https://www.qub.ac.uk/' },
     { name: 'National Cancer Registry Ireland (NCRI)', role: 'Data Registry', link: 'https://www.ncri.ie/' },
-    { name: 'Royal College of Surgeons in Ireland (RCSI), University College Dublin (UCD), University of Galway (UG), University College Cork (UCC), and Trinity College Dublin (TCD)', role: 'Academic Partners', link: 'https://www.rcsi.com/' }
+    { name: 'RCSI, UCD, University of Galway, UCC & TCD', role: 'Academic Partners', link: 'https://www.rcsi.com/' },
   ];
 
   return (
-    <section className="collaborators-section">
-      <div className="collaborators-container">
-        <div className="collaborators-content" data-aos="fade-right">
-          <div className="header-group">
-            <h2 className="section-heading">Our Collaborators</h2>
-            <div className="accent-bar"></div>
-            <p className="section-subheading">
-              Leading institutions driving innovation in cancer eHealth research.
-            </p>
-          </div>
+    <section className="cs-section">
+      <div className="cs-inner">
+        <div className="cs-grid">
 
-          <div className="main-text" data-aos="fade-up" data-aos-delay="200">
-            <p>
-              The <span className="highlight">eHealthHub for Cancer</span> brings together key institutions across Ireland in an effort 
-              to advance cancer research and improve patient care outcomes. This partnership enables us to leverage 
-              cutting-edge technology, data sharing, and collaborative research.
-            </p>
-          </div>
+          {/* ── Left: content ── */}
+          <div className="cs-content" data-aos="fade-right">
 
-          <div className="collaborators-grid" data-aos="fade-up" data-aos-delay="400">
-            {collaborators.map((collaborator, index) => (
-              <div className="collaborator-card" key={index}>
-                <div className="collaborator-content">
-                  <h3><a href={collaborator.link} target="_blank" rel="noopener noreferrer">{collaborator.name}</a></h3>
-                  <span className="role-tag"><a href={collaborator.link} target="_blank" rel="noopener noreferrer">{collaborator.role}</a></span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="quote-container" data-aos="fade-up" data-aos-delay="600">
-            <blockquote className="styled-quote">
-              <p>
-                "By connecting cancer data from across the island of Ireland, we are creating a future 
-                where real-time data access drives evidence-based healthcare decisions and improves 
-                cancer care for all."
+            <div className="cs-header">
+              <span className="cs-eyebrow">Research Network</span>
+              <h2 className="cs-heading">Our Collaborators</h2>
+              <div className="cs-bar"></div>
+              <p className="cs-subheading">
+                Leading institutions driving innovation in cancer eHealth research.
               </p>
-              <div className="quote-author">- eHealthHub for Cancer</div>
-            </blockquote>
-          </div>
-        </div>
+            </div>
 
-        <div className="collaborators-visual" data-aos="fade-left">
-          <div className="image-container">
-            <img 
-              src={image4} 
-              alt="Overview of Collaborators"
-              loading="lazy"
-              className="overview-image"
-            />
-            <div className="stats-overlay">
-              <div className="stat-item">
-                <span className="stat-number">4M</span>
-                <span className="stat-label">Euro Funding</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-number">10</span>
-                <span className="stat-label">PhD Students</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-number">7</span>
-                <span className="stat-label">Research Assistants</span>
+            <p className="cs-body" data-aos="fade-up" data-aos-delay="150">
+              The <strong className="cs-highlight">eHealthHub for Cancer</strong> brings together
+              key institutions across Ireland to advance cancer research and improve patient
+              care outcomes — leveraging cutting-edge technology, data sharing, and
+              collaborative research.
+            </p>
+
+            <div className="cs-cards" data-aos="fade-up" data-aos-delay="300">
+              {collaborators.map((c, i) => (
+                <a
+                  key={i}
+                  href={c.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cs-card"
+                >
+                  <div className="cs-card-body">
+                    <span className="cs-card-role">{c.role}</span>
+                    <span className="cs-card-name">{c.name}</span>
+                  </div>
+                  <svg className="cs-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                  </svg>
+                </a>
+              ))}
+            </div>
+
+            <figure className="cs-quote" data-aos="fade-up" data-aos-delay="450">
+              <blockquote>
+                "By connecting cancer data from across the island of Ireland, we are
+                creating a future where real-time data access drives evidence-based
+                healthcare decisions and improves cancer care for all."
+              </blockquote>
+              <figcaption>— eHealthHub for Cancer</figcaption>
+            </figure>
+
+          </div>
+
+          {/* ── Right: image + stats ── */}
+          <div className="cs-visual" data-aos="fade-left">
+            <div className="cs-img-wrap">
+              <img
+                src={image4}
+                alt="Overview of Collaborators"
+                loading="lazy"
+                className="cs-img"
+              />
+              <div className="cs-stats">
+                <div className="cs-stat">
+                  <span className="cs-stat-num">€4M</span>
+                  <span className="cs-stat-lbl">Funding</span>
+                </div>
+                <div className="cs-stat">
+                  <span className="cs-stat-num">10</span>
+                  <span className="cs-stat-lbl">PhD Students</span>
+                </div>
+                <div className="cs-stat">
+                  <span className="cs-stat-num">7</span>
+                  <span className="cs-stat-lbl">Research Assistants</span>
+                </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>
