@@ -1,4 +1,4 @@
-const API_ROOT = "https://ehealth4cancer.eu/api";
+const API_ROOT = "https:api.ehealth4cancer.eu";
 
 const API_ENDPOINTS = {
   PEOPLE: `${API_ROOT}/people/`,
