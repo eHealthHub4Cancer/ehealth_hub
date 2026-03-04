@@ -150,7 +150,12 @@ function People() {
       )}
       <div className="people-header">
         <div className="header-top">
-          <h1>People</h1>
+          <div>
+            <h1>People</h1>
+            <p style={{ color: '#5a7186', fontSize: '1.05rem', fontWeight: 500, marginTop: '4px' }}>
+              Meet the researchers and team behind eHealth Hub for Cancer
+            </p>
+          </div>
           <button
             onClick={() => refreshCache()}
             className="refresh-button"
