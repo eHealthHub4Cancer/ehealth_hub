@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  Shield, 
-  Users, 
-  Share2, 
-  Database, 
-  Cloud, 
-  Microscope, 
+import {
+  Shield,
+  Users,
+  Share2,
+  Database,
+  Microscope,
   Network,
   ChevronRight
 } from 'lucide-react';
@@ -86,20 +85,13 @@ const HeroSection = () => {
             </div>
           </div>
 
-          <div className="features-grid">
+          <div className="features-grid three-cards">
             <div className="feature-card">
               <div className="feature-icon">
                 <Database size={32} />
               </div>
               <h3>Data Science</h3>
               <p>Advanced analytics and machine learning for healthcare insights</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">
-                <Cloud size={32} />
-              </div>
-              <h3>Cloud Computing</h3>
-              <p>Scalable infrastructure for secure data processing</p>
             </div>
             <div className="feature-card">
               <div className="feature-icon">

@@ -278,6 +278,53 @@
   }
 }
 
+/* Three cards layout - stack vertically for better appearance */
+.features-grid.three-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .features-grid.three-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .features-grid.three-cards {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.features-grid.three-cards .feature-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem;
+}
+
+@media (min-width: 1024px) {
+  .features-grid.three-cards .feature-card {
+    flex-direction: row;
+    text-align: left;
+    padding: 1.25rem 1.5rem;
+    gap: 1.25rem;
+  }
+
+  .features-grid.three-cards .feature-card .feature-icon {
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .features-grid.three-cards .feature-card h3 {
+    margin-bottom: 0.25rem;
+  }
+}
+
 .feature-card {
   background: white;
   padding: 0.3rem;

@@ -52,6 +52,14 @@ import SeminarSeries from "./components/SeminarSeries";
 import AllIslandForum from "./components/AllIslandForum";
 import AdminForum from "./components/AdminForum";
 
+// Import News Admin component
+import AdminNews from "./components/AdminNews";
+
+// Import Firebase News components (new)
+import FirebaseNews from "./components/FirebaseNews";
+import FirebaseNewsArticle from "./components/FirebaseNewsArticle";
+import MigrateNews from "./components/MigrateNews";
+
 import './App.css'; 
 
 // Error redirect handler component to prevent navigation to not-found people
@@ -148,13 +156,37 @@ const AppWithRouter = () => {
               {/* Forum routes */}
               <Route path="/forum" element={<AllIslandForum />} />
               <Route path="/all-island-forum" element={<AllIslandForum />} />
-              <Route 
-                path="/admin/forum" 
+              <Route
+                path="/admin/forum"
                 element={
                   <PrivateRoute requiredRole="admin">
                     <AdminForum />
                   </PrivateRoute>
-                } 
+                }
+              />
+
+              {/* News Admin route */}
+              <Route
+                path="/admin/news"
+                element={
+                  <PrivateRoute requiredRole="admin">
+                    <AdminNews />
+                  </PrivateRoute>
+                }
+              />
+
+              {/* Firebase News routes (new - for testing) */}
+              <Route path="/news-new" element={<FirebaseNews />} />
+              <Route path="/news-new/:slug" element={<FirebaseNewsArticle />} />
+
+              {/* News Migration Tool (one-time use) */}
+              <Route
+                path="/admin/migrate-news"
+                element={
+                  <PrivateRoute requiredRole="admin">
+                    <MigrateNews />
+                  </PrivateRoute>
+                }
               />
             </Routes>
           </main>
