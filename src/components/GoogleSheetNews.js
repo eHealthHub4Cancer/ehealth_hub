@@ -7,7 +7,7 @@ import './News.css';
 
 // Constants
 const CACHE_KEY = 'news_data_cache';
-const CACHE_EXPIRY = 60 * 60 * 1000; // 1 hour in milliseconds
+const CACHE_EXPIRY = 30 * 60 * 1000; // 30 minutes in milliseconds
 const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSTKMvqBJMCJPvUPIyk1M-l03Yyd57wmo_0pevGrZoHuRIS0qv0r5mwo4WK97gEQWVLXadmrCK5TXVK/pub?gid=226797145&single=true&output=csv';
 
 function GoogleSheetNews() {
@@ -320,6 +320,7 @@ function GoogleSheetNews() {
           className="refresh-button"
           onClick={() => {
             localStorage.removeItem(CACHE_KEY);
+            localStorage.removeItem('article_data_cache');
             fetchNews();
           }}
         >

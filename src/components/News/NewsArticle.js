@@ -11,7 +11,7 @@ import './NewsArticle.css';
 
 // Constants
 const CACHE_KEY = 'article_data_cache';
-const CACHE_EXPIRY = 60 * 60 * 1000; // 1 hour in milliseconds
+const CACHE_EXPIRY = 30 * 60 * 1000; // 30 minutes in milliseconds
 const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSTKMvqBJMCJPvUPIyk1M-l03Yyd57wmo_0pevGrZoHuRIS0qv0r5mwo4WK97gEQWVLXadmrCK5TXVK/pub?gid=226797145&single=true&output=csv';
 
 function NewsArticle() {
@@ -73,11 +73,11 @@ function NewsArticle() {
   };
 
   const parseDetails = (detailsString) => {
-    if (!detailsString) return {};
+    if (!detailsString || !detailsString.trim()) return {};
     const result = {};
-    splitByPipes(detailsString).forEach(section => {
+    splitByPipes(detailsString.trim()).forEach(section => {
       const [key, ...values] = section.text.split(':');
-      if (key) {
+      if (key && key.trim()) {
         result[key.trim()] = {
           value: values.join(':').trim(),
           spacing: section.spacing
@@ -426,29 +426,37 @@ function NewsArticle() {
               />
             </div>
 
-            <div className="event-details-grid">
-              <div className="event-detail-card">
-                <Globe size={24} />
-                <div>
-                  <h3>Publication</h3>
-                  <p>{article.eventDetails.Publication?.value}</p>
-                </div>
+            {(article.eventDetails.Publication?.value || article.eventDetails.PublishDate?.value || article.eventDetails['Image Caption']?.value) && (
+              <div className="event-details-grid">
+                {article.eventDetails.Publication?.value && (
+                  <div className="event-detail-card">
+                    <Globe size={24} />
+                    <div>
+                      <h3>Publication</h3>
+                      <p>{article.eventDetails.Publication.value}</p>
+                    </div>
+                  </div>
+                )}
+                {article.eventDetails.PublishDate?.value && (
+                  <div className="event-detail-card">
+                    <Calendar size={24} />
+                    <div>
+                      <h3>Publish Date</h3>
+                      <p>{article.eventDetails.PublishDate.value}</p>
+                    </div>
+                  </div>
+                )}
+                {article.eventDetails['Image Caption']?.value && (
+                  <div className="event-detail-card">
+                    <User size={24} />
+                    <div>
+                      <h3>Image Caption</h3>
+                      <p>{article.eventDetails['Image Caption'].value}</p>
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="event-detail-card">
-                <Calendar size={24} />
-                <div>
-                  <h3>Publish Date</h3>
-                  <p>{article.eventDetails.PublishDate?.value}</p>
-                </div>
-              </div>
-              <div className="event-detail-card">
-                <User size={24} />
-                <div>
-                  <h3>Image Caption</h3>
-                  <p>{article.eventDetails['Image Caption']?.value}</p>
-                </div>
-              </div>
-            </div>
+            )}
 
             <div className="article-content">
               <div className="article-summary">
