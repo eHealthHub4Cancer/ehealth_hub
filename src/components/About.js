@@ -25,6 +25,7 @@ const About = () => {
             <h3>On this page</h3>
             <ul>
               <li><button onClick={() => scrollToSection('about')}>About</button></li>
+              <li><button onClick={() => scrollToSection('work-packages')}>Work Packages</button></li>
               <li><button onClick={() => scrollToSection('motivation')}>Motivation</button></li>
               <li><button onClick={() => scrollToSection('advisory-board')}>Scientific Advisory Board</button></li>
               <li><button onClick={() => scrollToSection('interoperability')}>Interoperability in Health Care Data</button></li>
@@ -49,7 +50,39 @@ const About = () => {
                 </a>
                 . The eHealth-Hub for Cancer is led by the University of Limerick (UL) and Queen's University Belfast (QUB), and partners with clinical and academic researchers from the University College Dublin (UCD), Royal College of Surgeons in Ireland (RCSI), University of Galway (UG), University College Cork (UCC), and Trinity College Dublin (TCD).
               </p>
-              
+
+            </div>
+          </section>
+
+          <section id="work-packages" className="content-section" data-aos="fade-up">
+            <h2>Work Packages</h2>
+            <div className="content-block">
+              <div className="work-packages-list">
+                <div className="work-package-item">
+                  <span className="wp-number">WP1</span>
+                  <span className="wp-title">Project Management and Dissemination</span>
+                </div>
+                <div className="work-package-item">
+                  <span className="wp-number">WP2</span>
+                  <span className="wp-title">eHealth-Hub Training Academy for clinical cancer research</span>
+                </div>
+                <div className="work-package-item">
+                  <span className="wp-number">WP3</span>
+                  <span className="wp-title">eHealth-Hub Foundations for implementing cross-border federated eHealth (Retrospective Study of Data Quality at Source)</span>
+                </div>
+                <div className="work-package-item">
+                  <span className="wp-number">WP4</span>
+                  <span className="wp-title">Development of next-generation cancer data tools to facilitate clinical decisions</span>
+                </div>
+                <div className="work-package-item">
+                  <span className="wp-number">WP5</span>
+                  <span className="wp-title">Application of federated all-Ireland cancer eHealth research in cancer</span>
+                </div>
+                <div className="work-package-item">
+                  <span className="wp-number">WP6</span>
+                  <span className="wp-title">Population all-island studies cancer to inform public policy</span>
+                </div>
+              </div>
             </div>
           </section>
 

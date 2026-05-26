@@ -66,12 +66,7 @@ function Navbar() {
               People
             </Link>
           </li>
-          <li className="nav-item">
-            <Link to="/projects" className={`nav-links ${getActiveClass('/projects')}`} onClick={closeMenu}>
-              Projects
-            </Link>
-          </li>
-          
+
           {/* OHDSI Ireland with Dropdown - UPDATED */}
           <li
             className="nav-item dropdown"
@@ -112,6 +107,11 @@ function Navbar() {
               Blog
             </Link>
           </li>
+          <li className="nav-item">
+            <Link to="/resources" className={`nav-links ${getActiveClass('/resources')}`} onClick={closeMenu}>
+              Resources
+            </Link>
+          </li>
           <li
             className="nav-item dropdown"
             onMouseEnter={() => window.innerWidth > 768 && setDropdownOpen(true)}
@@ -123,9 +123,6 @@ function Navbar() {
             <ul className={`dropdown-content ${dropdownOpen ? 'show' : ''}`}>
               <li>
                 <Link to="/output/publications" onClick={closeMenu}>Publications</Link>
-              </li>
-              <li>
-                <Link to="/resources" onClick={closeMenu}>Resources</Link>
               </li>
             </ul>
           </li>
