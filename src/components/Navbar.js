@@ -88,7 +88,7 @@ function Navbar() {
           </li>
           
           <li className="nav-item">
-            <Link to="/news" className={`nav-links ${getActiveClass('/news')}`} onClick={closeMenu}>
+            <Link to="/news-new" className={`nav-links ${getActiveClass('/news-new')}`} onClick={closeMenu}>
               News
             </Link>
           </li>
