@@ -181,7 +181,7 @@ const About = () => {
                         Ms Angela Clayton-Lea
                       </a>
                     </h4>
-                    <p>Chief Operations Officer at Cancer Trials Ireland, Ireland</p>
+                    <p>Chief Executive Officer at Cancer Trials Ireland, Ireland</p>
                   </div>
                 </div>
 
@@ -234,10 +234,10 @@ const About = () => {
                          target="_blank" 
                          rel="noopener noreferrer" 
                          className="member-link">
-                        Mr Giles Ducorroy
+                        Mr Gilles Ducorroy
                       </a>
                     </h4>
-                    <p>Head Real World Evidence Services, Novartis, Ireland</p>
+                    <p>Health &amp; Value and Pricing Reimbursement Director, Pfizer</p>
                   </div>
                 </div>
               </div>
