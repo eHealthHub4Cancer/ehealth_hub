@@ -14,7 +14,8 @@ import {
   validateArticle,
   getEventDetailFields,
   getUserRole,
-  ARTICLE_TYPES
+  ARTICLE_TYPES,
+  NEWS_CATEGORIES
 } from '../services/newsService';
 import './AdminNews.css';
 
@@ -35,7 +36,7 @@ const AdminNews = () => {
     excerpt: '',
     date: '',
     author: '',
-    categories: '',
+    categories: [],
     imageUrl: '',
     slug: '',
     type: 'research',
@@ -115,7 +116,7 @@ const AdminNews = () => {
       excerpt: '',
       date: '',
       author: '',
-      categories: '',
+      categories: [],
       imageUrl: '',
       slug: '',
       type: 'research',
@@ -142,7 +143,7 @@ const AdminNews = () => {
       excerpt: article.excerpt || '',
       date: article.date || '',
       author: article.author || '',
-      categories: Array.isArray(article.categories) ? article.categories.join(', ') : '',
+      categories: Array.isArray(article.categories) ? article.categories : [],
       imageUrl: article.imageUrl || '',
       slug: article.slug || '',
       type: article.type || 'research',
@@ -228,6 +229,15 @@ const AdminNews = () => {
     setNewLink({ title: '', url: '' });
   };
 
+  const handleCategoryToggle = (category) => {
+    setFormData(prev => ({
+      ...prev,
+      categories: prev.categories.includes(category)
+        ? prev.categories.filter(c => c !== category)
+        : NEWS_CATEGORIES.filter(c => c === category || prev.categories.includes(c))
+    }));
+  };
+
   const handleRemoveLink = (index) => {
     setFormData(prev => ({
       ...prev,
@@ -237,10 +247,7 @@ const AdminNews = () => {
 
   const handleSaveArticle = async () => {
     // Validate
-    const articleData = {
-      ...formData,
-      categories: formData.categories.split(',').map(c => c.trim()).filter(c => c)
-    };
+    const articleData = { ...formData };
 
     const validation = validateArticle(articleData);
     if (!validation.isValid) {
@@ -474,13 +481,18 @@ const AdminNews = () => {
 
                   <div className="form-group">
                     <label>Categories</label>
-                    <input
-                      type="text"
-                      name="categories"
-                      value={formData.categories}
-                      onChange={handleInputChange}
-                      placeholder="Comma-separated, e.g., Research, EHDS, Cancer Data"
-                    />
+                    <div className="category-checkboxes">
+                      {NEWS_CATEGORIES.map(category => (
+                        <label key={category} className="category-checkbox">
+                          <input
+                            type="checkbox"
+                            checked={formData.categories.includes(category)}
+                            onChange={() => handleCategoryToggle(category)}
+                          />
+                          {category}
+                        </label>
+                      ))}
+                    </div>
                   </div>
 
                   <div className="form-group">
