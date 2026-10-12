@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, memo } from "react";
 import { Link } from "react-router-dom";
-import { Filter, RefreshCw } from "lucide-react";
+import { Filter, RefreshCw, ArrowDown, Search } from "lucide-react";
 import "./People.css";
 import { useGlobalData } from "./globaldatacontext";
 import Loader from "./loader";
@@ -125,6 +125,11 @@ function People() {
       <div className="people-header">
         <div className="header-top">
           <h1>People</h1>
+          <div className="people-search-wrap">
+            <Search size={18} aria-hidden="true" />
+          <label className="people-search-label" htmlFor="people-search">Find a person</label>
+          <input id="people-search" className="people-search" type="search" value={search} onChange={event => { setSearch(event.target.value); setExtraCount(0); }} placeholder="Search by name, institution or category" />
+          </div>
           <button
             onClick={() => refreshCache()}
             className="refresh-button"
@@ -136,11 +141,9 @@ function People() {
           </button>
         </div>
         <div className="filter-section">
-          <label className="people-search-label" htmlFor="people-search">Find a person</label>
-          <input id="people-search" className="people-search" type="search" value={search} onChange={event => { setSearch(event.target.value); setExtraCount(0); }} placeholder="Search by name, institution or category" />
           <div className="filter-header">
             <Filter size={16} />
-            <span>Filter by role</span>
+            <span>Filter by category</span>
           </div>
           <div className="filter-tags">
             {allTags.map((tag) => (
@@ -150,7 +153,8 @@ function People() {
                 onClick={() => toggleFilter(tag)}
                 aria-pressed={selectedFilters.includes(tag)}
               >
-                {tag.charAt(0).toUpperCase() + tag.slice(1)} ({getTagCount(tag)})
+                <span>{tag.charAt(0).toUpperCase() + tag.slice(1)}</span>
+                <span className="filter-badge-count">{getTagCount(tag)}</span>
               </button>
             ))}
           </div>
@@ -175,7 +179,7 @@ function People() {
                   <div className="card-content">
                     <h3>{person.full_title_name || person.full_name || "Untitled"}</h3>
                     <div className="card-tags">
-                      {person.tags?.map((tag, index) => (
+                      {person.tags?.slice().sort((a, b) => Number(/leader|supervisor|researcher|student/i.test(b)) - Number(/leader|supervisor|researcher|student/i.test(a))).slice(0, 2).map((tag, index) => (
                         <span key={`${tag}-${index}`} className="tag">
                           {tag}
                         </span>
@@ -197,7 +201,8 @@ function People() {
       {visibleCount < filteredPeople.length && (
         <div className="load-more-container">
           <button onClick={loadMore} className="load-more-button">
-            View more ({Math.min(batchSize, filteredPeople.length - visibleCount)})
+            Load more ({Math.min(batchSize, filteredPeople.length - visibleCount)})
+            <ArrowDown size={18} aria-hidden="true" />
           </button>
         </div>
       )}

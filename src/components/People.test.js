@@ -15,15 +15,15 @@ function setup(mobile) {
 test('mobile starts with ten people and expands by ten', () => {
   setup(true);
   expect(screen.getAllByRole('link')).toHaveLength(10);
-  fireEvent.click(screen.getByRole('button', { name: 'View more (10)' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Load more (10)' }));
   expect(screen.getAllByRole('link')).toHaveLength(20);
 });
 test('desktop starts with twenty and shows the actual final batch count', () => {
   setup(false);
   expect(screen.getAllByRole('link')).toHaveLength(20);
-  fireEvent.click(screen.getByRole('button', { name: 'View more (20)' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Load more (20)' }));
   expect(screen.getAllByRole('link')).toHaveLength(40);
-  fireEvent.click(screen.getByRole('button', { name: 'View more (5)' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Load more (5)' }));
   expect(screen.getAllByRole('link')).toHaveLength(45);
-  expect(screen.queryByRole('button', { name: /View more/ })).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: /Load more/ })).not.toBeInTheDocument();
 });

@@ -13,7 +13,7 @@ import {
   BookOpen,
   Fingerprint,
 } from "lucide-react";
-import DOMPurify from "dompurify";
+import { biographyHtml } from "./biographyHtml";
 import { useGlobalData } from "../globaldatacontext";
 import Loader from "../loader";
 import "./Profile.css";
@@ -117,7 +117,7 @@ const Index = () => {
                   )}
                   {personInformation.email && (
                     <a
-                      href={`mailto:${personInformation.email}`}
+                      href={`mailto:${personInformation.email.replace(/^(?:mailto:|https?:\/\/)/i, "")}`}
                       className="action-button email"
                     >
                       <Mail size={20} />
@@ -141,8 +141,7 @@ const Index = () => {
                   })}
                 </ExpandableList>
               </div>
-            )}
-              </div>
+            )}              </div>
             </div>
           </div>
           <div className="profile-sections" key={slug}>
@@ -155,7 +154,7 @@ const Index = () => {
                   <div
                     className="bio-paragraph"
                     dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(personInformation.about_user),
+                      __html: biographyHtml(personInformation.about_user),
                     }}
                   />
                 ) : (
