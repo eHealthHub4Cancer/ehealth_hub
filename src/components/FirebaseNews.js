@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, User, Search, Filter } from 'lucide-react';
 import { ClipLoader } from 'react-spinners';
-import { getAllArticles, ARTICLE_TYPES } from '../services/newsService';
+import { getAllArticles, ARTICLE_TYPES, NEWS_CATEGORIES } from '../services/newsService';
 import './FirebaseNews.css';
 
 // Debounce hook
@@ -65,9 +65,14 @@ const FirebaseNews = () => {
     setSelectedCategories(newCategories);
   }, []);
 
-  // Get all unique categories from articles
-  const allCategories = useMemo(() => {
-    return [...new Set(articles.flatMap(item => item.categories || []))].filter(Boolean).sort();
+  // Article counts per fixed category (only categories in use are shown)
+  const categoryCounts = useMemo(() => {
+    return NEWS_CATEGORIES
+      .map(category => ({
+        category,
+        count: articles.filter(item => (item.categories || []).includes(category)).length
+      }))
+      .filter(({ count }) => count > 0);
   }, [articles]);
 
   // Parse date string (handles formats like "30/04/2026", "April 30, 2026", "2026-04-30")
@@ -216,14 +221,14 @@ const FirebaseNews = () => {
           </div>
         </div>
 
-        {allCategories.length > 0 && (
+        {categoryCounts.length > 0 && (
           <div className="categories-filter">
             <div className="filter-header">
               <Filter size={20} />
               <span>Categories</span>
             </div>
             <div className="category-tags">
-              {allCategories.map(category => (
+              {categoryCounts.map(({ category, count }) => (
                 <button
                   key={category}
                   className={`category-tag ${selectedCategories.includes(category) ? 'active' : ''}`}
@@ -235,7 +240,7 @@ const FirebaseNews = () => {
                     );
                   }}
                 >
-                  {category} ({articles.filter(item => (item.categories || []).includes(category)).length})
+                  {category} ({count})
                 </button>
               ))}
             </div>
