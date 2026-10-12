@@ -21,15 +21,18 @@ import ExpandableList from "./ExpandableList";
 import ResearchOutputs from "./ResearchOutputs";
 import PersonPortrait from "./PersonPortrait";
 
-const getLinkIcon = (name = "") => {
-  const platform = name.toLowerCase().replace(/[\s_-]/g, "");
-  if (["twitter", "x"].includes(platform)) return Twitter;
-  if (platform === "github") return Github;
-  if (platform === "linkedin") return Linkedin;
-  if (platform === "orcid") return Fingerprint;
-  if (["googlescholar", "scholar"].includes(platform)) return GraduationCap;
-  if (["researchgate", "pubmed", "scopus", "webofscience"].includes(platform)) return BookOpen;
-  return Globe;
+const getLinkIcon = (name = "", icon = "") => {
+  const normalize = (value) => String(value || "").toLowerCase().replace(/[\s_-]/g, "");
+  const icons = {
+    twitter: Twitter, x: Twitter, github: Github, code: Github,
+    linkedin: Linkedin, orcid: Fingerprint, fingerprint: Fingerprint,
+    googlescholar: GraduationCap, scholar: GraduationCap, school: GraduationCap,
+    graduationcap: GraduationCap, researchgate: BookOpen, pubmed: BookOpen,
+    scopus: BookOpen, webofscience: BookOpen, bookopen: BookOpen,
+    globe: Globe, language: Globe, mail: Mail, email: Mail,
+    home: Home, homepage: Home,
+  };
+  return icons[normalize(icon)] || icons[normalize(name)] || Globe;
 };
 
 const Index = () => {
@@ -130,7 +133,7 @@ const Index = () => {
               <div className="profile-header-links" key={slug}>
                 <ExpandableList as="div" className="profile-links-grid" label="profile links" limit={14} mobileLimit={8}>
                   {personInformation.social_links.filter(link => /^https?:\/\//i.test(link.url)).map((link, index) => {
-                    const Icon = getLinkIcon(link.name);
+                    const Icon = getLinkIcon(link.name, link.icon);
                     return (
                       <a key={`${link.url}-${index}`} href={link.url} target="_blank" rel="noopener noreferrer" className="profile-link-card">
                         <span className="profile-link-icon"><Icon size={22} aria-hidden="true" /></span>
