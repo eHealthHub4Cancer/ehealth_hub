@@ -37,6 +37,118 @@ export const ARTICLE_TYPES = [
   { value: 'presentation', label: 'Presentation' }
 ];
 
+// Fixed news categories - articles can only be tagged with these
+export const NEWS_CATEGORIES = [
+  'Research',
+  'Health Data & Infrastructure',
+  'Digital Health',
+  'Precision & Personalised Medicine',
+  'Policy',
+  'Collaboration & Partnerships',
+  'Patients & Communities',
+  'Events & Talks',
+  'Careers & Training'
+];
+
+// Maps old free-text tags (lowercased) onto the fixed categories.
+// Tags not listed here (e.g. place names) are dropped.
+const LEGACY_CATEGORY_MAP = {
+  'research': 'Research',
+  'cancer research': 'Research',
+  'research impact': 'Research',
+  'report': 'Research',
+
+  'cancer data': 'Health Data & Infrastructure',
+  'health data': 'Health Data & Infrastructure',
+  'data': 'Health Data & Infrastructure',
+  'data governance': 'Health Data & Infrastructure',
+  'data infrastructure': 'Health Data & Infrastructure',
+  'data science': 'Health Data & Infrastructure',
+  'data standards': 'Health Data & Infrastructure',
+  'ohdsi': 'Health Data & Infrastructure',
+  'omop cdm': 'Health Data & Infrastructure',
+  'ehds': 'Health Data & Infrastructure',
+  'secondary use': 'Health Data & Infrastructure',
+  'real world evidence': 'Health Data & Infrastructure',
+
+  'digital health': 'Digital Health',
+  'cancer digital health': 'Digital Health',
+  'connected health': 'Digital Health',
+  'dell technologies': 'Digital Health',
+  'digicore': 'Digital Health',
+
+  'genomics': 'Precision & Personalised Medicine',
+  'cancer genomcis': 'Precision & Personalised Medicine',
+  'cancer genomics': 'Precision & Personalised Medicine',
+  'molecular oncology': 'Precision & Personalised Medicine',
+  'precision medicine': 'Precision & Personalised Medicine',
+  'precision oncology medicines': 'Precision & Personalised Medicine',
+  'personalised cancer medicine': 'Precision & Personalised Medicine',
+  'personalised oncology medicine': 'Precision & Personalised Medicine',
+  'personalised prevention': 'Precision & Personalised Medicine',
+
+  'policy': 'Policy',
+  'cancer policy': 'Policy',
+  'health policy': 'Policy',
+  'digital health policy': 'Policy',
+  'eu policy': 'Policy',
+  "europe's beating cancer plan": 'Policy',
+  'eu4health': 'Policy',
+
+  'collaboration': 'Collaboration & Partnerships',
+  'international collaboration': 'Collaboration & Partnerships',
+  'european collaboration': 'Collaboration & Partnerships',
+  'all island': 'Collaboration & Partnerships',
+  'good friday': 'Collaboration & Partnerships',
+  'nsrp': 'Collaboration & Partnerships',
+  'hea': 'Collaboration & Partnerships',
+  'ldcrc': 'Collaboration & Partnerships',
+  'aicri': 'Collaboration & Partnerships',
+  'jane 2': 'Collaboration & Partnerships',
+  'ja pcm': 'Collaboration & Partnerships',
+  'iarc': 'Collaboration & Partnerships',
+
+  'patient advocacy': 'Patients & Communities',
+  'public & patient involvement': 'Patients & Communities',
+  'patient centered care': 'Patients & Communities',
+  'cancer survivors': 'Patients & Communities',
+  'cancer survivorship': 'Patients & Communities',
+  'health inequalities': 'Patients & Communities',
+  'gender': 'Patients & Communities',
+  'blood cancer': 'Patients & Communities',
+  'colorectal cancer': 'Patients & Communities',
+  'early onset bowel cancer': 'Patients & Communities',
+
+  'conference': 'Events & Talks',
+  'talk': 'Events & Talks',
+  'video': 'Events & Talks',
+  'esmo': 'Events & Talks',
+  'rte': 'Events & Talks',
+  'call to action': 'Events & Talks',
+
+  'phd': 'Careers & Training',
+  'postdoc': 'Careers & Training',
+  'hiring': 'Careers & Training',
+  'training': 'Careers & Training',
+  'research opportunity': 'Careers & Training'
+};
+
+// Convert any stored categories (old free-text or new fixed) to the fixed list
+export const normalizeCategories = (categories) => {
+  if (!Array.isArray(categories)) return [];
+  const result = new Set();
+  categories.forEach(cat => {
+    if (typeof cat !== 'string') return;
+    if (NEWS_CATEGORIES.includes(cat)) {
+      result.add(cat);
+      return;
+    }
+    const key = cat.trim().toLowerCase().replace(/-/g, ' ').replace(/\s+/g, ' ');
+    if (LEGACY_CATEGORY_MAP[key]) result.add(LEGACY_CATEGORY_MAP[key]);
+  });
+  return NEWS_CATEGORIES.filter(c => result.has(c));
+};
+
 // ==================== NEWS ARTICLE OPERATIONS ====================
 
 // Create a new article
@@ -133,6 +245,7 @@ export const getArticle = async (articleId) => {
     return {
       id: articleDoc.id,
       ...data,
+      categories: normalizeCategories(data.categories),
       createdAt: data.createdAt?.toDate(),
       updatedAt: data.updatedAt?.toDate()
     };
@@ -162,6 +275,7 @@ export const getArticleBySlug = async (slug) => {
     return {
       id: doc.id,
       ...data,
+      categories: normalizeCategories(data.categories),
       createdAt: data.createdAt?.toDate(),
       updatedAt: data.updatedAt?.toDate()
     };
@@ -187,6 +301,7 @@ export const getAllArticles = async (publishedOnly = false) => {
       return {
         id: doc.id,
         ...data,
+        categories: normalizeCategories(data.categories),
         createdAt: data.createdAt?.toDate(),
         updatedAt: data.updatedAt?.toDate()
       };
@@ -231,6 +346,7 @@ export const getArticlesByType = async (type, publishedOnly = false) => {
       return {
         id: doc.id,
         ...data,
+        categories: normalizeCategories(data.categories),
         createdAt: data.createdAt?.toDate(),
         updatedAt: data.updatedAt?.toDate()
       };
