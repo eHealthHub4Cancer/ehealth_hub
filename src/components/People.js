@@ -56,7 +56,18 @@ function People() {
     preloadVisiblePeople,
   } = useGlobalData();
 
-  const [visibleCount, setVisibleCount] = useState(28);
+  const [isMobile, setIsMobile] = useState(() => typeof window.matchMedia === 'function' && window.matchMedia('(max-width: 600px)').matches);
+  const [extraCount, setExtraCount] = useState(0);
+  const batchSize = isMobile ? 10 : 20;
+  const visibleCount = batchSize + extraCount;
+  useEffect(() => {
+    if (typeof window.matchMedia !== 'function') return;
+    const query = window.matchMedia('(max-width: 600px)');
+    const update = () => { setIsMobile(query.matches); setExtraCount(0); };
+    update();
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
+  }, []);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -68,6 +79,7 @@ function People() {
   }, [people]);
 
   const toggleFilter = useCallback((tag) => {
+    setExtraCount(0);
     setSelectedFilters((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
@@ -83,8 +95,8 @@ function People() {
   const visiblePeople = filteredPeople.slice(0, visibleCount);
 
   const loadMore = useCallback(() => {
-    setVisibleCount((prev) => prev + 12);
-  }, []);
+    setExtraCount((prev) => prev + batchSize);
+  }, [batchSize]);
 
   const debouncedPreload = useCallback(
     debounce((people) => {
@@ -125,7 +137,7 @@ function People() {
         </div>
         <div className="filter-section">
           <label className="people-search-label" htmlFor="people-search">Find a person</label>
-          <input id="people-search" className="people-search" type="search" value={search} onChange={event => { setSearch(event.target.value); setVisibleCount(28); }} placeholder="Search by name, institution or category" />
+          <input id="people-search" className="people-search" type="search" value={search} onChange={event => { setSearch(event.target.value); setExtraCount(0); }} placeholder="Search by name, institution or category" />
           <div className="filter-header">
             <Filter size={16} />
             <span>Filter by role</span>
@@ -147,7 +159,7 @@ function People() {
 
       <div className="directory-results" aria-live="polite">
         <span>{filteredPeople.length} {filteredPeople.length === 1 ? "person" : "people"}{search || selectedFilters.length ? " matching your search" : ""}</span>
-        {(search || selectedFilters.length > 0) && <button type="button" onClick={() => {setSearch(""); setSelectedFilters([]);}}>Clear filters</button>}
+        {(search || selectedFilters.length > 0) && <button type="button" onClick={() => {setSearch(""); setSelectedFilters([]); setExtraCount(0);}}>Clear filters</button>}
       </div>
       <div className="people-grid">
         {people.length > 0 ? (
@@ -185,7 +197,7 @@ function People() {
       {visibleCount < filteredPeople.length && (
         <div className="load-more-container">
           <button onClick={loadMore} className="load-more-button">
-            Load More ({filteredPeople.length - visibleCount} remaining)
+            View more ({Math.min(batchSize, filteredPeople.length - visibleCount)})
           </button>
         </div>
       )}

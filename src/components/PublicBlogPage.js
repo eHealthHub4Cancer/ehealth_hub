@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllBlogPosts } from '../services/BlogService';
 import './PublicBlogPage.css';
+import AuthorAvatars from './Blog/AuthorAvatars';
+import { blogPreview } from './Blog/blogPresentation';
 
 const PublicBlogPage = () => {
   const navigate = useNavigate();
@@ -38,22 +40,6 @@ const PublicBlogPage = () => {
       month: 'long',
       day: 'numeric'
     });
-  };
-
-  const truncateContent = (content, maxLength = 120) => {
-    if (!content) return 'No preview available';
-    // Remove markdown formatting for clean preview
-    const cleanContent = content
-      .replace(/\*\*(.*?)\*\*/g, '$1')
-      .replace(/\*(.*?)\*/g, '$1')
-      .replace(/## (.*)/g, '$1')
-      .replace(/!\[.*?\]\(.*?\)/g, '')
-      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-      .replace(/\n/g, ' ')
-      .trim();
-    
-    if (cleanContent.length <= maxLength) return cleanContent;
-    return cleanContent.substring(0, maxLength) + '...';
   };
 
   const getDefaultImage = () => {
@@ -195,17 +181,11 @@ const PublicBlogPage = () => {
                     
                     <h2 className="blog-card-title">{post.title}</h2>
                     
-                    <p className="blog-card-excerpt">{truncateContent(post.content)}</p>
+                    <p className="blog-card-excerpt">{blogPreview(post.content)}</p>
                     
                     <div className="blog-card-footer">
                       <div className="blog-author-info">
-                        <div className="blog-author-avatar">
-                          <span>{post.authors.charAt(0).toUpperCase()}</span>
-                        </div>
-                        <div className="blog-author-details">
-                          <span className="blog-author-name">{post.authors}</span>
-                          <span className="blog-author-role">Author</span>
-                        </div>
+                        <AuthorAvatars authors={post.authors} showAll icon />
                       </div>
                       
                       <div className="blog-read-time">

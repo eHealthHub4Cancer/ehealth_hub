@@ -443,3 +443,8 @@
       padding: 3rem 0;
     }
   }
+.blog-card-footer { gap: 12px; flex-wrap: wrap; }
+.blog-card-footer .blog-author-info { flex: 1 1 180px; min-width: 0; align-items: flex-start; }
+.blog-card-footer .blog-author-details { min-width: 0; }
+.blog-card-footer .blog-author-name { overflow-wrap: anywhere; }
+.blog-card-footer .blog-read-time { flex-shrink: 0; }
