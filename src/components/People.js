@@ -1,9 +1,10 @@
 import React, { useState, useCallback, useEffect, memo } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Filter, RefreshCw } from "lucide-react";
 import "./People.css";
 import { useGlobalData } from "./globaldatacontext";
 import Loader from "./loader";
+import PersonPortrait from "./People/PersonPortrait";
 
 const debounce = (func, wait) => {
   let timeout;
@@ -47,7 +48,6 @@ const sortPeople = (people) => {
 };
 
 function People() {
-  const navigate = useNavigate();
   const {
     people: globalPeople,
     peopleLoading,
@@ -58,6 +58,7 @@ function People() {
 
   const [visibleCount, setVisibleCount] = useState(28);
   const [selectedFilters, setSelectedFilters] = useState([]);
+  const [search, setSearch] = useState("");
 
   const people = globalPeople ? sortPeople([...globalPeople]) : [];
   const allTags = [...new Set(people.flatMap((person) => person.tags || []))];
@@ -74,8 +75,9 @@ function People() {
 
   const filteredPeople = people.filter(
     (person) =>
-      selectedFilters.length === 0 ||
-      selectedFilters.some((tag) => person.tags?.includes(tag))
+      (selectedFilters.length === 0 ||
+      selectedFilters.some((tag) => person.tags?.includes(tag))) &&
+      [person.full_title_name, person.full_name, person.association, ...(person.tags || [])].filter(Boolean).join(" ").toLowerCase().includes(search.trim().toLowerCase())
   );
 
   const visiblePeople = filteredPeople.slice(0, visibleCount);
@@ -122,9 +124,11 @@ function People() {
           </button>
         </div>
         <div className="filter-section">
+          <label className="people-search-label" htmlFor="people-search">Find a person</label>
+          <input id="people-search" className="people-search" type="search" value={search} onChange={event => { setSearch(event.target.value); setVisibleCount(28); }} placeholder="Search by name, institution or category" />
           <div className="filter-header">
-            <Filter size={24} />
-            <span>Categories</span>
+            <Filter size={16} />
+            <span>Filter by role</span>
           </div>
           <div className="filter-tags">
             {allTags.map((tag) => (
@@ -141,29 +145,23 @@ function People() {
         </div>
       </div>
 
+      <div className="directory-results" aria-live="polite">
+        <span>{filteredPeople.length} {filteredPeople.length === 1 ? "person" : "people"}{search || selectedFilters.length ? " matching your search" : ""}</span>
+        {(search || selectedFilters.length > 0) && <button type="button" onClick={() => {setSearch(""); setSelectedFilters([]);}}>Clear filters</button>}
+      </div>
       <div className="people-grid">
         {people.length > 0 ? (
           visiblePeople.length > 0 ? (
             visiblePeople.map((person) => {
               return (
-                <div
+                <Link
                   key={person.person_id || person.slug}
                   className={`person-card priority-${getPersonPriority(person)}`}
-                  onClick={() => navigate(`/people/${person.slug}`)}
+                  to={`/people/${person.slug}`}
                 >
-                  <div className="card-image-container">
-                    <img
-                      src={person.image || "/default-image.jpg"}
-                      alt={person.full_name || "Unknown"}
-                      className="card-image"
-                      loading="lazy"
-                      onError={(e) => {
-                        e.target.src = "/default-image.jpg";
-                      }}
-                    />
-                  </div>
+                  <PersonPortrait person={person} />
                   <div className="card-content">
-                    <h3>{person.full_title_name || "Untitled"}</h3>
+                    <h3>{person.full_title_name || person.full_name || "Untitled"}</h3>
                     <div className="card-tags">
                       {person.tags?.map((tag, index) => (
                         <span key={`${tag}-${index}`} className="tag">
@@ -171,9 +169,10 @@ function People() {
                         </span>
                       ))}
                     </div>
-                    <p className="card-title">{person.association || "No association"}</p>
+                    {person.association && <p className="card-title">{person.association}</p>}
+                    <span className="view-profile">View profile →</span>
                   </div>
-                </div>
+                </Link>
               );
             })
           ) : (

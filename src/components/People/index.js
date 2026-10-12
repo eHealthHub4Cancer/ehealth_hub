@@ -8,15 +8,34 @@ import {
   Twitter,
   Github,
   Linkedin,
+  Globe,
+  GraduationCap,
+  BookOpen,
+  Fingerprint,
 } from "lucide-react";
 import DOMPurify from "dompurify";
 import { useGlobalData } from "../globaldatacontext";
 import Loader from "../loader";
 import "./Profile.css";
+import ExpandableList from "./ExpandableList";
+import ResearchOutputs from "./ResearchOutputs";
+import PersonPortrait from "./PersonPortrait";
+
+const getLinkIcon = (name = "") => {
+  const platform = name.toLowerCase().replace(/[\s_-]/g, "");
+  if (["twitter", "x"].includes(platform)) return Twitter;
+  if (platform === "github") return Github;
+  if (platform === "linkedin") return Linkedin;
+  if (platform === "orcid") return Fingerprint;
+  if (["googlescholar", "scholar"].includes(platform)) return GraduationCap;
+  if (["researchgate", "pubmed", "scopus", "webofscience"].includes(platform)) return BookOpen;
+  return Globe;
+};
 
 const Index = () => {
   const { slug } = useParams();
   const {
+    people,
     personInformation,
     personLoading,
     error,
@@ -43,12 +62,12 @@ const Index = () => {
   if (error) return <p>Error: {error}</p>;
 
   const fullName = personInformation?.full_name || "Profile Not Found";
+  const image = personInformation?.image || people?.find(person => person.slug === slug)?.image;
+
 
   return (
     <div className="profile-container">
-      <nav className="breadcrumb">
-        <Link to="/people">People</Link>
-        <ChevronRight size={16} />
+      <nav className="breadcrumb" aria-label="Breadcrumb">
         <Link to="/people">Directory</Link>
         <ChevronRight size={16} />
         <span>{fullName}</span>
@@ -59,18 +78,9 @@ const Index = () => {
       ) : (
         <>
           <div className="profile-hero">
-            <div className="hero-content">
-              {personInformation.image && (
-                <div className="hero-image-wrapper hero-left">
-                  <img
-                    src={personInformation.image}
-                    alt={fullName}
-                    className="hero-image"
-                    loading="lazy"
-                  />
-                </div>
-              )}
-              <div className="hero-right">
+            <div className="person-profile-layout">
+              <PersonPortrait key={slug} profile person={{ full_name: fullName, image }} />
+              <div className="person-profile-details">
                 <h1>{fullName}</h1>
                 {personInformation.role_badge && (
                   <div className="role-badges">
@@ -115,32 +125,30 @@ const Index = () => {
                     </a>
                   )}
                 </div>
-                {personInformation.social_links && (
-                  <div className="social-links">
-                    {personInformation.social_links.map((link, index) => (
-                      <a
-                        key={index}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`social-button ${link.name.toLowerCase()}`}
-                      >
-                        {link.name === "Twitter" && <Twitter size={20} />}
-                        {link.name === "GitHub" && <Github size={20} />}
-                        {link.name === "LinkedIn" && <Linkedin size={20} />}
-                        <span>{link.name}</span>
+
+            {(personInformation.social_links || []).some(link => /^https?:\/\//i.test(link.url)) && (
+              <div className="profile-header-links" key={slug}>
+                <ExpandableList as="div" className="profile-links-grid" label="profile links" limit={14} mobileLimit={8}>
+                  {personInformation.social_links.filter(link => /^https?:\/\//i.test(link.url)).map((link, index) => {
+                    const Icon = getLinkIcon(link.name);
+                    return (
+                      <a key={`${link.url}-${index}`} href={link.url} target="_blank" rel="noopener noreferrer" className="profile-link-card">
+                        <span className="profile-link-icon"><Icon size={22} aria-hidden="true" /></span>
+                        <span>{link.name || "Research profile"}</span>
+                        <ExternalLink size={16} aria-hidden="true" />
                       </a>
-                    ))}
-                  </div>
-                )}
+                    );
+                  })}
+                </ExpandableList>
+              </div>
+            )}
               </div>
             </div>
           </div>
-          <div className="profile-sections">
+          <div className="profile-sections" key={slug}>
             <section className="content-section about-section">
-              <div className="section-header">
+              <div className="person-section-heading">
                 <h2>About</h2>
-                <div className="section-line"></div>
               </div>
               <div className="section-content">
                 {personInformation.about_user ? (
@@ -154,38 +162,39 @@ const Index = () => {
                   <p>No additional information available.</p>
                 )}
               </div>
+              <div className="person-about-details">
               {personInformation.areas_of_expertise &&
                 personInformation.areas_of_expertise.length > 0 && (
                   <div className="expertise-section">
                     <h3>Areas of Expertise</h3>
-                    <ul className="expertise-list">
+                    <ExpandableList as="ul" className="expertise-list" label="areas of expertise" limit={14} mobileLimit={8}>
                       {personInformation.areas_of_expertise.map((item, index) => (
                         <li key={index} className="expertise-item">
                           {item}
                         </li>
                       ))}
-                    </ul>
+                    </ExpandableList>
                   </div>
                 )}
               {personInformation.research_areas &&
                 personInformation.research_areas.length > 0 && (
                   <div className="research-areas-section">
                     <h3>Key Research Areas</h3>
-                    <div className="research-areas-grid">
+                    <ExpandableList as="div" className="research-areas-grid" label="research areas" limit={7} mobileLimit={5}>
                       {personInformation.research_areas.map((area, index) => (
                         <div key={index} className="research-area-card">
-                          <h4>{area.name}</h4>
+                          <h4>{area.name || area.title}</h4>
                           <p>{area.description}</p>
                         </div>
                       ))}
-                    </div>
+                    </ExpandableList>
                   </div>
                 )}
               {personInformation.key_initiatives &&
                 personInformation.key_initiatives.length > 0 && (
                   <div className="key-initiatives">
                     <h3>Key Initiatives</h3>
-                    <div className="initiatives-grid">
+                    <ExpandableList className="initiatives-grid" label="key initiatives" limit={7} mobileLimit={5}>
                       {personInformation.key_initiatives.map((initiative, index) => (
                         <a
                           key={index}
@@ -195,12 +204,12 @@ const Index = () => {
                           className="initiative-card"
                         >
                           <span className="initiative-title">
-                            {initiative.name}
+                            {initiative.name || initiative.title}
                           </span>
                           <ExternalLink size={16} />
                         </a>
                       ))}
-                    </div>
+                    </ExpandableList>
                   </div>
                 )}
               <div className="credentials-section">
@@ -208,38 +217,51 @@ const Index = () => {
                   personInformation.qualifications.length > 0 && (
                     <div className="qualifications">
                       <h3>Qualifications</h3>
-                      <ul className="credentials-list">
+                      <ExpandableList as="ul" className="credentials-list" label="qualifications" limit={7} mobileLimit={5}>
                         {personInformation.qualifications.map((qual, index) => (
                           <li key={index} className="credential-item">
                             {qual}
                           </li>
                         ))}
-                      </ul>
+                      </ExpandableList>
                     </div>
                   )}
                 {personInformation.memberships &&
                   personInformation.memberships.length > 0 && (
                     <div className="memberships">
                       <h3>Professional Memberships</h3>
-                      <ul className="credentials-list">
+                      <ExpandableList as="ul" className="credentials-list" label="professional memberships" limit={7} mobileLimit={5}>
                         {personInformation.memberships.map((membership, index) => (
                           <li key={index} className="credential-item">
                             {membership}
                           </li>
                         ))}
-                      </ul>
+                      </ExpandableList>
                     </div>
                   )}
               </div>
+              </div>
             </section>
+              {[
+                ['publication', 'Publications'],
+                ['poster', 'Posters'],
+                ['presentation', 'Presentations'],
+                ['other', 'Other Research Outputs'],
+              ].map(([category, heading]) => {
+                const links = (personInformation.research_links || []).filter(
+                  (link) => link.category === category && /^https?:\/\//i.test(link.url)
+                );
+                return links.length > 0 ? (
+                  <ResearchOutputs key={category} heading={heading} links={links} />
+                ) : null;
+              })}
             {personInformation.research_interests &&
               personInformation.research_interests.length > 0 && (
                 <section className="content-section interests-section">
-                  <div className="section-header">
+                  <div className="person-section-heading">
                     <h2>Research Interests</h2>
-                    <div className="section-line"></div>
-                  </div>
-                  <div className="interests-grid">
+                      </div>
+                  <ExpandableList as="div" className="interests-grid" label="research interests" limit={14} mobileLimit={8}>
                     {personInformation.research_interests.map((interest, index) => (
                       <div
                         key={index}
@@ -254,7 +276,7 @@ const Index = () => {
                         </div>
                       </div>
                     ))}
-                  </div>
+                  </ExpandableList>
                 </section>
               )}
           </div>

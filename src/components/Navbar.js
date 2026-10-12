@@ -1,30 +1,35 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import { FaBars, FaTimes, FaChevronDown } from 'react-icons/fa';
 import './Navbar.css';
 import logo from '../Images/logo/eHealthHub_logo.png';
 import nsrp_logo from '../Images/logo/NSRP_Correct.jpg'
 
 function Navbar() {
   const [click, setClick] = useState(false);
+  const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [ohdsiDropdownOpen, setOhdsiDropdownOpen] = useState(false); // NEW STATE
   const location = useLocation();
 
   const handleClick = () => {
     setClick(!click);
+    setAboutDropdownOpen(false);
     setDropdownOpen(false); // Close dropdown when main menu is toggled
     setOhdsiDropdownOpen(false); // Close OHDSI dropdown too
   };
 
   const closeMenu = () => {
     setClick(false);
+    setAboutDropdownOpen(false);
     setDropdownOpen(false); // Close dropdown when a menu item is clicked
     setOhdsiDropdownOpen(false); // Close OHDSI dropdown too
   };
 
   const toggleDropdown = () => {
+    setAboutDropdownOpen(false);
     setDropdownOpen(!dropdownOpen);
+    setOhdsiDropdownOpen(false);
   };
 
   const getActiveClass = (path) => {
@@ -32,7 +37,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="navbar">
+    <nav className="navbar" onKeyDown={event => { if (event.key === "Escape") { setAboutDropdownOpen(false); setDropdownOpen(false); setOhdsiDropdownOpen(false); } }}>
       <div className="navbar-container">
         <div className="navbar-logos">
           <Link to="/" className="navbar-logo ehealth-logo" onClick={closeMenu}>
@@ -47,32 +52,37 @@ function Navbar() {
             <img src={nsrp_logo} alt="NSRP Logo" />
           </a>
         </div>
-        <div className="menu-icon" onClick={handleClick}>
+        <button type="button" className="menu-icon" onClick={handleClick} aria-label={click ? "Close navigation" : "Open navigation"} aria-expanded={click} aria-controls="main-navigation">
           {click ? <FaTimes /> : <FaBars />}
-        </div>
-        <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+        </button>
+        <ul id="main-navigation" className={click ? 'nav-menu active' : 'nav-menu'}>
           <li className="nav-item">
             <Link to="/" className={`nav-links ${getActiveClass('/')}`} onClick={closeMenu}>
               Home
             </Link>
           </li>
-          <li className="nav-item">
-            <Link to="/about" className={`nav-links ${getActiveClass('/about')}`} onClick={closeMenu}>
-              About
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/people" className={`nav-links ${getActiveClass('/people')}`} onClick={closeMenu}>
-              People
-            </Link>
+          <li className="nav-item dropdown"
+            onMouseEnter={() => { if (window.innerWidth > 1100) { setAboutDropdownOpen(true); setDropdownOpen(false); setOhdsiDropdownOpen(false); } }}
+            onMouseLeave={() => window.innerWidth > 1100 && setAboutDropdownOpen(false)}>
+            <div className="nav-dropdown-row">
+              <Link to="/about" className={`nav-links ${location.pathname === '/about' || location.pathname.startsWith('/people') ? 'active' : ''}`} onClick={closeMenu}>About Us</Link>
+              <button type="button" className="nav-dropdown-toggle" aria-label="About Us submenu" aria-expanded={aboutDropdownOpen} aria-controls="about-submenu" onClick={() => { setAboutDropdownOpen(value => !value); setDropdownOpen(false); setOhdsiDropdownOpen(false); }}>
+                <FaChevronDown aria-hidden="true" />
+              </button>
+            </div>
+            <ul id="about-submenu" className={`dropdown-content ${aboutDropdownOpen ? 'show' : ''}`}>
+              <li><Link to="/about" onClick={closeMenu}>About eHealth Hub</Link></li>
+              <li><Link to="/people" onClick={closeMenu}>Meet the Team</Link></li>
+            </ul>
           </li>
 
           {/* OHDSI Ireland with Dropdown - UPDATED */}
           <li
             className="nav-item dropdown"
-            onMouseEnter={() => window.innerWidth > 768 && setOhdsiDropdownOpen(true)}
-            onMouseLeave={() => window.innerWidth > 768 && setOhdsiDropdownOpen(false)}
+            onMouseEnter={() => window.innerWidth > 1100 && setOhdsiDropdownOpen(true)}
+            onMouseLeave={() => window.innerWidth > 1100 && setOhdsiDropdownOpen(false)}
           >
+            <div className="nav-dropdown-row">
             <Link 
               to="/ohdsi-ireland" 
               className={`nav-links ${getActiveClass('/ohdsi-ireland')}`}
@@ -80,7 +90,11 @@ function Navbar() {
             >
               OHDSI Ireland
             </Link>
-            <ul className={`dropdown-content ${ohdsiDropdownOpen ? 'show' : ''}`}>
+            <button type="button" className="nav-dropdown-toggle" aria-label="OHDSI Ireland submenu" aria-expanded={ohdsiDropdownOpen} aria-controls="ohdsi-submenu" onClick={() => { setOhdsiDropdownOpen(value => !value); setDropdownOpen(false); setAboutDropdownOpen(false); }}>
+              <FaChevronDown aria-hidden="true" />
+            </button>
+            </div>
+            <ul id="ohdsi-submenu" className={`dropdown-content ${ohdsiDropdownOpen ? 'show' : ''}`}>
               <li>
                 <Link to="/ohdsi-ireland/seminars" onClick={closeMenu}>Seminar Series</Link>
               </li>
@@ -114,13 +128,13 @@ function Navbar() {
           </li>
           <li
             className="nav-item dropdown"
-            onMouseEnter={() => window.innerWidth > 768 && setDropdownOpen(true)}
-            onMouseLeave={() => window.innerWidth > 768 && setDropdownOpen(false)}
+            onMouseEnter={() => window.innerWidth > 1100 && setDropdownOpen(true)}
+            onMouseLeave={() => window.innerWidth > 1100 && setDropdownOpen(false)}
           >
-            <span className="nav-links" onClick={toggleDropdown}>
-              Output
-            </span>
-            <ul className={`dropdown-content ${dropdownOpen ? 'show' : ''}`}>
+            <button type="button" className="nav-links nav-dropdown-trigger" onClick={toggleDropdown} aria-expanded={dropdownOpen} aria-controls="output-submenu">
+              Output <FaChevronDown className="nav-dropdown-chevron" aria-hidden="true" />
+            </button>
+            <ul id="output-submenu" className={`dropdown-content ${dropdownOpen ? 'show' : ''}`}>
               <li>
                 <Link to="/output/publications" onClick={closeMenu}>Publications</Link>
               </li>
