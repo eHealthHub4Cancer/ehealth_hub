@@ -28,6 +28,18 @@ async function json(url, options = {}) {
   if (!response.ok) throw new Error(`Public content request failed (${response.status})`);
   return response.json();
 }
+// The people API stores lists as Python-style strings, e.g. "['Genomics', 'Machine Learning']".
+const listFrom = value => Array.isArray(value) ? value.map(String) : [...String(value || '').matchAll(/'([^']*)'|"([^"]*)"/g)].map(match => match[1] ?? match[2]).filter(Boolean);
+// Fetch profile details a few at a time; a failed profile keeps its short listing entry.
+async function profileDetails(api, people) {
+  const details = new Map();
+  for (let i = 0; i < people.length; i += 8) {
+    await Promise.all(people.slice(i, i + 8).filter(person => person.slug).map(async person => {
+      try { details.set(person.slug, await json(`${api}/person-info/${encodeURIComponent(person.slug)}/`)); } catch (error) { console.warn(`Profile details unavailable for ${person.slug}: ${error.message}`); }
+    }));
+  }
+  return details;
+}
 async function publishedCollection(collection, field, value) {
   const project = process.env.REACT_APP_FIREBASE_PROJECT_ID;
   if (!project || project.startsWith('your_')) throw new Error('Firebase project configuration is required to build the article sitemap.');
@@ -53,7 +65,20 @@ async function main() {
     publishedCollection('news_articles', 'published', { booleanValue: true }),
   ]);
   if (!Array.isArray(people)) throw new Error('People API must return a public profile list.');
-  for (const person of people) if (person.slug) records.push({ route: `/people/${encodeURIComponent(person.slug)}`, title: person.full_title_name || person.full_name, description: [person.full_title_name || person.full_name, person.association].filter(Boolean).join(' — ') });
+  const profiles = await profileDetails(api, people);
+  for (const person of people) {
+    if (!person.slug) continue;
+    const info = profiles.get(person.slug) || {};
+    const name = person.full_title_name || person.full_name;
+    const interests = listFrom(info.research_interests);
+    const bio = textFrom(info.about_user);
+    records.push({
+      route: `/people/${encodeURIComponent(person.slug)}`,
+      title: name,
+      description: summary([[name, person.association].filter(Boolean).join(', '), interests.length ? `Research interests: ${interests.join(', ')}.` : bio].filter(Boolean).join('. '), name),
+      body: `${person.association ? `<p><strong>${escape(person.association)}</strong></p>` : ''}${interests.length ? `<p>Research interests: ${escape(interests.join(', '))}</p>` : ''}${paragraphs(info.about_user)}`,
+    });
+  }
   for (const post of blogs) {
     const f = post.fields;
     const authors = textFrom(f.authors?.stringValue);
