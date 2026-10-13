@@ -46,6 +46,12 @@ const articleDate = value => {
 const organizationRef = { '@id': `${origin}/#organization` };
 // JSON-LD script tag; "<" is escaped so content can never close the script early.
 const jsonLd = data => `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
+const universities = [
+  ['University of Limerick', 'https://www.ul.ie/'],
+  ["Queen's University Belfast", 'https://www.qub.ac.uk/'],
+];
+// Profile links stored as "[{'name': 'LinkedIn', 'url': 'https://...'}]".
+const profileLinks = value => [...String(value || '').matchAll(/'url':\s*'(https?:\/\/[^']+)'/g)].map(match => match[1]);
 async function json(url, options = {}) {
   const response = await fetch(url, { ...options, signal: AbortSignal.timeout(20000) });
   if (!response.ok) throw new Error(`Public content request failed (${response.status})`);
@@ -116,6 +122,18 @@ async function main() {
       route: `/people/${encodeURIComponent(person.slug)}`,
       lastmod: info.updated_at || person.updated_at,
       image: person.image,
+      structured: {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: textFrom(person.full_name || name),
+        url: `${origin}/people/${encodeURIComponent(person.slug)}/`,
+        ...(person.image ? { image: person.image } : {}),
+        ...(person.association ? { jobTitle: textFrom(person.association) } : {}),
+        worksFor: organizationRef,
+        affiliation: universities.filter(([university]) => String(person.association || info.institution || '').includes(university)).map(([university, url]) => ({ '@type': 'CollegeOrUniversity', name: university, url })),
+        ...(interests.length ? { knowsAbout: interests } : {}),
+        ...(profileLinks(info.social_links).length ? { sameAs: profileLinks(info.social_links) } : {}),
+      },
       title: name,
       description: summary([[name, person.association].filter(Boolean).join(', '), interests.length ? `Research interests: ${interests.join(', ')}.` : bio].filter(Boolean).join('. '), name),
       body: `${person.association ? `<p><strong>${escape(person.association)}</strong></p>` : ''}${interests.length ? `<p>Research interests: ${escape(interests.join(', '))}</p>` : ''}${paragraphs(info.about_user)}`,
