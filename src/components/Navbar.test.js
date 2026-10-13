@@ -2,40 +2,44 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Navbar from './Navbar';
-
-test('dropdown buttons expose their state and preserve the OHDSI page link', () => {
-  render(<MemoryRouter><Navbar /></MemoryRouter>);
-  expect(screen.getByRole('link', { name: 'OHDSI Ireland' })).toHaveAttribute('href', '/ohdsi-ireland');
-  const ohdsi = screen.getByRole('button', { name: 'OHDSI Ireland submenu' });
-  const output = screen.getByRole('button', { name: 'Output' });
-  expect(ohdsi).toHaveAttribute('aria-expanded', 'false');
-  fireEvent.click(ohdsi);
-  expect(ohdsi).toHaveAttribute('aria-expanded', 'true');
-  expect(document.getElementById(ohdsi.getAttribute('aria-controls'))).toHaveClass('show');
-  fireEvent.click(output);
-  expect(output).toHaveAttribute('aria-expanded', 'true');
-  expect(ohdsi).toHaveAttribute('aria-expanded', 'false');
-  fireEvent.keyDown(output, { key: 'Escape' });
-  expect(output).toHaveAttribute('aria-expanded', 'false');
+const original = window.matchMedia;
+beforeEach(() => { window.matchMedia = jest.fn(() => ({ matches: true, addEventListener: jest.fn(), removeEventListener: jest.fn() })); });
+afterEach(() => { window.matchMedia = original; });
+function setup() { render(<MemoryRouter initialEntries={['/people/example']}><Navbar /></MemoryRouter>); fireEvent.click(screen.getByRole('button', { name: 'Open navigation' })); }
+test('About Us opens its submenu instead of navigating', () => {
+  setup();
+  expect(screen.queryByRole('link', { name: 'Meet the Team' })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'About Us' }));
+  expect(screen.getByRole('link', { name: 'Meet the Team' })).toHaveAttribute('href', '/people');
+  expect(screen.getByRole('link', { name: 'About eHealth Hub' })).toHaveAttribute('href', '/about');
+  fireEvent.click(screen.getByRole('link', { name: 'Meet the Team' }));
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+});
+test('drawer locks scroll, closes on Escape and restores trigger focus', () => {
+  setup();
+  expect(screen.getByRole('dialog', { name: 'Navigation' })).toBeInTheDocument();
+  expect(document.body.style.overflow).toBe('hidden');
+  fireEvent.keyDown(screen.getByRole('button', { name: 'Close menu' }), { key: 'Escape' });
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  expect(document.body.style.overflow).not.toBe('hidden');
+  expect(screen.getByRole('button', { name: 'Open navigation' })).toHaveFocus();
+});
+test('dropdown sections have plain chevrons and only one expands at a time', () => {
+  setup();
+  fireEvent.click(screen.getByRole('button', { name: 'About Us' }));
+  fireEvent.click(screen.getByRole('button', { name: 'OHDSI Ireland' }));
+  expect(screen.getByRole('button', { name: 'About Us' })).toHaveAttribute('aria-expanded', 'false');
+  expect(screen.getByRole('link', { name: 'About the Node' })).toHaveAttribute('href', '/ohdsi-ireland');
+  expect(screen.getByRole('link', { name: 'Seminar Series' })).toBeInTheDocument();
 });
 
-test('mobile navigation closes when a submenu destination is selected', () => {
+ test('desktop dropdown opens on hover and closes on mouse leave', () => {
+  window.matchMedia = jest.fn(() => ({ matches: false, addEventListener: jest.fn(), removeEventListener: jest.fn() }));
   render(<MemoryRouter><Navbar /></MemoryRouter>);
-  fireEvent.click(screen.getByRole('button', { name: 'Open navigation' }));
-  fireEvent.click(screen.getByRole('button', { name: 'OHDSI Ireland submenu' }));
-  fireEvent.click(screen.getByRole('link', { name: 'Seminar Series' }));
-  expect(screen.getByRole('button', { name: 'Open navigation' })).toHaveAttribute('aria-expanded', 'false');
-  expect(screen.getByRole('button', { name: 'OHDSI Ireland submenu' })).toHaveAttribute('aria-expanded', 'false');
-});
-
-test('groups People under About Us and closes the submenu after navigation', () => {
-  render(<MemoryRouter initialEntries={['/people/example']}><Navbar /></MemoryRouter>);
-  expect(screen.getByRole('link', { name: 'About Us' })).toHaveClass('active');
-  const toggle = screen.getByRole('button', { name: 'About Us submenu' });
-  fireEvent.click(toggle);
-  const people = screen.getByRole('link', { name: 'Meet the Team' });
-  expect(people.closest('ul')).toHaveAttribute('id', 'about-submenu');
-  expect(people).toHaveAttribute('href', '/people');
-  fireEvent.click(people);
-  expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  const button = screen.getByRole('button', { name: 'About Us' });
+  fireEvent.mouseEnter(button.closest('li'));
+  expect(button).toHaveAttribute('aria-expanded', 'true');
+  expect(screen.getByRole('link', { name: 'Meet the Team' })).toBeInTheDocument();
+  fireEvent.mouseLeave(button.closest('li'));
+  expect(button).toHaveAttribute('aria-expanded', 'false');
 });

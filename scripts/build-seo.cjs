@@ -50,7 +50,7 @@ async function main() {
     let html = template.replace(/<title>.*?<\/title>/, `<title>${escape(record.title)} | ${siteName}</title>`);
     html = html.replace(/<meta name="description" content="[^"]*"\s*\/?\s*>/, `<meta name="description" content="${escape(record.description)}"/>`);
     html = html.replace('</head>', `<link rel="canonical" href="${canonical}"/><meta property="og:title" content="${escape(record.title)} | ${siteName}"/><meta property="og:description" content="${escape(record.description)}"/><meta property="og:url" content="${canonical}"/></head>`);
-    html = html.replace('<div id="root"></div>', `<div id="root"><main><h1>${escape(record.title)}</h1><p>${escape(record.description)}</p>${navigation}</main></div>`);
+    html = html.replace('<div id="root"></div>', `<div id="root"><main class="seo-loading-shell"><h1>${escape(record.title)}</h1><p>${escape(record.description)}</p>${navigation}</main></div>`);
     const folder = path.join(build, record.route.slice(1));
     fs.mkdirSync(folder, { recursive: true });
     fs.writeFileSync(path.join(folder, 'index.html'), html);

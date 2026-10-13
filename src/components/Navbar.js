@@ -1,149 +1,84 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaBars, FaTimes, FaChevronDown } from 'react-icons/fa';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import './Navbar.css';
 import logo from '../Images/logo/eHealthHub_logo.png';
-import nsrp_logo from '../Images/logo/NSRP_Correct.jpg'
+import nsrpLogo from '../Images/logo/NSRP_Correct.jpg';
 
-function Navbar() {
-  const [click, setClick] = useState(false);
-  const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [ohdsiDropdownOpen, setOhdsiDropdownOpen] = useState(false); // NEW STATE
+const items = [
+  { label: 'Home', path: '/' },
+  { label: 'About Us', children: [{ label: 'About eHealth Hub', path: '/about' }, { label: 'Meet the Team', path: '/people' }] },
+  { label: 'OHDSI Ireland', children: [{ label: 'About the Node', path: '/ohdsi-ireland' }, { label: 'Seminar Series', path: '/ohdsi-ireland/seminars' }] },
+  { label: 'News', path: '/news' }, { label: 'Events', path: '/forum' },
+  { label: 'Calendar', path: '/calendar' }, { label: 'Blog', path: '/blog' },
+  { label: 'Resources', path: '/resources' },
+  { label: 'Output', children: [{ label: 'Publications', path: '/output/publications' }] },
+];
+
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
+  const [expanded, setExpanded] = useState(null);
+  const [mobile, setMobile] = useState(() => typeof window.matchMedia === 'function' && window.matchMedia('(max-width: 1100px)').matches);
+  const trigger = useRef(null);
+  const panel = useRef(null);
+  const closeButton = useRef(null);
   const location = useLocation();
-
-  const handleClick = () => {
-    setClick(!click);
-    setAboutDropdownOpen(false);
-    setDropdownOpen(false); // Close dropdown when main menu is toggled
-    setOhdsiDropdownOpen(false); // Close OHDSI dropdown too
+  const close = () => { setOpen(false); setExpanded(null); };
+  useEffect(() => {
+    if (typeof window.matchMedia !== 'function') return;
+    const media = window.matchMedia('(max-width: 1100px)');
+    const update = () => { setMobile(media.matches); setOpen(false); setExpanded(null); };
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
+  useEffect(() => { setOpen(false); setExpanded(null); }, [location.pathname]);
+  useEffect(() => {
+    const outside = event => {
+      if (!panel.current?.contains(event.target) && !trigger.current?.contains(event.target)) { setOpen(false); setExpanded(null); }
+    };
+    document.addEventListener('pointerdown', outside);
+    return () => document.removeEventListener('pointerdown', outside);
+  }, []);
+  useEffect(() => {
+    if (!open || !mobile) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    closeButton.current?.focus();
+    return () => { document.body.style.overflow = previousOverflow; trigger.current?.focus(); };
+  }, [open, mobile]);
+  const onKeyDown = event => {
+    if (event.key === 'Escape') { close(); trigger.current?.focus(); }
+    if (event.key !== 'Tab' || !open || !mobile) return;
+    const controls = [...panel.current.querySelectorAll('a, button')].filter(element => !element.closest('[hidden]'));
+    const first = controls[0], last = controls[controls.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+    if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   };
-
-  const closeMenu = () => {
-    setClick(false);
-    setAboutDropdownOpen(false);
-    setDropdownOpen(false); // Close dropdown when a menu item is clicked
-    setOhdsiDropdownOpen(false); // Close OHDSI dropdown too
-  };
-
-  const toggleDropdown = () => {
-    setAboutDropdownOpen(false);
-    setDropdownOpen(!dropdownOpen);
-    setOhdsiDropdownOpen(false);
-  };
-
-  const getActiveClass = (path) => {
-    return location.pathname === path ? 'active' : '';
-  };
-
-  return (
-    <nav className="navbar" onKeyDown={event => { if (event.key === "Escape") { setAboutDropdownOpen(false); setDropdownOpen(false); setOhdsiDropdownOpen(false); } }}>
-      <div className="navbar-container">
-        <div className="navbar-logos">
-          <Link to="/" className="navbar-logo ehealth-logo" onClick={closeMenu}>
-            <img src={logo} alt="eHealthHub Logo" />
-          </Link>
-          <a 
-            href="https://hea.ie/policy/research-policy/north-south-research-programme/" 
-            className="navbar-logo nsrp-logo" 
-            target="_blank" 
-            rel="noopener noreferrer"
-          >
-            <img src={nsrp_logo} alt="NSRP Logo" />
-          </a>
-        </div>
-        <button type="button" className="menu-icon" onClick={handleClick} aria-label={click ? "Close navigation" : "Open navigation"} aria-expanded={click} aria-controls="main-navigation">
-          {click ? <FaTimes /> : <FaBars />}
-        </button>
-        <ul id="main-navigation" className={click ? 'nav-menu active' : 'nav-menu'}>
-          <li className="nav-item">
-            <Link to="/" className={`nav-links ${getActiveClass('/')}`} onClick={closeMenu}>
-              Home
-            </Link>
-          </li>
-          <li className="nav-item dropdown"
-            onMouseEnter={() => { if (window.innerWidth > 1100) { setAboutDropdownOpen(true); setDropdownOpen(false); setOhdsiDropdownOpen(false); } }}
-            onMouseLeave={() => window.innerWidth > 1100 && setAboutDropdownOpen(false)}>
-            <div className="nav-dropdown-row">
-              <Link to="/about" className={`nav-links ${location.pathname === '/about' || location.pathname.startsWith('/people') ? 'active' : ''}`} onClick={closeMenu}>About Us</Link>
-              <button type="button" className="nav-dropdown-toggle" aria-label="About Us submenu" aria-expanded={aboutDropdownOpen} aria-controls="about-submenu" onClick={() => { setAboutDropdownOpen(value => !value); setDropdownOpen(false); setOhdsiDropdownOpen(false); }}>
-                <FaChevronDown aria-hidden="true" />
-              </button>
-            </div>
-            <ul id="about-submenu" className={`dropdown-content ${aboutDropdownOpen ? 'show' : ''}`}>
-              <li><Link to="/about" onClick={closeMenu}>About eHealth Hub</Link></li>
-              <li><Link to="/people" onClick={closeMenu}>Meet the Team</Link></li>
-            </ul>
-          </li>
-
-          {/* OHDSI Ireland with Dropdown - UPDATED */}
-          <li
-            className="nav-item dropdown"
-            onMouseEnter={() => window.innerWidth > 1100 && setOhdsiDropdownOpen(true)}
-            onMouseLeave={() => window.innerWidth > 1100 && setOhdsiDropdownOpen(false)}
-          >
-            <div className="nav-dropdown-row">
-            <Link 
-              to="/ohdsi-ireland" 
-              className={`nav-links ${getActiveClass('/ohdsi-ireland')}`}
-              onClick={closeMenu}
-            >
-              OHDSI Ireland
-            </Link>
-            <button type="button" className="nav-dropdown-toggle" aria-label="OHDSI Ireland submenu" aria-expanded={ohdsiDropdownOpen} aria-controls="ohdsi-submenu" onClick={() => { setOhdsiDropdownOpen(value => !value); setDropdownOpen(false); setAboutDropdownOpen(false); }}>
-              <FaChevronDown aria-hidden="true" />
-            </button>
-            </div>
-            <ul id="ohdsi-submenu" className={`dropdown-content ${ohdsiDropdownOpen ? 'show' : ''}`}>
-              <li>
-                <Link to="/ohdsi-ireland/seminars" onClick={closeMenu}>Seminar Series</Link>
-              </li>
-            </ul>
-          </li>
-          
-          <li className="nav-item">
-            <Link to="/news" className={`nav-links ${getActiveClass('/news')}`} onClick={closeMenu}>
-              News
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/forum" className={`nav-links ${getActiveClass('/forum')}`} onClick={closeMenu}>
-              Events
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/calendar" className={`nav-links ${getActiveClass('/calendar')}`} onClick={closeMenu}>
-              Calendar
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/blog" className={`nav-links ${getActiveClass('/blog')}`} onClick={closeMenu}>
-              Blog
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/resources" className={`nav-links ${getActiveClass('/resources')}`} onClick={closeMenu}>
-              Resources
-            </Link>
-          </li>
-          <li
-            className="nav-item dropdown"
-            onMouseEnter={() => window.innerWidth > 1100 && setDropdownOpen(true)}
-            onMouseLeave={() => window.innerWidth > 1100 && setDropdownOpen(false)}
-          >
-            <button type="button" className="nav-links nav-dropdown-trigger" onClick={toggleDropdown} aria-expanded={dropdownOpen} aria-controls="output-submenu">
-              Output <FaChevronDown className="nav-dropdown-chevron" aria-hidden="true" />
-            </button>
-            <ul id="output-submenu" className={`dropdown-content ${dropdownOpen ? 'show' : ''}`}>
-              <li>
-                <Link to="/output/publications" onClick={closeMenu}>Publications</Link>
-              </li>
-            </ul>
-          </li>
-        </ul>
+  const isActive = path => path === '/' ? location.pathname === '/' : location.pathname === path || location.pathname.startsWith(`${path}/`);
+  return <nav className="navbar" aria-label="Main navigation" onKeyDown={onKeyDown}>
+    <div className="navbar-container">
+      <div className="navbar-logos">
+        <Link to="/" className="navbar-logo" onClick={close}><img src={logo} alt="eHealthHub Logo" /></Link>
+        <a href="https://hea.ie/policy/research-policy/north-south-research-programme/" className="navbar-logo" target="_blank" rel="noopener noreferrer"><img src={nsrpLogo} alt="NSRP Logo" /></a>
       </div>
-    </nav>
-  );
+      <button ref={trigger} type="button" className="menu-icon" aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="main-navigation" onClick={() => { setOpen(value => !value); setExpanded(null); }}><Menu size={25} aria-hidden="true" /></button>
+      {open && <div className="navigation-backdrop" aria-hidden="true" onClick={close} />}
+      <div ref={panel} id="main-navigation" className={`navigation-panel${open ? ' is-open' : ''}`} role={mobile && open ? 'dialog' : undefined} aria-modal={mobile && open ? 'true' : undefined} aria-label={mobile && open ? 'Navigation' : undefined}>
+        <div className="navigation-drawer-header"><button ref={closeButton} type="button" aria-label="Close menu" onClick={close}><X size={23} aria-hidden="true" /></button></div>
+        <ul className="nav-menu">{items.map((item, index) => {
+          const active = item.children ? item.children.some(child => isActive(child.path)) : isActive(item.path);
+          const isExpanded = expanded === item.label;
+          const id = `navigation-submenu-${index}`;
+          return <li key={item.label} className="nav-item"
+            onMouseEnter={() => { if (!mobile && item.children) setExpanded(item.label); }}
+            onMouseLeave={() => { if (!mobile && item.children) setExpanded(null); }}>
+            {item.children ? <>
+              <button type="button" className={`nav-links nav-parent${active ? ' active' : ''}`} aria-expanded={isExpanded} aria-controls={id} onClick={() => setExpanded(isExpanded ? null : item.label)}>{item.label}<ChevronDown size={16} aria-hidden="true" /></button>
+              <ul id={id} className="dropdown-content" hidden={!isExpanded}>{item.children.map(child => <li key={child.path}><Link to={child.path} aria-current={isActive(child.path) ? 'page' : undefined} onClick={close}>{child.label}</Link></li>)}</ul>
+            </> : <Link to={item.path} className={`nav-links${active ? ' active' : ''}`} aria-current={active ? 'page' : undefined} onClick={close}>{item.label}</Link>}
+          </li>;
+        })}</ul>
+      </div>
+    </div>
+  </nav>;
 }
-
-export default Navbar;
