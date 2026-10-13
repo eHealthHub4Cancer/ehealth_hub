@@ -52,7 +52,7 @@ async function main() {
   ]);
   if (!Array.isArray(people)) throw new Error('People API must return a public profile list.');
   for (const person of people) if (person.slug) records.push({ route: `/people/${encodeURIComponent(person.slug)}`, title: person.full_title_name || person.full_name, description: [person.full_title_name || person.full_name, person.association].filter(Boolean).join(' — ') });
-  for (const post of blogs) records.push({ route: `/blog/${encodeURIComponent(post.id)}`, title: post.fields.title?.stringValue || 'Research article', description: 'Research insights and perspectives from the eHealth Hub for Cancer.' });
+  for (const post of blogs) records.push({ route: `/blog/${encodeURIComponent(post.id)}`, title: post.fields.title?.stringValue || 'Research article', description: summary(post.fields.content?.stringValue, 'Research insights and perspectives from the eHealth Hub for Cancer.') });
   for (const article of news) if (article.fields.slug?.stringValue) records.push({ route: `/news/${encodeURIComponent(article.fields.slug.stringValue)}`, title: article.fields.title?.stringValue || 'News article', description: summary(article.fields.excerpt?.stringValue || article.fields.content?.stringValue, 'News and updates from the eHealth Hub for Cancer.') });
   // Include the static news pages that remain linked in the archive.
   const app = fs.readFileSync(path.join(root, 'src/App.js'), 'utf8');
