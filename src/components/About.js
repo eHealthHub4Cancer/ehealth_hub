@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './About.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -49,6 +50,12 @@ const About = () => {
                   NSRP North-South Research Programme
                 </a>
                 . The eHealth-Hub for Cancer is led by the University of Limerick (UL) and Queen's University Belfast (QUB), and partners with clinical and academic researchers from the University College Dublin (UCD), Royal College of Surgeons in Ireland (RCSI), University of Galway (UG), University College Cork (UCC), and Trinity College Dublin (TCD).
+              </p>
+              <p>
+                The Hub also works with European partners on Ireland's readiness for the{' '}
+                <Link to="/news/preparing-for-EHDS" className="highlight-link">European Health Data Space (EHDS)</Link>
+                , and the University of Limerick leads Ireland's participation in the EU-funded{' '}
+                <Link to="/news/ul-leads-ireland-in-eu-candle-cancer-data-project" className="highlight-link">CANDLE cancer data initiative</Link>.
               </p>
 
             </div>
