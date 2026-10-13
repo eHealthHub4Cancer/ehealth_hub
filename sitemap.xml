@@ -6,7 +6,6 @@
   <url><loc>https://www.ehealth4cancer.ie/projects/</loc></url>
   <url><loc>https://www.ehealth4cancer.ie/ohdsi-ireland/</loc></url>
   <url><loc>https://www.ehealth4cancer.ie/ohdsi-ireland/seminars/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/</loc></url>
   <url><loc>https://www.ehealth4cancer.ie/news/</loc></url>
   <url><loc>https://www.ehealth4cancer.ie/forum/</loc></url>
   <url><loc>https://www.ehealth4cancer.ie/calendar/</loc></url>
@@ -15,6 +14,7 @@
   <url><loc>https://www.ehealth4cancer.ie/output/talks/</loc></url>
   <url><loc>https://www.ehealth4cancer.ie/resources/</loc></url>
   <url><loc>https://www.ehealth4cancer.ie/sitemap/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news-archive/</loc></url>
   <url><loc>https://www.ehealth4cancer.ie/people/arya-c-soman/</loc></url>
   <url><loc>https://www.ehealth4cancer.ie/people/sarah-hershey/</loc></url>
   <url><loc>https://www.ehealth4cancer.ie/people/brendan-reardon/</loc></url>
@@ -69,55 +69,55 @@
   <url><loc>https://www.ehealth4cancer.ie/blog/q15OIoT4mAAuL1Aw5iut/</loc></url>
   <url><loc>https://www.ehealth4cancer.ie/blog/uYcvpGUYCjGfCYFgG19K/</loc></url>
   <url><loc>https://www.ehealth4cancer.ie/blog/yFrqhLImN5ZgRtl3R4k6/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/hrb-national-conference-2022/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/all-island-forum-on-cancer-data/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/ehealth-hub-at-the-ohdsi-2022-meeting/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/2026-All-Island-Cancer-Data-Forum/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/molecular-oncology-almanac/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/university-of-limerick-researcher-joins-european-discussions-on-personalised-cancer-prevention-and-care/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/ul-leads-ireland-in-eu-candle-cancer-data-project/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/microcredential-data-analytics-cancer-real-world-data/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/new-study-highlights-significant-gender-inequality-and-bias-in-cancer-research/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/eHealth-Hub-Data_Forum/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/collaborative-data-science/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/Conroy-Hastings-Memorial-Session/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/preparing-for-EHDS/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/bcni-talk/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/ul-ehealth-hub-eu-personalised-cancer-initiative/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/ecr-workshops-ppi-and-clinical-trials/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/prof-mark-lawler-and-dell-technologies/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/hea-visit-to-UL/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/belfast-agreement-25-cancer-showcase/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/Harnessing-the-Power-of-Data/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/aicri-launch/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/landmark-lancet-oncology-commission-sets-out-roadmap-for-equitable-precision-oncology/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/ohdsi-uk-2024/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/limerickpost/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/ireland-introduces-right-to-be-forgotten-for-cancer-survivors/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/OHDSI-Ireland-node/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/ehealth-hub-cancer-review-2025/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/data-transformation-northern-ireland-health-research/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/ending-financial-discrimination/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/ldcrc-digicore-announcement/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/iarc-meeting-advances-global-research-into-early-onset-colorectal-cancer/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/irish-researchers-early-onset-bowel-cancer-study/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/rte-brainstorm-article/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/all-island-study-highlights-the-cancer-legacy-of-the-good-friday-agreement/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/phd-advert/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/postdoctoral-researcher-in-cancer-digital-health/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/ldcrc-building-together-event/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news-new/research-assistant-advert/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news/gender-inequality-study/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news/good-friday-cancer-legacy/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news/phd-opportunity/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news/belfast-agreement-showcase/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news/ldcrc-building-together/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news/dell-technologies-presentation/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news/aicri-launch/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news/ohdsi-meeting/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news/hrb-conference/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/hrb-national-conference-2022/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/all-island-forum-on-cancer-data/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/ehealth-hub-at-the-ohdsi-2022-meeting/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/2026-All-Island-Cancer-Data-Forum/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/molecular-oncology-almanac/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/university-of-limerick-researcher-joins-european-discussions-on-personalised-cancer-prevention-and-care/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/ul-leads-ireland-in-eu-candle-cancer-data-project/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/microcredential-data-analytics-cancer-real-world-data/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/new-study-highlights-significant-gender-inequality-and-bias-in-cancer-research/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/eHealth-Hub-Data_Forum/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/collaborative-data-science/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/Conroy-Hastings-Memorial-Session/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/preparing-for-EHDS/</loc></url>
   <url><loc>https://www.ehealth4cancer.ie/news/bcni-talk/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news/rte-brainstorm/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news/postdoctoral-application/</loc></url>
-  <url><loc>https://www.ehealth4cancer.ie/news/limerick-post/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/ul-ehealth-hub-eu-personalised-cancer-initiative/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/ecr-workshops-ppi-and-clinical-trials/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/prof-mark-lawler-and-dell-technologies/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/hea-visit-to-UL/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/belfast-agreement-25-cancer-showcase/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/Harnessing-the-Power-of-Data/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/aicri-launch/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/landmark-lancet-oncology-commission-sets-out-roadmap-for-equitable-precision-oncology/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/ohdsi-uk-2024/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/limerickpost/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/ireland-introduces-right-to-be-forgotten-for-cancer-survivors/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/OHDSI-Ireland-node/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/ehealth-hub-cancer-review-2025/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/data-transformation-northern-ireland-health-research/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/ending-financial-discrimination/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/ldcrc-digicore-announcement/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/iarc-meeting-advances-global-research-into-early-onset-colorectal-cancer/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/irish-researchers-early-onset-bowel-cancer-study/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/rte-brainstorm-article/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/all-island-study-highlights-the-cancer-legacy-of-the-good-friday-agreement/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/phd-advert/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/postdoctoral-researcher-in-cancer-digital-health/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/ldcrc-building-together-event/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/research-assistant-advert/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news-archive/gender-inequality-study/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news-archive/good-friday-cancer-legacy/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news-archive/phd-opportunity/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news-archive/belfast-agreement-showcase/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news-archive/ldcrc-building-together/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news-archive/dell-technologies-presentation/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news-archive/aicri-launch/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news-archive/ohdsi-meeting/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news-archive/hrb-conference/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news-archive/bcni-talk/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news-archive/rte-brainstorm/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news-archive/postdoctoral-application/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news-archive/limerick-post/</loc></url>
 </urlset>
