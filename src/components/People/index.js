@@ -5,6 +5,8 @@ import {
   Mail,
   ChevronRight,
   ExternalLink,
+  GraduationCap,
+  UsersRound,
 } from "lucide-react";
 import { biographyHtml } from "./biographyHtml";
 import { useGlobalData } from "../globaldatacontext";
@@ -15,6 +17,11 @@ import ResearchOutputs from "./ResearchOutputs";
 import PersonPortrait from "./PersonPortrait";
 
 import { getLinkIcon } from "./socialIcons";
+
+const qualificationParts = (text) => {
+  const match = String(text).match(/^(.+?)(?:\s[-–—]\s|,\s+)(.+)$/);
+  return match ? [match[1], match[2]] : [text];
+};
 
 const Index = () => {
   const { slug } = useParams();
@@ -199,11 +206,12 @@ const Index = () => {
                 {personInformation.qualifications &&
                   personInformation.qualifications.length > 0 && (
                     <div className="qualifications">
-                      <h3>Qualifications</h3>
+                      <h3 className="profile-list-heading"><GraduationCap size={20} aria-hidden="true" />Qualifications</h3>
                       <ExpandableList as="ul" className="credentials-list" label="qualifications" limit={7} mobileLimit={5}>
                         {personInformation.qualifications.map((qual, index) => (
                           <li key={index} className="credential-item">
-                            {qual}
+                            <span className="credential-title">{qualificationParts(qual)[0]}</span>
+                            {qualificationParts(qual).length > 1 && <span className="credential-description">{qualificationParts(qual)[1]}</span>}
                           </li>
                         ))}
                       </ExpandableList>
@@ -212,7 +220,7 @@ const Index = () => {
                 {personInformation.memberships &&
                   personInformation.memberships.length > 0 && (
                     <div className="memberships">
-                      <h3>Professional Memberships</h3>
+                      <h3 className="profile-list-heading"><UsersRound size={20} aria-hidden="true" />Professional Memberships</h3>
                       <ExpandableList as="ul" className="credentials-list" label="professional memberships" limit={7} mobileLimit={5}>
                         {personInformation.memberships.map((membership, index) => (
                           <li key={index} className="credential-item">
@@ -232,9 +240,9 @@ const Index = () => {
                   <div className="person-section-heading">
                     <h2>Research Interests</h2>
                       </div>
-                  <ExpandableList as="div" className="interests-grid" label="research interests" limit={14} mobileLimit={8}>
+                  <ExpandableList as="ul" className="interests-grid" label="research interests" limit={14} mobileLimit={8}>
                     {personInformation.research_interests.map((interest, index) => (
-                      <div
+                      <li
                         key={index}
                         className="interest-card"
                         style={{ animationDelay: `${index * 0.1}s` }}
@@ -245,7 +253,7 @@ const Index = () => {
                           </span>
                           <span className="interest-text">{interest}</span>
                         </div>
-                      </div>
+                      </li>
                     ))}
                   </ExpandableList>
                 </section>

@@ -18,5 +18,16 @@ export function biographyHtml(content) {
       element.replaceWith(heading);
     }
   });
+  // Apply the same list presentation even when the editor wraps the list or
+  // places explanatory text between a heading and its list.
+  container.querySelectorAll('ul, ol').forEach(list => {
+    if (list.closest('li')) return;
+    list.classList.add('bio-list-panel');
+    list.removeAttribute('style');
+    [...list.children].filter(child => child.tagName === 'LI').forEach(item => {
+      item.classList.add('bio-list-row');
+      item.removeAttribute('style');
+    });
+  });
   return container.innerHTML;
 }

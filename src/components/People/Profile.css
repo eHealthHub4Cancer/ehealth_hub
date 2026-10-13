@@ -285,3 +285,119 @@
 .profile-container .person-output-title-block { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
 .profile-container .person-output-type { align-self: flex-start; font-size: .72rem; font-weight: 600; color: #526b79; background: #edf2f5; border: 1px solid #dde6ec; border-radius: 4px; padding: 2px 6px; }
 @media (max-width: 600px) { .profile-container .person-output-title-block { flex-basis: 100%; } }
+
+/* Keep the main sections as cards; let their content breathe without nested boxes. */
+.profile-container .person-about-details > .expertise-section,
+.profile-container .person-about-details > .research-areas-section,
+.profile-container .person-about-details > .key-initiatives,
+.profile-container .qualifications,
+.profile-container .memberships { padding: 0; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
+.profile-container .person-about-details { gap: 28px; }
+.profile-container .person-about-details h3, .profile-container .bio-paragraph h3 { font-size: 1.2rem; font-weight: 700; color: #1a3e5a; margin-bottom: 14px; }
+.profile-container .research-area-card { padding: 0; border: 0; background: transparent; border-radius: 0; }
+.profile-container .research-area-card h4 { margin-bottom: 6px; }
+.profile-container .expertise-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; }
+.profile-container .expertise-item { position: relative; padding: 0 0 0 16px; border: 0; background: transparent; border-radius: 0; line-height: 1.7; color: #435c73; font-weight: 500; }
+.profile-container .expertise-item::before { content: ""; position: absolute; top: .7em; left: 0; width: 5px; height: 5px; background: #267b83; border-radius: 50%; }
+.profile-container .bio-paragraph h3 + ul, .profile-container .bio-paragraph h3 + ol { gap: 8px 24px; }
+.profile-container .bio-paragraph h3 + ul > li, .profile-container .bio-paragraph h3 + ol > li { padding: 4px 0 4px 18px; background: transparent; border: 0; border-radius: 0; }
+.profile-container .bio-paragraph h3 + ul > li::before { top: 16px; left: 0; }
+.profile-container .bio-paragraph h3 + ol > li { padding-left: 26px; }
+.profile-container .bio-paragraph h3 + ol > li::before { top: 4px; left: 0; }
+.profile-container .interests-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 28px; }
+.profile-container .interest-card { position: relative; padding: 0 0 0 17px; border: 0; border-radius: 0; background: transparent; box-shadow: none; transition: none; }
+.profile-container .interest-card::before { content: ""; position: absolute; left: 0; top: .7em; width: 5px; height: 5px; border-radius: 50%; background: #267b83; }
+.profile-container .interest-text { color: #435c73; font-weight: 500; font-size: 1rem; line-height: 1.7; }
+.profile-container .interest-card:hover { background: transparent; border-color: transparent; box-shadow: none; transform: none; }
+.profile-container .person-output-items, .profile-container .initiatives-grid { gap: 0; }
+.profile-container .person-output { border: 0; border-bottom: 1px solid #e7edf0; border-radius: 0; background: transparent; overflow: visible; }
+.profile-container .person-output:last-child { border-bottom: 0; }
+.profile-container .person-output-row { padding: 16px 0; gap: 12px; }
+.profile-container .person-output-type { background: transparent; border: 0; padding: 0; border-radius: 0; color: #607782; font-size: .75rem; font-weight: 600; }
+.profile-container .person-output-details { padding: 0 0 18px; border: 0; background: transparent; }
+.profile-container .initiative-card, .profile-container .person-about-details .initiative-card { padding: 14px 0; background: transparent; border: 0; border-bottom: 1px solid #e7edf0; border-radius: 0; box-shadow: none; }
+.profile-container .initiative-card:last-child { border-bottom: 0; }
+.profile-container .initiative-card:hover { background: transparent; box-shadow: none; transform: none; }
+@media (max-width: 600px) {
+  .profile-container .interests-grid, .profile-container .expertise-list { grid-template-columns: 1fr; gap: 10px; }
+  .profile-container .person-about-details > .expertise-section, .profile-container .person-about-details > .research-areas-section, .profile-container .person-about-details > .key-initiatives, .profile-container .qualifications, .profile-container .memberships { padding: 0; }
+}
+
+.profile-container .interests-grid { list-style: none; margin: 0; padding: 0; }
+
+/* Soft, understated cards for research interests only. */
+.profile-container .interests-grid { gap: 10px 14px; }
+.profile-container .interest-card { padding: 12px 16px; border: 1px solid #e1e8ec; border-radius: 10px; background: #f7f9fa; box-shadow: none; }
+.profile-container .interest-card::before { display: none; }
+.profile-container .interest-text { color: #354b5c; font-size: .95rem; font-weight: 500; line-height: 1.65; }
+.profile-container .interest-card:hover { background: #f7f9fa; border-color: #e1e8ec; box-shadow: none; transform: none; }
+@media (max-width: 600px) { .profile-container .interest-card { padding: 11px 14px; } }
+
+/* Editorial list treatment for qualifications, memberships and biography lists. */
+.profile-container .profile-list-heading { display: flex; align-items: center; gap: 9px; }
+.profile-container .profile-list-heading svg { flex-shrink: 0; color: #527a87; }
+.profile-container .credentials-section { gap: 32px; margin-top: 4px; }
+.profile-container .credentials-list { gap: 0; }
+.profile-container .credential-item { padding: 12px 0; border-bottom: 1px solid #e9eef1; font-size: .95rem; line-height: 1.7; }
+.profile-container .credential-item:first-child { padding-top: 0; }
+.profile-container .credential-item:last-child { border-bottom: 0; padding-bottom: 0; }
+.profile-container .credential-item::before { display: none; }
+.profile-container .credential-title { display: block; color: #1a3e5a; font-weight: 600; }
+.profile-container .credential-description { display: block; color: #526777; font-size: .9rem; margin-top: 3px; }
+.profile-container .bio-paragraph h3 + ul > li, .profile-container .bio-paragraph h3 + ol > li { padding-top: 8px; padding-bottom: 8px; line-height: 1.75; }
+.profile-container .bio-paragraph h3 + ul > li::before { top: 20px; }
+.profile-container .bio-paragraph h3 + ol > li::before { top: 8px; }
+@media (max-width: 600px) { .profile-container .credentials-section { gap: 24px; } }
+
+/* One subtle panel per biography list, with unboxed rows inside. */
+.profile-container .credentials-list,
+.profile-container .bio-paragraph h3 + ul,
+.profile-container .bio-paragraph h3 + ol { background: #f7f9fa; border: 1px solid #e5ebef; border-radius: 12px; padding: 16px 20px; margin-top: 0; }
+.profile-container .credentials-list { gap: 0; }
+.profile-container .credential-item { padding: 11px 0; border-bottom: 1px solid #e4ebef; }
+.profile-container .credential-item:first-child { padding-top: 0; }
+.profile-container .credential-item:last-child { border-bottom: 0; padding-bottom: 0; }
+.profile-container .bio-paragraph h3 + ul,
+.profile-container .bio-paragraph h3 + ol { grid-template-columns: 1fr; gap: 0; }
+.profile-container .bio-paragraph h3 + ul > li,
+.profile-container .bio-paragraph h3 + ol > li { background: transparent; border: 0; border-bottom: 1px solid #e4ebef; border-radius: 0; padding-top: 10px; padding-bottom: 10px; }
+.profile-container .bio-paragraph h3 + ul > li:last-child,
+.profile-container .bio-paragraph h3 + ol > li:last-child { border-bottom: 0; }
+.profile-container .bio-paragraph h3 + ul > li::before { top: 22px; }
+.profile-container .bio-paragraph h3 + ol > li::before { top: 10px; }
+@media (max-width: 600px) {
+  .profile-container .credentials-list,
+  .profile-container .bio-paragraph h3 + ul,
+  .profile-container .bio-paragraph h3 + ol { padding: 14px 16px; }
+}
+
+/* Cover every top-level rich-text list, including editor wrappers. */
+.profile-container .bio-paragraph .bio-list-panel { display: block; margin: 14px 0 24px; padding: 6px 20px 6px 38px; background: #f7f9fa; border: 1px solid #e5ebef; border-radius: 12px; list-style: disc outside; }
+.profile-container .bio-paragraph ol.bio-list-panel { list-style: decimal outside; padding-left: 44px; }
+.profile-container .bio-paragraph .bio-list-panel > .bio-list-row { display: list-item; position: static; min-width: 0; margin: 0; padding: 12px 0 12px 4px; background: transparent; border: 0; border-bottom: 1px solid #e4ebef; border-radius: 0; line-height: 1.75; overflow-wrap: anywhere; }
+.profile-container .bio-paragraph .bio-list-panel > .bio-list-row:last-child { border-bottom: 0; }
+.profile-container .bio-paragraph .bio-list-panel > .bio-list-row::before { display: none; content: none; }
+.profile-container .bio-paragraph .bio-list-row ul, .profile-container .bio-paragraph .bio-list-row ol { display: block; margin: 10px 0 0; padding-left: 24px; background: transparent; border: 0; border-radius: 0; }
+.profile-container .bio-paragraph .bio-list-row ul { list-style: disc outside; }
+.profile-container .bio-paragraph .bio-list-row ol { list-style: decimal outside; }
+.profile-container .bio-paragraph .bio-list-row li { padding: 4px 0; margin: 0; }
+.profile-container .bio-paragraph .bio-list-row p { margin-bottom: 8px; }
+.profile-container .bio-paragraph .bio-list-row > :last-child { margin-bottom: 0; }
+@media (max-width: 600px) { .profile-container .bio-paragraph .bio-list-panel { padding-left: 30px; padding-right: 14px; } .profile-container .bio-paragraph ol.bio-list-panel { padding-left: 36px; } }
+
+/* Consistent grouped treatment for structured About lists too. */
+.profile-container .person-about-details .expertise-list,
+.profile-container .person-about-details .research-areas-grid,
+.profile-container .person-about-details .initiatives-grid { display: block; margin: 0; padding: 6px 18px; border: 1px solid #e5ebef; border-radius: 12px; background: #f7f9fa; }
+.profile-container .person-about-details .expertise-item { padding: 11px 0 11px 16px; border-bottom: 1px solid #e4ebef; }
+.profile-container .person-about-details .expertise-item::before { top: 23px; }
+.profile-container .person-about-details .expertise-item:last-child { border-bottom: 0; }
+.profile-container .research-areas-grid > .research-area-card { padding: 14px 0; border: 0; border-bottom: 1px solid #e4ebef; background: transparent; border-radius: 0; }
+.profile-container .research-areas-grid > .research-area-card:last-child { border-bottom: 0; }
+.profile-container .person-about-details .initiatives-grid .initiative-card { padding: 13px 0; align-items: center; background: transparent; }
+.profile-container .person-about-details .initiatives-grid .initiative-title { font-size: .95rem; font-weight: 600; }
+@media (max-width: 600px) {
+  .profile-container .person-about-details .expertise-list,
+  .profile-container .person-about-details .research-areas-grid,
+  .profile-container .person-about-details .initiatives-grid { padding-left: 16px; padding-right: 16px; }
+}
