@@ -180,13 +180,12 @@ export const GlobalDataProvider = ({ children }) => {
       // Check cache first
       const cachedPersonInfo = getCachedData(PERSON_INFO_CACHE_KEY);
       if (cachedPersonInfo && cachedPersonInfo[slug]) {
-        console.log(`INSTANT: ${slug} loaded from cache`);
+        console.log(`Showing cached ${slug} while refreshing from API`);
         setPersonInformation(cachedPersonInfo[slug]);
         setPersonLoading(false);
-        return;
       }
 
-      // Fetch from API
+      // Always refresh viewed profiles so admin changes do not stay stale.
       console.log(`API FETCH: ${slug}`);
       const personData = await getPersonInformation(slug);
       setPersonInformation(personData);
@@ -209,6 +208,7 @@ export const GlobalDataProvider = ({ children }) => {
   const refreshCache = useCallback(async () => {
     console.log("Refreshing people list...");
     localStorage.removeItem(PEOPLE_CACHE_KEY);
+    localStorage.removeItem(PERSON_INFO_CACHE_KEY);
 
     setPeopleLoading(true);
     try {

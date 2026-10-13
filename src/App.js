@@ -1,5 +1,7 @@
 import React from "react";
-import { HashRouter as Router, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import PageMetadata from "./seo/PageMetadata";
+import SiteMap from "./components/SiteMap";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import HomePage from "./components/HomePage";
@@ -90,12 +92,14 @@ const AppWithRouter = () => {
   return (
     <Router basename="/">
       <ScrollToTop />
+      <PageMetadata />
       <ErrorRedirectHandler>
         <div className="app-container">
           <Navbar />
           <main className="main-content">
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/sitemap" element={<SiteMap />} />
               <Route path="/about" element={<About />} />
               <Route path="/people" element={<People />} />
               <Route path="/projects" element={<Projects />} />

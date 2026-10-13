@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /blog-editor/
+Disallow: /blog-dashboard/
+Disallow: /blog-admin/
+Disallow: /login/
+
+Sitemap: https://www.ehealth4cancer.ie/sitemap.xml

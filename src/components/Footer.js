@@ -80,6 +80,7 @@ const Footer = () => {
         <div className="footer-bottom-content">
           <p>&copy; {currentYear} eHealth-Hub for Cancer. All rights reserved.</p>
           <div className="footer-bottom-links">
+            <Link to="/sitemap">Site Map</Link>
             <Link to="/privacy">Privacy Policy</Link>
             <Link to="/terms">Terms of Use</Link>
           </div>

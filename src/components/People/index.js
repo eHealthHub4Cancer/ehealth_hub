@@ -5,13 +5,6 @@ import {
   Mail,
   ChevronRight,
   ExternalLink,
-  Twitter,
-  Github,
-  Linkedin,
-  Globe,
-  GraduationCap,
-  BookOpen,
-  Fingerprint,
 } from "lucide-react";
 import { biographyHtml } from "./biographyHtml";
 import { useGlobalData } from "../globaldatacontext";
@@ -21,19 +14,7 @@ import ExpandableList from "./ExpandableList";
 import ResearchOutputs from "./ResearchOutputs";
 import PersonPortrait from "./PersonPortrait";
 
-const getLinkIcon = (name = "", icon = "") => {
-  const normalize = (value) => String(value || "").toLowerCase().replace(/[\s_-]/g, "");
-  const icons = {
-    twitter: Twitter, x: Twitter, github: Github, code: Github,
-    linkedin: Linkedin, orcid: Fingerprint, fingerprint: Fingerprint,
-    googlescholar: GraduationCap, scholar: GraduationCap, school: GraduationCap,
-    graduationcap: GraduationCap, researchgate: BookOpen, pubmed: BookOpen,
-    scopus: BookOpen, webofscience: BookOpen, bookopen: BookOpen,
-    globe: Globe, language: Globe, mail: Mail, email: Mail,
-    home: Home, homepage: Home,
-  };
-  return icons[normalize(icon)] || icons[normalize(name)] || Globe;
-};
+import { getLinkIcon } from "./socialIcons";
 
 const Index = () => {
   const { slug } = useParams();

@@ -210,7 +210,7 @@ const OHDSIIreland = () => {
             </div>
             <div className="resource-card">
               <h3>
-                <a href="https://www.ehealth4cancer.ie/#/blog/Ke0b0Mr3iBRZYE3j2mo2" 
+                <a href="https://www.ehealth4cancer.ie/blog/Ke0b0Mr3iBRZYE3j2mo2"
                    target="_blank" rel="noopener noreferrer">
                   Newcomers Guide
                 </a>

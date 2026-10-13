@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, memo } from "react";
+import React, { useState, useCallback, useEffect, useRef, memo } from "react";
 import { Link } from "react-router-dom";
 import { Filter, RefreshCw, ArrowDown, Search } from "lucide-react";
 import "./People.css";
@@ -70,20 +70,38 @@ function People() {
   }, []);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [search, setSearch] = useState("");
+  const [chosenTags, setChosenTags] = useState(null);
+  const badgePickerRef = useRef(null);
+  useEffect(() => {
+    const dismiss = event => {
+      const picker = badgePickerRef.current;
+      if (picker && !picker.contains(event.target)) picker.open = false;
+    };
+    const escape = event => { if (event.key === 'Escape' && badgePickerRef.current) badgePickerRef.current.open = false; };
+    document.addEventListener('pointerdown', dismiss);
+    document.addEventListener('keydown', escape);
+    return () => { document.removeEventListener('pointerdown', dismiss); document.removeEventListener('keydown', escape); };
+  }, []);
 
   const people = globalPeople ? sortPeople([...globalPeople]) : [];
   const allTags = [...new Set(people.flatMap((person) => person.tags || []))];
 
+  const availableTags = chosenTags === null ? allTags : allTags.filter(tag => chosenTags.includes(tag));
+  const allTagsChosen = chosenTags === null || availableTags.length === allTags.length;
+  const unselectedTags = allTags.filter(tag => !availableTags.includes(tag));
+  const visibleFilterTags = availableTags;
+  const hiddenTags = unselectedTags;
+  const changeChosenTag = (tag) => {
+    const current = chosenTags === null ? allTags : chosenTags;
+    const next = current.includes(tag) ? current.filter(value => value !== tag) : [...current, tag];
+    setChosenTags(next);
+    setSelectedFilters(previous => previous.filter(value => next.includes(value)));
+    setExtraCount(0);
+  };
+
   const getTagCount = useCallback((tag) => {
     return people.filter((person) => person.tags?.includes(tag)).length;
   }, [people]);
-
-  const toggleFilter = useCallback((tag) => {
-    setExtraCount(0);
-    setSelectedFilters((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-    );
-  }, []);
 
   const filteredPeople = people.filter(
     (person) =>
@@ -144,13 +162,20 @@ function People() {
           <div className="filter-header">
             <Filter size={16} />
             <span>Filter by category</span>
+            <details className="filter-badge-picker" ref={badgePickerRef}>
+              <summary>Choose filter badges</summary>
+              <div className="filter-badge-options">
+                <label><input type="checkbox" checked={allTagsChosen} onChange={event => { setChosenTags(event.target.checked ? null : []); setSelectedFilters([]); setExtraCount(0); }} />Select all</label>
+                {allTags.map(tag => <label key={tag}><input type="checkbox" checked={chosenTags === null || chosenTags.includes(tag)} onChange={() => changeChosenTag(tag)} />{tag}</label>)}
+              </div>
+            </details>
           </div>
           <div className="filter-tags">
-            {allTags.map((tag) => (
+            {visibleFilterTags.map((tag) => (
               <button
                 key={tag}
                 className={`filter-tag ${selectedFilters.includes(tag) ? "active" : ""}`}
-                onClick={() => toggleFilter(tag)}
+                onClick={() => { setSelectedFilters(previous => previous.includes(tag) ? previous.filter(value => value !== tag) : [...previous, tag]); setExtraCount(0); }}
                 aria-pressed={selectedFilters.includes(tag)}
               >
                 <span>{tag.charAt(0).toUpperCase() + tag.slice(1)}</span>
@@ -158,12 +183,18 @@ function People() {
               </button>
             ))}
           </div>
+          {hiddenTags.length > 0 && <button type="button" className="filter-badge-more" aria-label={`Load more filter badges (${Math.min(5, hiddenTags.length)})`} onClick={() => {
+            const loaded = hiddenTags.slice(0, 5);
+            const next = [...new Set([...availableTags, ...loaded])];
+            setChosenTags(next);
+                    setExtraCount(0);
+          }}>Load more ({Math.min(5, hiddenTags.length)})<ArrowDown size={15} aria-hidden="true" /></button>}
         </div>
       </div>
 
       <div className="directory-results" aria-live="polite">
         <span>{filteredPeople.length} {filteredPeople.length === 1 ? "person" : "people"}{search || selectedFilters.length ? " matching your search" : ""}</span>
-        {(search || selectedFilters.length > 0) && <button type="button" onClick={() => {setSearch(""); setSelectedFilters([]); setExtraCount(0);}}>Clear filters</button>}
+        {(search || selectedFilters.length > 0) && <button type="button" onClick={() => {setSearch(""); setSelectedFilters([]); setChosenTags(null); setExtraCount(0);}}>Clear filters</button>}
       </div>
       <div className="people-grid">
         {people.length > 0 ? (

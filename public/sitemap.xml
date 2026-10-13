@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Production build expands this with current public profiles and published articles. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.ehealth4cancer.ie/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/about/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/people/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/projects/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/ohdsi-ireland/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/ohdsi-ireland/seminars/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news-new/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/news/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/forum/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/calendar/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/blog/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/output/publications/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/output/talks/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/resources/</loc></url>
+  <url><loc>https://www.ehealth4cancer.ie/sitemap/</loc></url>
+</urlset>
