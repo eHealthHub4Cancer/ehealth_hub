@@ -17,6 +17,7 @@ import ResearchOutputs from "./ResearchOutputs";
 import PersonPortrait from "./PersonPortrait";
 
 import { getLinkIcon } from "./socialIcons";
+import { prerenderedHtml, PrerenderedContent } from "../../seo/prerendered";
 
 const qualificationParts = (text) => {
   const match = String(text).match(/^(.+?)(?:\s[-–—]\s|,\s+)(.+)$/);
@@ -47,6 +48,10 @@ const Index = () => {
       }
     };
   }, [resetPersonInformation]);
+
+  // Until the profile arrives, show its pre-rendered bio (when this page was opened directly).
+  const prerendered = prerenderedHtml();
+  if (prerendered && !error && (personLoading || !personInformation)) return <PrerenderedContent html={prerendered} />;
 
   // Use personLoading instead of general loading
   if (personLoading) return <Loader dataName="person" />;
