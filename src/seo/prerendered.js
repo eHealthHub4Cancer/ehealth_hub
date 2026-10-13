@@ -19,5 +19,5 @@ export function prerenderedHtml(pathname = window.location.pathname) {
 
 // Content is generated and escaped at build time from our own data.
 export function PrerenderedContent({ html }) {
-  return <main className="seo-loading-shell" dangerouslySetInnerHTML={{ __html: html }} />;
+  return <div className="seo-loading-shell" dangerouslySetInnerHTML={{ __html: html }} />;
 }
