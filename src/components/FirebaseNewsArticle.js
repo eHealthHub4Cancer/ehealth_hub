@@ -8,6 +8,7 @@ import {
 import { ClipLoader } from 'react-spinners';
 import { getArticleBySlug } from '../services/newsService';
 import './FirebaseNewsArticle.css';
+import { prerenderedHtml, PrerenderedContent } from '../seo/prerendered';
 
 const FirebaseNewsArticle = () => {
   const { slug } = useParams();
@@ -50,6 +51,9 @@ const FirebaseNewsArticle = () => {
   };
 
   if (loading) {
+    // Show the pre-rendered article text (when this page was opened directly) instead of a spinner.
+    const prerendered = prerenderedHtml();
+    if (prerendered) return <div className="fb-article-container"><PrerenderedContent html={prerendered} /></div>;
     return (
       <div className="fb-article-container">
         <div className="loading-container">
