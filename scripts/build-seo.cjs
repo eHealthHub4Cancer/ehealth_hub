@@ -163,18 +163,19 @@ async function main() {
   for (const [, route] of app.matchAll(/<Route path="(\/news-archive\/[^:"]+)"/g)) if (!archivedNews[route.split('/').pop()]) records.push({ route, title: route.split('/').pop().split('-').map(word => word[0].toUpperCase() + word.slice(1)).join(' '), description: 'Archived research news from the eHealth Hub for Cancer.' });
   const unique = [...new Map(records.map(record => [record.route, record])).values()];
   const navigation = `<nav aria-label="Website pages"><ul>${pages.filter(([route]) => !hiddenPages.has(route)).map(([route, title]) => `<li><a href="${route === '/' ? '/' : route + '/'}">${escape(title)}</a></li>`).join('')}</ul></nav>`;
+  // Replacements use functions so "$&"-style patterns in titles or text are inserted literally.
   for (const record of unique) {
     const canonical = `${origin}${record.route === '/' ? '/' : record.route + '/'}`;
-    let html = template.replace(/<title>.*?<\/title>/, `<title>${escape(record.title)} | ${siteName}</title>`);
-    html = html.replace(/<meta name="description" content="[^"]*"\s*\/?\s*>/, `<meta name="description" content="${escape(record.description)}"/>`);
+    let html = template.replace(/<title>.*?<\/title>/, () => `<title>${escape(record.title)} | ${siteName}</title>`);
+    html = html.replace(/<meta name="description" content="[^"]*"\s*\/?\s*>/, () => `<meta name="description" content="${escape(record.description)}"/>`);
     // Swap the default logo share image for the page's own image when it has one.
     if (/^https:\/\//.test(record.image || '')) {
       html = html.replace(/<meta (?:property="og:image(?::width|:height|:alt)?"|name="twitter:image")[^>]*>/g, '')
-        .replace('</head>', `<meta property="og:image" content="${escape(record.image)}"/><meta name="twitter:image" content="${escape(record.image)}"/></head>`);
+        .replace('</head>', () => `<meta property="og:image" content="${escape(record.image)}"/><meta name="twitter:image" content="${escape(record.image)}"/></head>`);
     }
-    if (record.structured) html = html.replace('</head>', `${jsonLd(record.structured)}</head>`);
-    html = html.replace('</head>', `<link rel="canonical" href="${canonical}"/><meta property="og:title" content="${escape(record.title)} | ${siteName}"/><meta property="og:description" content="${escape(record.description)}"/><meta property="og:url" content="${canonical}"/></head>`);
-    html = html.replace('<div id="root"></div>', `<div id="root"><main class="seo-loading-shell"><h1>${escape(record.title)}</h1>${record.body || `<p>${escape(record.description)}</p>`}${navigation}</main></div>`);
+    if (record.structured) html = html.replace('</head>', () => `${jsonLd(record.structured)}</head>`);
+    html = html.replace('</head>', () => `<link rel="canonical" href="${canonical}"/><meta property="og:title" content="${escape(record.title)} | ${siteName}"/><meta property="og:description" content="${escape(record.description)}"/><meta property="og:url" content="${canonical}"/></head>`);
+    html = html.replace('<div id="root"></div>', () => `<div id="root"><main class="seo-loading-shell"><h1>${escape(record.title)}</h1>${record.body || `<p>${escape(record.description)}</p>`}${navigation}</main></div>`);
     const folder = path.join(build, record.route.slice(1));
     fs.mkdirSync(folder, { recursive: true });
     fs.writeFileSync(path.join(folder, 'index.html'), html);
