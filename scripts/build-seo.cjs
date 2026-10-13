@@ -105,6 +105,7 @@ async function main() {
     records.push({
       route: `/people/${encodeURIComponent(person.slug)}`,
       lastmod: info.updated_at || person.updated_at,
+      image: person.image,
       title: name,
       description: summary([[name, person.association].filter(Boolean).join(', '), interests.length ? `Research interests: ${interests.join(', ')}.` : bio].filter(Boolean).join('. '), name),
       body: `${person.association ? `<p><strong>${escape(person.association)}</strong></p>` : ''}${interests.length ? `<p>Research interests: ${escape(interests.join(', '))}</p>` : ''}${paragraphs(info.about_user)}`,
@@ -116,6 +117,7 @@ async function main() {
     records.push({
       route: `/blog/${encodeURIComponent(post.id)}`,
       lastmod: post.updated,
+      image: f.coverImage?.stringValue,
       title: textFrom(f.title?.stringValue) || 'Research article',
       description: summary(f.content?.stringValue, 'Research insights and perspectives from the eHealth Hub for Cancer.'),
       body: `${authors ? `<p><em>${escape(authors)}</em></p>` : ''}${paragraphs(f.content?.stringValue)}`,
@@ -128,6 +130,7 @@ async function main() {
     records.push({
       route: `/news/${encodeURIComponent(f.slug.stringValue)}`,
       lastmod: article.updated,
+      image: f.imageUrl?.stringValue,
       title: f.title?.stringValue || 'News article',
       description: summary(f.excerpt?.stringValue || f.content?.stringValue, 'News and updates from the eHealth Hub for Cancer.'),
       body: `${byline ? `<p><em>${byline}</em></p>` : ''}${paragraphs(f.content?.stringValue || f.excerpt?.stringValue)}`,
@@ -142,6 +145,11 @@ async function main() {
     const canonical = `${origin}${record.route === '/' ? '/' : record.route + '/'}`;
     let html = template.replace(/<title>.*?<\/title>/, `<title>${escape(record.title)} | ${siteName}</title>`);
     html = html.replace(/<meta name="description" content="[^"]*"\s*\/?\s*>/, `<meta name="description" content="${escape(record.description)}"/>`);
+    // Swap the default logo share image for the page's own image when it has one.
+    if (/^https:\/\//.test(record.image || '')) {
+      html = html.replace(/<meta (?:property="og:image(?::width|:height|:alt)?"|name="twitter:image")[^>]*>/g, '')
+        .replace('</head>', `<meta property="og:image" content="${escape(record.image)}"/><meta name="twitter:image" content="${escape(record.image)}"/></head>`);
+    }
     html = html.replace('</head>', `<link rel="canonical" href="${canonical}"/><meta property="og:title" content="${escape(record.title)} | ${siteName}"/><meta property="og:description" content="${escape(record.description)}"/><meta property="og:url" content="${canonical}"/></head>`);
     html = html.replace('<div id="root"></div>', `<div id="root"><main class="seo-loading-shell"><h1>${escape(record.title)}</h1>${record.body || `<p>${escape(record.description)}</p>`}${navigation}</main></div>`);
     const folder = path.join(build, record.route.slice(1));
