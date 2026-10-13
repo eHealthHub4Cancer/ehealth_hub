@@ -71,7 +71,7 @@ const FirebaseNewsArticle = () => {
       <div className="fb-article-container">
         <div className="error-container">
           <h2>{error || 'Article Not Found'}</h2>
-          <Link to="/news-new" className="back-link">
+          <Link to="/news" className="back-link">
             <ChevronLeft size={20} />
             Back to News
           </Link>
@@ -228,7 +228,7 @@ const FirebaseNewsArticle = () => {
   return (
     <div className="fb-article-container">
       <nav className="article-breadcrumb">
-        <Link to="/news-new" className="breadcrumb-link">News</Link>
+        <Link to="/news" className="breadcrumb-link">News</Link>
         <ChevronLeft size={16} />
         <span>{article.title}</span>
       </nav>
@@ -326,7 +326,7 @@ const FirebaseNewsArticle = () => {
       </article>
 
       <div className="article-footer">
-        <Link to="/news-new" className="back-to-news">
+        <Link to="/news" className="back-to-news">
           <ChevronLeft size={20} />
           <span>Back to News</span>
         </Link>

@@ -14,7 +14,7 @@ export function routeMetadata(pathname) {
   }
   if (path.startsWith('/people/')) return { title: 'Researcher Profile', description: 'Learn about a researcher, their affiliations, research interests and outputs.', dynamic: true };
   if (path.startsWith('/blog/')) return { title: 'Research Article', description: 'Read research insights from the eHealth Hub for Cancer.', dynamic: true };
-  if (/^\/(news|news-new)\//.test(path)) return { title: 'News Article', description: 'Read news and research updates from the eHealth Hub for Cancer.', dynamic: true };
+  if (/^\/(news|news-new|news-archive)\//.test(path)) return { title: 'News Article', description: 'Read news and research updates from the eHealth Hub for Cancer.', dynamic: true };
   if (path === '/all-island-forum') return routeMetadata('/forum');
   return { title: 'Page', description: publicPages[0][2], private: false };
 }

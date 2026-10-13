@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation, useNavigate } from "react-router-dom";
 import PageMetadata from "./seo/PageMetadata";
 import SiteMap from "./components/SiteMap";
 import Navbar from "./components/Navbar";
@@ -88,6 +88,11 @@ const ErrorRedirectHandler = ({ children }) => {
 };
 
 // Wrapper for the app with the router
+const LegacyNewsRedirect = () => {
+  const { pathname, search, hash } = useLocation();
+  return <Navigate replace to={`${pathname.replace(/^\/news-new/, '/news')}${search}${hash}`} />;
+};
+
 const AppWithRouter = () => {
   return (
     <Router basename="/">
@@ -103,22 +108,24 @@ const AppWithRouter = () => {
               <Route path="/about" element={<About />} />
               <Route path="/people" element={<People />} />
               <Route path="/projects" element={<Projects />} />
-              <Route path="/news" element={<GoogleSheetNews />} />
-              <Route path="/news/:slug" element={<NewsArticle />} />
+              <Route path="/news" element={<FirebaseNews />} />
+              <Route path="/news-archive" element={<GoogleSheetNews />} />
+              <Route path="/news/:slug" element={<FirebaseNewsArticle />} />
+              <Route path="/news-archive/:slug" element={<NewsArticle />} />
               <Route path="/people/:slug" element={<Index />} />
-              <Route path="/news/gender-inequality-study" element={<GenderInequalityStudy />} />
-              <Route path="/news/good-friday-cancer-legacy" element={<GoodFridayCancerLegacy />} />
-              <Route path="/news/phd-opportunity" element={<PhDOpportunity />} />
-              <Route path="/news/belfast-agreement-showcase" element={<BelfastAgreement25 />} />
-              <Route path="/news/ldcrc-building-together" element={<LDCRCBuildingTogether />} />
-              <Route path="/news/dell-technologies-presentation" element={<DellTechnologiesPresentation />} />
-              <Route path="/news/aicri-launch" element={<AICRILaunch />} />
-              <Route path="/news/ohdsi-meeting" element={<OHDSIMeeting />} />
-              <Route path="/news/hrb-conference" element={<HRBConference />} />
-              <Route path="/news/bcni-talk" element={<BCNITalk />} />
-              <Route path="/news/rte-brainstorm" element={<RTEBrainstorm />} />
-              <Route path="/news/postdoctoral-application" element={<Postdoc />} />
-              <Route path="/news/limerick-post" element={<LimerickPost />} />
+              <Route path="/news-archive/gender-inequality-study" element={<GenderInequalityStudy />} />
+              <Route path="/news-archive/good-friday-cancer-legacy" element={<GoodFridayCancerLegacy />} />
+              <Route path="/news-archive/phd-opportunity" element={<PhDOpportunity />} />
+              <Route path="/news-archive/belfast-agreement-showcase" element={<BelfastAgreement25 />} />
+              <Route path="/news-archive/ldcrc-building-together" element={<LDCRCBuildingTogether />} />
+              <Route path="/news-archive/dell-technologies-presentation" element={<DellTechnologiesPresentation />} />
+              <Route path="/news-archive/aicri-launch" element={<AICRILaunch />} />
+              <Route path="/news-archive/ohdsi-meeting" element={<OHDSIMeeting />} />
+              <Route path="/news-archive/hrb-conference" element={<HRBConference />} />
+              <Route path="/news-archive/bcni-talk" element={<BCNITalk />} />
+              <Route path="/news-archive/rte-brainstorm" element={<RTEBrainstorm />} />
+              <Route path="/news-archive/postdoctoral-application" element={<Postdoc />} />
+              <Route path="/news-archive/limerick-post" element={<LimerickPost />} />
               <Route path="/output/talks" element={<Talks />} />
               <Route path="/output/publications" element={<Publications />} />
               <Route path="/resources" element={<Resources />} />
@@ -180,8 +187,7 @@ const AppWithRouter = () => {
               />
 
               {/* Firebase News routes (new - for testing) */}
-              <Route path="/news-new" element={<FirebaseNews />} />
-              <Route path="/news-new/:slug" element={<FirebaseNewsArticle />} />
+              <Route path="/news-new/*" element={<LegacyNewsRedirect />} />
 
               {/* News Migration Tool (one-time use) */}
               <Route

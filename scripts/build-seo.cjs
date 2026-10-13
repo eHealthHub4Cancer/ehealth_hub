@@ -39,10 +39,10 @@ async function main() {
   if (!Array.isArray(people)) throw new Error('People API must return a public profile list.');
   for (const person of people) if (person.slug) records.push({ route: `/people/${encodeURIComponent(person.slug)}`, title: person.full_title_name || person.full_name, description: [person.full_title_name || person.full_name, person.association].filter(Boolean).join(' — ') });
   for (const post of blogs) records.push({ route: `/blog/${encodeURIComponent(post.id)}`, title: post.fields.title?.stringValue || 'Research article', description: 'Research insights and perspectives from the eHealth Hub for Cancer.' });
-  for (const article of news) if (article.fields.slug?.stringValue) records.push({ route: `/news-new/${encodeURIComponent(article.fields.slug.stringValue)}`, title: article.fields.title?.stringValue || 'News article', description: 'News and updates from the eHealth Hub for Cancer.' });
+  for (const article of news) if (article.fields.slug?.stringValue) records.push({ route: `/news/${encodeURIComponent(article.fields.slug.stringValue)}`, title: article.fields.title?.stringValue || 'News article', description: 'News and updates from the eHealth Hub for Cancer.' });
   // Include the static news pages that remain linked in the archive.
   const app = fs.readFileSync(path.join(root, 'src/App.js'), 'utf8');
-  for (const [, route] of app.matchAll(/<Route path="(\/news\/[^:"]+)"/g)) records.push({ route, title: route.split('/').pop().split('-').map(word => word[0].toUpperCase() + word.slice(1)).join(' '), description: 'Archived research news from the eHealth Hub for Cancer.' });
+  for (const [, route] of app.matchAll(/<Route path="(\/news-archive\/[^:"]+)"/g)) records.push({ route, title: route.split('/').pop().split('-').map(word => word[0].toUpperCase() + word.slice(1)).join(' '), description: 'Archived research news from the eHealth Hub for Cancer.' });
   const unique = [...new Map(records.map(record => [record.route, record])).values()];
   const navigation = `<nav aria-label="Website pages"><ul>${pages.map(([route, title]) => `<li><a href="${route === '/' ? '/' : route + '/'}">${escape(title)}</a></li>`).join('')}</ul></nav>`;
   for (const record of unique) {
@@ -54,6 +54,13 @@ async function main() {
     const folder = path.join(build, record.route.slice(1));
     fs.mkdirSync(folder, { recursive: true });
     fs.writeFileSync(path.join(folder, 'index.html'), html);
+  }
+  // Preserve previously published news-new URLs without duplicate sitemap entries.
+  for (const record of unique.filter(record => record.route === '/news' || record.route.startsWith('/news/'))) {
+    const legacy = record.route.replace('/news', '/news-new');
+    const folder = path.join(build, legacy.slice(1));
+    fs.mkdirSync(folder, { recursive: true });
+    fs.writeFileSync(path.join(folder, 'index.html'), `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=${escape(record.route + '/')}"/><link rel="canonical" href="${origin}${escape(record.route + '/')}"/><title>News | ${siteName}</title></head><body><a href="${escape(record.route + '/')}">Continue to News</a></body></html>`);
   }
   // Unknown/deep private routes still load the router via GitHub Pages' fallback.
   fs.writeFileSync(path.join(build, '404.html'), template.replace('</head>', '<meta name="robots" content="noindex"/></head>'));

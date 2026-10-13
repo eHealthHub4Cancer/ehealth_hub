@@ -122,3 +122,18 @@
 .people-container .filter-badge-more:hover { background: #deedf0; }
 .people-container .filter-badge-empty { margin: 12px 0 0; color: #435c73; font-size: .85rem; }
 .people-container .filter-badge-picker summary:focus-visible { outline: 2px solid #267b83; outline-offset: 3px; }
+
+/* Improve directory readability without increasing card length. */
+.people-container .card-content h3 { color: #17374d; font-size: 1.2rem; font-weight: 700; line-height: 1.4; }
+.people-container .card-title { color: #354b5c; font-size: .95rem; font-weight: 500; line-height: 1.55; }
+.people-container .view-profile { color: #205d67; font-size: .9rem; font-weight: 600; }
+.people-container .tag { color: #263744; font-size: .8rem; font-weight: 600; }
+@media (max-width: 600px) { .people-container .card-content h3 { font-size: 1.1rem; } .people-container .card-title { font-size: .9rem; } .people-container .tag { font-size: .76rem; } }
+
+/* Wider cards while retaining the existing responsive column counts. */
+.people-container { max-width: 1440px; padding-left: 28px; padding-right: 28px; }
+.people-container .people-grid { gap: 16px; }
+@media (max-width: 800px) { .people-container { padding-left: 20px; padding-right: 20px; } .people-container .people-grid { gap: 12px; } }
+@media (max-width: 580px) { .people-container { padding-left: 14px; padding-right: 14px; } .people-container .people-grid { gap: 10px; } }
+
+@media (min-width: 801px) { .people-container { padding-left: clamp(48px, 6vw, 88px); padding-right: clamp(48px, 6vw, 88px); } }

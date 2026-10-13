@@ -30,14 +30,9 @@
     "Explore seminars on observational health data, research methods and real-world evidence."
   ],
   [
-    "/news-new",
+    "/news",
     "News",
     "Read the latest news and updates from the eHealth Hub for Cancer."
-  ],
-  [
-    "/news",
-    "News Archive",
-    "Explore archived news from the eHealth Hub for Cancer."
   ],
   [
     "/forum",
@@ -73,5 +68,10 @@
     "/sitemap",
     "Site Map",
     "Browse the public pages and researcher profiles of the eHealth Hub for Cancer."
+  ],
+  [
+    "/news-archive",
+    "News Archive",
+    "Explore archived news from the eHealth Hub for Cancer."
   ]
 ]

@@ -15,7 +15,7 @@ export default function SiteMap() {
       if (!active) return;
       const links = [];
       if (results[0].status === 'fulfilled') links.push(...results[0].value.map(post => ({ path: `/blog/${post.id}`, title: post.title })));
-      if (results[1].status === 'fulfilled') links.push(...results[1].value.filter(article => article.slug).map(article => ({ path: `/news-new/${article.slug}`, title: article.title })));
+      if (results[1].status === 'fulfilled') links.push(...results[1].value.filter(article => article.slug).map(article => ({ path: `/news/${article.slug}`, title: article.title })));
       setArticles(links);
     });
     return () => { active = false; };

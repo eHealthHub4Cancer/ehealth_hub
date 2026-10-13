@@ -331,3 +331,26 @@
         color: white;
     }
 }
+
+.footer .footer-contact-item { display: flex; align-items: flex-start; gap: 9px; }
+.footer .footer-contact-item svg { flex-shrink: 0; margin-top: 3px; }
+
+.footer .contact-info .footer-contact-item { color: #fff; font-weight: 600; line-height: 1.7; gap: 10px; }
+.footer .contact-info .footer-contact-item svg { color: #b9edf2; width: 19px; height: 19px; stroke-width: 2.25; margin-top: 3px; }
+.footer .contact-info a.footer-contact-item { color: #fff; text-decoration: none; }
+.footer .contact-info a.footer-contact-item:hover { color: #c7f1f5; }
+
+@media (min-width: 1025px) {
+  .footer .footer-content { grid-template-columns: minmax(0, 2fr) minmax(100px, .6fr) minmax(240px, 1.4fr) minmax(0, 2fr); gap: 24px; }
+  .footer .contact-info { padding-left: 8px; padding-right: 8px; }
+}
+.footer .contact-info .footer-contact-item > span { min-width: 0; overflow-wrap: anywhere; }
+
+@media (min-width: 1025px) { .footer .quick-links { padding-left: 4px; padding-right: 4px; } }
+
+/* Balanced desktop proportions with comfortable spacing for every section. */
+@media (min-width: 1025px) {
+  .footer .footer-content { max-width: 1440px; box-sizing: border-box; grid-template-columns: minmax(0, 1.8fr) minmax(135px, 1fr) minmax(240px, 1.4fr) minmax(0, 1.8fr); gap: 36px; padding-left: clamp(32px, 5vw, 72px); padding-right: clamp(32px, 5vw, 72px); }
+  .footer .footer-section { min-width: 0; padding-left: 0; padding-right: 0; }
+  .footer .quick-links h4 { white-space: nowrap; }
+}

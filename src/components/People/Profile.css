@@ -258,3 +258,21 @@
 .profile-container .bio-paragraph h3 + ul > li a, .profile-container .bio-paragraph h3 + ol > li a { font-weight: 600; text-decoration: none; }
 .profile-container .bio-paragraph h3 + ul > li a:hover, .profile-container .bio-paragraph h3 + ol > li a:hover { text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 700px) { .profile-container .bio-paragraph h3 + ul, .profile-container .bio-paragraph h3 + ol { grid-template-columns: 1fr; } }
+
+/* Decorative corner accents stay behind content and never intercept clicks. */
+.profile-container .profile-hero, .profile-container .content-section { position: relative; isolation: isolate; }
+.profile-container .profile-hero::before, .profile-container .content-section::before,
+.profile-container .profile-hero::after, .profile-container .content-section::after { content: ""; position: absolute; width: 54px; height: 54px; pointer-events: none; z-index: -1; opacity: .65; }
+.profile-container .profile-hero::before, .profile-container .content-section::before { top: 0; right: 0; border-top: 2px solid #bed8de; border-right: 2px solid #bed8de; border-radius: 0 20px 0 0; background: radial-gradient(circle at top right, #e1f0f3 0, transparent 72%); }
+.profile-container .profile-hero::after, .profile-container .content-section::after { bottom: 0; left: 0; border-bottom: 2px solid #bed8de; border-left: 2px solid #bed8de; border-radius: 0 0 0 20px; background: radial-gradient(circle at bottom left, #e1f0f3 0, transparent 72%); }
+@media (max-width: 600px) {
+  .profile-container .profile-hero::before, .profile-container .content-section::before,
+  .profile-container .profile-hero::after, .profile-container .content-section::after { width: 38px; height: 38px; }
+}
+
+/* Tighter spacing between individual profile cards. */
+.profile-container .profile-hero { margin-bottom: 16px; }
+.profile-container .profile-sections { gap: 16px; }
+.profile-container .profile-sections > .content-section { margin-bottom: 0; }
+.profile-container .person-about-details, .profile-container .credentials-section { gap: 14px; }
+@media (max-width: 600px) { .profile-container .profile-sections { gap: 12px; } .profile-container .profile-hero { margin-bottom: 12px; } }

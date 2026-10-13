@@ -143,7 +143,7 @@ function GoogleSheetNews() {
   const NewsCard = React.memo(({ item }) => (
     <article
       className="news-card"
-      onClick={() => navigate(`/news/${item.slug}`)}
+      onClick={() => navigate(`/news-archive/${item.slug}`)}
     >
       <div className="news-image-container">
         <img 
