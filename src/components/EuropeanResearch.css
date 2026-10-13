@@ -1,0 +1,88 @@
+.european-research {
+  padding: 80px 40px;
+  background: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.european-research-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.european-research h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a3e5a;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.european-research-accent {
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #1a3e5a, #66b2ff);
+  margin: 20px 0;
+  border-radius: 2px;
+}
+
+.european-research-intro {
+  max-width: 780px;
+  color: #435c73;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin: 0 0 36px;
+}
+
+.european-research-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.european-research-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 24px;
+  background: #f5f8fa;
+  border: 1px solid #e4ebef;
+  border-radius: 16px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.european-research-card:hover,
+.european-research-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(26, 62, 90, 0.12);
+}
+
+.european-research-label {
+  color: #226b73;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.european-research-card-title {
+  color: #1a3e5a;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .european-research {
+    padding: 56px 16px;
+  }
+
+  .european-research h2 {
+    font-size: 1.6rem;
+  }
+}
