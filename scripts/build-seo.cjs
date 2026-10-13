@@ -21,6 +21,8 @@ const summary = (text, fallback) => {
   if (!clean) return fallback;
   return clean.length <= 160 ? clean : `${clean.slice(0, 157).replace(/\s+\S*$/, '')}…`;
 };
+// Escaped paragraphs for the pre-rendered page body that crawlers read before the app loads.
+const paragraphs = html => textFrom(html).split('\n').map(line => `<p>${escape(line)}</p>`).join('');
 async function json(url, options = {}) {
   const response = await fetch(url, { ...options, signal: AbortSignal.timeout(20000) });
   if (!response.ok) throw new Error(`Public content request failed (${response.status})`);
@@ -53,7 +55,17 @@ async function main() {
   if (!Array.isArray(people)) throw new Error('People API must return a public profile list.');
   for (const person of people) if (person.slug) records.push({ route: `/people/${encodeURIComponent(person.slug)}`, title: person.full_title_name || person.full_name, description: [person.full_title_name || person.full_name, person.association].filter(Boolean).join(' — ') });
   for (const post of blogs) records.push({ route: `/blog/${encodeURIComponent(post.id)}`, title: post.fields.title?.stringValue || 'Research article', description: summary(post.fields.content?.stringValue, 'Research insights and perspectives from the eHealth Hub for Cancer.') });
-  for (const article of news) if (article.fields.slug?.stringValue) records.push({ route: `/news/${encodeURIComponent(article.fields.slug.stringValue)}`, title: article.fields.title?.stringValue || 'News article', description: summary(article.fields.excerpt?.stringValue || article.fields.content?.stringValue, 'News and updates from the eHealth Hub for Cancer.') });
+  for (const article of news) {
+    const f = article.fields;
+    if (!f.slug?.stringValue) continue;
+    const byline = [f.date?.stringValue, f.author?.stringValue].filter(Boolean).map(escape).join(' · ');
+    records.push({
+      route: `/news/${encodeURIComponent(f.slug.stringValue)}`,
+      title: f.title?.stringValue || 'News article',
+      description: summary(f.excerpt?.stringValue || f.content?.stringValue, 'News and updates from the eHealth Hub for Cancer.'),
+      body: `${byline ? `<p><em>${byline}</em></p>` : ''}${paragraphs(f.content?.stringValue || f.excerpt?.stringValue)}`,
+    });
+  }
   // Include the static news pages that remain linked in the archive.
   const app = fs.readFileSync(path.join(root, 'src/App.js'), 'utf8');
   for (const [, route] of app.matchAll(/<Route path="(\/news-archive\/[^:"]+)"/g)) records.push({ route, title: route.split('/').pop().split('-').map(word => word[0].toUpperCase() + word.slice(1)).join(' '), description: 'Archived research news from the eHealth Hub for Cancer.' });
@@ -64,7 +76,7 @@ async function main() {
     let html = template.replace(/<title>.*?<\/title>/, `<title>${escape(record.title)} | ${siteName}</title>`);
     html = html.replace(/<meta name="description" content="[^"]*"\s*\/?\s*>/, `<meta name="description" content="${escape(record.description)}"/>`);
     html = html.replace('</head>', `<link rel="canonical" href="${canonical}"/><meta property="og:title" content="${escape(record.title)} | ${siteName}"/><meta property="og:description" content="${escape(record.description)}"/><meta property="og:url" content="${canonical}"/></head>`);
-    html = html.replace('<div id="root"></div>', `<div id="root"><main class="seo-loading-shell"><h1>${escape(record.title)}</h1><p>${escape(record.description)}</p>${navigation}</main></div>`);
+    html = html.replace('<div id="root"></div>', `<div id="root"><main class="seo-loading-shell"><h1>${escape(record.title)}</h1>${record.body || `<p>${escape(record.description)}</p>`}${navigation}</main></div>`);
     const folder = path.join(build, record.route.slice(1));
     fs.mkdirSync(folder, { recursive: true });
     fs.writeFileSync(path.join(folder, 'index.html'), html);
