@@ -34,6 +34,8 @@ const summary = (text, fallback) => {
 };
 // Escaped paragraphs for the pre-rendered page body that crawlers read before the app loads.
 const paragraphs = html => textFrom(html).split('\n').map(line => `<p>${escape(line)}</p>`).join('');
+// YYYY-MM-DD for sitemap <lastmod>; empty when the source has no usable date.
+const isoDate = value => { const date = new Date(value); return value && !isNaN(date) ? date.toISOString().slice(0, 10) : ''; };
 async function json(url, options = {}) {
   const response = await fetch(url, { ...options, signal: AbortSignal.timeout(20000) });
   if (!response.ok) throw new Error(`Public content request failed (${response.status})`);
@@ -58,7 +60,7 @@ async function publishedCollection(collection, field, value) {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ structuredQuery: { from: [{ collectionId: collection }], where: { fieldFilter: { field: { fieldPath: field }, op: 'EQUAL', value } } } }),
   });
-  return result.filter(row => row.document).map(row => ({ id: row.document.name.split('/').pop(), fields: row.document.fields }));
+  return result.filter(row => row.document).map(row => ({ id: row.document.name.split('/').pop(), fields: row.document.fields, updated: row.document.updateTime }));
 }
 // Archived static news pages that now live as Firebase articles under /news/.
 const archivedNews = {
@@ -102,6 +104,7 @@ async function main() {
     const bio = textFrom(info.about_user);
     records.push({
       route: `/people/${encodeURIComponent(person.slug)}`,
+      lastmod: info.updated_at || person.updated_at,
       title: name,
       description: summary([[name, person.association].filter(Boolean).join(', '), interests.length ? `Research interests: ${interests.join(', ')}.` : bio].filter(Boolean).join('. '), name),
       body: `${person.association ? `<p><strong>${escape(person.association)}</strong></p>` : ''}${interests.length ? `<p>Research interests: ${escape(interests.join(', '))}</p>` : ''}${paragraphs(info.about_user)}`,
@@ -112,6 +115,7 @@ async function main() {
     const authors = textFrom(f.authors?.stringValue);
     records.push({
       route: `/blog/${encodeURIComponent(post.id)}`,
+      lastmod: post.updated,
       title: textFrom(f.title?.stringValue) || 'Research article',
       description: summary(f.content?.stringValue, 'Research insights and perspectives from the eHealth Hub for Cancer.'),
       body: `${authors ? `<p><em>${escape(authors)}</em></p>` : ''}${paragraphs(f.content?.stringValue)}`,
@@ -123,6 +127,7 @@ async function main() {
     const byline = [f.date?.stringValue, f.author?.stringValue].filter(Boolean).map(escape).join(' · ');
     records.push({
       route: `/news/${encodeURIComponent(f.slug.stringValue)}`,
+      lastmod: article.updated,
       title: f.title?.stringValue || 'News article',
       description: summary(f.excerpt?.stringValue || f.content?.stringValue, 'News and updates from the eHealth Hub for Cancer.'),
       body: `${byline ? `<p><em>${byline}</em></p>` : ''}${paragraphs(f.content?.stringValue || f.excerpt?.stringValue)}`,
@@ -159,7 +164,7 @@ async function main() {
   // Unknown/deep private routes still load the router via GitHub Pages' fallback.
   fs.writeFileSync(path.join(build, '404.html'), template.replace('</head>', '<meta name="robots" content="noindex"/></head>'));
   fs.writeFileSync(path.join(build, '.nojekyll'), '');
-  fs.writeFileSync(path.join(build, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${unique.filter(record => !hiddenPages.has(record.route)).map(record => `  <url><loc>${escape(origin + (record.route === '/' ? '/' : record.route + '/'))}</loc></url>`).join('\n')}\n</urlset>\n`);
+  fs.writeFileSync(path.join(build, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${unique.filter(record => !hiddenPages.has(record.route)).map(record => `  <url><loc>${escape(origin + (record.route === '/' ? '/' : record.route + '/'))}</loc>${isoDate(record.lastmod) ? `<lastmod>${isoDate(record.lastmod)}</lastmod>` : ''}</url>`).join('\n')}\n</urlset>\n`);
   fs.writeFileSync(path.join(build, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /blog-editor/\nDisallow: /blog-dashboard/\nDisallow: /blog-admin/\nDisallow: /login/\n\nSitemap: ${origin}/sitemap.xml\n`);
   console.log(`Generated ${unique.length} public page entry files and sitemap URLs. Private pages excluded.`);
 }
