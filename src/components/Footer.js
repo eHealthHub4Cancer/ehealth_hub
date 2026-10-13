@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Building2, MapPin, Mail } from 'lucide-react';
 import './Footer.css';
 import NSRPLogo from '../Images/logo/NSRP_Correct.jpg';
 import LDCRCLogo from '../Images/logo/LDCRC Irish Ver.png';
@@ -45,9 +46,9 @@ const Footer = () => {
 
         <div className="footer-section contact-info">
           <h4>Contact</h4>
-          <p>University of Limerick</p>
-          <p>Limerick, Ireland</p>
-          <a href="mailto:contact@ehealthhub.ie">contact@ehealthhub.ie</a>
+          <p className="footer-contact-item"><Building2 size={17} aria-hidden="true" /><span>University of Limerick</span></p>
+          <p className="footer-contact-item"><MapPin size={17} aria-hidden="true" /><span>Limerick, Ireland</span></p>
+          <a className="footer-contact-item" href="mailto:ehealth@ul.ie"><Mail size={17} aria-hidden="true" /><span>ehealth@ul.ie</span></a>
         </div>
 
         <div className="footer-section organizations">
@@ -80,6 +81,7 @@ const Footer = () => {
         <div className="footer-bottom-content">
           <p>&copy; {currentYear} eHealth-Hub for Cancer. All rights reserved.</p>
           <div className="footer-bottom-links">
+            <Link to="/sitemap">Site Map</Link>
             <Link to="/privacy">Privacy Policy</Link>
             <Link to="/terms">Terms of Use</Link>
           </div>

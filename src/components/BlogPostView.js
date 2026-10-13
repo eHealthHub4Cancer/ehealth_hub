@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getBlogPost } from '../services/BlogService';
 import './BlogPostView.css';
+import AuthorAvatars from './Blog/AuthorAvatars';
 
 const BlogPostView = () => {
   const { id } = useParams();
@@ -206,14 +207,9 @@ const BlogPostView = () => {
             
             <h1 className="blog-post-title">{post.title}</h1>
             
-            <div className="blog-post-author-section">
-              <div className="blog-post-author-avatar">
-                <span>{post.authors.charAt(0).toUpperCase()}</span>
-              </div>
-              <div className="blog-post-author-info">
-                <span className="blog-post-author-name">{post.authors}</span>
-                <span className="blog-post-author-role">Author</span>
-              </div>
+            <div className="blog-post-author-section blog-post-contributors">
+              <span className="blog-post-contributors-label">Contributing authors</span>
+              <AuthorAvatars authors={post.authors} showAll icon />
             </div>
           </div>
         </div>
@@ -280,11 +276,8 @@ const BlogPostView = () => {
             </div>
 
             <div className="blog-post-author-card">
-              <div className="blog-post-author-card-avatar">
-                <span>{post.authors.charAt(0).toUpperCase()}</span>
-              </div>
+              <AuthorAvatars authors={post.authors} showAll />
               <div className="blog-post-author-card-info">
-                <h4>{post.authors}</h4>
                 <p>Contributing author at eHealth Hub, sharing insights on technology and digital health innovations.</p>
               </div>
             </div>

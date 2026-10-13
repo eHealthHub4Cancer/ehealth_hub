@@ -128,7 +128,7 @@ const FirebaseNews = () => {
 
   // News Card Component
   const NewsCard = ({ item }) => (
-    <Link to={`/news-new/${item.slug}`} className="news-card">
+    <Link to={`/news/${item.slug}`} className="news-card">
       <div className="news-image">
         {item.imageUrl ? (
           <img src={item.imageUrl} alt={item.title} loading="lazy" />

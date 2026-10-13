@@ -1,0 +1,14 @@
+.blog-initials-group { display: flex; flex-wrap: wrap; gap: 12px; min-width: 0; align-items: center; }
+.blog-initials-group .blog-initials-badge { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 40px; width: 40px; height: 40px; box-sizing: border-box; border-radius: 50%; background: #edf3f5; border: 1px solid #d0dfe5; color: #1a3e5a; font-family: 'Montserrat', sans-serif; font-size: .85rem; font-weight: 700; line-height: 1; letter-spacing: .02em; }
+
+.blog-initials-group .blog-named-author { display: inline-flex; align-items: center; gap: 8px; min-width: 0; max-width: 100%; }
+.blog-initials-group .blog-initials-name { color: #1a3e5a; font-size: .9rem; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; min-width: 0; }
+
+.blog-initials-group .blog-other-authors-toggle { display: inline-flex; align-items: center; gap: 6px; padding: 6px 8px; background: #f2f7f8; border: 1px solid #dfe9ed; border-radius: 6px; color: #1a3e5a; font: inherit; font-size: .8rem; font-weight: 600; cursor: pointer; }
+.blog-initials-group .blog-other-authors-toggle:hover { background: #e5eff2; }
+.blog-initials-group .blog-other-authors-toggle:focus-visible { outline: 2px solid #267b83; outline-offset: 3px; }
+.blog-initials-group .blog-other-authors { display: flex; flex-direction: column; flex-basis: 100%; gap: 12px; padding-top: 8px; }
+
+.blog-author-summary { display: flex; align-items: flex-start; gap: 8px; min-width: 0; color: #1a3e5a; font-size: .9rem; font-weight: 600; line-height: 1.5; }
+.blog-author-summary > svg { flex-shrink: 0; margin-top: 2px; }
+.blog-author-summary > span { min-width: 0; overflow-wrap: anywhere; }

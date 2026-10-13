@@ -708,3 +708,9 @@
       text-align: left;
     }
   }
+.blog-post-author-section { flex-wrap: wrap; }
+.blog-post-author-info, .blog-post-author-card-info { min-width: 0; overflow-wrap: anywhere; }
+.blog-post-author-card .blog-initials-group { margin-bottom: 14px; }
+
+.blog-post-view .blog-post-contributors { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
+.blog-post-view .blog-post-contributors-label { color: #667b8a; font-size: .8rem; font-weight: 500; line-height: 1.5; }

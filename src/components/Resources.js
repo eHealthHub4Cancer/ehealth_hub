@@ -16,7 +16,7 @@ const resourcesData = [
     title: 'OHDSI-Ireland All-Island Node',
     description: 'The Irish national node of the Observational Health Data Sciences and Informatics (OHDSI) network, facilitating collaborative health data research.',
     url: 'https://www.ohdsi-europe.org/index.php/national-nodes/ireland',
-    secondaryUrl: 'https://www.ehealth4cancer.ie/#/ohdsi-ireland',
+    secondaryUrl: 'https://www.ehealth4cancer.ie/ohdsi-ireland',
     secondaryLabel: 'Monthly Seminars',
     icon: 'globe',
     category: 'Health Data Network'
