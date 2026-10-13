@@ -8,12 +8,21 @@ const origin = 'https://www.ehealth4cancer.ie';
 const siteName = 'eHealth Hub for Cancer';
 const escape = text => String(text || '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const entities = { amp: '&', lt: '<', gt: '>', quot: '"', '#39': "'", nbsp: ' ', rsquo: "'", lsquo: "'", rdquo: '"', ldquo: '"', ndash: '–', mdash: '—', hellip: '…' };
+const accents = { acute: '\u0301', grave: '\u0300', circ: '\u0302', uml: '\u0308', tilde: '\u0303', cedil: '\u0327' };
+// Decode named (incl. accented letters such as &iacute; in Irish names) and numeric entities.
+const decodeEntity = (match, name) => {
+  if (entities[name] !== undefined) return entities[name];
+  if (/^#x[0-9a-f]+$/i.test(name)) return String.fromCodePoint(parseInt(name.slice(2), 16));
+  if (/^#\d+$/.test(name)) return String.fromCodePoint(parseInt(name.slice(1), 10));
+  const accented = name.match(/^([a-zA-Z])(acute|grave|circ|uml|tilde|cedil)$/);
+  return accented ? (accented[1] + accents[accented[2]]).normalize('NFC') : match;
+};
 // Plain text from stored rich-text HTML, keeping paragraph breaks.
 const textFrom = html => String(html || '')
   .replace(/<(script|style)[\s\S]*?<\/\1>/gi, '')
   .replace(/<\/(p|div|h[1-6]|li|blockquote)>|<br\s*\/?>/gi, '\n')
   .replace(/<[^>]+>/g, '')
-  .replace(/&(#?\w+);/g, (match, name) => entities[name] ?? (name.startsWith('#') ? String.fromCharCode(parseInt(name.slice(1), 10)) : match))
+  .replace(/&(#?\w+);/g, decodeEntity)
   .split('\n').map(line => line.replace(/\s+/g, ' ').trim()).filter(Boolean).join('\n');
 // Search-result length summary (Google shows about 155 characters).
 const summary = (text, fallback) => {
