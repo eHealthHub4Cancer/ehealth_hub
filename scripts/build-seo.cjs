@@ -7,6 +7,20 @@ for (const file of ['.env.production.local', '.env.local', '.env.production', '.
 const origin = 'https://www.ehealth4cancer.ie';
 const siteName = 'eHealth Hub for Cancer';
 const escape = text => String(text || '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+const entities = { amp: '&', lt: '<', gt: '>', quot: '"', '#39': "'", nbsp: ' ', rsquo: "'", lsquo: "'", rdquo: '"', ldquo: '"', ndash: '–', mdash: '—', hellip: '…' };
+// Plain text from stored rich-text HTML, keeping paragraph breaks.
+const textFrom = html => String(html || '')
+  .replace(/<(script|style)[\s\S]*?<\/\1>/gi, '')
+  .replace(/<\/(p|div|h[1-6]|li|blockquote)>|<br\s*\/?>/gi, '\n')
+  .replace(/<[^>]+>/g, '')
+  .replace(/&(#?\w+);/g, (match, name) => entities[name] ?? (name.startsWith('#') ? String.fromCharCode(parseInt(name.slice(1), 10)) : match))
+  .split('\n').map(line => line.replace(/\s+/g, ' ').trim()).filter(Boolean).join('\n');
+// Search-result length summary (Google shows about 155 characters).
+const summary = (text, fallback) => {
+  const clean = textFrom(text).replace(/\n/g, ' ');
+  if (!clean) return fallback;
+  return clean.length <= 160 ? clean : `${clean.slice(0, 157).replace(/\s+\S*$/, '')}…`;
+};
 async function json(url, options = {}) {
   const response = await fetch(url, { ...options, signal: AbortSignal.timeout(20000) });
   if (!response.ok) throw new Error(`Public content request failed (${response.status})`);
@@ -39,7 +53,7 @@ async function main() {
   if (!Array.isArray(people)) throw new Error('People API must return a public profile list.');
   for (const person of people) if (person.slug) records.push({ route: `/people/${encodeURIComponent(person.slug)}`, title: person.full_title_name || person.full_name, description: [person.full_title_name || person.full_name, person.association].filter(Boolean).join(' — ') });
   for (const post of blogs) records.push({ route: `/blog/${encodeURIComponent(post.id)}`, title: post.fields.title?.stringValue || 'Research article', description: 'Research insights and perspectives from the eHealth Hub for Cancer.' });
-  for (const article of news) if (article.fields.slug?.stringValue) records.push({ route: `/news/${encodeURIComponent(article.fields.slug.stringValue)}`, title: article.fields.title?.stringValue || 'News article', description: 'News and updates from the eHealth Hub for Cancer.' });
+  for (const article of news) if (article.fields.slug?.stringValue) records.push({ route: `/news/${encodeURIComponent(article.fields.slug.stringValue)}`, title: article.fields.title?.stringValue || 'News article', description: summary(article.fields.excerpt?.stringValue || article.fields.content?.stringValue, 'News and updates from the eHealth Hub for Cancer.') });
   // Include the static news pages that remain linked in the archive.
   const app = fs.readFileSync(path.join(root, 'src/App.js'), 'utf8');
   for (const [, route] of app.matchAll(/<Route path="(\/news-archive\/[^:"]+)"/g)) records.push({ route, title: route.split('/').pop().split('-').map(word => word[0].toUpperCase() + word.slice(1)).join(' '), description: 'Archived research news from the eHealth Hub for Cancer.' });
