@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.245ca5e5.css",
-    "main.js": "/static/js/main.61b9b122.js",
+    "main.js": "/static/js/main.6ae8a517.js",
     "static/js/453.6411f75a.chunk.js": "/static/js/453.6411f75a.chunk.js",
     "static/media/all_island_2026.jpg": "/static/media/all_island_2026.5e5b63889e1746e0c8d4.jpg",
     "static/media/Cancer-Research-UL.jpg": "/static/media/Cancer-Research-UL.cea648545bb9e86a250a.jpg",
@@ -27,17 +27,17 @@
     "static/media/IrishNews_gender.jpg": "/static/media/IrishNews_gender.354fec680a04935de745.jpg",
     "static/media/overview.jpeg": "/static/media/overview.823c11e5a1ab1b5e5e22.jpeg",
     "static/media/Slide1.jpeg": "/static/media/Slide1.5934e05d59a4606534be.jpeg",
+    "index.html": "/index.html",
     "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
     "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
     "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
-    "index.html": "/index.html",
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "main.245ca5e5.css.map": "/static/css/main.245ca5e5.css.map",
-    "main.61b9b122.js.map": "/static/js/main.61b9b122.js.map",
+    "main.6ae8a517.js.map": "/static/js/main.6ae8a517.js.map",
     "453.6411f75a.chunk.js.map": "/static/js/453.6411f75a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.245ca5e5.css",
-    "static/js/main.61b9b122.js"
+    "static/js/main.6ae8a517.js"
   ]
 }
