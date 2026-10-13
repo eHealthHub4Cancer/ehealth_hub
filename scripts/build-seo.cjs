@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const dotenv = require('dotenv');
 const pages = require('../src/seo/publicPages.json');
+// Pages that still load but are hidden from the menu or duplicate other pages.
+const hiddenPages = new Set(require('../src/seo/hiddenPages.json'));
 const root = path.resolve(__dirname, '..');
 for (const file of ['.env.production.local', '.env.local', '.env.production', '.env']) dotenv.config({ path: path.join(root, file), quiet: true });
 const origin = 'https://www.ehealth4cancer.ie';
@@ -157,7 +159,7 @@ async function main() {
   // Unknown/deep private routes still load the router via GitHub Pages' fallback.
   fs.writeFileSync(path.join(build, '404.html'), template.replace('</head>', '<meta name="robots" content="noindex"/></head>'));
   fs.writeFileSync(path.join(build, '.nojekyll'), '');
-  fs.writeFileSync(path.join(build, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${unique.map(record => `  <url><loc>${escape(origin + (record.route === '/' ? '/' : record.route + '/'))}</loc></url>`).join('\n')}\n</urlset>\n`);
+  fs.writeFileSync(path.join(build, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${unique.filter(record => !hiddenPages.has(record.route)).map(record => `  <url><loc>${escape(origin + (record.route === '/' ? '/' : record.route + '/'))}</loc></url>`).join('\n')}\n</urlset>\n`);
   fs.writeFileSync(path.join(build, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /blog-editor/\nDisallow: /blog-dashboard/\nDisallow: /blog-admin/\nDisallow: /login/\n\nSitemap: ${origin}/sitemap.xml\n`);
   console.log(`Generated ${unique.length} public page entry files and sitemap URLs. Private pages excluded.`);
 }
