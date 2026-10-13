@@ -4,6 +4,7 @@ import CollaboratorsSection from './CollaboratorsSection';
 import FundingSection from "./FundingSection";
 import HeroSection from "./HeroSection";
 import DigitalInitiatives from "./DigitalInitiatives";
+import EuropeanResearch from "./EuropeanResearch";
 
 import "./HomePage.css";
 
@@ -12,6 +13,7 @@ function HomePage() {
     <div className="home-page">
         <HomeSlider />
         <HeroSection/>
+        <EuropeanResearch/>
         <CollaboratorsSection/>
         <FundingSection/>
         <DigitalInitiatives/>
