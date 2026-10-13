@@ -58,6 +58,23 @@ async function publishedCollection(collection, field, value) {
   });
   return result.filter(row => row.document).map(row => ({ id: row.document.name.split('/').pop(), fields: row.document.fields }));
 }
+// Archived static news pages that now live as Firebase articles under /news/.
+const archivedNews = {
+  'gender-inequality-study': 'new-study-highlights-significant-gender-inequality-and-bias-in-cancer-research',
+  'good-friday-cancer-legacy': 'all-island-study-highlights-the-cancer-legacy-of-the-good-friday-agreement',
+  'phd-opportunity': 'phd-advert',
+  'belfast-agreement-showcase': 'belfast-agreement-25-cancer-showcase',
+  'ldcrc-building-together': 'ldcrc-building-together-event',
+  'dell-technologies-presentation': 'prof-mark-lawler-and-dell-technologies',
+  'aicri-launch': 'aicri-launch',
+  'ohdsi-meeting': 'ehealth-hub-at-the-ohdsi-2022-meeting',
+  'hrb-conference': 'hrb-national-conference-2022',
+  'bcni-talk': 'bcni-talk',
+  'rte-brainstorm': 'rte-brainstorm-article',
+  'postdoctoral-application': 'postdoctoral-researcher-in-cancer-digital-health',
+  'limerick-post': 'limerickpost',
+};
+const redirectPage = (to, title) => `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=${escape(to)}"/><link rel="canonical" href="${origin}${escape(to)}"/><title>${escape(title)} | ${siteName}</title></head><body><a href="${escape(to)}">Continue to ${escape(title)}</a></body></html>`;
 async function main() {
   const build = path.join(root, 'build');
   const template = fs.readFileSync(path.join(build, 'index.html'), 'utf8')
@@ -111,7 +128,7 @@ async function main() {
   }
   // Include the static news pages that remain linked in the archive.
   const app = fs.readFileSync(path.join(root, 'src/App.js'), 'utf8');
-  for (const [, route] of app.matchAll(/<Route path="(\/news-archive\/[^:"]+)"/g)) records.push({ route, title: route.split('/').pop().split('-').map(word => word[0].toUpperCase() + word.slice(1)).join(' '), description: 'Archived research news from the eHealth Hub for Cancer.' });
+  for (const [, route] of app.matchAll(/<Route path="(\/news-archive\/[^:"]+)"/g)) if (!archivedNews[route.split('/').pop()]) records.push({ route, title: route.split('/').pop().split('-').map(word => word[0].toUpperCase() + word.slice(1)).join(' '), description: 'Archived research news from the eHealth Hub for Cancer.' });
   const unique = [...new Map(records.map(record => [record.route, record])).values()];
   const navigation = `<nav aria-label="Website pages"><ul>${pages.map(([route, title]) => `<li><a href="${route === '/' ? '/' : route + '/'}">${escape(title)}</a></li>`).join('')}</ul></nav>`;
   for (const record of unique) {
@@ -130,6 +147,12 @@ async function main() {
     const folder = path.join(build, legacy.slice(1));
     fs.mkdirSync(folder, { recursive: true });
     fs.writeFileSync(path.join(folder, 'index.html'), `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=${escape(record.route + '/')}"/><link rel="canonical" href="${origin}${escape(record.route + '/')}"/><title>News | ${siteName}</title></head><body><a href="${escape(record.route + '/')}">Continue to News</a></body></html>`);
+  }
+  // Send archived duplicates to their /news/ article so search engines index one copy.
+  for (const [old, slug] of Object.entries(archivedNews)) {
+    const folder = path.join(build, 'news-archive', old);
+    fs.mkdirSync(folder, { recursive: true });
+    fs.writeFileSync(path.join(folder, 'index.html'), redirectPage(`/news/${slug}/`, 'News'));
   }
   // Unknown/deep private routes still load the router via GitHub Pages' fallback.
   fs.writeFileSync(path.join(build, '404.html'), template.replace('</head>', '<meta name="robots" content="noindex"/></head>'));
