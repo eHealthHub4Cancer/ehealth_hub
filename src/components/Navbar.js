@@ -12,7 +12,7 @@ const items = [
   { label: 'News', path: '/news' }, { label: 'Events', path: '/forum' },
   { label: 'Calendar', path: '/calendar' }, { label: 'Blog', path: '/blog' },
   { label: 'Resources', path: '/resources' },
-  { label: 'Output', children: [{ label: 'Publications', path: '/output/publications' }] },
+  { label: 'Impact', children: [{ label: 'Publications', path: '/output/publications' }] },
 ];
 
 export default function Navbar() {
