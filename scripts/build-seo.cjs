@@ -132,7 +132,7 @@ async function main() {
   const app = fs.readFileSync(path.join(root, 'src/App.js'), 'utf8');
   for (const [, route] of app.matchAll(/<Route path="(\/news-archive\/[^:"]+)"/g)) if (!archivedNews[route.split('/').pop()]) records.push({ route, title: route.split('/').pop().split('-').map(word => word[0].toUpperCase() + word.slice(1)).join(' '), description: 'Archived research news from the eHealth Hub for Cancer.' });
   const unique = [...new Map(records.map(record => [record.route, record])).values()];
-  const navigation = `<nav aria-label="Website pages"><ul>${pages.map(([route, title]) => `<li><a href="${route === '/' ? '/' : route + '/'}">${escape(title)}</a></li>`).join('')}</ul></nav>`;
+  const navigation = `<nav aria-label="Website pages"><ul>${pages.filter(([route]) => !hiddenPages.has(route)).map(([route, title]) => `<li><a href="${route === '/' ? '/' : route + '/'}">${escape(title)}</a></li>`).join('')}</ul></nav>`;
   for (const record of unique) {
     const canonical = `${origin}${record.route === '/' ? '/' : record.route + '/'}`;
     let html = template.replace(/<title>.*?<\/title>/, `<title>${escape(record.title)} | ${siteName}</title>`);
