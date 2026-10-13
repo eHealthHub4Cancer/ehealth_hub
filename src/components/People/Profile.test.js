@@ -24,7 +24,7 @@ test('renders arbitrary social platforms and research outputs, excluding unsafe 
   ] });
   expect(screen.getByRole('link', { name: 'ORCID' })).toHaveAttribute('href', 'https://orcid.org/example');
   expect(screen.getByRole('link', { name: 'New Research Network' })).toHaveAttribute('rel', 'noopener noreferrer');
-  fireEvent.click(screen.getByRole('button', { name: /Publications/ }));
+  fireEvent.click(screen.getByRole('button', { name: /Research Outputs/ }));
   expect(screen.getByRole('link', { name: /Cancer research/ })).toHaveAttribute('href', 'https://example.com/paper');
   expect(screen.queryByText('Unsafe')).not.toBeInTheDocument();
   expect(screen.queryByText('Unsafe output')).not.toBeInTheDocument();
@@ -34,7 +34,7 @@ test('omits empty links and outputs while supporting minimal profiles', () => {
   renderProfile({ full_name: 'Minimal Profile' });
   expect(screen.getByRole('heading', { name: 'Minimal Profile' })).toBeInTheDocument();
   expect(screen.queryByRole('heading', { name: 'Find me online' })).not.toBeInTheDocument();
-  expect(screen.queryByRole('heading', { name: /Publications/ })).not.toBeInTheDocument();
+  expect(screen.queryByRole('heading', { name: /Research Outputs/ })).not.toBeInTheDocument();
 });
 
 test('loads relative profile photos from the API server', () => {

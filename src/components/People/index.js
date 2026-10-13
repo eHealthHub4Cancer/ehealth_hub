@@ -225,19 +225,7 @@ const Index = () => {
               </div>
               </div>
             </section>
-              {[
-                ['publication', 'Publications'],
-                ['poster', 'Posters'],
-                ['presentation', 'Presentations'],
-                ['other', 'Other Research Outputs'],
-              ].map(([category, heading]) => {
-                const links = (personInformation.research_links || []).filter(
-                  (link) => link.category === category && /^https?:\/\//i.test(link.url)
-                );
-                return links.length > 0 ? (
-                  <ResearchOutputs key={category} heading={heading} links={links} />
-                ) : null;
-              })}
+            <ResearchOutputs links={personInformation.research_links || []} />
             {personInformation.research_interests &&
               personInformation.research_interests.length > 0 && (
                 <section className="content-section interests-section">

@@ -276,3 +276,12 @@
 .profile-container .profile-sections > .content-section { margin-bottom: 0; }
 .profile-container .person-about-details, .profile-container .credentials-section { gap: 14px; }
 @media (max-width: 600px) { .profile-container .profile-sections { gap: 12px; } .profile-container .profile-hero { margin-bottom: 12px; } }
+
+.profile-container .person-output-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.profile-container .person-output-filter { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #d6e2e8; border-radius: 20px; background: #f5f8fa; color: #354b5c; font: inherit; font-size: .85rem; font-weight: 600; cursor: pointer; }
+.profile-container .person-output-filter[aria-pressed="true"] { background: #1a3e5a; color: white; border-color: #1a3e5a; }
+.profile-container .person-output-filter > span { font-size: .75rem; opacity: .85; }
+.profile-container .person-output-filter:focus-visible { outline: 2px solid #267b83; outline-offset: 3px; }
+.profile-container .person-output-title-block { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+.profile-container .person-output-type { align-self: flex-start; font-size: .72rem; font-weight: 600; color: #526b79; background: #edf2f5; border: 1px solid #dde6ec; border-radius: 4px; padding: 2px 6px; }
+@media (max-width: 600px) { .profile-container .person-output-title-block { flex-basis: 100%; } }
