@@ -36,6 +36,16 @@ const summary = (text, fallback) => {
 const paragraphs = html => textFrom(html).split('\n').map(line => `<p>${escape(line)}</p>`).join('');
 // YYYY-MM-DD for sitemap <lastmod>; empty when the source has no usable date.
 const isoDate = value => { const date = new Date(value); return value && !isNaN(date) ? date.toISOString().slice(0, 10) : ''; };
+// Article dates are free text ("April 10, 2026", "30/04/2026"); returns ISO or ''.
+const articleDate = value => {
+  const text = String(value || '').trim();
+  const dmy = text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  const date = dmy ? new Date(Date.UTC(dmy[3], dmy[2] - 1, dmy[1])) : new Date(text);
+  return text && !isNaN(date) ? date.toISOString().slice(0, 10) : '';
+};
+const organizationRef = { '@id': `${origin}/#organization` };
+// JSON-LD script tag; "<" is escaped so content can never close the script early.
+const jsonLd = data => `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
 async function json(url, options = {}) {
   const response = await fetch(url, { ...options, signal: AbortSignal.timeout(20000) });
   if (!response.ok) throw new Error(`Public content request failed (${response.status})`);
@@ -131,6 +141,18 @@ async function main() {
       route: `/news/${encodeURIComponent(f.slug.stringValue)}`,
       lastmod: article.updated,
       image: f.imageUrl?.stringValue,
+      structured: {
+        '@context': 'https://schema.org',
+        '@type': 'NewsArticle',
+        headline: textFrom(f.title?.stringValue).slice(0, 110),
+        description: summary(f.excerpt?.stringValue || f.content?.stringValue, ''),
+        ...(f.imageUrl?.stringValue ? { image: [f.imageUrl.stringValue] } : {}),
+        ...(articleDate(f.date?.stringValue) ? { datePublished: articleDate(f.date.stringValue) } : {}),
+        ...(isoDate(article.updated) ? { dateModified: isoDate(article.updated) } : {}),
+        ...(f.author?.stringValue ? { author: { '@type': 'Person', name: f.author.stringValue } } : { author: organizationRef }),
+        publisher: organizationRef,
+        mainEntityOfPage: `${origin}/news/${encodeURIComponent(f.slug.stringValue)}/`,
+      },
       title: f.title?.stringValue || 'News article',
       description: summary(f.excerpt?.stringValue || f.content?.stringValue, 'News and updates from the eHealth Hub for Cancer.'),
       body: `${byline ? `<p><em>${byline}</em></p>` : ''}${paragraphs(f.content?.stringValue || f.excerpt?.stringValue)}`,
@@ -150,6 +172,7 @@ async function main() {
       html = html.replace(/<meta (?:property="og:image(?::width|:height|:alt)?"|name="twitter:image")[^>]*>/g, '')
         .replace('</head>', `<meta property="og:image" content="${escape(record.image)}"/><meta name="twitter:image" content="${escape(record.image)}"/></head>`);
     }
+    if (record.structured) html = html.replace('</head>', `${jsonLd(record.structured)}</head>`);
     html = html.replace('</head>', `<link rel="canonical" href="${canonical}"/><meta property="og:title" content="${escape(record.title)} | ${siteName}"/><meta property="og:description" content="${escape(record.description)}"/><meta property="og:url" content="${canonical}"/></head>`);
     html = html.replace('<div id="root"></div>', `<div id="root"><main class="seo-loading-shell"><h1>${escape(record.title)}</h1>${record.body || `<p>${escape(record.description)}</p>`}${navigation}</main></div>`);
     const folder = path.join(build, record.route.slice(1));
