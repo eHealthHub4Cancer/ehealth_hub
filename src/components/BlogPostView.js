@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getBlogPost } from '../services/BlogService';
 import './BlogPostView.css';
 import AuthorAvatars from './Blog/AuthorAvatars';
+import { prerenderedHtml, PrerenderedContent } from '../seo/prerendered';
 
 const BlogPostView = () => {
   const { id } = useParams();
@@ -136,6 +137,9 @@ const BlogPostView = () => {
   };
 
   if (loading) {
+    // Show the pre-rendered post text (when this page was opened directly) instead of a spinner.
+    const prerendered = prerenderedHtml();
+    if (prerendered) return <PrerenderedContent html={prerendered} />;
     return (
       <div className="blog-post-loading">
         <div className="blog-post-loading-container">
