@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import './Resources.css';
+import gdiIrelandLogo from '../Images/logo/GDI-Ireland.png';
+import ohdsiIrelandLogo from '../Images/logo/OHDSI_Logo.png';
+import candleLogo from '../Images/logo/CANDLE-official-light.svg';
+import euLogo from '../Images/logo/eu-flag.svg';
+import hiqaLogo from '../Images/logo/HIQA.svg';
 import { ExternalLink, Database, GraduationCap, Globe, BookOpen, Building2, Github, Archive } from 'lucide-react';
 
 const resourcesData = [
@@ -9,6 +14,8 @@ const resourcesData = [
     description: 'The Irish Node of the European 1+ Million Genomes Initiative (1+MG), providing access to genomic data infrastructure across Europe.',
     url: 'https://genomicdata.ie/',
     icon: 'database',
+    logo: gdiIrelandLogo,
+    logoAlt: 'Genomic Data Infrastructure Ireland',
     category: 'Data Infrastructure'
   },
   {
@@ -16,9 +23,11 @@ const resourcesData = [
     title: 'OHDSI-Ireland All-Island Node',
     description: 'The Irish national node of the Observational Health Data Sciences and Informatics (OHDSI) network, facilitating collaborative health data research.',
     url: 'https://www.ohdsi-europe.org/index.php/national-nodes/ireland',
-    secondaryUrl: 'https://www.ehealth4cancer.ie/ohdsi-ireland',
+    secondaryUrl: '/ohdsi-ireland/seminars',
     secondaryLabel: 'Monthly Seminars',
     icon: 'globe',
+    logo: ohdsiIrelandLogo,
+    logoAlt: 'OHDSI Ireland',
     category: 'Health Data Network'
   },
   {
@@ -27,14 +36,18 @@ const resourcesData = [
     description: 'EU Horizon program supporting establishment of National Cancer Data Nodes, aligned with the European Health Data Space (EHDS).',
     url: 'https://candle-project.eu/',
     icon: 'building',
+    logo: candleLogo,
+    logoAlt: 'CANDLE project',
     category: 'EU Project'
   },
   {
     id: 4,
     title: 'EHDS Ireland – Primary Care',
     description: 'European Health Data Space implementation in Ireland for patient data access through MyHealth@EU and myHealth@myHands initiatives.',
-    url: 'https://www.ehealthireland.ie/',
+    url: 'https://www.hse.ie/website-maintenance-eh/',
     icon: 'globe',
+    logo: euLogo,
+    logoAlt: 'European Union',
     category: 'Patient Access'
   },
   {
@@ -43,6 +56,8 @@ const resourcesData = [
     description: 'HIQA leading the Health Data Access Body (HDAB) and data standards for research through HealthData@EU.',
     url: 'https://www.hiqa.ie/areas-we-work/health-information/healthdataie',
     icon: 'database',
+    logo: hiqaLogo,
+    logoAlt: 'HIQA',
     category: 'Research Data'
   }
 ];
@@ -105,7 +120,7 @@ function Resources() {
   const [activeSection, setActiveSection] = useState('resources');
 
   const getIcon = (iconName) => {
-    const iconProps = { size: 22, strokeWidth: 2 };
+    const iconProps = { size: 22, strokeWidth: 1.8, 'aria-hidden': true };
     switch (iconName) {
       case 'database':
         return <Database {...iconProps} />;
@@ -152,21 +167,30 @@ function Resources() {
       <div className="resources-body">
         {/* Resources Section */}
         {activeSection === 'resources' && (
-          <div className="resources-grid">
+          <div className="resources-grid resources-directory">
             {resourcesData.map(resource => (
-              <article key={resource.id} className="resource-card">
-                <div className="card-header">
-                  <span className="card-icon">{getIcon(resource.icon)}</span>
-                  <span className="card-category">{resource.category}</span>
-                </div>
-                <h3>{resource.title}</h3>
+              <article key={resource.id} className="directory-resource-card">
+                {resource.logo ? (
+                  <div className="directory-brand-heading">
+                    <img className="resource-brand-logo" src={resource.logo} alt={resource.logoAlt} />
+                    <h3>{resource.title}</h3>
+                  </div>
+                ) : (
+                  <>
+                    <div className="directory-resource-header">
+                      <span className="directory-resource-icon">{getIcon(resource.icon)}</span>
+                      <span className="directory-resource-category">{resource.category}</span>
+                    </div>
+                    <h3>{resource.title}</h3>
+                  </>
+                )}
                 <p>{resource.description}</p>
-                <div className="card-links">
-                  <a href={resource.url} target="_blank" rel="noopener noreferrer" className="primary-link">
+                <div className="directory-resource-links">
+                  <a href={resource.url} target="_blank" rel="noopener noreferrer" className="directory-primary-link">
                     Visit Website <ExternalLink size={14} />
                   </a>
                   {resource.secondaryUrl && (
-                    <a href={resource.secondaryUrl} target="_blank" rel="noopener noreferrer" className="secondary-link">
+                    <a href={resource.secondaryUrl} target="_blank" rel="noopener noreferrer" className="directory-secondary-link directory-seminar-link">
                       <BookOpen size={14} /> {resource.secondaryLabel}
                     </a>
                   )}
