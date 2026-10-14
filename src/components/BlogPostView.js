@@ -151,6 +151,9 @@ const BlogPostView = () => {
   }
 
   if (!post) {
+    // If the post can't be fetched (e.g. a search engine's renderer), keep the pre-rendered text.
+    const prerendered = prerenderedHtml();
+    if (prerendered) return <PrerenderedContent html={prerendered} />;
     return (
       <div className="blog-post-error">
         <div className="blog-post-error-container">

@@ -49,9 +49,9 @@ const Index = () => {
     };
   }, [resetPersonInformation]);
 
-  // Until the profile arrives, show its pre-rendered bio (when this page was opened directly).
+  // Until the profile arrives, or if it can't be fetched, show its pre-rendered bio (when this page was opened directly).
   const prerendered = prerenderedHtml();
-  if (prerendered && !error && (personLoading || !personInformation)) return <PrerenderedContent html={prerendered} />;
+  if (prerendered && (error || personLoading || !personInformation)) return <PrerenderedContent html={prerendered} />;
 
   // Use personLoading instead of general loading
   if (personLoading) return <Loader dataName="person" />;

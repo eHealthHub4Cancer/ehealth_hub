@@ -71,6 +71,9 @@ const FirebaseNewsArticle = () => {
   }
 
   if (error || !article) {
+    // If the article can't be fetched (e.g. a search engine's renderer), keep the pre-rendered text.
+    const prerendered = prerenderedHtml();
+    if (prerendered) return <div className="fb-article-container"><PrerenderedContent html={prerendered} /></div>;
     return (
       <div className="fb-article-container">
         <div className="error-container">
