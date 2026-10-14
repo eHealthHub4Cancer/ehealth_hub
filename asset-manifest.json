@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.00c9af9e.css",
-    "main.js": "/static/js/main.76ccf8df.js",
+    "main.js": "/static/js/main.46f7699c.js",
     "static/js/453.6411f75a.chunk.js": "/static/js/453.6411f75a.chunk.js",
     "static/media/all_island_2026.jpg": "/static/media/all_island_2026.5e5b63889e1746e0c8d4.jpg",
     "static/media/Cancer-Research-UL.jpg": "/static/media/Cancer-Research-UL.cea648545bb9e86a250a.jpg",
@@ -33,11 +33,11 @@
     "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "main.00c9af9e.css.map": "/static/css/main.00c9af9e.css.map",
-    "main.76ccf8df.js.map": "/static/js/main.76ccf8df.js.map",
+    "main.46f7699c.js.map": "/static/js/main.46f7699c.js.map",
     "453.6411f75a.chunk.js.map": "/static/js/453.6411f75a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.00c9af9e.css",
-    "static/js/main.76ccf8df.js"
+    "static/js/main.46f7699c.js"
   ]
 }
