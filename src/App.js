@@ -8,7 +8,6 @@ import HomePage from "./components/HomePage";
 import About from './components/About';
 import People from './components/People';
 import Projects from './components/Projects';
-import { NewsProvider } from "./NewsContext";
 // import News from './components/News';
 import Talks from "./components/Talks";
 import Publications from './components/Publications';
@@ -211,9 +210,7 @@ const AppWithRouter = () => {
 function App() {
   return (
     <GlobalDataProvider>
-      <NewsProvider> 
-        <AppWithRouter />
-      </NewsProvider>
+      <AppWithRouter />
     </GlobalDataProvider>
   );
 }
