@@ -378,3 +378,25 @@ blockquote {
     font-size: 0.85rem;
     color: #40586a;
 }
+
+.collaborators-section .quote-author {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+    color: #1a3e5a;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.collaborators-section .quote-author::before {
+    content: '';
+    width: 26px;
+    height: 3px;
+    flex-shrink: 0;
+    border-radius: 3px;
+    background: #4a899b;
+}

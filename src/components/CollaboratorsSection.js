@@ -58,7 +58,7 @@ function CollaboratorsSection() {
                 where real-time data access drives evidence-based healthcare decisions and improves 
                 cancer care for all."
               </p>
-              <div className="quote-author">- eHealthHub for Cancer</div>
+              <cite className="quote-author">eHealthHub for Cancer</cite>
             </blockquote>
           </div>
         </div>

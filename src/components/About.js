@@ -1,11 +1,54 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { Users, UserRound, ArrowUpRight } from 'lucide-react';
 import './About.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import overviewImage from '../Images/sliders/overview.jpeg';
 
 const About = () => {
+  const [activeSection, setActiveSection] = useState('about');
+  useEffect(() => {
+    const sections = Array.from(document.querySelectorAll('.about-page .content-section'));
+    const update = () => {
+      const current = sections.filter(section => section.getBoundingClientRect().top <= 150).pop();
+      setActiveSection(current ? current.id : 'about');
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
+  }, []);
+  const [advisoryPage, setAdvisoryPage] = useState(0);
+  const [advisoryPaused, setAdvisoryPaused] = useState(false);
+  const [advisoryHovered, setAdvisoryHovered] = useState(false);
+  const [advisoryFocused, setAdvisoryFocused] = useState(false);
+  const [advisoryVisible, setAdvisoryVisible] = useState(false);
+  const [advisoryAutoAllowed, setAdvisoryAutoAllowed] = useState(false);
+  const advisoryRef = useRef(null);
+
+  useEffect(() => {
+    const mobile = window.matchMedia('(max-width: 768px)');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setAdvisoryAutoAllowed(mobile.matches && !reducedMotion.matches && !document.hidden);
+    update();
+    mobile.addEventListener('change', update);
+    reducedMotion.addEventListener('change', update);
+    document.addEventListener('visibilitychange', update);
+    const observer = new IntersectionObserver(([entry]) => setAdvisoryVisible(entry.isIntersecting), { threshold: 0.25 });
+    if (advisoryRef.current) observer.observe(advisoryRef.current);
+    return () => {
+      observer.disconnect();
+      mobile.removeEventListener('change', update);
+      reducedMotion.removeEventListener('change', update);
+      document.removeEventListener('visibilitychange', update);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!advisoryAutoAllowed || !advisoryVisible || advisoryPaused || advisoryHovered || advisoryFocused) return;
+    const timer = window.setInterval(() => setAdvisoryPage(page => (page + 1) % 3), 10000);
+    return () => window.clearInterval(timer);
+  }, [advisoryAutoAllowed, advisoryVisible, advisoryPaused, advisoryHovered, advisoryFocused]);
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -15,24 +58,24 @@ const About = () => {
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    element?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
   };
 
   return (
     <div className="about-page">
       <div className="about-container">
         <aside className="about-sidebar" data-aos="fade-right">
-          <nav className="page-navigation">
+          <nav className="page-navigation" aria-label="On this page">
             <h3>On this page</h3>
             <ul>
-              <li><button onClick={() => scrollToSection('about')}>About</button></li>
-              <li><button onClick={() => scrollToSection('work-packages')}>Work Packages</button></li>
-              <li><button onClick={() => scrollToSection('motivation')}>Motivation</button></li>
-              <li><button onClick={() => scrollToSection('advisory-board')}>Scientific Advisory Board</button></li>
-              <li><button onClick={() => scrollToSection('interoperability')}>Interoperability in Health Care Data</button></li>
-              <li><button onClick={() => scrollToSection('ehealthhub')}>The eHealth-Hub for Cancer</button></li>
-              <li><button onClick={() => scrollToSection('contribution')}>Contribution to Goals</button></li>
-              <li><button onClick={() => scrollToSection('ehealth')}>eHealth</button></li>
+              <li><button aria-current={activeSection === 'about' ? 'location' : undefined} onClick={() => scrollToSection('about')}>About</button></li>
+              <li><button aria-current={activeSection === 'work-packages' ? 'location' : undefined} onClick={() => scrollToSection('work-packages')}>Work Packages</button></li>
+              <li><button aria-current={activeSection === 'motivation' ? 'location' : undefined} onClick={() => scrollToSection('motivation')}>Motivation</button></li>
+              <li><button aria-current={activeSection === 'advisory-board' ? 'location' : undefined} onClick={() => scrollToSection('advisory-board')}>Scientific Advisory Board</button></li>
+              <li><button aria-current={activeSection === 'interoperability' ? 'location' : undefined} onClick={() => scrollToSection('interoperability')}>Interoperability in Health Care Data</button></li>
+              <li><button aria-current={activeSection === 'ehealthhub' ? 'location' : undefined} onClick={() => scrollToSection('ehealthhub')}>The eHealth-Hub for Cancer</button></li>
+              <li><button aria-current={activeSection === 'contribution' ? 'location' : undefined} onClick={() => scrollToSection('contribution')}>Contribution to Goals</button></li>
+              <li><button aria-current={activeSection === 'ehealth' ? 'location' : undefined} onClick={() => scrollToSection('ehealth')}>eHealth</button></li>
             </ul>
           </nav>
         </aside>
@@ -133,10 +176,16 @@ const About = () => {
           </section>
 
           <section id="advisory-board" className="content-section" data-aos="fade-up">
-            <h2>eHealth Hub for Cancer Scientific Advisory Board</h2>
+            <h2 className="advisory-heading"><Users size={27} aria-hidden="true" /><span>eHealth Hub for Cancer Scientific Advisory Board</span></h2>
             <div className="content-block"> 
-              <div className="advisory-board-grid">
+              <div className="advisory-carousel" ref={advisoryRef}
+                onMouseEnter={() => setAdvisoryHovered(true)} onMouseLeave={() => setAdvisoryHovered(false)}
+                onFocusCapture={() => setAdvisoryFocused(true)}
+                onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setAdvisoryFocused(false); }}
+                onTouchStart={() => setAdvisoryPaused(true)}>
+              <div className="advisory-board-grid" id="advisory-members" data-page={advisoryPage}>
                 <div className="advisory-member">
+                  <span className="advisory-avatar"><UserRound size={23} aria-hidden="true" /></span>
                   <div className="member-info">
                     <h4>
                       <a href="https://www.leedsth.nhs.uk/about/press-media/media-experts/professor-geoff-hall/" 
@@ -144,6 +193,8 @@ const About = () => {
                          rel="noopener noreferrer" 
                          className="member-link">
                         Professor Geoff Hall
+                        <ArrowUpRight size={16} aria-hidden="true" />
+                        <span className="advisory-sr-only"> (opens in a new tab)</span>
                       </a>
                     </h4>
                     <p>Professor of Digital Health, Leeds University, Chief Clinical Information Officer for Leeds Teaching Hospitals, UK</p>
@@ -151,6 +202,7 @@ const About = () => {
                 </div>
 
                 <div className="advisory-member">
+                  <span className="advisory-avatar"><UserRound size={23} aria-hidden="true" /></span>
                   <div className="member-info">
                     <h4>
                       <a href="https://www.abdn.ac.uk/people/lesley.anderson" 
@@ -158,6 +210,8 @@ const About = () => {
                          rel="noopener noreferrer" 
                          className="member-link">
                         Professor Lesley Anderson
+                        <ArrowUpRight size={16} aria-hidden="true" />
+                        <span className="advisory-sr-only"> (opens in a new tab)</span>
                       </a>
                     </h4>
                     <p>Professor in Health Data Science, University of Aberdeen, UK</p>
@@ -165,6 +219,7 @@ const About = () => {
                 </div>
 
                 <div className="advisory-member">
+                  <span className="advisory-avatar"><UserRound size={23} aria-hidden="true" /></span>
                   <div className="member-info">
                     <h4>
                       <a href="https://www.bme.jhu.edu/people/faculty/paul-nagy/" 
@@ -172,6 +227,8 @@ const About = () => {
                          rel="noopener noreferrer" 
                          className="member-link">
                         Associate Professor Paul Nagy
+                        <ArrowUpRight size={16} aria-hidden="true" />
+                        <span className="advisory-sr-only"> (opens in a new tab)</span>
                       </a>
                     </h4>
                     <p>Program Director Informatics and Data Science, Johns Hopkins University, USA</p>
@@ -179,6 +236,7 @@ const About = () => {
                 </div>
 
                 <div className="advisory-member">
+                  <span className="advisory-avatar"><UserRound size={23} aria-hidden="true" /></span>
                   <div className="member-info">
                     <h4>
                       <a href="https://ie.linkedin.com/in/angela-clayton-lea-mba-7970881b" 
@@ -186,6 +244,8 @@ const About = () => {
                          rel="noopener noreferrer" 
                          className="member-link">
                         Ms Angela Clayton-Lea
+                        <ArrowUpRight size={16} aria-hidden="true" />
+                        <span className="advisory-sr-only"> (opens in a new tab)</span>
                       </a>
                     </h4>
                     <p>Chief Executive Officer at Cancer Trials Ireland, Ireland</p>
@@ -193,6 +253,7 @@ const About = () => {
                 </div>
 
                 <div className="advisory-member">
+                  <span className="advisory-avatar"><UserRound size={23} aria-hidden="true" /></span>
                   <div className="member-info">
                     <h4>
                       <a href="https://martincurley.eu/" 
@@ -200,6 +261,8 @@ const About = () => {
                          rel="noopener noreferrer" 
                          className="member-link">
                         Prof Martin Curley
+                        <ArrowUpRight size={16} aria-hidden="true" />
+                        <span className="advisory-sr-only"> (opens in a new tab)</span>
                       </a>
                     </h4>
                     <p>Professor of Innovation, Maynooth University and Digital Health Leader, Ireland</p>
@@ -207,6 +270,7 @@ const About = () => {
                 </div>
 
                 <div className="advisory-member">
+                  <span className="advisory-avatar"><UserRound size={23} aria-hidden="true" /></span>
                   <div className="member-info">
                     <h4>
                       <a href="https://www.turing.ac.uk/people/external-researchers/debbie-keatley" 
@@ -214,6 +278,8 @@ const About = () => {
                          rel="noopener noreferrer" 
                          className="member-link">
                         Ms Debbie Keatley
+                        <ArrowUpRight size={16} aria-hidden="true" />
+                        <span className="advisory-sr-only"> (opens in a new tab)</span>
                       </a>
                     </h4>
                     <p>Member Data Advisory Board, Cancer Research UK and member of the Northern Ireland cancer Research Consumer Forum</p>
@@ -221,6 +287,7 @@ const About = () => {
                 </div>
 
                 <div className="advisory-member">
+                  <span className="advisory-avatar"><UserRound size={23} aria-hidden="true" /></span>
                   <div className="member-info">
                     <h4>
                       <a href="https://uk.linkedin.com/in/xosegb" 
@@ -228,6 +295,8 @@ const About = () => {
                          rel="noopener noreferrer" 
                          className="member-link">
                         Dr Xose Fernandez
+                        <ArrowUpRight size={16} aria-hidden="true" />
+                        <span className="advisory-sr-only"> (opens in a new tab)</span>
                       </a>
                     </h4>
                     <p>Head Digital Oncology Network for Europe, IQVIA UK</p>
@@ -235,6 +304,7 @@ const About = () => {
                 </div>
 
                 <div className="advisory-member">
+                  <span className="advisory-avatar"><UserRound size={23} aria-hidden="true" /></span>
                   <div className="member-info">
                     <h4>
                       <a href="https://ie.linkedin.com/in/gilles-ducorroy-9b90768" 
@@ -242,11 +312,23 @@ const About = () => {
                          rel="noopener noreferrer" 
                          className="member-link">
                         Mr Gilles Ducorroy
+                        <ArrowUpRight size={16} aria-hidden="true" />
+                        <span className="advisory-sr-only"> (opens in a new tab)</span>
                       </a>
                     </h4>
                     <p>Health &amp; Value and Pricing Reimbursement Director, Pfizer</p>
                   </div>
                 </div>
+              </div>
+              <nav className="advisory-pagination" aria-label="Advisory board pages">
+                {[0, 1, 2].map(page => (
+                  <button key={page} type="button" aria-controls="advisory-members"
+                    aria-label={`Show advisory board page ${page + 1}`}
+                    aria-current={advisoryPage === page ? 'page' : undefined}
+                    onClick={() => { setAdvisoryPage(page); setAdvisoryPaused(true); }}>{page + 1}</button>
+                ))}
+                <span className="advisory-page-status">Page {advisoryPage + 1} of 3</span>
+              </nav>
               </div>
             </div>
           </section>
