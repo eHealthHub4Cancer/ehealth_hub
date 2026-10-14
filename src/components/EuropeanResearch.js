@@ -15,7 +15,7 @@ const items = [
     logo: euFlag,
     logoAlt: "European Union flag",
     logoClass: "european-research-eu-flag",
-    title: 'Preparing for the European Health Data Space',
+    title: 'Preparing for the European Health Data Space (EHDS)',
   },
   {
     path: '/news/ul-leads-ireland-in-eu-candle-cancer-data-project',
