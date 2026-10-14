@@ -1,88 +1,47 @@
-.european-research {
-  padding: 80px 40px;
-  background: #ffffff;
-  font-family: 'Montserrat', sans-serif;
-}
-
-.european-research-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.european-research h2 {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #1a3e5a;
-  line-height: 1.2;
-  margin: 0;
-}
-
-.european-research-accent {
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, #1a3e5a, #66b2ff);
-  margin: 20px 0;
-  border-radius: 2px;
-}
-
-.european-research-intro {
-  max-width: 780px;
-  color: #435c73;
-  font-size: 1.05rem;
-  line-height: 1.8;
-  margin: 0 0 36px;
-}
-
-.european-research-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.european-research-card {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  height: 100%;
-  box-sizing: border-box;
-  padding: 24px;
-  background: #f5f8fa;
-  border: 1px solid #e4ebef;
-  border-radius: 16px;
-  text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.european-research-card:hover,
-.european-research-card:focus-visible {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 24px rgba(26, 62, 90, 0.12);
-}
-
-.european-research-label {
-  color: #226b73;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.european-research-card-title {
-  color: #1a3e5a;
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.5;
-}
-
+.european-research { padding: 72px 40px; background: #fff; font-family: 'Montserrat', sans-serif; }
+.european-research *, .european-research *::before, .european-research *::after { box-sizing: border-box; }
+.european-research .european-research-inner { max-width: 1200px; margin: 0 auto; }
+.european-research h2 { font-size: 2.2rem; font-weight: 700; color: #1a3e5a; line-height: 1.25; margin: 0; letter-spacing: -.025em; }
+.european-research .european-research-accent { width: 56px; height: 4px; background: #267b83; margin: 20px 0; border-radius: 2px; }
+.european-research .european-research-intro { max-width: 820px; color: #435c73; font-size: 1.05rem; font-weight: 500; line-height: 1.8; margin: 0 0 32px; }
+.european-research .european-research-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; list-style: none; margin: 0; padding: 0; }
+.european-research .european-research-list > li { min-width: 0; }
+.european-research .european-research-card { display: flex; flex-direction: column; height: 100%; padding: 24px; background: linear-gradient(145deg, #fff, #f5f9fa); border: 1px solid #dfe8ed; border-radius: 14px; text-decoration: none; transition: border-color .2s, box-shadow .2s, transform .2s; }
+.european-research .european-research-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.european-research .european-research-icon { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; color: #236b75; background: #e8f1f4; border: 1px solid #d7e7ec; }
+.european-research .european-research-link-icon { color: #6c8592; }
+.european-research .european-research-label { margin: 0 0 12px; color: #1a3e5a; font-size: 1.1rem; font-weight: 700; letter-spacing: -.015em; line-height: 1.45; }
+.european-research .european-research-card-title { color: #435c73; font-size: .93rem; font-weight: 500; line-height: 1.75; margin: 0 0 24px; }
+@media (hover: hover) { .european-research .european-research-card:hover { border-color: #9dbfc9; box-shadow: 0 8px 20px #1a3e5a10; transform: translateY(-3px); } }
+.european-research .european-research-card:focus-visible { outline: 3px solid #267b83; outline-offset: 4px; }
+@media (max-width: 1100px) { .european-research .european-research-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) {
-  .european-research {
-    padding: 56px 16px;
-  }
-
-  .european-research h2 {
-    font-size: 1.6rem;
-  }
+  .european-research { padding: 48px 18px; }
+  .european-research h2 { font-size: 1.6rem; }
+  .european-research .european-research-list { grid-template-columns: 1fr; gap: 14px; }
+  .european-research .european-research-card { padding: 20px; }
+  .european-research .european-research-card-header { margin-bottom: 16px; }
 }
+@media (prefers-reduced-motion: reduce) { .european-research .european-research-card { transition: none; } .european-research .european-research-card:hover { transform: none; } }
+
+.european-research .european-research-project-logo { display: flex; align-items: center; justify-content: center; width: 138px; height: 48px; padding: 6px 0; background: transparent; border-radius: 0; }
+.european-research .european-research-project-logo img { display: block; width: 100%; height: 100%; object-fit: contain; }
+
+.european-research .european-research-card-main { display: flex; flex-direction: column; flex: 1; color: inherit; text-decoration: none; }
+.european-research .european-research-eu-flag { display: flex; align-items: center; height: 48px; }
+.european-research .european-research-eu-flag img { display: block; width: 66px; height: 44px; border-radius: 3px; }
+.european-research .european-research-official-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 12px; color: #526d7b; font-size: .78rem; font-weight: 500; text-decoration: none; line-height: 1.6; }
+.european-research .european-research-official-link:hover { color: #226b73; text-decoration: underline; text-underline-offset: 3px; }
+.european-research .european-research-card-main:focus-visible, .european-research .european-research-official-link:focus-visible { outline: 2px solid #267b83; outline-offset: 4px; }
+
+.european-research .european-research-card-title { margin-bottom: 0; }
+
+.european-research .european-research-ohdsi-logos { display: flex; align-items: center; gap: 10px; min-width: 0; min-height: 48px; }
+.european-research .european-research-ohdsi-logos img { display: block; object-fit: contain; }
+.european-research .ohdsi-europe-mark { width: 108px; height: 40px; }
+.european-research .ohdsi-ireland-mark { width: 72px; height: 72px; }
+
+.european-research .european-research-personalised-icon { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 14px; background: #e8f1f4; border: 1px solid #d7e7ec; color: #236b75; }
+.european-research .european-research-personalised-icon > svg:last-child { position: absolute; right: -5px; bottom: -3px; width: 26px; height: 26px; padding: 3px; border-radius: 50%; background: #f5f9fa; color: #1a3e5a; }
+
+.european-research .european-research-intro strong { color: #1a3e5a; font-weight: 700; }
