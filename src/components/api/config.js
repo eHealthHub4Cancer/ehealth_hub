@@ -1,5 +1,5 @@
-// const API_ROOT = "https://api.ehealth4cancer.eu";
-const API_ROOT = "http://localhost:8000/api";
+const API_ROOT = "https://api.ehealth4cancer.eu";
+// const API_ROOT = "http://localhost:8000/api";
 
 const API_ENDPOINTS = {
   PEOPLE: `${API_ROOT}/people/`,
