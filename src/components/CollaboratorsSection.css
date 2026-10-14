@@ -353,3 +353,50 @@ blockquote {
         font-size: 0.7rem;
     }
 }
+
+/* Quote refinement, scoped to the collaborators section. */
+.collaborators-section .quote-container {
+    padding: 0;
+    margin-top: 28px;
+    background: transparent;
+}
+
+.collaborators-section .styled-quote {
+    padding: 18px 20px;
+    background: rgba(255, 255, 255, 0.65);
+    border-left: 3px solid #7e9eb4;
+    box-shadow: none;
+    line-height: 1.75;
+}
+
+.collaborators-section .styled-quote p {
+    margin: 0;
+}
+
+.collaborators-section .quote-author {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: #40586a;
+}
+
+.collaborators-section .quote-author {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+    color: #1a3e5a;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.collaborators-section .quote-author::before {
+    content: '';
+    width: 26px;
+    height: 3px;
+    flex-shrink: 0;
+    border-radius: 3px;
+    background: #4a899b;
+}

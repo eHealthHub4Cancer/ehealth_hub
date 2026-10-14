@@ -602,3 +602,217 @@
   opacity: 0;
   transition: opacity 500ms;
 }
+
+/* Give mobile content room beneath the fixed navigation. */
+@media (max-width: 768px) {
+  .about-page {
+    padding-top: 52px;
+  }
+
+  .about-page .content-section {
+    scroll-margin-top: 104px;
+  }
+}
+
+/* Advisory board refinement, isolated from other About sections. */
+.about-page #advisory-board .advisory-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  line-height: 1.4;
+}
+.about-page #advisory-board .advisory-heading > svg {
+  flex-shrink: 0;
+  margin-top: 8px;
+  color: #326c7d;
+}
+.about-page #advisory-board .advisory-board-grid {
+  gap: 18px;
+  margin: 28px 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.about-page #advisory-board .advisory-member {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid #dfe7ed;
+  border-radius: 12px;
+  background: #f9fbfc;
+  box-shadow: none;
+  transition: border-color .2s ease;
+}
+.about-page #advisory-board .advisory-member:hover {
+  transform: none;
+  border-color: #a3bdc8;
+  box-shadow: none;
+}
+.about-page #advisory-board .advisory-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #eaf1f5;
+  color: #386779;
+}
+.about-page #advisory-board .member-info { min-width: 0; }
+.about-page #advisory-board .member-info h4 {
+  margin: 0 0 9px;
+  font-size: 1.08rem;
+  line-height: 1.5;
+  font-weight: 600;
+}
+.about-page #advisory-board .member-link {
+  color: #1a3e5a;
+  overflow-wrap: break-word;
+}
+.about-page #advisory-board .member-link > svg {
+  display: inline-block;
+  margin-left: 6px;
+  vertical-align: middle;
+  color: #527989;
+}
+.about-page #advisory-board .member-info p {
+  font-size: .95rem;
+  line-height: 1.7;
+  color: #43596a;
+  margin: 0;
+}
+.about-page #advisory-board .member-link:focus-visible {
+  outline: 2px solid #287d8c;
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+.about-page #advisory-board .advisory-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media (max-width: 1200px) {
+  .about-page #advisory-board .advisory-board-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 480px) {
+  .about-page #advisory-board .advisory-member { padding: 16px 14px; gap: 10px; }
+  .about-page #advisory-board .advisory-avatar { width: 36px; height: 36px; }
+  .about-page #advisory-board .advisory-heading { gap: 10px; }
+  .about-page #advisory-board .advisory-heading > svg { width: 23px; margin-top: 5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-page #advisory-board .advisory-member { transition: none; }
+}
+
+.about-page #advisory-board .advisory-pagination { display: none; }
+@media (max-width: 768px) {
+  .about-page #advisory-board .advisory-board-grid[data-page="0"] .advisory-member:nth-child(n+4),
+  .about-page #advisory-board .advisory-board-grid[data-page="1"] .advisory-member:nth-child(-n+3),
+  .about-page #advisory-board .advisory-board-grid[data-page="1"] .advisory-member:nth-child(n+7),
+  .about-page #advisory-board .advisory-board-grid[data-page="2"] .advisory-member:nth-child(-n+6) {
+    display: none;
+  }
+  .about-page #advisory-board .advisory-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .about-page #advisory-board .advisory-pagination button {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    border: 1px solid #d5e1e8;
+    background: #f0f5f7;
+    color: #1a3e5a;
+    font: inherit;
+    font-weight: 600;
+  }
+  .about-page #advisory-board .advisory-pagination button[aria-current="page"] {
+    background: #1a3e5a;
+    color: #fff;
+    border-color: #1a3e5a;
+  }
+  .about-page #advisory-board .advisory-pagination button:hover { border-color: #287d8c; }
+  .about-page #advisory-board .advisory-pagination button:focus-visible { outline: 2px solid #287d8c; outline-offset: 3px; }
+  .about-page #advisory-board .advisory-page-status { width: 100%; text-align: center; font-size: .85rem; color: #43596a; }
+}
+
+/* Restrained desktop section navigation. */
+@media (min-width: 993px) {
+  .about-page .about-sidebar {
+    padding: 12px 12px 12px 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    max-height: calc(100dvh - 124px);
+    overflow-y: auto;
+  }
+  .about-page .page-navigation h3 {
+    margin: 0 0 20px;
+    padding-left: 18px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a3e5a;
+  }
+  .about-page .page-navigation ul {
+    border-left: 1px solid #ccd9e2;
+    margin-left: 8px;
+  }
+  .about-page .page-navigation button {
+    margin-left: -1px;
+    padding: 10px 16px;
+    border-left: 2px solid transparent;
+    border-radius: 0;
+    color: #465d6e;
+    line-height: 1.6;
+    background: transparent;
+    transition: color .15s ease;
+  }
+  .about-page .page-navigation button:hover {
+    padding-left: 16px;
+    background: transparent;
+    color: #236b7c;
+  }
+  .about-page .page-navigation button[aria-current="location"] {
+    border-left-color: #287d8c;
+    color: #1a3e5a;
+    font-weight: 600;
+    background: transparent;
+  }
+  .about-page .page-navigation button:focus-visible {
+    outline: 2px solid #287d8c;
+    outline-offset: 2px;
+  }
+  .about-page .content-section { scroll-margin-top: 104px; }
+}
+
+/* Softer treatment for scientific advisory board members. */
+.about-page #advisory-board .advisory-member {
+  background: #fbfcfd;
+  border-color: #e8edf1;
+  border-radius: 16px;
+}
+.about-page #advisory-board .advisory-member:hover {
+  border-color: #d4e0e7;
+}
+.about-page #advisory-board .advisory-avatar {
+  background: #f0f4f6;
+  color: #66818f;
+}
+.about-page #advisory-board .advisory-avatar svg {
+  stroke-width: 1.6;
+}
+.about-page #advisory-board .member-info h4 {
+  font-weight: 500;
+}
+.about-page #advisory-board .member-link > svg {
+  color: #7c94a0;
+  stroke-width: 1.6;
+}

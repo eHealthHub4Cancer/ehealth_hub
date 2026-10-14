@@ -69,7 +69,7 @@
   gap: 24px;
 }
 
-.resource-card {
+.directory-resource-card {
   background: white;
   border-radius: 16px;
   padding: 28px;
@@ -80,20 +80,20 @@
   flex-direction: column;
 }
 
-.resource-card:hover {
+.directory-resource-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
   border-color: #1a3e5a;
 }
 
-.card-header {
+.directory-resource-header {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 16px;
 }
 
-.card-icon {
+.directory-resource-icon {
   width: 44px;
   height: 44px;
   display: flex;
@@ -104,7 +104,7 @@
   color: white;
 }
 
-.card-category {
+.directory-resource-category {
   font-size: 12px;
   font-weight: 600;
   color: #1a3e5a;
@@ -115,7 +115,7 @@
   letter-spacing: 0.3px;
 }
 
-.resource-card h3 {
+.directory-resource-card h3 {
   color: #1a3e5a;
   font-size: 1.1rem;
   font-weight: 600;
@@ -123,7 +123,7 @@
   line-height: 1.4;
 }
 
-.resource-card > p {
+.directory-resource-card > p {
   color: #5a7184;
   font-size: 0.9rem;
   line-height: 1.6;
@@ -131,14 +131,14 @@
   flex-grow: 1;
 }
 
-.card-links {
+.directory-resource-links {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-top: auto;
 }
 
-.primary-link {
+.directory-primary-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -153,16 +153,16 @@
   opacity: 1;
 }
 
-.primary-link:hover {
+.directory-primary-link:hover {
   background: #2c5982;
   color: #ffffff !important;
 }
 
-.primary-link:visited {
+.directory-primary-link:visited {
   color: #ffffff !important;
 }
 
-.secondary-link {
+.directory-secondary-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -176,12 +176,12 @@
   transition: all 0.2s ease;
 }
 
-.secondary-link:hover {
+.directory-secondary-link:hover {
   background: #e0e8ef;
   color: #1a3e5a !important;
 }
 
-.secondary-link:visited {
+.directory-secondary-link:visited {
   color: #1a3e5a !important;
 }
 
@@ -405,7 +405,7 @@
     grid-template-columns: 1fr;
   }
 
-  .resource-card {
+  .directory-resource-card {
     padding: 22px;
   }
 
@@ -457,17 +457,252 @@
     font-size: 1.5rem;
   }
 
-  .card-header {
+  .directory-resource-header {
     flex-wrap: wrap;
   }
 
-  .card-links {
+  .directory-resource-links {
     flex-direction: column;
   }
 
-  .primary-link,
-  .secondary-link {
+  .directory-primary-link,
+  .directory-secondary-link {
     width: 100%;
     justify-content: center;
+  }
+}
+
+/* Refine only the Resources tab; Training and Code & Data retain their styling. */
+.resources-page .resources-directory {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.resources-page .resources-directory .directory-resource-card {
+  min-width: 0;
+  padding: 26px;
+  background: #fbfcfd;
+  border: 1px solid #dfe7ed;
+  border-radius: 14px;
+  box-shadow: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.resources-page .resources-directory .directory-resource-card:hover {
+  transform: none;
+  border-color: #a5bec9;
+  box-shadow: 0 6px 20px rgba(26, 62, 90, .05);
+}
+.resources-page .resources-directory .directory-resource-header {
+  flex-wrap: nowrap;
+  margin-bottom: 18px;
+  gap: 12px;
+}
+.resources-page .resources-directory .directory-resource-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #eaf2f5;
+  color: #326c7d;
+}
+.resources-page .resources-directory .directory-resource-category {
+  background: transparent;
+  padding: 0;
+  color: #4b6678;
+  font-size: .82rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+.resources-page .resources-directory h3 {
+  font-size: 1.18rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 0 0 12px;
+}
+.resources-page .resources-directory .directory-resource-card > p {
+  color: #40596b;
+  font-size: .96rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+.resources-page .resources-directory .directory-resource-links {
+  padding-top: 14px;
+  border-top: 1px solid #e3eaef;
+  gap: 8px 20px;
+  flex-direction: row;
+}
+.resources-page .resources-directory .directory-primary-link,
+.resources-page .resources-directory .directory-secondary-link {
+  width: auto;
+  min-height: 44px;
+  padding: 6px 0;
+  background: transparent;
+  border-radius: 3px;
+  color: #246779 !important;
+  font-size: .88rem;
+  font-weight: 600;
+  gap: 8px;
+}
+.resources-page .resources-directory .directory-secondary-link { color: #435c73 !important; }
+.resources-page .resources-directory .directory-primary-link:hover,
+.resources-page .resources-directory .directory-secondary-link:hover { color: #1a3e5a !important; text-decoration: underline; text-underline-offset: 4px; }
+.resources-page .resources-directory a:focus-visible { outline: 2px solid #287d8c; outline-offset: 4px; }
+@media (max-width: 768px) {
+  .resources-page .resources-directory { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .resources-page .resources-directory .directory-resource-card { padding: 22px; }
+  .resources-page .resources-directory h3 { font-size: 1.1rem; }
+}
+@media (max-width: 480px) {
+  .resources-page .resources-directory .directory-resource-card { padding: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .resources-page .resources-directory .directory-resource-card { transition: none; }
+}
+
+.resources-page .resources-directory .directory-resource-card > p {
+  color: #2f485a;
+  font-weight: 500;
+}
+.resources-page .resources-directory .resource-brand-logo {
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+  object-position: left center;
+  flex-shrink: 0;
+}
+@media (max-width: 480px) {
+  .resources-page .resources-directory .directory-resource-header:has(.resource-brand-logo) {
+    flex-wrap: wrap;
+  }
+}
+
+.resources-page .resources-directory .directory-resource-header {
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.resources-page .resources-directory .directory-resource-card {
+  text-align: left;
+}
+.resources-page .resources-directory .directory-resource-links {
+  justify-content: flex-start;
+}
+.resources-page .resources-directory .resource-brand-logo {
+  object-position: center;
+}
+
+.resources-page .resources-directory .directory-resource-header:has(.resource-brand-logo) {
+  margin-bottom: 16px;
+}
+.resources-page .resources-directory .resource-brand-logo {
+  width: 88px;
+  height: 88px;
+}
+
+.resources-page .resources-directory .directory-brand-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.resources-page .resources-directory .directory-brand-heading h3 {
+  margin: 0;
+  min-width: 0;
+  flex: 1;
+}
+.resources-page .resources-directory .directory-brand-heading .resource-brand-logo {
+  width: 76px;
+  height: 76px;
+  flex-shrink: 0;
+}
+@media (max-width: 480px) {
+  .resources-page .resources-directory .directory-brand-heading { gap: 12px; }
+  .resources-page .resources-directory .directory-brand-heading .resource-brand-logo { width: 64px; height: 64px; }
+}
+
+/* A balanced logo and title treatment for the GDI resource. */
+.resources-page .resources-directory .directory-brand-heading {
+  gap: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #e5ecf0;
+  margin-bottom: 18px;
+}
+.resources-page .resources-directory .directory-brand-heading .resource-brand-logo {
+  width: 88px;
+  height: 88px;
+  padding: 8px;
+  box-sizing: border-box;
+  background: #fff;
+  border: 1px solid #e8edf1;
+  border-radius: 14px;
+}
+.resources-page .resources-directory .directory-brand-heading h3 {
+  font-size: 1.13rem;
+  line-height: 1.55;
+  letter-spacing: -.01em;
+}
+@media (max-width: 480px) {
+  .resources-page .resources-directory .directory-brand-heading { gap: 14px; padding-bottom: 16px; }
+  .resources-page .resources-directory .directory-brand-heading .resource-brand-logo { width: 76px; height: 76px; padding: 6px; border-radius: 12px; }
+  .resources-page .resources-directory .directory-brand-heading h3 { font-size: 1.03rem; }
+}
+
+.resources-page .resources-directory .directory-seminar-link {
+  padding: 10px 14px;
+  background: #e8f2f5;
+  border: 1px solid #b9d2dc;
+  border-radius: 8px;
+  color: #1a5365 !important;
+  font-size: .9rem;
+  font-weight: 600;
+}
+.resources-page .resources-directory .directory-seminar-link:hover {
+  background: #d9eaf0;
+  border-color: #86afbf;
+  text-decoration: none;
+}
+
+/* Visible, understated website actions within the Resources tab. */
+.resources-page .resources-directory .directory-primary-link {
+  padding: 9px 14px;
+  min-height: 44px;
+  background: #edf3f6;
+  border: 1px solid #ccdce5;
+  border-radius: 8px;
+  color: #1a3e5a !important;
+  font-size: .88rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.resources-page .resources-directory .directory-primary-link:hover {
+  background: #e1edf2;
+  border-color: #9bb9c8;
+  color: #1a3e5a !important;
+  text-decoration: none;
+}
+.resources-page .resources-directory .directory-primary-link:visited {
+  color: #1a3e5a !important;
+}
+
+.resources-page .resources-directory .directory-seminar-link,
+.resources-page .resources-directory .directory-seminar-link:visited {
+  background: #246b78;
+  border-color: #246b78;
+  color: #fff !important;
+}
+.resources-page .resources-directory .directory-seminar-link:hover {
+  background: #1c5560;
+  border-color: #1c5560;
+  color: #fff !important;
+  text-decoration: none;
+}
+
+/* Mobile clearance for Resources and Code & Data beneath the fixed navbar. */
+@media (max-width: 768px) {
+  .resources-page {
+    padding-top: 112px;
   }
 }

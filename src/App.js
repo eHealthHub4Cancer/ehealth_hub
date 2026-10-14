@@ -12,6 +12,7 @@ import Projects from './components/Projects';
 import Talks from "./components/Talks";
 import Publications from './components/Publications';
 import Resources from './components/Resources';
+import CodeData from './components/CodeData';
 import Index from "./components/People/index";
 import GoogleSheetNews from "./components/GoogleSheetNews";
 import NewsArticle from "./components/News/NewsArticle";
@@ -128,6 +129,7 @@ const AppWithRouter = () => {
               <Route path="/output/talks" element={<Talks />} />
               <Route path="/output/publications" element={<Publications />} />
               <Route path="/resources" element={<Resources />} />
+              <Route path="/output/code-data" element={<CodeData />} />
 
               {/* OHDSI Ireland Routes */}
               <Route path="/ohdsi-ireland" element={<OHDSIIreland />} />
