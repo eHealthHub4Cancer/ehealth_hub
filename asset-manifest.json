@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.00c9af9e.css",
-    "main.js": "/static/js/main.46f7699c.js",
+    "main.css": "/static/css/main.bc577938.css",
+    "main.js": "/static/js/main.e6a873c8.js",
     "static/js/453.6411f75a.chunk.js": "/static/js/453.6411f75a.chunk.js",
     "static/media/all_island_2026.jpg": "/static/media/all_island_2026.5e5b63889e1746e0c8d4.jpg",
     "static/media/Cancer-Research-UL.jpg": "/static/media/Cancer-Research-UL.cea648545bb9e86a250a.jpg",
@@ -23,21 +23,25 @@
     "static/media/Computer_Stockphoto.PNG": "/static/media/Computer_Stockphoto.37b9c65d341945a446b4.PNG",
     "static/media/LDCRC Irish Ver.png": "/static/media/LDCRC Irish Ver.166e463ff79eddbe9483.png",
     "static/media/eHealth.png": "/static/media/eHealth.add01f1f12a41e0877d5.png",
+    "static/media/GDI-Ireland.png": "/static/media/GDI-Ireland.87e7a8582497694fe1c7.png",
     "static/media/OHDSI_Logo.png": "/static/media/OHDSI_Logo.13c6ea72c3d8e6b37a9b.png",
     "static/media/IrishNews_gender.jpg": "/static/media/IrishNews_gender.354fec680a04935de745.jpg",
     "static/media/overview.jpeg": "/static/media/overview.823c11e5a1ab1b5e5e22.jpeg",
     "static/media/Slide1.jpeg": "/static/media/Slide1.5934e05d59a4606534be.jpeg",
+    "static/media/HIQA.svg": "/static/media/HIQA.0086b01ebf3b8015f2058f0a3c33342a.svg",
     "index.html": "/index.html",
+    "static/media/CANDLE-official-light.svg": "/static/media/CANDLE-official-light.65545a7c6fa61ad012cd8e27afc12110.svg",
     "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
     "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
     "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
-    "main.00c9af9e.css.map": "/static/css/main.00c9af9e.css.map",
-    "main.46f7699c.js.map": "/static/js/main.46f7699c.js.map",
+    "static/media/eu-flag.svg": "/static/media/eu-flag.a9f5277cdec7b2b059090d4af78b2370.svg",
+    "main.bc577938.css.map": "/static/css/main.bc577938.css.map",
+    "main.e6a873c8.js.map": "/static/js/main.e6a873c8.js.map",
     "453.6411f75a.chunk.js.map": "/static/js/453.6411f75a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.00c9af9e.css",
-    "static/js/main.46f7699c.js"
+    "static/css/main.bc577938.css",
+    "static/js/main.e6a873c8.js"
   ]
 }
