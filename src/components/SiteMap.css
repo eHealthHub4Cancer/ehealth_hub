@@ -1,7 +1,67 @@
-.public-site-map { max-width: 1100px; margin: 40px auto; padding: 24px; color: #1a3e5a; font-family: 'Montserrat', sans-serif; }
-.public-site-map h1 { font-size: 2rem; font-weight: 700; }
-.public-site-map h2 { margin-top: 30px; font-size: 1.4rem; }
-.public-site-map p { color: #435c73; line-height: 1.7; }
-.public-site-map ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding-left: 20px; }
-.public-site-map a { color: #226b73; font-weight: 600; line-height: 1.6; text-underline-offset: 3px; }
-@media (max-width: 600px) { .public-site-map ul { grid-template-columns: 1fr; } }
+.public-site-map { max-width: 1200px; margin: 0 auto; padding: 56px 32px 72px; color: #1a3e5a; font-family: 'Montserrat', sans-serif; }
+.public-site-map .sitemap-eyebrow { color: #326a77; font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.public-site-map h1 { margin: 10px 0 12px; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; }
+.public-site-map p { color: #435c73; line-height: 1.7; margin: 0; }
+.public-site-map .sitemap-intro > p { font-size: 1.05rem; }
+.public-site-map .sitemap-jump-links { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 32px; }
+.public-site-map .sitemap-jump-links a { color: #264e63; background: #eef4f6; border: 1px solid #dde8ec; border-radius: 24px; padding: 10px 16px; font-size: .88rem; font-weight: 500; text-decoration: none; }
+.public-site-map .sitemap-jump-links a:hover { background: #e0edf0; }
+.public-site-map .sitemap-sections { display: grid; gap: 24px; }
+.public-site-map .sitemap-section { padding: 28px; border: 1px solid #dfe7ed; border-radius: 16px; background: #fff; scroll-margin-top: 110px; }
+.public-site-map .sitemap-section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.public-site-map .sitemap-section-icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 48px; height: 48px; border-radius: 12px; color: #2b6878; background: #eef4f6; }
+.public-site-map h2 { margin: 0 0 5px; font-size: 1.35rem; font-weight: 600; line-height: 1.4; }
+.public-site-map .sitemap-section-header p { font-size: .9rem; }
+.public-site-map .sitemap-count { margin-left: auto; align-self: flex-start; padding: 5px 10px; border-radius: 20px; background: #f0f4f7; color: #425e70; font-size: .8rem; font-weight: 600; }
+.public-site-map ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; list-style: none; margin: 0; padding: 0; }
+.public-site-map li { min-width: 0; border-bottom: 1px solid #edf1f4; }
+.public-site-map li a { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 48px; padding: 13px 0; color: #27495e; font-size: .95rem; font-weight: 500; line-height: 1.65; text-decoration: none; }
+.public-site-map li a span { overflow-wrap: anywhere; }
+.public-site-map li a svg { flex-shrink: 0; color: #527d8c; }
+.public-site-map li a:hover { color: #176779; }
+.public-site-map a:focus-visible { outline: 2px solid #287d8c; outline-offset: 4px; border-radius: 4px; }
+@media (max-width: 600px) {
+  .public-site-map { padding: 32px 20px 44px; }
+  .public-site-map .sitemap-section { padding: 20px 16px; }
+  .public-site-map .sitemap-section-header { gap: 10px; align-items: flex-start; }
+  .public-site-map .sitemap-section-icon { width: 38px; height: 38px; border-radius: 10px; }
+  .public-site-map h2 { font-size: 1.15rem; }
+  .public-site-map ul { grid-template-columns: 1fr; }
+  .public-site-map .sitemap-jump-links { gap: 8px; }
+  .public-site-map .sitemap-jump-links a { padding: 10px 12px; font-size: .82rem; }
+}
+
+/* Clear the fixed navigation and allow narrow-screen headings to wrap. */
+.public-site-map {
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  max-height: none;
+  overflow: visible;
+  padding-top: 136px;
+}
+.public-site-map .sitemap-section-header > div {
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: break-word;
+}
+.public-site-map .sitemap-count { flex-shrink: 0; }
+@media (max-width: 600px) {
+  .public-site-map { padding-top: 112px; }
+}
+
+/* Native disclosure keeps section links mounted while collapsed. */
+.public-site-map summary.sitemap-section-header {
+  cursor: pointer;
+  list-style: none;
+  margin-bottom: 0;
+}
+.public-site-map summary.sitemap-section-header::-webkit-details-marker { display: none; }
+.public-site-map .sitemap-section[open] > summary { margin-bottom: 20px; }
+.public-site-map .sitemap-chevron { flex-shrink: 0; color: #527d8c; transition: transform .18s ease; }
+.public-site-map .sitemap-section[open] .sitemap-chevron { transform: rotate(180deg); }
+.public-site-map summary:focus-visible { outline: 2px solid #287d8c; outline-offset: 6px; border-radius: 4px; }
+.public-site-map summary:hover h2 { color: #176779; }
+@media (prefers-reduced-motion: reduce) {
+  .public-site-map .sitemap-chevron { transition: none; }
+}
