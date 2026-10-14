@@ -699,3 +699,10 @@
   color: #fff !important;
   text-decoration: none;
 }
+
+/* Mobile clearance for Resources and Code & Data beneath the fixed navbar. */
+@media (max-width: 768px) {
+  .resources-page {
+    padding-top: 112px;
+  }
+}

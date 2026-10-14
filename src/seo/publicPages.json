@@ -73,5 +73,10 @@
     "/news-archive",
     "News Archive",
     "Explore archived news from the eHealth Hub for Cancer."
+  ],
+  [
+    "/output/code-data",
+    "Code & Data",
+    "Explore open-source code, datasets and archived research outputs from the eHealth Hub for Cancer."
   ]
 ]

@@ -1110,3 +1110,11 @@
     justify-content: center;
   }
 }
+
+/* Mobile clearance beneath the fixed navbar. */
+@media (max-width: 768px) {
+  .publications-container {
+    margin-top: 0;
+    padding-top: 112px;
+  }
+}

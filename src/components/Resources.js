@@ -5,7 +5,7 @@ import ohdsiIrelandLogo from '../Images/logo/OHDSI_Logo.png';
 import candleLogo from '../Images/logo/CANDLE-official-light.svg';
 import euLogo from '../Images/logo/eu-flag.svg';
 import hiqaLogo from '../Images/logo/HIQA.svg';
-import { ExternalLink, Database, GraduationCap, Globe, BookOpen, Building2, Github, Archive } from 'lucide-react';
+import { ExternalLink, Database, GraduationCap, Globe, BookOpen, Building2 } from 'lucide-react';
 
 const resourcesData = [
   {
@@ -99,22 +99,6 @@ const trainingData = [
   }
 ];
 
-const codeDataLinks = [
-  {
-    id: 1,
-    title: 'GitHub Repository',
-    description: 'Access our open-source code, tools, and projects developed by the eHealth-Hub for Cancer research team.',
-    url: 'https://github.com/eHealthHub4Cancer',
-    icon: 'github'
-  },
-  {
-    id: 2,
-    title: 'Zenodo Community',
-    description: 'Browse and download our published datasets, research outputs, and archived materials with DOIs for citation.',
-    url: 'https://zenodo.org/communities/ehealth4cancer/records?q=&l=list&p=1&s=10&sort=newest',
-    icon: 'archive'
-  }
-];
 
 function Resources() {
   const [activeSection, setActiveSection] = useState('resources');
@@ -154,13 +138,7 @@ function Resources() {
             <GraduationCap size={18} />
             Training
           </button>
-          <button
-            className={`tab-btn ${activeSection === 'code' ? 'active' : ''}`}
-            onClick={() => setActiveSection('code')}
-          >
-            <Github size={18} />
-            Code & Data
-          </button>
+
         </div>
       </div>
 
@@ -228,34 +206,7 @@ function Resources() {
           </div>
         )}
 
-        {/* Code & Data Section */}
-        {activeSection === 'code' && (
-          <div className="code-data-section">
-            <div className="code-data-grid">
-              {codeDataLinks.map(link => (
-                <a
-                  key={link.id}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`code-data-card ${link.icon}`}
-                >
-                  <div className="code-data-icon">
-                    {link.icon === 'github' ? <Github size={40} /> : <Archive size={40} />}
-                  </div>
-                  <div className="code-data-content">
-                    <h3>{link.title}</h3>
-                    <p>{link.description}</p>
-                  </div>
-                  <div className="code-data-action">
-                    <span>Visit</span>
-                    <ExternalLink size={16} />
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
+
       </div>
     </div>
   );
