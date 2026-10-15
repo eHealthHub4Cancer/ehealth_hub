@@ -9,8 +9,9 @@ const items = [
   { label: 'Home', path: '/' },
   { label: 'About Us', children: [{ label: 'About eHealth Hub', path: '/about' }, { label: 'Meet the Team', path: '/people' }] },
   { label: 'OHDSI Ireland', children: [{ label: 'About the Node', path: '/ohdsi-ireland' }, { label: 'Seminar Series', path: '/ohdsi-ireland/seminars' }] },
-  { label: 'News', path: '/news' }, { label: 'Events', path: '/forum' },
-  { label: 'Calendar', path: '/calendar' }, { label: 'Blog', path: '/blog' },
+  { label: 'News', path: '/news' },
+  { label: 'Events', children: [{ label: 'All-Island Forum', path: '/forum' }, { label: 'Calendar', path: '/calendar' }] },
+  { label: 'Blog', path: '/blog' },
   { label: 'Resources', path: '/resources' },
   { label: 'Impact', children: [{ label: 'Publications', path: '/output/publications' }, { label: 'Code & Data', path: '/output/code-data' }] },
 ];
