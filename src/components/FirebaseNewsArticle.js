@@ -15,6 +15,7 @@ const FirebaseNewsArticle = () => {
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const [imageFailed, setImageFailed] = useState(false);
 
   const override = {
@@ -35,6 +36,7 @@ const FirebaseNewsArticle = () => {
         setError('Article not found');
       } else {
         setArticle(data);
+        setImageLoaded(false);
         setImageFailed(false);
         setError(null);
       }
@@ -268,13 +270,17 @@ const FirebaseNewsArticle = () => {
         </header>
 
         {/* Featured Image */}
-        {/* Hidden if the image host is unreachable */}
+        {/* Hidden until loaded, so an unreachable image host (failing or hanging) shows nothing */}
         {article.imageUrl && !imageFailed && (
-          <div className="article-image-container">
+          <div
+            className="article-image-container"
+            style={imageLoaded ? undefined : { display: 'none' }}
+          >
             <img
               src={article.imageUrl}
               alt={article.title}
               className="article-image"
+              onLoad={() => setImageLoaded(true)}
               onError={() => setImageFailed(true)}
             />
             {article.eventDetails?.ImageCaption && (

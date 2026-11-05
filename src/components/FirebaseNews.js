@@ -128,21 +128,24 @@ const FirebaseNews = () => {
 
   // News Card Component
   const NewsCard = ({ item }) => {
-    // Falls back to the placeholder if the image host is unreachable
+    // The placeholder stays visible until the image has actually loaded, so an
+    // unreachable image host (failing or hanging) never shows a broken image
+    const [imageLoaded, setImageLoaded] = useState(false);
     const [imageFailed, setImageFailed] = useState(false);
 
     return (
     <Link to={`/news/${item.slug}`} className="news-card">
       <div className="news-image">
-        {item.imageUrl && !imageFailed ? (
+        {!imageLoaded && <div className="no-image">No Image</div>}
+        {item.imageUrl && !imageFailed && (
           <img
             src={item.imageUrl}
             alt={item.title}
             loading="lazy"
+            className={imageLoaded ? 'loaded' : ''}
+            onLoad={() => setImageLoaded(true)}
             onError={() => setImageFailed(true)}
           />
-        ) : (
-          <div className="no-image">No Image</div>
         )}
         <span className={`type-badge ${item.type}`}>
           {getTypeLabel(item.type)}

@@ -174,10 +174,17 @@
 }
 
 .firebase-news-container .news-image img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.3s ease;
+}
+
+.firebase-news-container .news-image img.loaded {
+  opacity: 1;
 }
 
 .firebase-news-container .news-card:hover .news-image img {
