@@ -127,11 +127,20 @@ const FirebaseNews = () => {
   };
 
   // News Card Component
-  const NewsCard = ({ item }) => (
+  const NewsCard = ({ item }) => {
+    // Falls back to the placeholder if the image host is unreachable
+    const [imageFailed, setImageFailed] = useState(false);
+
+    return (
     <Link to={`/news/${item.slug}`} className="news-card">
       <div className="news-image">
-        {item.imageUrl ? (
-          <img src={item.imageUrl} alt={item.title} loading="lazy" />
+        {item.imageUrl && !imageFailed ? (
+          <img
+            src={item.imageUrl}
+            alt={item.title}
+            loading="lazy"
+            onError={() => setImageFailed(true)}
+          />
         ) : (
           <div className="no-image">No Image</div>
         )}
@@ -163,7 +172,8 @@ const FirebaseNews = () => {
         </div>
       </div>
     </Link>
-  );
+    );
+  };
 
   // Skeleton loader
   const NewsCardSkeleton = () => (
