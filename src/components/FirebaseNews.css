@@ -386,6 +386,9 @@
 .firebase-news-container .pagination-button {
   min-width: 42px;
   height: 42px;
+  /* Override the global .pagination-button padding/margin from Publications.css */
+  padding: 0 8px;
+  margin: 0;
   border: 2px solid #e2e8f0;
   background-color: white;
   border-radius: 10px;
@@ -567,8 +570,7 @@
   }
 
   .firebase-news-container .pagination {
-    flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
   }
 }
 
@@ -579,5 +581,16 @@
 
   .firebase-news-container .news-image {
     height: 180px;
+  }
+
+  .firebase-news-container .pagination {
+    gap: 5px;
+  }
+
+  .firebase-news-container .pagination-button {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 6px;
+    font-size: 0.85rem;
   }
 }
