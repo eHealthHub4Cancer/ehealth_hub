@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.eb61d519.css",
-    "main.js": "/static/js/main.31112e40.js",
+    "main.css": "/static/css/main.5be74d07.css",
+    "main.js": "/static/js/main.4e9ad7a7.js",
     "static/js/453.6411f75a.chunk.js": "/static/js/453.6411f75a.chunk.js",
     "static/media/all_island_2026.jpg": "/static/media/all_island_2026.5e5b63889e1746e0c8d4.jpg",
     "static/media/Cancer-Research-UL.jpg": "/static/media/Cancer-Research-UL.cea648545bb9e86a250a.jpg",
@@ -36,12 +36,12 @@
     "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "static/media/eu-flag.svg": "/static/media/eu-flag.a9f5277cdec7b2b059090d4af78b2370.svg",
-    "main.eb61d519.css.map": "/static/css/main.eb61d519.css.map",
-    "main.31112e40.js.map": "/static/js/main.31112e40.js.map",
+    "main.5be74d07.css.map": "/static/css/main.5be74d07.css.map",
+    "main.4e9ad7a7.js.map": "/static/js/main.4e9ad7a7.js.map",
     "453.6411f75a.chunk.js.map": "/static/js/453.6411f75a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.eb61d519.css",
-    "static/js/main.31112e40.js"
+    "static/css/main.5be74d07.css",
+    "static/js/main.4e9ad7a7.js"
   ]
 }
