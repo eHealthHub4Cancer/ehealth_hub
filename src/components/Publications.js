@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Publications.css';
 import './ResearchPublications.css';
-import PublicationsData from './PublicationsData';
-import ReportsData from './ReportsData';
-import OtherOutputsData from './OtherOutputsData';
+import { getPublicOutputs, formatOutputDate, sortOutputs, getStaticOutputs } from '../services/researchOutputsService';
 import { FileText, ChevronDown, CalendarDays, Copy, Check } from 'lucide-react';
 
 function CopyLink({ url }) {
@@ -26,11 +24,50 @@ function CopyLink({ url }) {
   </button>;
 }
 
+const typeKeys = { publications: 'publication', reports: 'report', posters: 'poster', presentations: 'presentation' };
+
+// Latest year that has outputs of the given type
+const latestYear = (outputs, type) =>
+  outputs.filter(output => output.type === typeKeys[type]).map(output => String(output.year || 'Undated'))
+    .sort((a, b) => b.localeCompare(a))[0] || '';
+
+// Render a publication as Authors. "Title". Source. - or the stored citation for older free-text entries
+const renderCitation = (pub) => {
+  if (pub.title) {
+    return <>
+      <span className="rp-citation-authors">{pub.authors}. </span>
+      <strong className="rp-citation-title">"{pub.title}".</strong>
+      <span className="rp-citation-source"> {pub.source}</span>
+    </>;
+  }
+  const citation = pub.citation || '';
+  const titleStart = citation.indexOf('"');
+  const titleEnd = titleStart >= 0 ? citation.indexOf('"', titleStart + 1) : -1;
+  if (titleEnd < 0) return citation;
+  return <>
+    <span className="rp-citation-authors">{citation.slice(0, titleStart)}</span>
+    <strong className="rp-citation-title">{citation.slice(titleStart, titleEnd + 1)}</strong>
+    <span className="rp-citation-source">{citation.slice(titleEnd + 1)}</span>
+  </>;
+};
+
 function Publications() {
-  // State for active section - can be 'reports' or a year like '2024'
+  // Static data renders immediately, then is replaced by the admin-managed outputs
+  const [outputs, setOutputs] = useState(() => sortOutputs(getStaticOutputs()));
+  // State for active section - a year like '2024'
   const [outputType, setOutputType] = useState('publications');
-  const [activeSection, setActiveSection] = useState(Object.keys(PublicationsData).sort((a, b) => Number(b) - Number(a))[0] || '');
+  const [activeSection, setActiveSection] = useState(() => latestYear(sortOutputs(getStaticOutputs()), 'publications'));
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    let cancelled = false;
+    getPublicOutputs().then(loaded => {
+      if (cancelled) return;
+      setOutputs(loaded);
+      setActiveSection(current => current || latestYear(loaded, 'publications'));
+    });
+    return () => { cancelled = true; };
+  }, []);
 
   const publicationsPerPage = 5; // Number of publications per page
 
@@ -44,14 +81,18 @@ function Publications() {
     window.open(pdfViewerUrl, '_blank');
   };
 
+  const getYear = item => String(item.year || 'Undated');
+  const outputItems = outputs.filter(output => output.type === typeKeys[outputType]);
+  const filteredOutputs = outputItems.filter(item => getYear(item) === activeSection);
+
   // Calculate current items and rp-pagination for publications
   const getPublicationData = () => {
     if (outputType !== 'publications') return { currentItems: [], totalPages: 0 };
     
     const indexOfLastPublication = currentPage * publicationsPerPage;
     const indexOfFirstPublication = indexOfLastPublication - publicationsPerPage;
-    const currentItems = (PublicationsData[activeSection] || []).slice(indexOfFirstPublication, indexOfLastPublication);
-    const totalPages = Math.ceil((PublicationsData[activeSection] || []).length / publicationsPerPage);
+    const currentItems = filteredOutputs.slice(indexOfFirstPublication, indexOfLastPublication);
+    const totalPages = Math.ceil(filteredOutputs.length / publicationsPerPage);
     
     return { currentItems, totalPages, indexOfFirstPublication };
   };
@@ -64,18 +105,10 @@ function Publications() {
   };
 
   const typeLabels = { publications: 'Publications', reports: 'Reports', posters: 'Posters', presentations: 'Presentations' };
-  const getYear = item => String(item.year || (item.date || '').match(/\b(?:19|20)\d{2}\b/)?.[0] || 'Undated');
-  const outputItems = outputType === 'reports' ? ReportsData : (OtherOutputsData[outputType] || []);
-  const availableYears = outputType === 'publications'
-    ? Object.keys(PublicationsData).filter(year => PublicationsData[year].length).sort((a, b) => Number(b) - Number(a))
-    : [...new Set(outputItems.map(getYear))].sort((a, b) => b.localeCompare(a));
-  const filteredOutputs = outputItems.filter(item => getYear(item) === activeSection);
+  const availableYears = [...new Set(outputItems.map(getYear))].sort((a, b) => b.localeCompare(a));
   const handleTypeChange = type => {
     setOutputType(type);
-    const items = type === 'reports' ? ReportsData : (OtherOutputsData[type] || []);
-    const years = type === 'publications' ? Object.keys(PublicationsData).filter(year => PublicationsData[year].length).sort((a, b) => Number(b) - Number(a))
-      : [...new Set(items.map(getYear))].sort((a, b) => b.localeCompare(a));
-    setActiveSection(years[0] || '');
+    setActiveSection(latestYear(outputs, type));
     setCurrentPage(1);
   };
 
@@ -121,20 +154,22 @@ function Publications() {
                   <div className="rp-report-content">
                     <div className="rp-report-header">
                       <h3>{report.title}</h3>
-                      <p className="rp-report-meta">{report.date}</p>
+                      <p className="rp-report-meta">{formatOutputDate(report)}</p>
                     </div>
                     <div className="rp-report-body">
-                      <div className="rp-report-image">
-                        <img 
-                          src={report.imageUrl} 
-                          alt={report.imageCaption || "Report cover"} 
-                        />
-                        {report.imageCaption && (
-                          <p className="rp-image-caption">{report.imageCaption}</p>
-                        )}
-                      </div>
+                      {report.imageUrl && (
+                        <div className="rp-report-image">
+                          <img 
+                            src={report.imageUrl} 
+                            alt={report.imageCaption || "Report cover"} 
+                          />
+                          {report.imageCaption && (
+                            <p className="rp-image-caption">{report.imageCaption}</p>
+                          )}
+                        </div>
+                      )}
                       <div className="rp-report-details">
-                        <p className="rp-report-authors">Authors: {report.authors}</p>
+                        {report.authors && <p className="rp-report-authors">Authors: {report.authors}</p>}
                         <p className="rp-report-description">{report.description}</p>
                         <div className="rp-report-actions">
                           <span className="rp-link-actions">
@@ -164,7 +199,7 @@ function Publications() {
               <div className="rp-publication-content">
                 <h3 className="rp-paper-title">{item.title}</h3>
                 {item.authors && <p className="rp-paper-authors">{item.authors}</p>}
-                {item.date && <p className="rp-paper-source">{item.date}</p>}
+                {item.year && <p className="rp-paper-source">{formatOutputDate(item)}</p>}
                 {item.description && <p className="rp-publication-text">{item.description}</p>}
                 {(item.url || item.pdfUrl) && <span className="rp-link-actions"><a className="rp-meta-link" href={item.url || item.pdfUrl} target="_blank" rel="noopener noreferrer">View {outputType === 'posters' ? 'poster' : 'presentation'}</a><CopyLink url={item.url || item.pdfUrl} /></span>}
               </div>
@@ -176,7 +211,7 @@ function Publications() {
           <section className="rp-content-section">
             <div className="rp-results-heading">
               <h2>Publications <span className="rp-year-label">{activeSection}</span></h2>
-              <span className="rp-results-count">{(PublicationsData[activeSection] || []).length} publications</span>
+              <span className="rp-results-count">{filteredOutputs.length} publications</span>
             </div>
             
             <div className="rp-publications-grid">
@@ -184,16 +219,7 @@ function Publications() {
                 <article key={pub.id} className="rp-publication-card">
                   <div className="rp-publication-number">[{index + 1 + indexOfFirstPublication}]</div>
                   <div className="rp-publication-content">
-                    <p className="rp-publication-text">{(() => {
-                      const titleStart = pub.citation.indexOf('"');
-                      const titleEnd = titleStart >= 0 ? pub.citation.indexOf('"', titleStart + 1) : -1;
-                      if (titleEnd < 0) return pub.citation;
-                      return <>
-                        <span className="rp-citation-authors">{pub.citation.slice(0, titleStart)}</span>
-                        <strong className="rp-citation-title">{pub.citation.slice(titleStart, titleEnd + 1)}</strong>
-                        <span className="rp-citation-source">{pub.citation.slice(titleEnd + 1)}</span>
-                      </>;
-                    })()}</p>
+                    <p className="rp-publication-text">{renderCitation(pub)}</p>
                     <div className="rp-publication-meta">
                       {pub.doi && (
                         <span className="rp-link-actions"><a

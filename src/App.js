@@ -61,6 +61,7 @@ import AdminNews from "./components/AdminNews";
 import FirebaseNews from "./components/FirebaseNews";
 import FirebaseNewsArticle from "./components/FirebaseNewsArticle";
 import MigrateNews from "./components/MigrateNews";
+import MigrateResearchOutputs from "./components/MigrateResearchOutputs";
 
 import './App.css'; 
 
@@ -196,6 +197,16 @@ const AppWithRouter = () => {
                 element={
                   <PrivateRoute requiredRole="admin">
                     <MigrateNews />
+                  </PrivateRoute>
+                }
+              />
+
+              {/* Publications & Outputs import (one-time use) */}
+              <Route
+                path="/admin/migrate-outputs"
+                element={
+                  <PrivateRoute requiredRole="admin">
+                    <MigrateResearchOutputs />
                   </PrivateRoute>
                 }
               />

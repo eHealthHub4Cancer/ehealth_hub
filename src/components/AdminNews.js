@@ -1,6 +1,6 @@
 // src/components/AdminNews.js
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { auth } from '../firebase';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -17,10 +17,13 @@ import {
   ARTICLE_TYPES,
   NEWS_CATEGORIES
 } from '../services/newsService';
+import AdminResearchOutputs from './AdminResearchOutputs';
 import './AdminNews.css';
 
 const AdminNews = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const section = searchParams.get('section') === 'outputs' ? 'outputs' : 'news';
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [articles, setArticles] = useState([]);
@@ -299,6 +302,37 @@ const AdminNews = () => {
     return found ? found.label : type;
   };
 
+  // Switch between News and Publications & Outputs on the same admin page
+  const sectionSwitch = (
+    <div className="admin-section-switch" role="tablist">
+      <button
+        role="tab"
+        aria-selected={section === 'news'}
+        className={section === 'news' ? 'active' : ''}
+        onClick={() => setSearchParams({})}
+      >
+        News
+      </button>
+      <button
+        role="tab"
+        aria-selected={section === 'outputs'}
+        className={section === 'outputs' ? 'active' : ''}
+        onClick={() => setSearchParams({ section: 'outputs' })}
+      >
+        Publications & Outputs
+      </button>
+    </div>
+  );
+
+  if (section === 'outputs') {
+    return (
+      <div className="admin-news-container">
+        {sectionSwitch}
+        <AdminResearchOutputs />
+      </div>
+    );
+  }
+
   if (loading) {
     return (
       <div className="admin-news-loading">
@@ -310,6 +344,7 @@ const AdminNews = () => {
 
   return (
     <div className="admin-news-container">
+      {sectionSwitch}
       <div className="admin-news-header">
         <div className="header-content">
           <h1>News Management</h1>

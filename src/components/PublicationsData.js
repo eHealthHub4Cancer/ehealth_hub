@@ -10,6 +10,87 @@ const PublicationsData = {
         id: 2,
         citation: "Reardon B, Camp SY, O'Mahoney G, Vergara M, Lawler M, Van Allen EM, Culhane AC. \"A standard operating procedure to enable global, regionally-guided precision oncology knowledge bases\". (2026).",
         doi: "10.5281/zenodo.18186568"
+      },
+      {
+        id: 3,
+        citation: "Casolino R, Mateo J, de Vries EGE, Johns A, Courtot M, Lawlor RT, Perdomo S, Gray SW, Perez-Lopez R, Turnbull C, Torrents D, Vokinger KN, Akhoundova D, Bourque JM, Cardona AF, Chang YJ, Chakravarty D, Chicherova I, Cranston KA, Davis M, Drury A, Frisell O, Garcia RM, Grossman RL, Hamdi Y, Hediger S, Hofmarcher T, Hofmann O, Kather JN, Kim H, Kato K, Knoppers BM, Lehmann KV, Lokuhetty D, LoRusso PM, Mascalzoni D, Mulder N, Osterman T, Odedina F, Parikh AR, Rotimi S, Rous B, Sweeney S, Sirohi B, Sondka Z, Staunton C, Taskén K, Wagner A, Westphalen CB, Wu J, Yann J, Zawati MH, Biankin AV, Yoshino T, Stein L, Lawler M. \"Accelerating equitable cancer genomics and precision oncology in health care and research: a Lancet Oncology Commission\". In: Lancet Oncol. (Oct. 2026)",
+        doi: "10.1016/S1470-2045(26)00302-5",
+        pmid: "42790448"
+      },
+      {
+        id: 4,
+        citation: "Culhane AC, Kherreh N, Brennan P. \"Rising colorectal cancer mortality among young adults in many countries\". In: J Natl Cancer Inst. (Oct. 2026)",
+        doi: "10.1093/jnci/djag215",
+        pmid: "42678893"
+      },
+      {
+        id: 5,
+        citation: "Hersey S, Celik H, Rosen S, Scott C, Keeling P, Joglekar L, Lawler M. \"Diagnostic regulatory pathways are an underrecognized bottleneck in precision oncology clinical trials: Real-world evidence across Europe\". In: Eur J Cancer. (Oct. 2026)",
+        doi: "10.1016/j.ejca.2026.117009",
+        pmid: "42664749"
+      },
+      {
+        id: 6,
+        citation: "Kumar Panda P, Prashant Mathur DNB, Chowdhury S, Tan AC, Pham GH, Ting FIL, Nguyen LT, Ordinario MVC, Lee D, Das A, Pitiyarachchi O, Casolino R, Lawler M, Sirohi B. \"Cancer genomics and precision oncology in South-East Asia: access, inequities, and implementation challenges\". In: Lancet Reg Health Southeast Asia. (Nov. 2026)",
+        doi: "10.1016/j.lansea.2026.100889"
+      },
+      {
+        id: 7,
+        citation: "Fagereng GL, Abel E, CAN.HEAL Consortium, Casolino R, De Maria R, Fröhling S, Gelderblom H, Hernando-Calvo A, Hill S, JA PCM Consortium, Jalkanen K, Kama Ml, Krebs M, Lawler M, le Tourneau, Lepland A, Ługowska I, Mainoli B, Normanno N, Obermannova RL, Piris-Giménez A, PRIME-ROSE Consortium, PCM4EU Consortium, Rohrberg KS, Ryll B, Bulcke M, van Waalwijk van Doorn-Khosrovani SB, Van Valckenborgh E, Verlingue L, Westphalen CB, Taskén K. \"Landscape of cancer genomics and precision oncology in Europe\". In: Lancet Reg Health Eur. (2026). In press."
+      },
+      {
+        id: 8,
+        citation: "Torrents D, Hofmann O, Cranston KA, Casolino R, Biankin AV, Cardona AF, Grossman RL, Johns A, Lawler M, Lehmann KV, Garcia RK, Mulder N, Osterman T, Rebbeck T, Rotimi S, Sondka Z, Sweeney S, Volchenboum S, Wagner A, Wu J, Yoshino T, Courtot M, Stein L. \"Genomic data systems in precision oncology: from integration to clinical implementation\". In: EBioMedicine. (Oct. 2026)",
+        doi: "10.1016/j.ebiom.2026.106480",
+        pmid: "42791163"
+      },
+      {
+        id: 9,
+        citation: "Turnbull C, Perdomo S, Domchek S, Foulkes W, Pharoah P, Ashton-Prolla P, Sirohi B, Mateo J, Robbins HA, Sullivan R, Lawler M, Casolino R. \"Balancing benefits, costs, and harms: policy implications of expanding cancer susceptibility testing from genetics clinics to the general population\". In: Lancet Oncol. (Sep. 2026)",
+        doi: "10.1016/S1470-2045(26)00390-6",
+        pmid: "42790443"
+      },
+      {
+        id: 10,
+        citation: "Shi L, Bao W, Culhane AC, Fang X, Furlanello C, Hao R, Jones WD, Kusko R, Lababidi S, Mason CE, Scherer A, Thakkar S, Tong W, Wolfinger RD, Xu J, Yu Y, Zhang R, Zheng Y. \"Ensuring multiomics data reproducibility for artificial intelligence with reference materials as a common calibrator\". In: Nat Biotechnol. (Sep. 2026)",
+        doi: "10.1038/s41587-026-03267-1",
+        pmid: "42680824"
+      },
+      {
+        id: 11,
+        citation: "Thomas S, Keeble HC, Brown E, Baker SR, Cooke S, Lawler M, McPeake K, Oliver K, Selby P, Nelson D. \"Barriers and facilitators to implementing the European code of cancer practice in a rural and coastal setting: a qualitative study\". In: Cancer Causes Control. (Aug. 2026)",
+        doi: "10.1007/s10552-026-02225-1",
+        pmid: "42570155"
+      },
+      {
+        id: 12,
+        citation: "Kleinhappel TK, Calanzani N, Cooke S, Pickwell-Smith B, Spencer K, Kane R, Naqvi SA, de Sá J, Couespel N, Selby P, Lawler M, Murchie P, Nelson D. \"Rural cancer research activity across Europe: A bibliometric analysis on patterns, gaps and policy implications\". In: Eur J Oncol Nurs. (Aug. 2026)",
+        doi: "10.1016/j.ejon.2026.103258",
+        pmid: "42378787"
+      },
+      {
+        id: 13,
+        citation: "Nelson D, Pickwell-Smith B, Falvey J, Kane R, Cooke S, McPeake K, Mee P, Theophanous S, Harding-Bell A, Calman L, Spencer K, Calanzani N, Murchie P, Shilling V, Selby P, Aggarwal A, Sullivan R, Lawler M. \"Coastal cancer care: A blueprint to address the unmet needs through place-based research and policy approaches\". In: J Cancer Policy. (Jun. 2026)",
+        doi: "10.1016/j.jcpo.2026.100769",
+        pmid: "42372821"
+      },
+      {
+        id: 14,
+        citation: "Adair O, McFerran E, Lawler M, van Duuren LA, Lamrock F. \"Developing and calibrating a colorectal cancer microsimulation model for Northern Ireland\". In: Pharmacoeconomics. (Apr. 2026)",
+        doi: "10.1007/s40273-025-01572-2",
+        pmid: "41484326"
+      },
+      {
+        id: 15,
+        citation: "Lawler M, Degi CL, Diamond L, Thurston-Smith K. \"Analysis and recommendations to improve national cancer control plans and policies informed by a 20 country analysis\". In: J Cancer Policy. (Mar. 2026)",
+        doi: "10.1016/j.jcpo.2026.100708",
+        pmid: "41558549"
+      },
+      {
+        id: 16,
+        citation: "McFerran E, McKay D, Loughrey MB, Lawler M, McSorley ST. \"Re-evaluating post-polypectomy surveillance: The role of non-invasive modalities in colorectal cancer prevention\". In: Best Pract Res Clin Gastroenterol. (Feb. 2026)",
+        doi: "10.1016/j.bpg.2026.102092",
+        pmid: "41724544"
       }
     ],
     2025: [
@@ -51,6 +132,35 @@ const PublicationsData = {
         id: 7,
         citation: "Lawler M, McFerran E, Readman L, Gautama S, Koczan P, Palmer J, Wiltshire S, Pace E. \"Independent Economic Evaluation of the London Care Record\". Eng. In: London Care Record Report (May 2025).",
         link: "https://www.onelondon.online/wp-content/uploads/2025/09/London-Care-Record-Independent-Economic-Evaluation-July-2025.pdf"
+      },
+      {
+        id: 8,
+        citation: "Hersey S, Scott C, Rosen S, Kavita, Keeling P, Lawler M. \"Precision medicine: what is so difficult? The interplay and complexities of pharmaceutical and diagnostic partnerships to deliver the promise of precision medicine\". In: J Precis Med Health Dis. (Dec. 2025)",
+        doi: "10.1016/j.premed.2025.100027"
+      },
+      {
+        id: 9,
+        citation: "Lawler M, Adams C, Pisani E, Romero Y, Quinlan S, Price P. \"A deliverable national cancer control plan for the UK: lessons from abroad and the need for discipline at home\". In: Lancet Oncol. (Dec. 2025)",
+        doi: "10.1016/S1470-2045(25)00650-3",
+        pmid: "41207314"
+      },
+      {
+        id: 10,
+        citation: "Nelson D, Kleinhappel TK, Calanzani N, Cooke S, Pickwell-Smith B, Spencer K, Kane R, Naqvi SA, Selby P, Lawler M, Murchie P. \"Mapping the landscape of rural cancer research: a global bibliometric analysis\". In: Cancer Causes Control. (Dec. 2025)",
+        doi: "10.1007/s10552-025-02086-0",
+        pmid: "41454992"
+      },
+      {
+        id: 11,
+        citation: "Lawler M, Price P, Sullivan R. \"Living within our means: trouble ahead for England's cancer planning\". In: Lancet Oncol. (May 2025)",
+        doi: "10.1016/S1470-2045(25)00202-5",
+        pmid: "40245906"
+      },
+      {
+        id: 12,
+        citation: "Boyiadzis M, Wei AH, Paiva B, Freeman SD, Kaspers G, Chyla B, Hersey S, Patel R, Maloney B, Blanchet Zumofen MH, Van Hoef M, Wulff B, Obourn V, Patel S, Lopes de Menezes D, Shi Q, Bengoudifa BR, Dimier N, Prior TJ, Roboz GJ, Prebet T. \"Measurable residual disease (MRD) as a surrogate end point for clinical drug approval in acute myeloid leukemia (AML): Perspectives from the MRD Partnership and Alliance in AML Clinical Treatment Consortium\". In: Cancer. (Jul. 2025)",
+        doi: "10.1002/cncr.35960",
+        pmid: "40576165"
       }
     ],
     2024: [
