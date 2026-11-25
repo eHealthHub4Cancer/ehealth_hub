@@ -16,7 +16,7 @@ export const fetchData = async (url, options = {}) => {
 
 // Fetch a list of people
 export const getPeople = async () => {
-  return await fetchData(API_ENDPOINTS.PEOPLE);
+  return await fetchData(API_ENDPOINTS.PEOPLE, { cache: "no-cache" });
 };
 
 // Fetch details for a specific person by slug
