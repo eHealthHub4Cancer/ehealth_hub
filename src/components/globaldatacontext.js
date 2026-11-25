@@ -1,9 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from "react";
 import { getPeople, getPersonInformation } from "./api";
 
 // Constants for caching
 const PEOPLE_CACHE_KEY = "people_data_cache";
 const PERSON_INFO_CACHE_KEY = "person_info_cache";
+const PEOPLE_REFRESH_INTERVAL = 60 * 1000;
 const CACHE_EXPIRY = 3 * 60 * 60 * 1000; // 3 hours in milliseconds
 
 const GlobalDataContext = createContext();
@@ -17,6 +18,10 @@ export const GlobalDataProvider = ({ children }) => {
   const [personLoading, setPersonLoading] = useState(false);
 
   const [error, setError] = useState(null);
+  const peopleRequest = useRef(null);
+  const lastPeopleRequest = useRef(null);
+  const hasPeople = useRef(false);
+  const mounted = useRef(false);
 
   // Check cache for data
   const getCachedData = (key) => {
@@ -139,36 +144,61 @@ export const GlobalDataProvider = ({ children }) => {
     }
   }, [people, peopleLoading]);
 
-  // Fetch people list (fast initial load)
-  useEffect(() => {
-    const fetchPeopleList = async () => {
-      setPeopleLoading(true);
-      setError(null);
-
+  // Cached data stays visible while one shared request refreshes the list.
+  const revalidatePeople = useCallback(({ force = false } = {}) => {
+    if (peopleRequest.current) return peopleRequest.current;
+    if (!force && lastPeopleRequest.current !== null && Date.now() - lastPeopleRequest.current < PEOPLE_REFRESH_INTERVAL) {
+      return Promise.resolve();
+    }
+    lastPeopleRequest.current = Date.now();
+    if (!hasPeople.current || force) setPeopleLoading(true);
+    setError(null);
+    const request = (async () => {
       try {
-        // Check cache first
-        const cachedPeople = getCachedData(PEOPLE_CACHE_KEY);
-        if (cachedPeople) {
-          console.log(`Loaded ${cachedPeople.length} people from cache`);
-          setPeople(cachedPeople);
-          setPeopleLoading(false);
-          return; // Preloading handled by preloadAllPeople
-        }
-
-        // Fetch from API
         const peopleData = await getPeople();
+        if (!mounted.current) return;
+        hasPeople.current = true;
         setPeople(peopleData);
         setCachedData(PEOPLE_CACHE_KEY, peopleData);
-        console.log(`Loaded ${peopleData.length} people from API`);
       } catch (err) {
-        setError(err.message);
+        // A failed background request must not hide a usable cached directory.
+        if (mounted.current && (!hasPeople.current || force)) setError(err.message);
       } finally {
-        setPeopleLoading(false);
+        if (mounted.current) setPeopleLoading(false);
+        peopleRequest.current = null;
       }
-    };
-
-    fetchPeopleList();
+    })();
+    peopleRequest.current = request;
+    return request;
   }, []);
+
+  useEffect(() => {
+    mounted.current = true;
+    const cachedPeople = getCachedData(PEOPLE_CACHE_KEY);
+    if (cachedPeople) {
+      hasPeople.current = true;
+      setPeople(cachedPeople);
+      // Respect the refresh limit across reloads as well as focus events.
+      try {
+        lastPeopleRequest.current = JSON.parse(localStorage.getItem(PEOPLE_CACHE_KEY)).timestamp;
+      } catch {
+        lastPeopleRequest.current = null;
+      }
+    }
+    revalidatePeople();
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === 'visible') revalidatePeople();
+    };
+    window.addEventListener('focus', refreshWhenVisible);
+    document.addEventListener('visibilitychange', refreshWhenVisible);
+    const timer = window.setInterval(refreshWhenVisible, PEOPLE_REFRESH_INTERVAL);
+    return () => {
+      mounted.current = false;
+      window.clearInterval(timer);
+      window.removeEventListener('focus', refreshWhenVisible);
+      document.removeEventListener('visibilitychange', refreshWhenVisible);
+    };
+  }, [revalidatePeople]);
 
   // Fetch individual person information by slug
   const fetchPersonInformation = useCallback(async (slug) => {
@@ -204,24 +234,15 @@ export const GlobalDataProvider = ({ children }) => {
     }
   }, []);
 
-  // Refresh people list
+  // Manual refresh bypasses the minute limit and invalidates profile details.
   const refreshCache = useCallback(async () => {
-    console.log("Refreshing people list...");
-    localStorage.removeItem(PEOPLE_CACHE_KEY);
-    localStorage.removeItem(PERSON_INFO_CACHE_KEY);
-
-    setPeopleLoading(true);
     try {
-      const peopleData = await getPeople();
-      setPeople(peopleData);
-      setCachedData(PEOPLE_CACHE_KEY, peopleData);
-      console.log(`Refreshed ${peopleData.length} people`);
+      localStorage.removeItem(PERSON_INFO_CACHE_KEY);
     } catch (err) {
-      setError(err.message);
-    } finally {
-      setPeopleLoading(false);
+      console.warn("Cache removal error:", err);
     }
-  }, []);
+    return revalidatePeople({ force: true });
+  }, [revalidatePeople]);
 
   // Reset personInformation
   const resetPersonInformation = useCallback(() => {
